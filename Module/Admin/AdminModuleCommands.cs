@@ -32,7 +32,6 @@ using VMP_CNR.Module.Players.Windows;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Weapons.Data;
 using static VMP_CNR.Module.Chat.Chats;
-using VMP_CNR.Module.Node;
 using VMP_CNR.Module.Players.Drunk;
 using VMP_CNR.Module.Vehicles.Garages;
 using VMP_CNR.Module.Business.FuelStations;
@@ -4121,8 +4120,6 @@ namespace VMP_CNR.Module.Admin
             }
 
             Configuration.Instance.IsServerOpen = false;
-
-            DiscordHandler.SendMessage($"{ NAPI.Server.GetServerName() + NAPI.Server.GetServerPort()} - Es wurde /kickall durchgeführt", $"Ausgeführt von: {iPlayer.GetName()}"); // Geht nur an einen internen Channel, nicht #ankündigungen
         }
 
         public async void testsync(Player player, string heightstring)
@@ -5897,25 +5894,6 @@ namespace VMP_CNR.Module.Admin
             bool xb = false;
             if (enabled == 1) xb = true;
             player.Vehicle.SetExtra(extra, xb);
-        }
-
-        [CommandPermission(PlayerRankPermission = false)]
-        [Command]
-        public void node(Player player, string commandParams)
-        {
-            if (!Devmode)
-            {
-                return;
-            }
-
-            var args = commandParams.Split(" ");
-            if (args.Length <= 2) return;
-
-            if (!int.TryParse(args[0], out int slot)) return;
-            if (!int.TryParse(args[1], out int drawable)) return;
-            if (!int.TryParse(args[2], out int texture)) return;
-
-            NodeModule.Instance.SetPlayerProp(player.GetPlayer(), slot, drawable, texture);
         }
 
         [CommandPermission(PlayerRankPermission = true)]

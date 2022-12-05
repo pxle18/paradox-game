@@ -402,11 +402,6 @@ namespace VMP_CNR.Module.Items
             }
             catch (Exception e)
             {
-                if (e is NullReferenceException)
-                {
-                    DiscordHandler.SendMessage("[INVENTAR EXCEPTION #2]", e.ToString());
-                }
-
                 Logger.Crash(e);
             }
         }

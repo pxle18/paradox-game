@@ -53,17 +53,9 @@ namespace VMP_CNR.Module.Sync
             }
         }
 
-        private void ExceptionHandler(object p_Sender, UnhandledExceptionEventArgs p_Args)
-        {
-            Exception l_E = (Exception) p_Args.ExceptionObject;
-            DiscordHandler.SendMessage("Unhandled Exception in AsyncThread!", l_E.ToString());
-            Logger.Crash(l_E);
-        }
-
-        public void AddToAsyncThread(Task l_Task)
-        {
-            m_AsyncTasks.Enqueue(l_Task);
-        }
+        private void ExceptionHandler(object p_Sender, UnhandledExceptionEventArgs p_Args) => Logger.Crash((Exception)p_Args.ExceptionObject);
+        
+        public void AddToAsyncThread(Task l_Task) => m_AsyncTasks.Enqueue(l_Task);
     }
 
     public class SyncThread

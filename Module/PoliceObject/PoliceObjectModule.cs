@@ -24,23 +24,15 @@ namespace VMP_CNR
 
     public class PoliceObjectModule : Module<PoliceObjectModule>
     {
+        private Dictionary<int, PoliceObject> _objects = new Dictionary<int, PoliceObject>();
+        private int _currentUnique;
 
-        private Dictionary<int, PoliceObject> objects = new Dictionary<int, PoliceObject>();
         private const int MaxPoliceCounts = 30;
-        private int currUnique;
 
         protected override bool OnLoad()
         {
-            objects = new Dictionary<int, PoliceObject>();
+            _objects = new Dictionary<int, PoliceObject>();
             return base.OnLoad();
-        }
-
-        public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
-        {
-            if(objects.Count() > 0)
-            {
-
-            }
         }
 
         /*public override void OnMinuteUpdate()
@@ -53,7 +45,7 @@ namespace VMP_CNR
 
         public bool IsMaxReached()
         {
-            return MaxPoliceCounts < objects.Count;
+            return MaxPoliceCounts < _objects.Count;
         }
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
@@ -77,7 +69,7 @@ namespace VMP_CNR
 
             var polO = new PoliceObject
             {
-                Id = currUnique++,
+                Id = _currentUnique++,
                 Position = player.Position,
                 Owner = dbPlayer.GetName(),
                 Item = item,
@@ -98,18 +90,18 @@ namespace VMP_CNR
             polO.Entity = ObjectSpawn.Create(model, pos, rot);
             polO.Rotation = rot;
 
-            objects.Add(polO.Id, polO);
+            _objects.Add(polO.Id, polO);
             return polO;
         }
 
         public Dictionary<int, PoliceObject> GetAll()
         {
-            return objects;
+            return _objects;
         }
 
         public PoliceObject GetNearest(Vector3 position)
         {
-            foreach (var kvp in objects)
+            foreach (var kvp in _objects)
             {
                 var l_Entity = kvp.Value.Entity;
                 if (l_Entity == null)
@@ -126,7 +118,7 @@ namespace VMP_CNR
         {
             obj.Shape?.Delete();
             obj.Entity.Delete();
-            objects.Remove(obj.Id);
+            _objects.Remove(obj.Id);
         }
 
         public void Refresh(PoliceObject obj)

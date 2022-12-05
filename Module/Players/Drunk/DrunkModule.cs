@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using VMP_CNR.Module.Items;
-using VMP_CNR.Module.Node;
 using VMP_CNR.Module.Players.Db;
 
 namespace VMP_CNR.Module.Players.Drunk

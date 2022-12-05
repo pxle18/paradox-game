@@ -235,7 +235,6 @@ namespace VMP_CNR
         public static AsyncThread m_AsyncThread;
 
         //public static MySqlSyncThread m_MySqlThread = new MySqlSyncThread();
-        public static DiscordHandler Discord = new DiscordHandler();
 
         public static string m_RestartReason;
         public static uint m_RestartMinuten;
@@ -556,16 +555,10 @@ namespace VMP_CNR
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;
 
-            // Setting the Timer
             minTimer = DateTime.Now;
             SavePlayerCheck = DateTime.Now;
 
-            DiscordHandler.SendMessage($"ist gestartet", $"GL HF");
-            //Module.Launcher.APIModule.Instance.UnlockLauncher();
-            
-            //New Death Handling
             NAPI.Server.SetAutoRespawnAfterDeath(false);
-
         }
 
         [ServerEvent(Event.ResourceStart)]

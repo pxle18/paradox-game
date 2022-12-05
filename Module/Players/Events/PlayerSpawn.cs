@@ -176,7 +176,7 @@ namespace VMP_CNR.Module.Players.Events
                             olderPlayer.SendNotification("Duplicate Entry 1");
                             olderPlayer.ResetData("Duplicate Entry!");
                             olderPlayer.Kick("Duplicate Entry!");
-                            DiscordHandler.SendMessage($"LOGIN FEHLER!", $"(PlayerSpawn.cs - 85) {olderPlayer.Name} - {DateTime.Now.ToString()}");
+
                             return;
                         }
 

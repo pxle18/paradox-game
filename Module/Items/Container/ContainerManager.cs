@@ -434,9 +434,6 @@ namespace VMP_CNR.Module.Items
             }
             catch (Exception e)
             {
-                if (e is NullReferenceException)
-                    DiscordHandler.SendMessage($"[INVENTAR EXCEPTION]", e.ToString());
-
                 Logger.Crash(e);
             }
 
