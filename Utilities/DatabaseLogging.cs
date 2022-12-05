@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using VMP_CNR.Module.PlayerName;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Utilities;
 
 /// <summary>
 /// This function checks for any sleeping connections beyond a reasonable time and kills them.
@@ -14,10 +15,12 @@ using VMP_CNR.Module.Players.Db;
 /// 
 namespace VMP_CNR
 {
-    public class DBLogging
+    /**
+     * Really trash lol
+     */
+    public class DatabaseLogging : Singleton<DatabaseLogging>
     {
-        public static void LogAdminAction(Player admin, string user, adminLogTypes type, string reason, int optime = 0,
-            bool devmode = false)
+        public void LogAdminAction(Player admin, string user, adminLogTypes type, string reason, int optime = 0, bool devMode = false)
         {
             DbPlayer dbPlayer = admin.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid())
@@ -84,7 +87,7 @@ namespace VMP_CNR
             MySQLHandler.ExecuteAsync(query);
         }
 
-        public static void LogAcpAdminAction(PlayerName admin, string user, adminLogTypes type, string reason)
+        public void LogAcpAdminAction(PlayerName admin, string user, adminLogTypes type, string reason)
         {
             string xtype = "undefined";
 
@@ -111,7 +114,7 @@ namespace VMP_CNR
             MySQLHandler.ExecuteAsync(query);
         }
 
-        public static void LogAcpAdminAction(string admin, string user, adminLogTypes type, string reason)
+        public void LogAcpAdminAction(string admin, string user, adminLogTypes type, string reason)
         {
             string xtype = "undefined";
 

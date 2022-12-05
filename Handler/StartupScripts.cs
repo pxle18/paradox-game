@@ -7,7 +7,7 @@ using VMP_CNR.Module.Logging;
 
 namespace VMP_CNR.Handler
 {
-    public static class StartupScripts
+    public sealed class StartupScripts
     {
         public static void OnStartup()
         {

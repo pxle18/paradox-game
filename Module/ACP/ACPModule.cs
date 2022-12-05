@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.ACP
                                 await Task.Delay(30000);
                                 await Chats.SendGlobalMessage(RankModule.Instance.Get(admin.RankId).Name + " " + admin.Name + " hat " +
                                                               findPlayer.GetName() + " vom Server gekickt! (Grund: " + actionInfo[1] + ")", Chats.COLOR.RED, Chats.ICON.GLOB);
-                                DBLogging.LogAcpAdminAction(admin, findPlayer.GetName(), adminLogTypes.kick, actionInfo[1]);
+                                DatabaseLogging.Instance.LogAcpAdminAction(admin, findPlayer.GetName(), adminLogTypes.kick, actionInfo[1]);
                                 findPlayer.Save();
                                 findPlayer.SendNewNotification($"Sie wurden gekickt. Grund {actionInfo[1]}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
                                 findPlayer.Player.Kick();
@@ -83,7 +83,7 @@ namespace VMP_CNR.Module.ACP
                                     findPlayer.SendNewNotification("ERSTATTUNG: Ihnen wurde$" +
                                                                amount + " auf Ihr Konto gutgeschrieben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
 
-                                    DBLogging.LogAcpAdminAction(admin.Name, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ Givemoney");
+                                    DatabaseLogging.Instance.LogAcpAdminAction(admin.Name, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ Givemoney");
                                 }
 
                                 break;

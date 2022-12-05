@@ -1453,7 +1453,7 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.RageExtension.IsInVehicle)
                 {
-                    DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.kick, "Shoprob aus dem Fahrzeug", 0,
+                    DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.kick, "Shoprob aus dem Fahrzeug", 0,
                         Configuration.Instance.DevMode);
                     Module.Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         $"{dbPlayer.GetName()} wurde gekickt. Grund: Shoprob aus dem Fahrzeug!");
@@ -1509,7 +1509,7 @@ namespace VMP_CNR.Module.Players
 
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
                             "Community-Ausschluss Juwelier Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1544,7 +1544,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
                             "Community-Ausschluss Staatsbank Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1567,7 +1567,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
                             "Community-Ausschluss VespucciBank Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1588,7 +1588,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
                             "Community-Ausschluss Juwelier Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",

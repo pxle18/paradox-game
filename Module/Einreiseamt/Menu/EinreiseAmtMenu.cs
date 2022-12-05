@@ -61,7 +61,7 @@ namespace VMP_CNR.Module.Einreiseamt
                         foundPlayer.SendNewNotification("Bitte melden Sie sich bei Fragen im Support!");
                         dbPlayer.SendNewNotification($"Sie haben {foundPlayer.GetName()} die Einreise verweigert!");
 
-                        DBLogging.LogAdminAction(dbPlayer.Player, foundPlayer.GetName(), adminLogTypes.perm, "Einreiseamt", 0, Configurations.Configuration.Instance.DevMode);
+                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, foundPlayer.GetName(), adminLogTypes.perm, "Einreiseamt", 0, Configurations.Configuration.Instance.DevMode);
                         foundPlayer.warns[0] = 3;
 
                         Logging.Logger.AddToEinreiseLog(dbPlayer.Id, foundPlayer.Id, false);

@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Players.Windows
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            DBLogging.LogAdminAction(p_Player, l_DbPlayer.GetName(), adminLogTypes.kick, "AFK System", 0,
+            DatabaseLogging.Instance.LogAdminAction(p_Player, l_DbPlayer.GetName(), adminLogTypes.kick, "AFK System", 0,
                     Configuration.Instance.DevMode);
             l_DbPlayer.SendNewNotification("Anti AFK");
             l_DbPlayer.Kick("AFK-Check nicht bestanden.");

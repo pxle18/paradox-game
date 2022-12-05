@@ -253,7 +253,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                 if (dbPlayer.Player.Dimension != 0)
                 {
-                    DBLogging.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.perm,
+                    DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.perm,
                         "Community-Ausschluss Shop Auto Cheat", 0, Configurations.Configuration.Instance.DevMode);
                     Players.Players.Instance.SendMessageToAuthorizedUsers("anticheat",
                         "Haus Bug Use " + dbPlayer.GetName());

@@ -2380,7 +2380,7 @@ namespace VMP_CNR.Module.Admin
                         dbPlayer.GetName() + " hat " + findPlayer.GetName() + " " + amount + " " +
                     Item.Name + " gegeben.");
 
-                DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.setitem, amount + " " +
+                DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.setitem, amount + " " +
                     Item.Name, 0, Configuration.Instance.DevMode);
             }
             catch (Exception e)
@@ -2641,7 +2641,7 @@ namespace VMP_CNR.Module.Admin
             await Chats.SendGlobalMessage(dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " vom Server gekickt! (Grund: " + command[1] + ")", COLOR.RED, ICON.GLOB);
             dbPlayer.SendNewNotification($"Sie haben {findPlayer.GetName()} vom Server gekickt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.kick, command[1], 0,
+            DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.kick, command[1], 0,
                 Configuration.Instance.DevMode);
             findPlayer.Save();
             //findPlayer.SendNewNotification("Saved your stuff!");
@@ -2667,7 +2667,7 @@ namespace VMP_CNR.Module.Admin
 
             dbPlayer.SendNewNotification($"Sie haben {findPlayer.GetName()} vom Server gekickt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.kick, "Powernap!", 0,
+            DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.kick, "Powernap!", 0,
                 Configuration.Instance.DevMode);
             findPlayer.Save();
 
@@ -3192,7 +3192,7 @@ namespace VMP_CNR.Module.Admin
             findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() + " hat Sie revived!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
             PlayerSpawn.OnPlayerSpawn(findPlayer.Player);
-            DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.arev, $"{dbPlayer.GetName()} (ID: {dbPlayer.Id}) belebte {findPlayer.GetName()} (ID: {findPlayer.Id}) wieder.", 0, Configuration.Instance.DevMode);
+            DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.arev, $"{dbPlayer.GetName()} (ID: {dbPlayer.Id}) belebte {findPlayer.GetName()} (ID: {findPlayer.Id}) wieder.", 0, Configuration.Instance.DevMode);
 
         }
 
@@ -3705,7 +3705,7 @@ namespace VMP_CNR.Module.Admin
                         Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " gegeben!");
 
-                    DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ Givemoney");
+                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ Givemoney");
                     return;
                 }
 
@@ -3719,7 +3719,7 @@ namespace VMP_CNR.Module.Admin
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " entfernt!");
 
-                DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"-{amount}$ Givemoney");
+                DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"-{amount}$ Givemoney");
             }
             catch (Exception e)
             {
@@ -3914,7 +3914,7 @@ namespace VMP_CNR.Module.Admin
                 Vehicle.SetTeamCarGarage(true);
                 iPlayer.SendNewNotification("Team-Fahrzeug wurde in die Garage gesetzt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             }
-            DBLogging.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.setgarage, "VehId: " + dbId, 0, Devmode);
+            DatabaseLogging.Instance.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.setgarage, "VehId: " + dbId, 0, Devmode);
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -3950,7 +3950,7 @@ namespace VMP_CNR.Module.Admin
                         iPlayer.SendNewNotification("Team-Fahrzeug wurde in die Garage gesetzt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     }
 
-                    DBLogging.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.setdpos, "VehId: " + dbId, 0, Devmode);
+                    DatabaseLogging.Instance.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.setdpos, "VehId: " + dbId, 0, Devmode);
                 }
                 catch (Exception e)
                 {
@@ -4255,7 +4255,7 @@ namespace VMP_CNR.Module.Admin
                                            dbPlayer.GetName() + " verwarnt, Grund " + command[1] + "!", COLOR.RED, ICON.GLOB);
 
             dbPlayer.SendNewNotification("Du hast nun: " + dbPlayer.warns[0] + "/3 Abmahnungen!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-            DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.warn, command[1], 0, Devmode);
+            DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.warn, command[1], 0, Devmode);
             if (dbPlayer.warns[0] >= 3)
             {
                 dbPlayer.Player.SendNotification("Account gesperrt, (3 Abmahnungen) Grund: " + command[1]);
@@ -4318,7 +4318,7 @@ namespace VMP_CNR.Module.Admin
             await Chats.SendGlobalMessage("Administrator " + iPlayer.GetName() + " hat " +
                                     dbPlayer.GetName() + " vom Server gebannt! (Grund: " + command[1] + ")", COLOR.RED, ICON.GLOB);
 
-            DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm, command[1], 0, Devmode);
+            DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm, command[1], 0, Devmode);
             dbPlayer.warns[0] = 3;
             dbPlayer.Player.SendNotification("Sie wurden gebannt! Grund: " + command[1]);
             dbPlayer.Player.Kick("Sie wurden gebannt! Grund: " + command[1]);
@@ -4347,7 +4347,7 @@ namespace VMP_CNR.Module.Admin
                 await Chats.SendGlobalMessage(iPlayer.Rank.Name + " " + iPlayer.GetName() + " hat " +
                                                dbPlayer.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
 
-            DBLogging.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm, "Community-Ausschluss", 0, Devmode);
+            DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm, "Community-Ausschluss", 0, Devmode);
             dbPlayer.warns[0] = 3;
             SocialBanHandler.Instance.AddEntry(dbPlayer.Player);
             dbPlayer.Player.SendNotification("Permanenter Ausschluss!");
@@ -4691,7 +4691,7 @@ namespace VMP_CNR.Module.Admin
 
             dbPlayer.SendNewNotification(command[1], title: $"{iPlayer.GetName()} fluestert dir:", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 10000);
             iPlayer.SendNewNotification(command[1], title: $"Sie fluestern: {dbPlayer.GetName()}", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 10000);
-            DBLogging.LogAdminAction(iPlayer.Player, dbPlayer.GetName(), adminLogTypes.whisper, command[1]);
+            DatabaseLogging.Instance.LogAdminAction(iPlayer.Player, dbPlayer.GetName(), adminLogTypes.whisper, command[1]);
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -4813,7 +4813,7 @@ namespace VMP_CNR.Module.Admin
                 });
 
 
-                DBLogging.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.veh, $"{iPlayer.GetName()} hat das Fahrzeug {data.Model} (ID: {data.Id}) gespawnt", 0, Configuration.Instance.DevMode);
+                DatabaseLogging.Instance.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.veh, $"{iPlayer.GetName()} hat das Fahrzeug {data.Model} (ID: {data.Id}) gespawnt", 0, Configuration.Instance.DevMode);
             }));
         }
 
@@ -4932,7 +4932,7 @@ namespace VMP_CNR.Module.Admin
                                                " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
             }
 
-            DBLogging.LogAdminAction(player, findplayer.GetName(), adminLogTypes.timeban, command[2], hours, Devmode);
+            DatabaseLogging.Instance.LogAdminAction(player, findplayer.GetName(), adminLogTypes.timeban, command[2], hours, Devmode);
             findplayer.timeban[0] = banstamp;
             findplayer.Save();
             findplayer.Player.SendNotification("Timeban " + hours + " Stunden, Grund: " + command[2]);
@@ -5089,7 +5089,7 @@ namespace VMP_CNR.Module.Admin
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " sieht sich das Fahrzeug von " + name + " an");
 
-            DBLogging.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.log, $"vehinfo {sxVeh.databaseId}");
+            DatabaseLogging.Instance.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.log, $"vehinfo {sxVeh.databaseId}");
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -5353,7 +5353,7 @@ namespace VMP_CNR.Module.Admin
 
             iPlayer.SendNewNotification("Zu Koordinaten X=" + x + " Y=" + y + " Z=" + z, title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             player.SetPosition(new Vector3(x, y, z));
-            DBLogging.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.coord, $"X: {x}, Y: {y}, Z: {z}", 0, Configuration.Instance.DevMode);
+            DatabaseLogging.Instance.LogAdminAction(player, iPlayer.GetName(), adminLogTypes.coord, $"X: {x}, Y: {y}, Z: {z}", 0, Configuration.Instance.DevMode);
         }
 
         [CommandPermission(PlayerRankPermission = true)]

@@ -369,7 +369,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat das Geld von " + name + " um $" + amount + " veraendert.");
 
-                DBLogging.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GivemoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GivemoneyHand");
 
 
                 if (amount > 0)
@@ -387,7 +387,7 @@ namespace VMP_CNR.Module.Players.Commands
                         Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " auf die Hand gegeben!");
 
-                    DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GivemoneyHand");
+                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GivemoneyHand");
                     return;
                 }
 
@@ -418,7 +418,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " aus der Geldbörse entfernt!");
 
-                DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"-{amount}$ GivemoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"-{amount}$ GivemoneyHand");
             });
         }
 
@@ -445,7 +445,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat das Schwarzgeld von " + name + " um $" + amount + " veraendert.");
 
-                DBLogging.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
 
                 if (findPlayer == null) return;
 
@@ -461,7 +461,7 @@ namespace VMP_CNR.Module.Players.Commands
                     if (dbPlayer.RankId < (int)adminlevel.Projektleitung)
                         Players.Instance.SendMessageToAuthorizedUsers("log", "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben!");
 
-                    DBLogging.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
+                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
                     return;
                 }
                 

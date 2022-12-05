@@ -107,7 +107,7 @@ namespace VMP_CNR.Module.Meth
                     {
                         Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                             dbPlayer.GetName() + " Camper glitch (kochend entfernt) wurde gekickt!");
-                        DBLogging.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.kick, "Camper kochend entfernt", 0,
+                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.kick, "Camper kochend entfernt", 0,
                             Configuration.Instance.DevMode);
                         dbPlayer.ResetData("cooking");
                         if (CookingPlayers.Contains(dbPlayer)) CookingPlayers.Remove(dbPlayer);
