@@ -26,17 +26,17 @@ namespace VMP_CNR.Module.Players
         public static bool TakeMoney(this DbPlayer player, int money)
         {
             if (money < 0) return false;
-            if (player.money[0] < money) return false;
-            if (player.money[0] - money > player.money[0]) return false;
-            player.money[0] = player.money[0] - money;
-            player.Player.TriggerNewClient("updateMoney", player.money[0]);
+            if (player.Money[0] < money) return false;
+            if (player.Money[0] - money > player.Money[0]) return false;
+            player.Money[0] = player.Money[0] - money;
+            player.Player.TriggerNewClient("updateMoney", player.Money[0]);
             player.Save();
             return true;
         }
         public static bool ResetHandMoney(this DbPlayer player)
         {
-            player.money[0] = 0;
-            player.Player.TriggerNewClient("updateMoney", player.money[0]);
+            player.Money[0] = 0;
+            player.Player.TriggerNewClient("updateMoney", player.Money[0]);
             player.Save();
             return true;
         }
@@ -44,10 +44,10 @@ namespace VMP_CNR.Module.Players
         public static bool TakeBlackMoney(this DbPlayer player, int money)
         {
             if (money < 0) return false;
-            if (player.blackmoney[0] < money) return false;
-            if (player.blackmoney[0] - money > player.blackmoney[0]) return false;
-            player.blackmoney[0] = player.blackmoney[0] - money;
-            player.Player.TriggerNewClient("updateBlackMoney", player.blackmoney[0]);
+            if (player.BlackMoney[0] < money) return false;
+            if (player.BlackMoney[0] - money > player.BlackMoney[0]) return false;
+            player.BlackMoney[0] = player.BlackMoney[0] - money;
+            player.Player.TriggerNewClient("updateBlackMoney", player.BlackMoney[0]);
             player.Save();
             return true;
         }
@@ -55,9 +55,9 @@ namespace VMP_CNR.Module.Players
         public static bool GiveMoney(this DbPlayer player, int money)
         {
             if (money < 0) return false;
-            if (player.money[0] + money < player.money[0]) return false;
-            player.money[0] = player.money[0] + money;
-            player.Player.TriggerNewClient("updateMoney", player.money[0]);
+            if (player.Money[0] + money < player.Money[0]) return false;
+            player.Money[0] = player.Money[0] + money;
+            player.Player.TriggerNewClient("updateMoney", player.Money[0]);
             player.Save();
             return true;
         }
@@ -66,8 +66,8 @@ namespace VMP_CNR.Module.Players
         public static bool GiveBlackMoneyBank(this DbPlayer player, int money)
         {
             if (money < 0) return false;
-            if (player.blackmoneybank[0] + money < player.blackmoneybank[0]) return false;
-            player.blackmoneybank[0] = player.blackmoneybank[0] + money;
+            if (player.BlackMoneyBank[0] + money < player.BlackMoneyBank[0]) return false;
+            player.BlackMoneyBank[0] = player.BlackMoneyBank[0] + money;
             player.Save();
             return true;
         }
@@ -75,9 +75,9 @@ namespace VMP_CNR.Module.Players
         public static bool TakeBlackMoneyBank(this DbPlayer player, int money, string description = null)
         {
             if (money < 0) return false;
-            if (player.blackmoneybank[0] < money) return false;
-            if (player.blackmoneybank[0] - money > player.blackmoneybank[0]) return false;
-            player.blackmoneybank[0] = player.blackmoneybank[0] - money;
+            if (player.BlackMoneyBank[0] < money) return false;
+            if (player.BlackMoneyBank[0] - money > player.BlackMoneyBank[0]) return false;
+            player.BlackMoneyBank[0] = player.BlackMoneyBank[0] - money;
             player.Save();
             return true;
         }
@@ -85,9 +85,9 @@ namespace VMP_CNR.Module.Players
         public static bool GiveBlackMoney(this DbPlayer player, int money)
         {
             if (money < 0) return false;
-            if (player.blackmoney[0] + money < player.blackmoney[0]) return false;
-            player.blackmoney[0] = player.blackmoney[0] + money;
-            player.Player.TriggerNewClient("updateBlackMoney", player.blackmoney[0]);
+            if (player.BlackMoney[0] + money < player.BlackMoney[0]) return false;
+            player.BlackMoney[0] = player.BlackMoney[0] + money;
+            player.Player.TriggerNewClient("updateBlackMoney", player.BlackMoney[0]);
             player.Save();
             return true;
         }
@@ -108,9 +108,9 @@ namespace VMP_CNR.Module.Players
         public static bool TakeBankMoney(this DbPlayer player, int money, string description = null, bool ignoreMinus = false)
         {
             if (money < 0) return false;
-            if (player.bank_money[0] < money && !ignoreMinus) return false;
-            if (player.bank_money[0] - money > player.bank_money[0] && !ignoreMinus) return false;
-            player.bank_money[0] = player.bank_money[0] - money;
+            if (player.BankMoney[0] < money && !ignoreMinus) return false;
+            if (player.BankMoney[0] - money > player.BankMoney[0] && !ignoreMinus) return false;
+            player.BankMoney[0] = player.BankMoney[0] - money;
             if (description != null)
             {
                 player.AddPlayerBankHistory(-money, description);
@@ -122,8 +122,8 @@ namespace VMP_CNR.Module.Players
         public static void TakeSafeBankMoney(this DbPlayer player, int money, string description = null)
         {
             if (money < 0) return;
-            if (player.bank_money[0] - money > player.bank_money[0]) return;
-            player.bank_money[0] = player.bank_money[0] - money;
+            if (player.BankMoney[0] - money > player.BankMoney[0]) return;
+            player.BankMoney[0] = player.BankMoney[0] - money;
             if (description != null)
             {
                 player.AddPlayerBankHistory(-money, description);
@@ -135,8 +135,8 @@ namespace VMP_CNR.Module.Players
         public static bool GiveBankMoney(this DbPlayer player, int money, string description = null)
         {
             if (money < 1) return false;
-            if (player.bank_money[0] + money < player.bank_money[0]) return false;
-            player.bank_money[0] = player.bank_money[0] + money;
+            if (player.BankMoney[0] + money < player.BankMoney[0]) return false;
+            player.BankMoney[0] = player.BankMoney[0] + money;
             if (description != null)
             {
                 player.AddPlayerBankHistory(money, description);
@@ -178,7 +178,7 @@ namespace VMP_CNR.Module.Players
             }
 
             // not a valid amount
-            if (amount + dPlayer.money[0] < dPlayer.money[0])
+            if (amount + dPlayer.Money[0] < dPlayer.Money[0])
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Money.InvalidAmount());
                 return;
@@ -208,7 +208,7 @@ namespace VMP_CNR.Module.Players
 
         public static void ResetMoney(this DbPlayer dbPlayer)
         {
-            dbPlayer.money[0] = 0;
+            dbPlayer.Money[0] = 0;
             dbPlayer.Player.TriggerNewClient("updateMoney", 0);
         }
 
@@ -233,7 +233,7 @@ namespace VMP_CNR.Module.Players
                 }
             }*/
             
-            return/*businessMoney +*/ dbPlayer.money[0] + dbPlayer.bank_money[0];
+            return/*businessMoney +*/ dbPlayer.Money[0] + dbPlayer.BankMoney[0];
         }
     }
 }

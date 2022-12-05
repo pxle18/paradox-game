@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Items.Scripts
             DbPlayer target = Players.Players.Instance.GetClosestInjuredForPlayer(dbPlayer, 2.5f);
             if (target == null || !target.IsValid()) return false;
 
-            if (!target.isInjured()) return false;
+            if (!target.IsInjured()) return false;
 
             InjuryMovePoint injuryMovePoint = InjuryMoveModule.Instance.GetAll().Values.Where(ip => ip.Position.DistanceTo(target.Player.Position) < 2.0f).FirstOrDefault();
 

@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.Injury.InjuryMove.Menu
                     {
                         if(idx == index)
                         {
-                            if (Players.Players.Instance.GetValidPlayers().Where(p => p.isInjured() && p.Player.Position.DistanceTo(injuryMovePoint.Position) < 1.2f).Count() > 0)
+                            if (Players.Players.Instance.GetValidPlayers().Where(p => p.IsInjured() && p.Player.Position.DistanceTo(injuryMovePoint.Position) < 1.2f).Count() > 0)
                             {
                                 dbPlayer.SendNewNotification("Dieses Bett ist bereits in Benutzung!");
                                 return true;

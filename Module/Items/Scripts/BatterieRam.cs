@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     await Task.Delay(30000);
                     dbPlayer.ResetData("userCannotInterrupt");
 
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
 
                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 

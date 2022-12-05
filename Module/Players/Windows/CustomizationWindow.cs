@@ -42,7 +42,7 @@ namespace VMP_CNR.Module.Players.Windows
             if (dbPlayer == null || String.IsNullOrEmpty(charakterJSON)) return;
             CharacterCustomization customization = JsonConvert.DeserializeObject<CharacterCustomization>(charakterJSON);
 
-            if (dbPlayer.NeuEingereist())
+            if (dbPlayer.IsNewbie())
             {
                 dbPlayer.Customization = customization;
                 dbPlayer.SaveCustomization();

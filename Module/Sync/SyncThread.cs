@@ -348,7 +348,7 @@ namespace VMP_CNR.Module.Sync
                         if (iPlayer.HasData("follow"))
                         {
                             DbPlayer followedPlayer = Players.Players.Instance.FindPlayer(iPlayer.GetData("follow"));
-                            if (followedPlayer != null && followedPlayer.IsValid() && !followedPlayer.isInjured() && !iPlayer.isInjured() && !iPlayer.RageExtension.IsInVehicle)
+                            if (followedPlayer != null && followedPlayer.IsValid() && !followedPlayer.IsInjured() && !iPlayer.IsInjured() && !iPlayer.RageExtension.IsInVehicle)
                             {
                                 if (followedPlayer.Player.Position.DistanceTo(iPlayer.Player.Position) > 10.0f)
                                 {

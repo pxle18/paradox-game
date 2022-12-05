@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Players.Commands
                 return;
             }
 
-            if (findPlayer.isInjured())
+            if (findPlayer.IsInjured())
             {
                 dbPlayer.SendNewNotification("Person darf nicht verletzt sein!");
                 return;
@@ -383,7 +383,7 @@ namespace VMP_CNR.Module.Players.Commands
                                             " auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() + " hat ihnen $" +
                                                amount + " auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (dbPlayer.RankId < (int)adminlevel.Projektleitung)
+                    if (dbPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
                         Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " auf die Hand gegeben!");
 
@@ -458,7 +458,7 @@ namespace VMP_CNR.Module.Players.Commands
 
                     dbPlayer.SendNewNotification("Sie haben " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() + " hat ihnen $" + amount + " Schwarzgeld auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (dbPlayer.RankId < (int)adminlevel.Projektleitung)
+                    if (dbPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
                         Players.Instance.SendMessageToAuthorizedUsers("log", "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben!");
 
                     DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
@@ -524,8 +524,8 @@ namespace VMP_CNR.Module.Players.Commands
 
             foreach (var l_Player in Players.Instance.GetValidPlayers())
             {
-                if (l_Player.jailtime[0] > 0)
-                    l_JailInhabits.TryAdd(l_Player.GetName(), l_Player.jailtime[0]);
+                if (l_Player.JailTime[0] > 0)
+                    l_JailInhabits.TryAdd(l_Player.GetName(), l_Player.JailTime[0]);
             }
 
             DialogMigrator.CreateMenu(dbPlayer.Player, Dialogs.menu_jailinhabits, "Insassen (Name - Verbleib. Monate)", "");

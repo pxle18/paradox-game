@@ -183,7 +183,7 @@ namespace VMP_CNR.Module.Banks.Windows
                         biz.AddBankHistory(-auszahlen, $"Auszahlung von {dbPlayer.GetName()}");
                     }
 
-                    if (einzahlen > 0 && einzahlen <= dbPlayer.money[0])
+                    if (einzahlen > 0 && einzahlen <= dbPlayer.Money[0])
                     {
                         biz.Deposite(dbPlayer, einzahlen);
                         Logging.Logger.SaveToBusinessBank(biz.Id, einzahlen, dbPlayer.Id, dbPlayer.GetName(), true);
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Banks.Windows
 
                             if (dbPlayer.HasData("swbank"))
                             {
-                                if (auszahlen > 0 && auszahlen <= dbPlayer.blackmoneybank[0])
+                                if (auszahlen > 0 && auszahlen <= dbPlayer.BlackMoneyBank[0])
                                 {
                                     dbPlayer.TakeBlackMoneyBank(auszahlen);
                                     dbPlayer.GiveBlackMoney(auszahlen);
@@ -215,9 +215,9 @@ namespace VMP_CNR.Module.Banks.Windows
                                     );
                                 }
 
-                                if (einzahlen > 0 && einzahlen <= dbPlayer.blackmoney[0])
+                                if (einzahlen > 0 && einzahlen <= dbPlayer.BlackMoney[0])
                                 {
-                                    if (dbPlayer.blackmoneybank[0] >= 3000000)
+                                    if (dbPlayer.BlackMoneyBank[0] >= 3000000)
                                     {
                                         dbPlayer.SendNewNotification(
                                             "Ihr Schwarzgeldkonto kann maximal 3 Millionen fassen!"
@@ -225,7 +225,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                         return;
                                     }
 
-                                    int diff = 3000000 - dbPlayer.blackmoneybank[0];
+                                    int diff = 3000000 - dbPlayer.BlackMoneyBank[0];
                                     if (einzahlen > diff) einzahlen = diff;
 
                                     dbPlayer.GiveBlackMoneyBank(einzahlen);
@@ -271,7 +271,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                     );
                                 }
 
-                                if (einzahlen > 0 && einzahlen <= dbPlayer.money[0])
+                                if (einzahlen > 0 && einzahlen <= dbPlayer.Money[0])
                                 {
                                     teamShelter.Deposit(dbPlayer, einzahlen);
                                     dbPlayer.SendNewNotification(
@@ -378,7 +378,7 @@ namespace VMP_CNR.Module.Banks.Windows
                             return;
                         }
 
-                        if (auszahlen > 0 && auszahlen <= dbPlayer.bank_money[0])
+                        if (auszahlen > 0 && auszahlen <= dbPlayer.BankMoney[0])
                         {
                             if (dbPlayer.TakeBankMoney(auszahlen))
                             {
@@ -417,7 +417,7 @@ namespace VMP_CNR.Module.Banks.Windows
                             return;
                         }
 
-                        if (einzahlen > 0 && einzahlen <= dbPlayer.money[0])
+                        if (einzahlen > 0 && einzahlen <= dbPlayer.Money[0])
                         {
                             if (dbPlayer.GiveBankMoney(einzahlen))
                             {
@@ -478,7 +478,7 @@ namespace VMP_CNR.Module.Banks.Windows
                             return;
                         }
 
-                        if (einzahlen > 0 && einzahlen <= dbPlayer.money[0])
+                        if (einzahlen > 0 && einzahlen <= dbPlayer.Money[0])
                         {
                             if (dbPlayer.HasDepotLimitReached(PlayerDepotExtensions.DepotOperation.Add, (uint) einzahlen))
                             {

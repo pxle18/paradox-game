@@ -80,7 +80,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                     await Task.Delay(time);
 
-                    if (dbPlayer.isInjured())
+                    if (dbPlayer.IsInjured())
                     {
                         dbPlayer.SendNewNotification("Vorgang abgebrochen - du bist verletzt am Boden!");
                         dbPlayer.SetCannotInteract(false);
@@ -265,7 +265,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 }
 
                 dbPlayer.StopAnimation();
-                if (!dbPlayer.IsCuffed && !dbPlayer.IsTied && !dbPlayer.isInjured())
+                if (!dbPlayer.IsCuffed && !dbPlayer.IsTied && !dbPlayer.IsInjured())
                 {
                     RobberyModule.Instance.Add((int)closestShop.Id, dbPlayer, 1, copinterval: Utils.RandomNumber(2, 10), endinterval: Utils.RandomNumber(25, 35));
                 }
@@ -283,7 +283,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await Task.Delay(60000);
 
                 dbPlayer.SetCannotInteract(false);
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 
@@ -347,7 +347,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await Task.Delay(100000);
 
                 dbPlayer.SetCannotInteract(false);
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured() || dbPlayer.Player.Position.DistanceTo(bank.Position) > 2.0f) return false;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured() || dbPlayer.Player.Position.DistanceTo(bank.Position) > 2.0f) return false;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 
@@ -396,7 +396,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     await Task.Delay(60000);
 
                     dbPlayer.SetCannotInteract(false);
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                     dbPlayer.StopAnimation();
 
@@ -442,7 +442,7 @@ namespace VMP_CNR.Module.Items.Scripts
                             await Task.Delay(time);
 
                             dbPlayer.SetCannotInteract(false);
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.StopAnimation();
 
@@ -490,7 +490,7 @@ namespace VMP_CNR.Module.Items.Scripts
                             await Task.Delay(time);
 
                             dbPlayer.SetCannotInteract(false);
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.StopAnimation();
 
@@ -545,7 +545,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                     await Task.Delay(time);
 
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured())
+                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured())
                     {
                         MAZModule.Instance.MAZIsSomeoneOpening = false;
                         return true;
@@ -592,7 +592,7 @@ namespace VMP_CNR.Module.Items.Scripts
                             await Task.Delay(time);
 
                             dbPlayer.SetCannotInteract(false);
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.StopAnimation();
 

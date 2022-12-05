@@ -109,7 +109,7 @@ namespace VMP_CNR.Module.Players.Windows
                             }
                         }
 
-                        dbPlayer.Firstspawn = true;
+                        dbPlayer.IsFirstSpawn = true;
                         // Character Sync
                         NAPI.Task.Run(() =>
                         {

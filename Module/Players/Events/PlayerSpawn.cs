@@ -25,6 +25,8 @@ using MySql.Data.MySqlClient;
 using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Business;
 using VMP_CNR.Module.Voice;
+using VMP_CNR.Module.Chat;
+using static VMP_CNR.Module.Chat.Chats;
 
 namespace VMP_CNR.Module.Players.Events
 {
@@ -102,7 +104,7 @@ namespace VMP_CNR.Module.Players.Events
             {
                 await Task.Delay(3000);
                 if (dbPlayer == null || !dbPlayer.IsValid()) return;
-                if (dbPlayer.isInjured())
+                if (dbPlayer.IsInjured())
                 {
                     dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
                 }
@@ -113,7 +115,7 @@ namespace VMP_CNR.Module.Players.Events
                 }
             });
 
-            dbPlayer.Player.TriggerNewClient("updateInjured", dbPlayer.isInjured());
+            dbPlayer.Player.TriggerNewClient("updateInjured", dbPlayer.IsInjured());
 
             NAPI.Task.Run(() =>
             {
@@ -124,7 +126,7 @@ namespace VMP_CNR.Module.Players.Events
             player.TriggerNewClient("setPlayerHealthRechargeMultiplier");
 
             // Workaround for freeze fails
-            if (dbPlayer.Freezed == false)
+            if (dbPlayer.IsFreezed == false)
             {
                 player.TriggerNewClient("freezePlayer", false);
             }
@@ -188,7 +190,7 @@ namespace VMP_CNR.Module.Players.Events
                     {
                         await NAPI.Task.WaitForMainThread(2000);
                         dbPlayer.SetAcPlayerSpawnDeath();
-                        if (dbPlayer.Firstspawn)
+                        if (dbPlayer.IsFirstSpawn)
                         {
                             Modules.Instance.OnPlayerLoggedIn(dbPlayer);
                         }
@@ -196,7 +198,7 @@ namespace VMP_CNR.Module.Players.Events
                     else
                     {
                         dbPlayer.SetAcPlayerSpawnDeath();
-                        if (dbPlayer.Firstspawn)
+                        if (dbPlayer.IsFirstSpawn)
                         {
                             Modules.Instance.OnPlayerLoggedIn(dbPlayer);
                         }
@@ -217,11 +219,11 @@ namespace VMP_CNR.Module.Players.Events
                     // Default Data required for Spawn
                     bool FreezedNoAnim = false;
 
-                    if (dbPlayer.NeuEingereist())
+                    if (dbPlayer.IsNewbie())
                     {
-                        if (dbPlayer.isInjured()) dbPlayer.revive();
+                        if (dbPlayer.IsInjured()) dbPlayer.Revive();
 
-                        dbPlayer.jailtime[0] = 0;
+                        dbPlayer.JailTime[0] = 0;
                         dbPlayer.ApplyCharacter();
 
                         pos = new GTANetworkAPI.Vector3(-1144.26, -2792.27, 27.708);
@@ -244,7 +246,7 @@ namespace VMP_CNR.Module.Players.Events
                         FreezedNoAnim = true;
                     }
                     // Verletzt
-                    else if (dbPlayer.isInjured())
+                    else if (dbPlayer.IsInjured())
                     {
                         pos.X = dbPlayer.dead_x[0];
                         pos.Y = dbPlayer.dead_y[0];
@@ -291,10 +293,10 @@ namespace VMP_CNR.Module.Players.Events
                         dbPlayer.SetStunned(false);
                         FreezedNoAnim = true;
                     }
-                    else if (dbPlayer.jailtime[0] > 1 && !dbPlayer.Firstspawn)
+                    else if (dbPlayer.JailTime[0] > 1 && !dbPlayer.IsFirstSpawn)
                     {
                         //Jail Spawn
-                        if (dbPlayer.jailtime[0] > 1)
+                        if (dbPlayer.JailTime[0] > 1)
                         {
                             pos.X = 1691.28f;
                             pos.Y = 2565.91f;
@@ -305,10 +307,10 @@ namespace VMP_CNR.Module.Players.Events
                     }
                     else
                     {
-                        if (dbPlayer.spawnchange[0] == 1 && (dbPlayer.ownHouse[0] > 0 || dbPlayer.IsTenant())) //Haus
+                        if (dbPlayer.spawnchange[0] == 1 && (dbPlayer.OwnHouse[0] > 0 || dbPlayer.IsTenant())) //Haus
                         {
                             House iHouse;
-                            if ((iHouse = HouseModule.Instance.Get(dbPlayer.ownHouse[0])) != null)
+                            if ((iHouse = HouseModule.Instance.Get(dbPlayer.OwnHouse[0])) != null)
                             {
                                 pos = iHouse.Position;
                                 heading = iHouse.Heading;
@@ -339,13 +341,13 @@ namespace VMP_CNR.Module.Players.Events
                     }
 
                     // Setting Pos
-                    if (dbPlayer.Firstspawn)
+                    if (dbPlayer.IsFirstSpawn)
                     {
-                        if (dbPlayer.pos_x[0] != 0f && !dbPlayer.NeuEingereist())
+                        if (dbPlayer.pos_x[0] != 0f && !dbPlayer.IsNewbie())
                         {
                             dbPlayer.spawnProtection = DateTime.Now;
 
-                            pos = new GTANetworkAPI.Vector3(dbPlayer.pos_x[0], dbPlayer.pos_y[0], dbPlayer.pos_z[0] + 0.1f);
+                            pos = new Vector3(dbPlayer.pos_x[0], dbPlayer.pos_y[0], dbPlayer.pos_z[0] + 0.1f);
 
                             if (dbPlayer.HasData("cayoPerico"))
                             {                                
@@ -417,15 +419,15 @@ namespace VMP_CNR.Module.Players.Events
                             }
 
                             player.TriggerNewClient("SetOwnAnimData", JsonConvert.SerializeObject(new AnimationSyncItem(dbPlayer)));
-                            player.TriggerNewClient("onPlayerLoaded", firstName, lastName, dbPlayer.Id, dbPlayer.rp[0],
-                                dbPlayer.GetActiveBusiness()?.Id ?? 0, dbPlayer.grade[0], dbPlayer.money[0], 0,
-                                dbPlayer.ownHouse[0], dbPlayer.TeamId, dbPlayer.TeamRank, dbPlayer.Level, dbPlayer.isInjured(), dbPlayer.IsInDuty(),
+                            player.TriggerNewClient("onPlayerLoaded", firstName, lastName, dbPlayer.Id, dbPlayer.RP[0],
+                                dbPlayer.GetActiveBusiness()?.Id ?? 0, dbPlayer.grade[0], dbPlayer.Money[0], 0,
+                                dbPlayer.OwnHouse[0], dbPlayer.TeamId, dbPlayer.TeamRank, dbPlayer.Level, dbPlayer.IsInjured(), dbPlayer.IsInDuty(),
                                 dbPlayer.IsTied, dbPlayer.IsCuffed, dbPlayer.VoiceHash, dbPlayer.funkStatus, dbPlayer.handy[0], dbPlayer.job[0],
-                                dbPlayer.jobskill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)adminlevel.Supporter ? true : false,
-                                Configurations.Configuration.Instance.WeaponDamageMultipier, Configurations.Configuration.Instance.PlayerSync,
-                                Configurations.Configuration.Instance.VehicleSync, dbPlayer.blackmoney[0], dbPlayer.ringtone.Id, insurance, dbPlayer.zwd[0],
-                                Configurations.Configuration.Instance.MeleeDamageMultipier,
-                                Configurations.Configuration.Instance.DamageLog
+                                dbPlayer.JobSkill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)AdminLevelTypes.Supporter,
+                                Configuration.Instance.WeaponDamageMultipier, Configuration.Instance.PlayerSync,
+                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.ringtone.Id, insurance, dbPlayer.zwd[0],
+                                Configuration.Instance.MeleeDamageMultipier,
+                                Configuration.Instance.DamageLog
                                 );
                         }
                         else dbPlayer.Kick();
@@ -451,16 +453,14 @@ namespace VMP_CNR.Module.Players.Events
                         dbPlayer.SetHealth(100);
                     }
 
-                    if (dbPlayer.jailtime[0] > 0)
-                    {
-                        dbPlayer.ApplyCharacter();
-                    }
+                    if (dbPlayer.JailTime[0] > 0) dbPlayer.ApplyCharacter();
+                    
 
                     InitPlayerSpawnData(player);
 
                     dbPlayer.LoadPlayerWeapons();
 
-                    if (!dbPlayer.Firstspawn && dbPlayer.Paintball == 1)
+                    if (!dbPlayer.IsFirstSpawn && dbPlayer.Paintball == 1)
                     {
                         PaintballModule.Instance.Spawn(dbPlayer, false, false);
                         dbPlayer.StopAnimation();
@@ -498,15 +498,15 @@ namespace VMP_CNR.Module.Players.Events
                             player.TriggerNewClient("freezePlayer", false);
                         }
 
-                        if (dbPlayer.Firstspawn)
+                        if (dbPlayer.IsFirstSpawn)
                         {
                             NAPI.Task.Run(async () =>
                             {
-                                if (dbPlayer.NeuEingereist())
+                                if (dbPlayer.IsNewbie())
                                 {
-                                    if (dbPlayer.isInjured()) dbPlayer.revive();
+                                    if (dbPlayer.IsInjured()) dbPlayer.Revive();
 
-                                    dbPlayer.jailtime[0] = 0;
+                                    dbPlayer.JailTime[0] = 0;
                                     dbPlayer.ApplyCharacter(true);
 
                                     await NAPI.Task.WaitForMainThread(100);
@@ -517,20 +517,21 @@ namespace VMP_CNR.Module.Players.Events
                                 {
                                     dbPlayer.Player.TriggerNewClient("moveSkyCamera", dbPlayer.Player, "up", 1, false);
                                     await NAPI.Task.WaitForMainThread(4000);
+
                                     if (dbPlayer == null || !dbPlayer.IsValid()) return;
                                     dbPlayer.Player.TriggerNewClient("moveSkyCamera", dbPlayer.Player, "down", 1, false);
 
                                     dbPlayer.ApplyCharacter(true);
                                     dbPlayer.ApplyPlayerHealth();
 
-                                    dbPlayer.Firstspawn = false;
+                                    dbPlayer.IsFirstSpawn = false;
 
-                                    if(Configuration.Instance.DevMode) ComponentManager.Get<ConfirmationWindow>().Show()(dbPlayer, new ConfirmationObject($"ACHTUNG TESTSERVER", $"Du befindest dich auf dem Testserver von GVMP.de! Alle Daten werden NICHT auf den Liveserver übernommen, Fortschritte o.ä. gehen verloren. Hier gilt dennoch das Regelwerk von GVMP, sanktionen werden auf den Liveserver übertragen!", "nothing"));
+                                    if(Configuration.Instance.DevMode) await Chats.SendGlobalMessage($"{dbPlayer.GetName()} hat den Test-Server betreten.", COLOR.RED, ICON.DEV);
                                 }
                             });
                         }
 
-                        if (dbPlayer.isInjured())
+                        if (dbPlayer.IsInjured())
                         {
                             dbPlayer.ApplyDeathEffects();
                         }
@@ -583,7 +584,7 @@ namespace VMP_CNR.Module.Players.Events
                 }
                 catch (Exception e)
                 {
-                    Logging.Logger.Crash(e);
+                    Logger.Crash(e);
                 }
             });
         }

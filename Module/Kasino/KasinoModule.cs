@@ -77,7 +77,7 @@ namespace VMP_CNR.Module.Kasino
             }
             else
             {
-                if(dbPlayer.money[0] < kasinoDevice.MinPrice*5)
+                if(dbPlayer.Money[0] < kasinoDevice.MinPrice*5)
                 {
                     dbPlayer.SendNewNotification($"Sie benötigen mindestens ${kasinoDevice.MinPrice * 5} um hier zu spielen!");
                 }

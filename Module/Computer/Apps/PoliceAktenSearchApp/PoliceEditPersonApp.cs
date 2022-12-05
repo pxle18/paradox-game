@@ -147,9 +147,9 @@ namespace VMP_CNR.Module.Computer.Apps.PoliceAktenSearchApp
                     note = "Sicherheitsstufe " + foundPlayer.GovLevel;
                 }
 
-                if (foundPlayer.ownHouse[0] > 0)
+                if (foundPlayer.OwnHouse[0] > 0)
                 {
-                    foundPlayer.CustomData.Address = "Haus " + foundPlayer.ownHouse[0];
+                    foundPlayer.CustomData.Address = "Haus " + foundPlayer.OwnHouse[0];
                 }
                 else if (foundPlayer.IsTenant())
                 {

@@ -61,7 +61,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                     dbPlayer.SetCannotInteract(false);
 
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
 
                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                     door.Break();
@@ -102,7 +102,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await NAPI.Task.WaitForMainThread(60000);
 
                 dbPlayer.ResetData("userCannotInterrupt");
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 
@@ -158,7 +158,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await NAPI.Task.WaitForMainThread(240000);
 
                 dbPlayer.ResetData("userCannotInterrupt");
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 

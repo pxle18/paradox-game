@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Items.Scripts
                         await Task.Delay(20000);
                         dbPlayer.ResetData("userCannotInterrupt");
 
-                        if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                        if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
 
                         dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 
@@ -99,7 +99,7 @@ namespace VMP_CNR.Module.Items.Scripts
                             await Task.Delay(time);
 
                             dbPlayer.ResetData("userCannotInterrupt");
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.StopAnimation();
 
@@ -170,7 +170,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                     await Task.Delay(45000);
 
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured())
+                    if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured())
                     {
                         return true;
                     }

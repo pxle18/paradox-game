@@ -25,7 +25,7 @@ namespace VMP_CNR.Module.UHaft
 
             // Check Jail and 
 
-            if(findPlayer.UHaftTime > 0 || findPlayer.jailtime[0] > 0)
+            if(findPlayer.UHaftTime > 0 || findPlayer.JailTime[0] > 0)
             {
                 dbPlayer.SendNewNotification("Spieler bereits in Untersuchungshaft oder im Gefaengnis!");
                 return;

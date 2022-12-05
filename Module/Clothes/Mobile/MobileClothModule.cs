@@ -35,7 +35,7 @@ namespace VMP_CNR.Module.Clothes.Mobile
                 Cloth cloth = ClothModule.Instance[clothId];
                 if (cloth == null) return;
 
-                if (!dbPlayer.Freezed && dbPlayer.CanInteract() && dbPlayer.RageExtension.IsInVehicle == false)
+                if (!dbPlayer.IsFreezed && dbPlayer.CanInteract() && dbPlayer.RageExtension.IsInVehicle == false)
                 {
                     dbPlayer.PlayAnimation((int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl | AnimationFlags.OnlyAnimateUpperBody), "missfbi4", "takeoff_mask");
                 }
@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.Clothes.Mobile
                 }
 
                 // remove anim if still nothing occured
-                if (!dbPlayer.Freezed && dbPlayer.CanInteract() && dbPlayer.RageExtension.IsInVehicle == false)
+                if (!dbPlayer.IsFreezed && dbPlayer.CanInteract() && dbPlayer.RageExtension.IsInVehicle == false)
                     dbPlayer.StopAnimation();
             }
             catch(Exception e)

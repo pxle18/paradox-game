@@ -208,13 +208,13 @@ namespace VMP_CNR.Module.Staatsgefaengnis
                                 int haftzeitminderung = amount;
                                 int fbhaftzeitminderung = 0;
 
-                                if (dbPlayer.jailtime[0] > 5)
+                                if (dbPlayer.JailTime[0] > 5)
                                 {
-                                    if(dbPlayer.jailtime[0]- haftzeitminderung < 5)
+                                    if(dbPlayer.JailTime[0]- haftzeitminderung < 5)
                                     {
-                                        fbhaftzeitminderung = dbPlayer.jailtime[0]-5;
+                                        fbhaftzeitminderung = dbPlayer.JailTime[0]-5;
 
-                                        dbPlayer.jailtime[0] = 5;
+                                        dbPlayer.JailTime[0] = 5;
                                         dbPlayer.jailtimeReducing[0] = 0;
                                     }
                                     else
@@ -222,14 +222,14 @@ namespace VMP_CNR.Module.Staatsgefaengnis
                                         if (dbPlayer.jailtimeReducing[0] > haftzeitminderung)
                                         {
                                             fbhaftzeitminderung = haftzeitminderung;
-                                            dbPlayer.jailtime[0] -= haftzeitminderung;
+                                            dbPlayer.JailTime[0] -= haftzeitminderung;
                                             dbPlayer.jailtimeReducing[0] -= haftzeitminderung;
                                         }
                                         else
                                         {
                                             fbhaftzeitminderung = dbPlayer.jailtimeReducing[0];
 
-                                            dbPlayer.jailtime[0] -= dbPlayer.jailtimeReducing[0];
+                                            dbPlayer.JailTime[0] -= dbPlayer.jailtimeReducing[0];
                                             dbPlayer.jailtimeReducing[0] -= 0;
                                         }
                                     }

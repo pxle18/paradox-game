@@ -18,9 +18,9 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp
             try
             {
                 List<Tenant> tenants = new List<Tenant>();
-                if (dbPlayer.ownHouse[0] == 0) return tenants;
+                if (dbPlayer.OwnHouse[0] == 0) return tenants;
 
-                foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.ownHouse[0]))
+                foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0]))
                 {
                     if (houseRent == null || houseRent.PlayerId == 0 || houseRent.SlotId == 0) continue;
                     tenants.Add(new Tenant()

@@ -586,8 +586,8 @@ namespace VMP_CNR.Module.Players
         {
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.CanAccessMethod()) return;
-            if (dbPlayer.jailtime[0] <= 0) return;
-            dbPlayer.SendNewNotification("Sie befinden sich noch fuer " + (dbPlayer.jailtime[0]) +
+            if (dbPlayer.JailTime[0] <= 0) return;
+            dbPlayer.SendNewNotification("Sie befinden sich noch fuer " + (dbPlayer.JailTime[0]) +
                                       " Minuten im Staatsgefaengis!");
         }
 
@@ -625,7 +625,7 @@ namespace VMP_CNR.Module.Players
                 }
             }
             List<ClientContainerObject> containerList = new List<ClientContainerObject>();
-            containerList.Add(dbPlayer.Container.ConvertForClient(1, "", dbPlayer.money[0]));
+            containerList.Add(dbPlayer.Container.ConvertForClient(1, "", dbPlayer.Money[0]));
             
 
             // Find Now The Inventory
@@ -748,17 +748,17 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(1846.450, 2585.875, 45.672)) < 5.0f)
                 {
-                    findPlayer.jailtime[0] += plusTime;
+                    findPlayer.JailTime[0] += plusTime;
 
-                    if (findPlayer.jailtime[0] > 120)
+                    if (findPlayer.JailTime[0] > 120)
                     {
-                        findPlayer.jailtime[0] = 120;
+                        findPlayer.JailTime[0] = 120;
                     }
 
                     dbPlayer.SendNewNotification("Sie haben die Gefaengniszeit von Spieler: " +
-                                                findPlayer.GetName() + " auf: " + findPlayer.jailtime[0] + " gesetzt.");
+                                                findPlayer.GetName() + " auf: " + findPlayer.JailTime[0] + " gesetzt.");
                     findPlayer.SendNewNotification("Beamter: " + dbPlayer.GetName() +
-                                                " hat deine Gefaengniszeit auf: " + findPlayer.jailtime[0] + " gesetzt.");
+                                                " hat deine Gefaengniszeit auf: " + findPlayer.JailTime[0] + " gesetzt.");
                 }
             }));
         }
@@ -1161,7 +1161,7 @@ namespace VMP_CNR.Module.Players
                 if (CrimeModule.Instance.CalcJailTime(xPlayer.Crimes) > 0)
                 {
                     int jailtime = CrimeModule.Instance.CalcJailTime(xPlayer.Crimes);
-                    if (xPlayer.jailtime[0] > 0)
+                    if (xPlayer.JailTime[0] > 0)
                     {
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_show_wanteds,
                        "[INHAFTIERT]" + jailtime + "M - " + xPlayer.GetName(), "");
@@ -1219,7 +1219,7 @@ namespace VMP_CNR.Module.Players
             var findPlayer = Players.Instance.FindPlayer(name);
             if (findPlayer == null) return;
 
-            dbPlayer.SendNewNotification(findPlayer.GetName() + " Wanteds:" + findPlayer.wanteds[0]);
+            dbPlayer.SendNewNotification(findPlayer.GetName() + " Wanteds:" + findPlayer.Wanteds[0]);
         }
         
         [CommandPermission]
@@ -1229,14 +1229,14 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.hasPerso[0] == 0)
+            if (dbPlayer.HasPerso[0] == 0)
             {
                 dbPlayer.SendNewNotification(
                     "Um ein Haus zu kaufen, benoetigen Sie einen Personalausweis!");
                 return;
             }
             
-            if (dbPlayer.ownHouse[0] != 0)
+            if (dbPlayer.OwnHouse[0] != 0)
             {
                 dbPlayer.SendNewNotification("Sie besitzten bereits ein Haus!");
                 return;
@@ -1266,7 +1266,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SendNewNotification("Sie haben diese Immobilie fuer " + price + "$ erworben.", title: "", notificationType: PlayerNotification.NotificationType.SUCCESS);
                 house.OwnerName = dbPlayer.GetName();
                 house.OwnerId = dbPlayer.Id;
-                dbPlayer.ownHouse[0] = house.Id;
+                dbPlayer.OwnHouse[0] = house.Id;
                 house.SaveOwner();
                 dbPlayer.Save();
             }
@@ -1700,7 +1700,7 @@ namespace VMP_CNR.Module.Players
 
             if (xJob.Legal)
             {
-                if (dbPlayer.hasPerso[0] == 0)
+                if (dbPlayer.HasPerso[0] == 0)
                 {
                     dbPlayer.SendNewNotification(
                         "Fuer legale Berufe benoetigen Sie einen Personalausweis.", title: "", notificationType: PlayerNotification.NotificationType.ERROR);
@@ -1860,7 +1860,7 @@ namespace VMP_CNR.Module.Players
         public void ooc(Player player, string oocText = " ")
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.hasPerso[0] == 0 || !dbPlayer.CanAccessMethod()) return;
+            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.HasPerso[0] == 0 || !dbPlayer.CanAccessMethod()) return;
 
             if (string.IsNullOrWhiteSpace(oocText))
             {
@@ -1915,7 +1915,7 @@ namespace VMP_CNR.Module.Players
             if (!dbPlayer.CanAccessMethod()) return;
 
             House iHouse;
-            if ((iHouse = HouseModule.Instance[dbPlayer.ownHouse[0]]) == null) return;
+            if ((iHouse = HouseModule.Instance[dbPlayer.OwnHouse[0]]) == null) return;
             if ((!(dbPlayer.Player.Position.DistanceTo(iHouse.Position) <= 5.0f)) &&
                 (!dbPlayer.HasData("tempInt") || Main.CToInt(dbPlayer.GetData("tempInt")) <= 0)) return;
             DialogMigrator.CreateMenu(dbPlayer.Player, Dialogs.menu_shop_interior, "Innenausstattung", "");
@@ -1966,7 +1966,7 @@ namespace VMP_CNR.Module.Players
 
             if (string.Equals(location.ToLower(), "haus") || string.Equals(location.ToLower(), "house"))
             {
-                if (dbPlayer.ownHouse[0] > 0 || dbPlayer.IsTenant())
+                if (dbPlayer.OwnHouse[0] > 0 || dbPlayer.IsTenant())
                 {
                     dbPlayer.SendNewNotification(
                         "Sie spawnen nun an Ihrem Haus!");
@@ -2066,7 +2066,7 @@ namespace VMP_CNR.Module.Players
 
                 if (!findPlayer.IsCuffed && !findPlayer.IsTied)
                 {
-                    if (!findPlayer.isAlive())
+                    if (!findPlayer.IsAlive())
                     {
                         dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                         return;
@@ -3395,21 +3395,21 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    if (price > 50000 && dbPlayer.jobskill[0] < 1000)
+                    if (price > 50000 && dbPlayer.JobSkill[0] < 1000)
                     {
                         dbPlayer.SendNewNotification(
                             "Sie benötigen mindestens 1000 Skillpunkte bei einem Wert ueber $50.000");
                         return;
                     }
 
-                    if (price > 100000 && dbPlayer.jobskill[0] < 2500)
+                    if (price > 100000 && dbPlayer.JobSkill[0] < 2500)
                     {
                         dbPlayer.SendNewNotification(
                             "Sie benötigen mindestens 2500 Skillpunkte bei einem Wert ueber $100.000");
                         return;
                     }
 
-                    if (price > 2000000 && dbPlayer.jobskill[0] < 5000)
+                    if (price > 2000000 && dbPlayer.JobSkill[0] < 5000)
                     {
                         dbPlayer.SendNewNotification(
                             "Sie benötigen mindestens 5000 Skillpunkte bei einem Wert ueber $2.000.000");
@@ -3588,7 +3588,7 @@ namespace VMP_CNR.Module.Players
                     return;
                 }
 
-                if (dbPlayer.jobskill[0] < 5000)
+                if (dbPlayer.JobSkill[0] < 5000)
                 {
                     dbPlayer.SendNewNotification(
                         "Sie benötigen mindestens 5000 Skillpunkte");
@@ -3773,9 +3773,9 @@ namespace VMP_CNR.Module.Players
                     }
 
                     // Haus switch Process
-                    owner.ownHouse[0] = 0;
+                    owner.OwnHouse[0] = 0;
                     if(owner.IsTenant()) owner.RemoveTenant();
-                    customer.ownHouse[0] = iHouse.Id;
+                    customer.OwnHouse[0] = iHouse.Id;
 
                     HouseKeyHandler.Instance.DeleteAllHouseKeys(iHouse);
                     iHouse.OwnerId = customer.Id;
@@ -4021,7 +4021,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.IsACop() && dbPlayer.RankId == (int) adminlevel.Player) return;
+            if (dbPlayer.IsACop() && dbPlayer.RankId == (int) AdminLevelTypes.Player) return;
             if (string.IsNullOrWhiteSpace(weedCommand))
             {
                 dbPlayer.SendNewNotification(
@@ -4379,7 +4379,7 @@ namespace VMP_CNR.Module.Players
             var findPlayer = Players.Instance.FindPlayer(command[0]);
             if (findPlayer == null) return;
 
-            if (!dbPlayer.IsCuffed && !dbPlayer.IsTied && !dbPlayer.isInjured())
+            if (!dbPlayer.IsCuffed && !dbPlayer.IsTied && !dbPlayer.IsInjured())
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -4409,7 +4409,7 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.TeamId == (int)teams.TEAM_ARMY)
                 {
-                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)adminlevel.Manager) return;
+                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Manager) return;
                     var count = 0;
 
                     foreach (var currPlayer in TeamModule.Instance.Get((int)teams.TEAM_ARMY).GetTeamMembers())

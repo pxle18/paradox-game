@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Einreiseamt
             if (!dbPlayer.IsEinreiseAmt() || !dbPlayer.HasData("einreiseamtp")) return null;
 
             DbPlayer foundPlayer = Players.Players.Instance.FindPlayer(dbPlayer.GetData("einreiseamtp"));
-            if (foundPlayer == null || !foundPlayer.IsValid() || !foundPlayer.NeuEingereist()) return null;
+            if (foundPlayer == null || !foundPlayer.IsValid() || !foundPlayer.IsNewbie()) return null;
 
 
             var menu = new Menu.Menu(Menu, "Einreise " + foundPlayer.GetName());
@@ -51,7 +51,7 @@ namespace VMP_CNR.Module.Einreiseamt
                 if (!dbPlayer.IsEinreiseAmt() || !dbPlayer.HasData("einreiseamtp")) return false;
 
                 DbPlayer foundPlayer = Players.Players.Instance.FindPlayer(dbPlayer.GetData("einreiseamtp"));
-                if (foundPlayer == null || !foundPlayer.IsValid() || !foundPlayer.NeuEingereist()) return false;
+                if (foundPlayer == null || !foundPlayer.IsValid() || !foundPlayer.IsNewbie()) return false;
 
                 switch(index)
                 {
@@ -79,7 +79,7 @@ namespace VMP_CNR.Module.Einreiseamt
                         return true;
 
                     case 3: // Annehmen
-                        foundPlayer.hasPerso[0] = 1;
+                        foundPlayer.HasPerso[0] = 1;
                         foundPlayer.Save();
 
                         foundPlayer.SendNewNotification("Ihnen wurde die Einreise gestattet! Viel Spaß auf GVMP!");

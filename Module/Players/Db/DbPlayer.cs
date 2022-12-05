@@ -211,21 +211,21 @@ namespace VMP_CNR.Module.Players.Db
         public AccountStatus AccountStatus { get; set; }
         public int PassAttempts { get; set; }
         public uint TeamId { get; private set; }
-        public int[] money { get; set; }
-        public int[] bank_money { get; set; }
+        public int[] Money { get; set; }
+        public int[] BankMoney { get; set; }
 
-        public int[] blackmoney { get; set; }
-        public int[] blackmoneybank { get; set; }
+        public int[] BlackMoney { get; set; }
+        public int[] BlackMoneyBank { get; set; }
         public uint TeamRank { get; set; }
-        public int[] payday { set; get; }
-        public bool Firstspawn { get; set; }
+        public int[] PayDay { set; get; }
+        public bool IsFirstSpawn { get; set; }
         public bool IsSwimmingOrDivingDoNotUse { get; set; }
-        public int[] rp { get; set; }
-        public uint[] ownHouse { get; set; }
-        public int[] wanteds { get; set; }
+        public int[] RP { get; set; }
+        public uint[] OwnHouse { get; set; }
+        public int[] Wanteds { get; set; }
         public uint WatchMenu { get; set; }
-        public bool Freezed { get; set; }
-        public uint watchDialog { get; set; }
+        public bool IsFreezed { get; set; }
+        public uint WatchDialog { get; set; }
         public int[] Lic_Car { get; set; }
         public int[] Lic_LKW { get; set; }
         public int[] Lic_Bike { get; set; }
@@ -238,9 +238,9 @@ namespace VMP_CNR.Module.Players.Db
         public int marryLic { get; set; }
         public int[] spawnchange { get; set; }
         public int[] job { get; set; }
-        public int[] jobskill { get; set; }
+        public int[] JobSkill { get; set; }
         public string[] job_skills { get; set; }
-        public int[] jailtime { get; set; }
+        public int[] JailTime { get; set; }
         public int[] jailtimeReducing { get; set; }
         public int[] uni_points { get; set; }
         public int[] uni_economy { get; set; }
@@ -251,7 +251,7 @@ namespace VMP_CNR.Module.Players.Db
         public float[] dead_x { get; set; }
         public float[] dead_z { get; set; }
         public float[] dead_y { get; set; }
-        public int[] hasPerso { get; set; }
+        public int[] HasPerso { get; set; }
         public bool fakePerso { get; set; }
         public string fakeName { get; set; }
         public string fakeSurname { get; set; }
@@ -262,7 +262,7 @@ namespace VMP_CNR.Module.Players.Db
         public string[] hasPed { get; set; }
         public int[] Lic_FirstAID { get; set; }
         public int[] timeban { get; set; }
-        public int tmpPlayerId { get; set; }
+        public int TemporaryPlayerId { get; set; }
         public int[] warns { get; set; }
         public int[] fgehalt { get; set; }
         public int[] paycheck { get; set; }
@@ -321,8 +321,8 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsNSADuty { get; set; }
 
-        public GTANetworkAPI.Object adminObject { get; set; }
-        public double adminObjectSpeed { get; set; }
+        public GTANetworkAPI.Object AdminObject { get; set; }
+        public double AdminObjectSpeed { get; set; }
 
         public string saveQuery { get; set; }
 
@@ -882,7 +882,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsHomeless()
         {
-            return !this.IsTenant() && ownHouse[0] == 0;
+            return !this.IsTenant() && OwnHouse[0] == 0;
         }
         public void UpdateWimmingOrDiving()
         {
@@ -989,8 +989,8 @@ namespace VMP_CNR.Module.Players.Db
 
         public void SaveBlackMoneyBank()
         {
-            string query = $"UPDATE `player` SET blackmoneybank = '{blackmoneybank[0]}' WHERE id = '{Id}';";
-            blackmoneybank[1] = blackmoneybank[0];
+            string query = $"UPDATE `player` SET blackmoneybank = '{BlackMoneyBank[0]}' WHERE id = '{Id}';";
+            BlackMoneyBank[1] = BlackMoneyBank[0];
             MySQLHandler.ExecuteAsync(query);
         }
 
@@ -1003,7 +1003,7 @@ namespace VMP_CNR.Module.Players.Db
         public void SaveInsurance()
         {
             string query = $"UPDATE `player` SET health_insurance = '{InsuranceType}' WHERE id = '{Id}';";
-            blackmoneybank[1] = blackmoneybank[0];
+            BlackMoneyBank[1] = BlackMoneyBank[0];
             MySQLHandler.ExecuteAsync(query);
         }
         public void SavePaintballState()

@@ -33,7 +33,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             await NAPI.Task.WaitForMainThread(14000);
 
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return false;
 
             dbPlayer.SetCannotInteract(false);
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
@@ -87,7 +87,7 @@ namespace VMP_CNR.Module.Items.Scripts
             await NAPI.Task.WaitForMainThread(5000);
             dbPlayer.ResetData("userCannotInterrupt");
 
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return false;
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 
@@ -129,7 +129,7 @@ namespace VMP_CNR.Module.Items.Scripts
             await NAPI.Task.WaitForMainThread(5000);
             dbPlayer.ResetData("userCannotInterrupt");
 
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return false;
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 
@@ -156,7 +156,7 @@ namespace VMP_CNR.Module.Items.Scripts
             await NAPI.Task.WaitForMainThread(1000);
             dbPlayer.ResetData("userCannotInterrupt");
 
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return false;
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 

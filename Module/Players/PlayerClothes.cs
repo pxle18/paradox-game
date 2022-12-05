@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SetClothes(2, dbPlayer.Customization.Hair.Hair, 0);
             }
             
-            if (dbPlayer.jailtime[0] > 0)
+            if (dbPlayer.JailTime[0] > 0)
             {
                 dbPlayer.SetOutfit(OutfitTypes.Jail);
             }

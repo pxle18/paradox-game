@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                         if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
                         {
-                            if (dbPlayer.isInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
+                            if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
                             sxVehicle.WheelClamp = 0;
                             String updateString = $"UPDATE {(sxVehicle.IsTeamVehicle() ? "fvehicles" : "vehicles")} SET WheelClamp = '0' WHERE id = '{sxVehicle.databaseId}'";
                             MySQLHandler.ExecuteAsync(updateString);

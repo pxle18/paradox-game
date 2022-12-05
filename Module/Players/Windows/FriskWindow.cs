@@ -142,7 +142,7 @@ namespace VMP_CNR.Module.Players.Windows
             ItemsModuleEvents.resetDisabledInventoryFlag(dbPlayer);
 
             dbPlayer.SetData("friskInvUserID", editDbPlayer.Id);
-            editDbPlayer.Container.ShowFriskInventory(dbPlayer, editDbPlayer, "Spieler", (editDbPlayer.money[0] + editDbPlayer.blackmoney[0]));
+            editDbPlayer.Container.ShowFriskInventory(dbPlayer, editDbPlayer, "Spieler", (editDbPlayer.Money[0] + editDbPlayer.BlackMoney[0]));
 
             string clothString = "";
 
@@ -157,13 +157,13 @@ namespace VMP_CNR.Module.Players.Windows
 
             dbPlayer.SendNewNotification($"Person trägt folgende Kleidung mit sich: {clothString}");
 
-            if (editDbPlayer.blackmoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (editDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
             {
                 // Ab Rang 8 100%, Ab Rang 2 mit Chance 80%
                 bool Chance = (new Random().Next(1, 100) > 20);
                 if ((dbPlayer.TeamRank >= 1 && Chance) || dbPlayer.TeamRank >= 8)
                 {
-                    dbPlayer.SendNewNotification($"Sie konnten von ${(editDbPlayer.money[0] + editDbPlayer.blackmoney[0])} insgesamt ${editDbPlayer.blackmoney[0]} Schwarzgeld feststellen! (/takebm zum entfernen)");
+                    dbPlayer.SendNewNotification($"Sie konnten von ${(editDbPlayer.Money[0] + editDbPlayer.BlackMoney[0])} insgesamt ${editDbPlayer.BlackMoney[0]} Schwarzgeld feststellen! (/takebm zum entfernen)");
                 }
             }
         }

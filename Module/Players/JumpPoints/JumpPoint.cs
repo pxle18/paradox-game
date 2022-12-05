@@ -121,7 +121,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
 
             if (Id == 216 || Id == 215)
             {
-                if (player.hasPerso[0] == 0) return false; // Only Use with perso
+                if (player.HasPerso[0] == 0) return false; // Only Use with perso
             }
 
             if (!InsideVehicle || !player.RageExtension.IsInVehicle)
@@ -271,7 +271,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
 
         public bool CanOpen(DbPlayer dbPlayer)
         {
-            if (Houses.Contains(HouseModule.Instance.Get(dbPlayer.ownHouse[0]).Id)) return true;
+            if (Houses.Contains(HouseModule.Instance.Get(dbPlayer.OwnHouse[0]).Id)) return true;
             foreach (uint houseId in Houses)
             {
                 if (dbPlayer.IsTenant() && dbPlayer.GetTenant().HouseId == houseId) return true;

@@ -227,9 +227,9 @@ namespace VMP_CNR.Module.PointsOfInterest
 
 
             var l_HouseStoragesList = new List<LocationObject>();
-            if (dbPlayer.ownHouse[0] > 0 || dbPlayer.IsTenant())
+            if (dbPlayer.OwnHouse[0] > 0 || dbPlayer.IsTenant())
             {
-                House iHouse = HouseModule.Instance.Get(dbPlayer.ownHouse[0]);
+                House iHouse = HouseModule.Instance.Get(dbPlayer.OwnHouse[0]);
                 if (iHouse != null)
                 {
                     var l_LocationObject = new LocationObject()

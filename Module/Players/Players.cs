@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Players
 
         public List<DbPlayer> GetJailedPlayers()
         {
-            return players.Values.ToList().Where(p => p != null && p.IsValid() && p.jailtime[0] > 0).ToList();
+            return players.Values.ToList().Where(p => p != null && p.IsValid() && p.JailTime[0] > 0).ToList();
         }
         
         public void SendNotificationToAllUsers(string command, int duration = 5000)
@@ -98,7 +98,7 @@ namespace VMP_CNR.Module.Players
         {
             try
             {
-                return GetPlayersInRange(source.Player.Position, range).Where(pl => pl.Player.Position.DistanceTo(source.Player.Position) <= range && pl.Id != source.Id && pl.isInjured()).FirstOrDefault();
+                return GetPlayersInRange(source.Player.Position, range).Where(pl => pl.Player.Position.DistanceTo(source.Player.Position) <= range && pl.Id != source.Id && pl.IsInjured()).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -376,11 +376,14 @@ namespace VMP_CNR.Module.Players
 
         public async Task<DbPlayer> Load(MySqlDataReader reader, Player player)
         {
-            DbPlayer dbPlayer = new DbPlayer(reader);
-            dbPlayer.Player = player;
+            DbPlayer dbPlayer = new DbPlayer(reader)
+            {
+                Player = player,
 
 
-            dbPlayer.RemoteHashKey = HashThis.GetSha256Hash(VoiceListHandler.RandomString(64) + reader.GetString("Name"));
+                RemoteHashKey = HashThis.GetSha256Hash(VoiceListHandler.RandomString(64) + reader.GetString("Name"))
+            };
+
             dbPlayer.Player.TriggerNewClient("setRemoteHashKey", dbPlayer.RemoteHashKey);
             Logger.Debug("RemoteHashkey for " + dbPlayer.GetName() + ": " + dbPlayer.RemoteHashKey);
 
@@ -399,34 +402,34 @@ namespace VMP_CNR.Module.Players
 
             // Forumid
             dbPlayer.ForumId = reader.GetInt32("forumid");
-            dbPlayer.tmpPlayerId = GetFreeId();
+            dbPlayer.TemporaryPlayerId = GetFreeId();
 
             dbPlayer.AnimationScenario = new AnimationScenario();
             
-            dbPlayer.money = new int[2];
-            dbPlayer.money[1] = reader.GetInt32("Money");
-            dbPlayer.money[0] = reader.GetInt32("Money");
-            dbPlayer.bank_money = new int[2];
-            dbPlayer.bank_money[1] = reader.GetInt32("BankMoney");
-            dbPlayer.bank_money[0] = reader.GetInt32("BankMoney");
-            dbPlayer.blackmoney = new int[2];
-            dbPlayer.blackmoney[1] = reader.GetInt32("blackmoney");
-            dbPlayer.blackmoney[0] = reader.GetInt32("blackmoney");
-            dbPlayer.blackmoneybank = new int[2];
-            dbPlayer.blackmoneybank[1] = reader.GetInt32("blackmoneybank");
-            dbPlayer.blackmoneybank[0] = reader.GetInt32("blackmoneybank");
-            dbPlayer.payday = new int[2];
-            dbPlayer.payday[1] = reader.GetInt32("payday");
-            dbPlayer.payday[0] = reader.GetInt32("payday");
-            dbPlayer.rp = new int[2];
-            dbPlayer.rp[1] = reader.GetInt32("rp");
-            dbPlayer.rp[0] = reader.GetInt32("rp");
-            dbPlayer.ownHouse = new uint[2];
-            dbPlayer.ownHouse[1] = reader.GetUInt32("ownHouse");
-            dbPlayer.ownHouse[0] = reader.GetUInt32("ownHouse");
-            dbPlayer.wanteds = new int[2];
-            dbPlayer.wanteds[1] = reader.GetInt32("wanteds");
-            dbPlayer.wanteds[0] = reader.GetInt32("wanteds");
+            dbPlayer.Money = new int[2];
+            dbPlayer.Money[1] = reader.GetInt32("Money");
+            dbPlayer.Money[0] = reader.GetInt32("Money");
+            dbPlayer.BankMoney = new int[2];
+            dbPlayer.BankMoney[1] = reader.GetInt32("BankMoney");
+            dbPlayer.BankMoney[0] = reader.GetInt32("BankMoney");
+            dbPlayer.BlackMoney = new int[2];
+            dbPlayer.BlackMoney[1] = reader.GetInt32("blackmoney");
+            dbPlayer.BlackMoney[0] = reader.GetInt32("blackmoney");
+            dbPlayer.BlackMoneyBank = new int[2];
+            dbPlayer.BlackMoneyBank[1] = reader.GetInt32("blackmoneybank");
+            dbPlayer.BlackMoneyBank[0] = reader.GetInt32("blackmoneybank");
+            dbPlayer.PayDay = new int[2];
+            dbPlayer.PayDay[1] = reader.GetInt32("payday");
+            dbPlayer.PayDay[0] = reader.GetInt32("payday");
+            dbPlayer.RP = new int[2];
+            dbPlayer.RP[1] = reader.GetInt32("rp");
+            dbPlayer.RP[0] = reader.GetInt32("rp");
+            dbPlayer.OwnHouse = new uint[2];
+            dbPlayer.OwnHouse[1] = reader.GetUInt32("ownHouse");
+            dbPlayer.OwnHouse[0] = reader.GetUInt32("ownHouse");
+            dbPlayer.Wanteds = new int[2];
+            dbPlayer.Wanteds[1] = reader.GetInt32("wanteds");
+            dbPlayer.Wanteds[0] = reader.GetInt32("wanteds");
 
             //Licenses
             dbPlayer.Lic_Car = new int[2];
@@ -462,18 +465,18 @@ namespace VMP_CNR.Module.Players
             dbPlayer.job = new int[2];
             dbPlayer.job[1] = reader.GetInt32("job");
             dbPlayer.job[0] = reader.GetInt32("job");
-            dbPlayer.jobskill = new int[2];
-            dbPlayer.jobskill[1] = reader.GetInt32("jobskills");
-            dbPlayer.jobskill[0] = reader.GetInt32("jobskills");
-            dbPlayer.jailtime = new int[2];
-            dbPlayer.jailtime[1] = reader.GetInt32("jailtime");
-            dbPlayer.jailtime[0] = reader.GetInt32("jailtime");
+            dbPlayer.JobSkill = new int[2];
+            dbPlayer.JobSkill[1] = reader.GetInt32("jobskills");
+            dbPlayer.JobSkill[0] = reader.GetInt32("jobskills");
+            dbPlayer.JailTime = new int[2];
+            dbPlayer.JailTime[1] = reader.GetInt32("jailtime");
+            dbPlayer.JailTime[0] = reader.GetInt32("jailtime");
             dbPlayer.jailtimeReducing = new int[2];
             dbPlayer.jailtimeReducing[1] = reader.GetInt32("jailtime_reduce");
             dbPlayer.jailtimeReducing[0] = reader.GetInt32("jailtime_reduce");
-            dbPlayer.hasPerso = new int[2];
-            dbPlayer.hasPerso[1] = reader.GetInt32("Perso");
-            dbPlayer.hasPerso[0] = reader.GetInt32("Perso");
+            dbPlayer.HasPerso = new int[2];
+            dbPlayer.HasPerso[1] = reader.GetInt32("Perso");
+            dbPlayer.HasPerso[0] = reader.GetInt32("Perso");
             dbPlayer.fakePerso = false;
             dbPlayer.fakeName = "";
             dbPlayer.fakeSurname = "";
@@ -569,12 +572,15 @@ namespace VMP_CNR.Module.Players
             dbPlayer.Dimension[1] = reader.GetUInt32("dimension");
 
 
-            dbPlayer.MetaData = new MetaDataObject();
-            dbPlayer.MetaData.Position = new Vector3(dbPlayer.pos_x[0], dbPlayer.pos_y[0], dbPlayer.pos_z[0]);
-            dbPlayer.MetaData.Dimension = dbPlayer.Dimension[0];
-            dbPlayer.MetaData.Heading = 0f;
-            dbPlayer.MetaData.Armor = dbPlayer.Armor[0];
-            dbPlayer.MetaData.Health = dbPlayer.Hp;
+            dbPlayer.MetaData = new MetaDataObject
+            {
+                Position = new Vector3(dbPlayer.pos_x[0], dbPlayer.pos_y[0], dbPlayer.pos_z[0]),
+                Dimension = dbPlayer.Dimension[0],
+                Heading = 0f,
+                Armor = dbPlayer.Armor[0],
+                Health = dbPlayer.Hp
+            };
+
             dbPlayer.ApplyPlayerHealth();
 
             dbPlayer.CanSeeNames = false;
@@ -675,7 +681,7 @@ namespace VMP_CNR.Module.Players
         private int GetFreeId()
         {
             var freeId = 0;
-            while (players.Values.ToList().FirstOrDefault(player => player != null && player.IsValid() && player.tmpPlayerId == freeId) != null)
+            while (players.Values.ToList().FirstOrDefault(player => player != null && player.IsValid() && player.TemporaryPlayerId == freeId) != null)
             {
                 freeId++;
             }

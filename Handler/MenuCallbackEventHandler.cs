@@ -844,7 +844,7 @@ namespace VMP_CNR
                 }
                 else if (menuid == Dialogs.menu_adminObject)
                 {
-                    if (dbPlayer.adminObject == null)
+                    if (dbPlayer.AdminObject == null)
                     {
                         DialogMigrator.CloseUserDialog(player, Dialogs.menu_adminObject);
                         return;
@@ -975,7 +975,7 @@ namespace VMP_CNR
                         case 4:
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_main, true);
 
-                            if (dbPlayer.ownHouse[0] != iHouse.Id)
+                            if (dbPlayer.OwnHouse[0] != iHouse.Id)
                             {
                                 dbPlayer.SendNewNotification(
 
@@ -1028,7 +1028,7 @@ namespace VMP_CNR
                                 }
                                 else
                                 {
-                                    if (dbPlayer.ownHouse[0] != iHouse.Id)
+                                    if (dbPlayer.OwnHouse[0] != iHouse.Id)
                                     {
                                         dbPlayer.SendNewNotification(
                                             
@@ -1162,7 +1162,7 @@ namespace VMP_CNR
                                 }
                                 else
                                 {
-                                    if (dbPlayer.ownHouse[0] != iHouse.Id)
+                                    if (dbPlayer.OwnHouse[0] != iHouse.Id)
                                     {
                                         dbPlayer.SendNewNotification(
                                             
@@ -1210,7 +1210,7 @@ namespace VMP_CNR
                                 }
                                 else
                                 {
-                                    if (dbPlayer.ownHouse[0] != iHouse.Id)
+                                    if (dbPlayer.OwnHouse[0] != iHouse.Id)
                                     {
                                         dbPlayer.SendNewNotification(
                                             
@@ -1270,7 +1270,7 @@ namespace VMP_CNR
                                 }
                                 else
                                 {
-                                    if (dbPlayer.ownHouse[0] != iHouse.Id)
+                                    if (dbPlayer.OwnHouse[0] != iHouse.Id)
                                     {
                                         dbPlayer.SendNewNotification(
 
@@ -1710,7 +1710,7 @@ namespace VMP_CNR
                             if (garage != null)
                             {
                                 if (garage.HouseId > 0 &&
-                                    (dbPlayer.ownHouse[0] != garage.HouseId && !dbPlayer.HouseKeys.Contains(garage.HouseId) &&
+                                    (dbPlayer.OwnHouse[0] != garage.HouseId && !dbPlayer.HouseKeys.Contains(garage.HouseId) &&
                                     (!dbPlayer.IsTenant() || dbPlayer.GetTenant().HouseId != garage.HouseId))) return;
 
                                 // Fraktionsgarage
@@ -2697,7 +2697,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Car)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Car)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Car)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2736,7 +2736,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Lkw)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Lkw)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Lkw)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2775,7 +2775,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Bike)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Bike)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Bike)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2814,7 +2814,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Boot)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Boot)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Boot)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2853,7 +2853,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.PlaneA)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.PlaneA)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.PlaneA)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2892,7 +2892,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.PlaneB)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.PlaneB)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.PlaneB)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2931,7 +2931,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Gun)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Gun)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Gun)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -2970,7 +2970,7 @@ namespace VMP_CNR
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Transfer)
                             {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Transfer)
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Transfer)
                                 {
                                     dbPlayer.SendNewNotification(
                                         
@@ -3008,7 +3008,7 @@ namespace VMP_CNR
                         case 8: // Hunting
                             if (dbPlayer.Container.GetItemAmount(24) >=
                                 JobContent.Plagiat.Materials.Hunting) {
-                                if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Hunting) {
+                                if (dbPlayer.JobSkill[0] < JobContent.Plagiat.Requiredskill.Hunting) {
                                     dbPlayer.SendNewNotification(
 
                                         GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Hunting));
@@ -3716,7 +3716,7 @@ namespace VMP_CNR
 
                                 "Sie haben Ihren Job erfolgreich gekuendigt!");
                             dbPlayer.job[0] = 0;
-                            dbPlayer.jobskill[0] = 0;
+                            dbPlayer.JobSkill[0] = 0;
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_quitjob);
                             break;
                         default:
@@ -3759,11 +3759,11 @@ namespace VMP_CNR
                             dbPlayer.SendNewNotification(
                                  "Person " + xPlayer.GetName() + " | Level " +
                                 xPlayer.Level);
-                            if (xPlayer.wanteds[0] > 0)
+                            if (xPlayer.Wanteds[0] > 0)
                                 dbPlayer.SendNewNotification(
-                                     "Gesucht mit " + xPlayer.wanteds[0]);
+                                     "Gesucht mit " + xPlayer.Wanteds[0]);
                             dbPlayer.SendNewNotification(
-                                 "Wanteds " + xPlayer.wanteds[0]);
+                                 "Wanteds " + xPlayer.Wanteds[0]);
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             break;
                         case 1: // Car Lic
@@ -4111,7 +4111,7 @@ namespace VMP_CNR
                     switch (index)
                     {
                         case 0: //Schließen
-                            House xHouse = HouseModule.Instance[dbPlayer.ownHouse[0]];
+                            House xHouse = HouseModule.Instance[dbPlayer.OwnHouse[0]];
                             if (xHouse == null) return;
                             player.SetPosition(xHouse.Position);
                             dbPlayer.SetDimension(0);
@@ -4140,7 +4140,7 @@ namespace VMP_CNR
 
                                     dbPlayer.SendNewNotification(
                                          "Interior gekauft $" + price);
-                                    House mHouse = HouseModule.Instance[dbPlayer.ownHouse[0]];
+                                    House mHouse = HouseModule.Instance[dbPlayer.OwnHouse[0]];
 
                                     mHouse.Interior = interior;
                                     player.SetPosition(mHouse.Position);
@@ -4159,7 +4159,7 @@ namespace VMP_CNR
                         default:
                             int idx = 0;
                             House iHouse;
-                            if ((iHouse = HouseModule.Instance[dbPlayer.ownHouse[0]]) != null)
+                            if ((iHouse = HouseModule.Instance[dbPlayer.OwnHouse[0]]) != null)
                             {
                                 foreach (KeyValuePair<uint, Interior> kvp in InteriorModule.Instance.GetAll())
                                 {

@@ -43,7 +43,7 @@ namespace VMP_CNR.Module.Clothes.Character
                 price = 0;
             }
 
-            if (dbPlayer.NeuEingereist())
+            if (dbPlayer.IsNewbie())
             {
                 foreach (DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(p => p.IsEinreiseAmt()))
                 {

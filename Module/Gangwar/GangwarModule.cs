@@ -99,7 +99,7 @@ namespace VMP_CNR.Module.Gangwar
         public void Commandquitgw(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod() || dbPlayer.isInjured()||!dbPlayer.CanInteract()) return;
+            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured()||!dbPlayer.CanInteract()) return;
             if (dbPlayer.Player.Dimension != GangwarModule.Instance.DefaultDimension) return;
             if (dbPlayer.Team.IsNearSpawn(dbPlayer.Player.Position) || GangwarTownModule.Instance.IsTeamSpawn(dbPlayer.Player.Position))
             {
@@ -147,7 +147,7 @@ namespace VMP_CNR.Module.Gangwar
             foreach (DbPlayer dbPlayer in gangwarTown.Visitors.ToList())
             {
                 if (dbPlayer.TeamId != gangwarTown.AttackerTeam.Id) continue;
-                if (dbPlayer.isInjured()) continue;
+                if (dbPlayer.IsInjured()) continue;
 
                 if (dbPlayer.Player.Position.DistanceTo(gangwarTown.Flag_1) < 10.0f) attackersFlagOne++;
                 if (dbPlayer.Player.Position.DistanceTo(gangwarTown.Flag_2) < 10.0f) attackersFlagTwo++;
@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.Gangwar
             foreach (DbPlayer dbPlayer in gangwarTown.Visitors.ToList())
             {
                 if (dbPlayer.TeamId != gangwarTown.DefenderTeam.Id) continue;
-                if (dbPlayer.isInjured()) continue;
+                if (dbPlayer.IsInjured()) continue;
 
                 if (dbPlayer.Player.Position.DistanceTo(gangwarTown.Flag_1) < 10.0f) defendersFlagOne++;
                 if (dbPlayer.Player.Position.DistanceTo(gangwarTown.Flag_2) < 10.0f) defendersFlagTwo++;

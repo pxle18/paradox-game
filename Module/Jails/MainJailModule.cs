@@ -41,7 +41,7 @@ namespace VMP_CNR.Module.Jails
             {
                 if (kvp.Value != null && kvp.Value.IsValid())
                 {
-                    if(kvp.Value.jailtime[0] > 5)
+                    if(kvp.Value.JailTime[0] > 5)
                     {
                         if(kvp.Value.jailtimeReducing[0] > 0)
                         {
@@ -54,7 +54,7 @@ namespace VMP_CNR.Module.Jails
                             kvp.Value.SetData("sgtraining", actualdata);
 
 
-                            kvp.Value.jailtime[0]--;
+                            kvp.Value.JailTime[0]--;
                             kvp.Value.jailtimeReducing[0]--;
 
                             if (actualdata >= 5)
@@ -115,7 +115,7 @@ namespace VMP_CNR.Module.Jails
                     else dbPlayer.ResetData("sgtrainingLast");
                 }
 
-                if(dbPlayer.jailtime[0] < 5)
+                if(dbPlayer.JailTime[0] < 5)
                 {
                     dbPlayer.SendNewNotification("Du solltest dich auf deine Entlassung nun vorbereiten!");
                     return true;

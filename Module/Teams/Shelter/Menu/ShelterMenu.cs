@@ -112,11 +112,11 @@ namespace VMP_CNR.Module.Teams.Shelter
                     // Only Show History with Bank Permissions
                     if (!dbPlayer.TeamRankPermission.Bank)
                     {
-                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Fraktionskonto", dbPlayer.Team.Name, dbPlayer.money[0], teamShelter.Money, 0, new List<BankHistory>());
+                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Fraktionskonto", dbPlayer.Team.Name, dbPlayer.Money[0], teamShelter.Money, 0, new List<BankHistory>());
                     }
                     else
                     {
-                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Fraktionskonto", dbPlayer.Team.Name, dbPlayer.money[0], teamShelter.Money, 0, dbPlayer.Team.BankHistory);
+                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Fraktionskonto", dbPlayer.Team.Name, dbPlayer.Money[0], teamShelter.Money, 0, dbPlayer.Team.BankHistory);
                     }
                     return true;
                 }
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Teams.Shelter
 
                         dbPlayer.SetData("swbank", 1);
                         MenuManager.DismissCurrent(dbPlayer);
-                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Schwarzgeldkonto", "Schwarzgeldkonto", dbPlayer.blackmoney[0], dbPlayer.blackmoneybank[0], 0, new List<Banks.BankHistory.BankHistory>());
+                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Schwarzgeldkonto", "Schwarzgeldkonto", dbPlayer.BlackMoney[0], dbPlayer.BlackMoneyBank[0], 0, new List<Banks.BankHistory.BankHistory>());
                     }
                     else if (index == 4)
                     {

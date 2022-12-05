@@ -39,7 +39,7 @@ namespace VMP_CNR.Module.VirtualGarages
 
                 // Haus und kein Besitzer/Mieter?! -> weg
                 if (virtualGarageEnter.VirtualGarage.Houses.Count() > 0 
-                    && !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.ownHouse[0]) 
+                    && !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.OwnHouse[0]) 
                     && (!dbPlayer.IsTenant() || !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.GetTenant().HouseId))) return false;
                 
                 if (!dbPlayer.RageExtension.IsInVehicle)
@@ -117,7 +117,7 @@ namespace VMP_CNR.Module.VirtualGarages
 
                 // Haus und kein Besitzer/Mieter?! -> weg
                 if (virtualGarageEnter.VirtualGarage.Houses.Count() > 0
-                    && !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.ownHouse[0])
+                    && !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.OwnHouse[0])
                     && (!dbPlayer.IsTenant() || !virtualGarageEnter.VirtualGarage.Houses.Contains(dbPlayer.GetTenant().HouseId))) return false;
                 
                 if (!dbPlayer.RageExtension.IsInVehicle)

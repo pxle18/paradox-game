@@ -101,7 +101,7 @@ namespace VMP_CNR
         megaphone = 50,
     }
 
-    internal enum adminlevel
+    internal enum AdminLevelTypes
     {
         Player = 0,
         Supporter = 1,
@@ -1227,8 +1227,8 @@ namespace VMP_CNR
 
             //LoadPlayerHUD
             player.TriggerNewClient("loadHUD");
-            player.TriggerNewClient("updateMoney", iPlayer.money[0]);
-            player.TriggerNewClient("updateBlackMoney", iPlayer.blackmoney[0]);
+            player.TriggerNewClient("updateMoney", iPlayer.Money[0]);
+            player.TriggerNewClient("updateBlackMoney", iPlayer.BlackMoney[0]);
 
             if (ptr)
             {
@@ -1412,8 +1412,8 @@ namespace VMP_CNR
                             if (!itr.IsValid()) continue;
 
                             if (itr.AccountStatus == AccountStatus.LoggedIn &&
-                                itr.tmpPlayerId >= mininterval &&
-                                itr.tmpPlayerId < maxinterval)
+                                itr.TemporaryPlayerId >= mininterval &&
+                                itr.TemporaryPlayerId < maxinterval)
                             {
                                 string updateQuery = itr.GetUpdateQuery();
 
@@ -1462,7 +1462,7 @@ namespace VMP_CNR
         {
             string playerjob = iPlayer.job[0].ToString();
             string jobskills = iPlayer.job_skills[0];
-            int actualskill = Convert.ToInt32(iPlayer.jobskill[0]);
+            int actualskill = Convert.ToInt32(iPlayer.JobSkill[0]);
             string newskills = "";
             bool found = false;
 
@@ -1624,19 +1624,19 @@ namespace VMP_CNR
         {
             if (iPlayer.job[0] == (int) jobs.JOB_ANWALT)
             {
-                if (iTarget.jailtime[0] > 5)
+                if (iTarget.JailTime[0] > 5)
                 {
-                    if (iTarget.jailtime[0] < 20) return true;
-                    if (iTarget.jailtime[0] >= 20 && iTarget.jailtime[0] < 30 &&
-                        iPlayer.jobskill[0] >= 2000) return true;
-                    else if (iTarget.jailtime[0] >= 30 && iTarget.jailtime[0] < 40 &&
-                             iPlayer.jobskill[0] >= 3000)
+                    if (iTarget.JailTime[0] < 20) return true;
+                    if (iTarget.JailTime[0] >= 20 && iTarget.JailTime[0] < 30 &&
+                        iPlayer.JobSkill[0] >= 2000) return true;
+                    else if (iTarget.JailTime[0] >= 30 && iTarget.JailTime[0] < 40 &&
+                             iPlayer.JobSkill[0] >= 3000)
                         return true;
-                    else if (iTarget.jailtime[0] >= 40 && iTarget.jailtime[0] < 50 &&
-                             iPlayer.jobskill[0] >= 4000)
+                    else if (iTarget.JailTime[0] >= 40 && iTarget.JailTime[0] < 50 &&
+                             iPlayer.JobSkill[0] >= 4000)
                         return true;
-                    else if (iTarget.jailtime[0] >= 50 && iTarget.jailtime[0] < 60 &&
-                             iPlayer.jobskill[0] >= 5000)
+                    else if (iTarget.JailTime[0] >= 50 && iTarget.JailTime[0] < 60 &&
+                             iPlayer.JobSkill[0] >= 5000)
                         return true;
                 }
             }
@@ -1646,9 +1646,9 @@ namespace VMP_CNR
 
         public static int getFreePrice(DbPlayer iPlayer)
         {
-            if (iPlayer.jailtime[0] > 5)
+            if (iPlayer.JailTime[0] > 5)
             {
-                return 200 * iPlayer.jailtime[0];
+                return 200 * iPlayer.JailTime[0];
             }
 
             return 0;
@@ -1658,7 +1658,7 @@ namespace VMP_CNR
         {
             if (admin)
             {
-                iTarget.jailtime[0] = 1;
+                iTarget.JailTime[0] = 1;
                 PlayerSpawn.OnPlayerSpawn(iTarget.Player);
                 return;
             }
@@ -1667,7 +1667,7 @@ namespace VMP_CNR
             {
                 if (canPlayerFreed(iPlayer, iTarget))
                 {
-                    iTarget.jailtime[0] = 1;
+                    iTarget.JailTime[0] = 1;
                     PlayerSpawn.OnPlayerSpawn(iTarget.Player);
                     iTarget.SendNewNotification(
                         "Anwalt " + iPlayer.GetName() +
@@ -1739,7 +1739,7 @@ namespace VMP_CNR
 
             if (iPlayer.IsInAnimation()) return;
 
-            if ((iPlayer.isInjured()) &&
+            if ((iPlayer.IsInjured()) &&
                 iPlayer.RankId == 0)
             {
                 return;
@@ -1913,7 +1913,7 @@ namespace VMP_CNR
                         /*if (bank.Type == BankType.Atm)
                             player.PlaySoundFrontEnd("ATM_WINDOW",
                                 "HUD_FRONTEND_DEFAULT_SOUNDSET");*/
-                        ComponentManager.Get<BankWindow>().Show()(iPlayer, "Bank", iPlayer.GetName(), iPlayer.money[0], iPlayer.bank_money[0], bank.Type, iPlayer.BankHistory);
+                        ComponentManager.Get<BankWindow>().Show()(iPlayer, "Bank", iPlayer.GetName(), iPlayer.Money[0], iPlayer.BankMoney[0], bank.Type, iPlayer.BankHistory);
                         return;
                     }
 
@@ -2223,7 +2223,7 @@ namespace VMP_CNR
             if (iPlayer.DimensionType[0] == DimensionType.House_Shop_Interior)
             {
                 House iHouse;
-                if ((iHouse = HouseModule.Instance[iPlayer.ownHouse[0]]) == null) return;
+                if ((iHouse = HouseModule.Instance[iPlayer.OwnHouse[0]]) == null) return;
                 DialogMigrator.CreateMenu(iPlayer.Player, Dialogs.menu_shop_interior, "Innenausstattung", "");
                 DialogMigrator.AddMenuItem(iPlayer.Player, Dialogs.menu_shop_interior, GlobalMessages.General.Close(), "");
                 DialogMigrator.AddMenuItem(iPlayer.Player, Dialogs.menu_shop_interior, "Interior kaufen",

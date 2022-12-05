@@ -53,7 +53,7 @@ namespace VMP_CNR.Module.Government
         {
             dbPlayer.EconomyIndex = EconomyIndex.Low;
 
-            int moneySum = dbPlayer.bank_money[0] + dbPlayer.money[0];
+            int moneySum = dbPlayer.BankMoney[0] + dbPlayer.Money[0];
 
             if(dbPlayer.IsMemberOfBusiness())
             {

@@ -54,7 +54,7 @@ namespace VMP_CNR.Module.Items
 
                 List<ClientContainerObject> containerList = new List<ClientContainerObject>
                 {
-                    dbPlayer.Container.ConvertForClient(1, "", dbPlayer.money[0], dbPlayer.blackmoney[0], true)
+                    dbPlayer.Container.ConvertForClient(1, "", dbPlayer.Money[0], dbPlayer.BlackMoney[0], true)
                 };
 
                 // Find Now The Inventory
@@ -298,7 +298,7 @@ namespace VMP_CNR.Module.Items
                             return;
                         }
 
-                        if (!findPlayer.IsCuffed && !findPlayer.IsTied && !findPlayer.isInjured())
+                        if (!findPlayer.IsCuffed && !findPlayer.IsTied && !findPlayer.IsInjured())
                         {
                             dbPlayer.SendNewNotification("Buerger nicht gefesselt / bewusstlos!");
                             return;
@@ -499,7 +499,7 @@ namespace VMP_CNR.Module.Items
 
             DbPlayer destinationPlayer = Players.Players.Instance.FindPlayerById(dbPlayer.GetData("giveitem"));
             dbPlayer.ResetData("giveitem");
-            if (destinationPlayer.isInjured()) return;
+            if (destinationPlayer.IsInjured()) return;
             if (destinationPlayer == null || !destinationPlayer.IsValid())
             {
                 dbPlayer.SendNewNotification("Niemand in der Nähe!");
@@ -747,7 +747,7 @@ namespace VMP_CNR.Module.Items
 
             if (model != null)
             {
-                if (dbPlayer.isInjured())
+                if (dbPlayer.IsInjured())
                 {
                     dbPlayer.SendNewNotification("Sie koennen diese Funktion derzeit nicht benutzen.");
                     return false;

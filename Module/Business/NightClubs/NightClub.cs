@@ -139,7 +139,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
             int price = 200000;
 
-            if (price > 0 && price <= dbPlayer.money[0])
+            if (price > 0 && price <= dbPlayer.Money[0])
             {
                 dbPlayer.TakeMoney(price);
                 dbPlayer.SendNewNotification("Umbau abgeschlossen!", PlayerNotification.NotificationType.BUSINESS);
@@ -164,7 +164,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
             int price = 20000;
 
-            if (price > 0 && price <= dbPlayer.money[0])
+            if (price > 0 && price <= dbPlayer.Money[0])
             {
                 dbPlayer.TakeMoney(price);
                 dbPlayer.SendNewNotification("Umbau abgeschlossen!", PlayerNotification.NotificationType.BUSINESS);
@@ -183,7 +183,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
             int price = 20000;
 
-            if (price > 0 && price <= dbPlayer.money[0])
+            if (price > 0 && price <= dbPlayer.Money[0])
             {
                 dbPlayer.TakeMoney(price);
                 dbPlayer.SendNewNotification("Umbau abgeschlossen!", PlayerNotification.NotificationType.BUSINESS);
@@ -208,7 +208,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
             int price = 50000;
 
-            if (price > 0 && price <= dbPlayer.money[0])
+            if (price > 0 && price <= dbPlayer.Money[0])
             {
                 dbPlayer.TakeMoney(price);
                 dbPlayer.SendNewNotification("Umbau abgeschlossen!", PlayerNotification.NotificationType.BUSINESS);
@@ -227,7 +227,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
             int price = 50000;
 
-            if (price > 0 && price <= dbPlayer.money[0])
+            if (price > 0 && price <= dbPlayer.Money[0])
             {
                 dbPlayer.TakeMoney(price);
                 dbPlayer.SendNewNotification("Umbau abgeschlossen!", PlayerNotification.NotificationType.BUSINESS);

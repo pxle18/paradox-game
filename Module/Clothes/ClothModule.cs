@@ -600,7 +600,7 @@ namespace VMP_CNR.Module.Clothes
                 {
                     dbPlayer.ApplyArmorVisibility();
 
-                    if (dbPlayer.jailtime[0] > 0)
+                    if (dbPlayer.JailTime[0] > 0)
                     {
                         dbPlayer.SetPlayerJailClothes();
                     }
@@ -838,7 +838,7 @@ namespace VMP_CNR.Module.Clothes
             dbPlayer.RefreshNacked();
 
             // Jail
-            if (dbPlayer.jailtime[0] > 0 && dbPlayer.Player.Position.DistanceTo(JailModule.PrisonZone) < JailModule.Range)
+            if (dbPlayer.JailTime[0] > 0 && dbPlayer.Player.Position.DistanceTo(JailModule.PrisonZone) < JailModule.Range)
             {
                 dbPlayer.SetPlayerJailClothes();
             }

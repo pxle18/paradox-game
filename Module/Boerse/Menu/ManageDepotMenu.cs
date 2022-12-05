@@ -49,7 +49,7 @@ namespace VMP_CNR.Module.Boerse.Menu
                         if (!dbPlayer.HasDepot())
                             break;
                         
-                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Aktien-Depot", dbPlayer.GetName(), dbPlayer.money[0], (int)dbPlayer.Depot.Amount, 0, new List<BankHistory>());
+                        ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Aktien-Depot", dbPlayer.GetName(), dbPlayer.Money[0], (int)dbPlayer.Depot.Amount, 0, new List<BankHistory>());
                         break;
                     default: // Wird aufgerufen, wenn Schließen ausgewählt wurde
                         break;

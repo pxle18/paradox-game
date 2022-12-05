@@ -293,7 +293,7 @@ namespace VMP_CNR.Module.Business
                     if (biz == null || !dbPlayer.IsMemberOfBusiness() ||
                         dbPlayer.ActiveBusinessId != biz.Id) return true;
 
-                    ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Business Tresor", biz.Name, dbPlayer.money[0], biz.Money, 0, biz.BankHistory);
+                    ComponentManager.Get<BankWindow>().Show()(dbPlayer, "Business Tresor", biz.Name, dbPlayer.Money[0], biz.Money, 0, biz.BankHistory);
                     return true;
                 }
 

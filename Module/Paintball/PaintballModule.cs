@@ -138,7 +138,7 @@ namespace VMP_CNR.Module.Paintball
                             //REVIVE IF INJURED
                             if (dbPlayer.Injury.Id != 0)
                             {
-                                dbPlayer.revive();
+                                dbPlayer.Revive();
                             }
 
                             dbPlayer.Player.TriggerNewClient("finishPaintball");
@@ -202,7 +202,7 @@ namespace VMP_CNR.Module.Paintball
                             //REVIVE IF INJURED
                             if (dbPlayer.Injury.Id != 0)
                             {
-                                dbPlayer.revive();
+                                dbPlayer.Revive();
                             }
 
                             if (!colshapeSpawn)
@@ -262,7 +262,7 @@ namespace VMP_CNR.Module.Paintball
                 DbPlayer iKiller = killer.ToPlayer().GetPlayer();
                 if (dbPlayer == null && !dbPlayer.IsValid()) return;
                 if (iKiller == null && !iKiller.IsValid()) return;
-                if (!dbPlayer.isAlive()) return; // Erneuter Tot verhindern
+                if (!dbPlayer.IsAlive()) return; // Erneuter Tot verhindern
 
 
                 if (iKiller.HasData("paintball_map") && dbPlayer.HasData("paintball_map"))
@@ -337,7 +337,7 @@ namespace VMP_CNR.Module.Paintball
         {
             if (p_ColShape.HasData("paintballId") && dbPlayer.DimensionType[0] == DimensionType.Paintball)
             {
-                if (dbPlayer.isInjured()) return false;
+                if (dbPlayer.IsInjured()) return false;
 
                 switch (p_ColShapeState)
                 {
@@ -362,7 +362,7 @@ namespace VMP_CNR.Module.Paintball
         public void Commandquit(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod() || dbPlayer.isInjured()) return;
+            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured()) return;
             if (dbPlayer.HasData("paintball_map"))
             {
                 if (!dbPlayer.HasData("paintball_death"))

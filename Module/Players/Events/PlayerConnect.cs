@@ -15,10 +15,7 @@ namespace VMP_CNR.Module.Players.Events
         
         public static void OnPlayerConnected(Player player)
         {
-            if (player == null)
-            {
-                return;
-            }
+            if (player == null) return;
 
             Logger.Debug("OnPlayerConnectEvent " + player.Name);
 
@@ -41,26 +38,12 @@ namespace VMP_CNR.Module.Players.Events
                 return;
             }
 
-            // TODO: Edit before release
-            //Task.Run(async () =>
-            //{
-            //    if (!Configuration.Instance.Ptr && await SocialBanHandler.Instance.IsPlayerSocialBanned(player))
-            //    {
-            //        await NAPI.Task.WaitForMainThread();
-            //        player.SendNotification("Bitte melde dich beim Support im Teamspeak (Social-Ban)");
-            //        player.Kick();
-            //        return;
-            //    }
-            //});
-            
-            Modules.Instance.OnClientConnected(player);
-
             player.SetData("loginStatusCheck", 1);
-            
-            //player.Freeze(true);
             player.TriggerNewClient("freezePlayer", true);
 
-            SynchronizedTaskManager.Instance.Add(new PlayerLoginTask(player));
+            SynchronizedTaskManager.Instance.Add(
+                new PlayerLoginTask(player)
+            );
         }
     }
 }

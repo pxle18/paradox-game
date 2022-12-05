@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Items
             if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
             {
                 House xHouse = HouseModule.Instance.Get((uint)dbPlayer.GetData("inHouse"));
-                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.ownHouse[0] == xHouse.Id/* || (xHouse.LastBreak.AddMinutes(10) > DateTime.Now)*/ ))
+                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id/* || (xHouse.LastBreak.AddMinutes(10) > DateTime.Now)*/ ))
                 {
                     if (xHouse.Interior.InventoryPosition.DistanceTo(playerPosition) < 3.0f) 
                         return xHouse.Container;
@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Items
             if (dbPlayer.DimensionType[0] == DimensionType.Labor)
             {
                 House xHouse = HouseModule.Instance.Get(playerDimension);
-                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.ownHouse[0] == xHouse.Id))
+                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id))
                 {
                     if (playerPosition.DistanceTo(new Vector3(1118.81, -3193.38, -40.3918)) < 2.0f)
                     {
@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Items
             if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
             {
                 House xHouse = HouseModule.Instance.Get((uint)playerDimension);
-                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.ownHouse[0] == xHouse.Id || (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 5)))
+                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id || (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 5)))
                 {
                     if (playerPosition.DistanceTo(SchwarzgeldModule.BlackMoneyInvPosition) < 1.5f)
                     {

@@ -25,7 +25,7 @@ namespace VMP_CNR.Module.Houses
                 return;
             }
 
-            if (!dbPlayer.HasData("houseId") || dbPlayer.GetData("houseId") != dbPlayer.ownHouse[0])
+            if (!dbPlayer.HasData("houseId") || dbPlayer.GetData("houseId") != dbPlayer.OwnHouse[0])
             {
                 dbPlayer.SendNewNotification("Sie müssen an Ihrem Haus sein!");
                 return;
@@ -37,7 +37,7 @@ namespace VMP_CNR.Module.Houses
 
             if (target.Player.Position.DistanceTo(dbPlayer.Player.Position) < 5.0f)
             {
-                if (target.IsTenant() || target.ownHouse[0] > 0)
+                if (target.IsTenant() || target.OwnHouse[0] > 0)
                 {
                     dbPlayer.SendNewNotification("Person hat bereits eine Mietwohnung oder ein Haus!");
                     return;
@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Houses
             var owner = Players.Players.Instance.FindPlayer(userToFind);
             if (owner == null || !owner.IsValid()) return;
 
-            HouseRent houseRent = HouseRentModule.Instance.houseRents.Where(hr => hr.HouseId == owner.ownHouse[0] && hr.SlotId == tenantSlot).FirstOrDefault();
+            HouseRent houseRent = HouseRentModule.Instance.houseRents.Where(hr => hr.HouseId == owner.OwnHouse[0] && hr.SlotId == tenantSlot).FirstOrDefault();
 
             if (houseRent == null) return;
 

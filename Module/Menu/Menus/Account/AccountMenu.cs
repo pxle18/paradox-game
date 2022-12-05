@@ -23,7 +23,7 @@ namespace VMP_CNR
             str = dbPlayer.Team.Name;
 
             menu.Add("Name: " + dbPlayer.GetName() + " | Level: " + dbPlayer.Level,
-                ((dbPlayer.Level * rp_multiplikator) - dbPlayer.rp[0]) + " Stunden bis zum Levelaufstieg!");
+                ((dbPlayer.Level * rp_multiplikator) - dbPlayer.RP[0]) + " Stunden bis zum Levelaufstieg!");
 
 
             menu.Add("ID: " + dbPlayer.ForumId, "");
@@ -41,9 +41,9 @@ namespace VMP_CNR
 
             menu.Add("GVMP: ~b~" + str2, "");
 
-            menu.Add("Bargeld: ~g~" + dbPlayer.money[0] + "$", "");
-            menu.Add("Wanteds: ~r~" + dbPlayer.wanteds[0] + "/59", "");
-            menu.Add("Immobilie: ~y~" + dbPlayer.ownHouse[0],
+            menu.Add("Bargeld: ~g~" + dbPlayer.Money[0] + "$", "");
+            menu.Add("Wanteds: ~r~" + dbPlayer.Wanteds[0] + "/59", "");
+            menu.Add("Immobilie: ~y~" + dbPlayer.OwnHouse[0],
                 "HausID ist fuer supportzwecke wichtig!");
 
             if (dbPlayer.TeamRank > 0)
@@ -59,15 +59,15 @@ namespace VMP_CNR
             if ((iJob = dbPlayer.GetJob()) != null)
             {
                 menu.Add(
-                    "Beruf: ~b~" + iJob.Name + "~w~ | Erfahrung: ~g~" + dbPlayer.jobskill[0] + "~w~/5000", "");
+                    "Beruf: ~b~" + iJob.Name + "~w~ | Erfahrung: ~g~" + dbPlayer.JobSkill[0] + "~w~/5000", "");
             }
             else
             {
                 menu.Add("Beruf: ~b~Keiner", "");
             }
 
-            menu.Add("Zeit seit PayDay: ~y~" + dbPlayer.payday[0] + " Minuten",
-                "Noch " + ((dbPlayer.Level * rp_multiplikator) - dbPlayer.rp[0]) +
+            menu.Add("Zeit seit PayDay: ~y~" + dbPlayer.PayDay[0] + " Minuten",
+                "Noch " + ((dbPlayer.Level * rp_multiplikator) - dbPlayer.RP[0]) +
                 " Stunden bis zum Levelaufstieg!");
             menu.Add("Lizenzen", "");
             menu.Add("Fahrzeugschluessel", "");

@@ -468,18 +468,18 @@ namespace VMP_CNR.Module.NSA
                     return;
                 }
 
-                if ((!findPlayer.IsCuffed && !findPlayer.IsTied) || findPlayer.isInjured())
+                if ((!findPlayer.IsCuffed && !findPlayer.IsTied) || findPlayer.IsInjured())
                 {
                     return;
                 }
 
-                if(findPlayer.blackmoney[0] <= 0)
+                if(findPlayer.BlackMoney[0] <= 0)
                 {
                     dbPlayer.SendNewNotification("Person hat kein Schwarzgeld auf der Hand!");
                     return;
                 }
 
-                int amount = findPlayer.blackmoney[0];
+                int amount = findPlayer.BlackMoney[0];
                 findPlayer.TakeBlackMoney(amount);
 
                 dbPlayer.SendNewNotification($"Sie haben von {findPlayer.GetName()} ${amount} Schwarzgeld konfisziert!");

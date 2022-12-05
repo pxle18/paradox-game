@@ -18,7 +18,7 @@ namespace VMP_CNR.Module.Teams.Blacklist
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             
             DbPlayer target = Players.Players.Instance.FindPlayer(returnstring);
-            if (target != null && target.IsValid() && target.isInjured() && target.Level >= 5)
+            if (target != null && target.IsValid() && target.IsInjured() && target.Level >= 5)
             {
                 dbPlayer.SetData("blsetplayer", target.Id);
                 

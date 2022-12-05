@@ -108,7 +108,7 @@ namespace VMP_CNR.Module.Players
     {
         public static void CloseUserDialog(this DbPlayer dbPlayer, uint dialogid)
         {
-            dbPlayer.watchDialog = 0;
+            dbPlayer.WatchDialog = 0;
             dbPlayer.Player.TriggerNewClient("deleteDialog");
             //dbPlayer.Freeze(false);
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
@@ -130,9 +130,9 @@ namespace VMP_CNR.Module.Players
                 player.TriggerNewClient("createDialog", template, dbPlayer.GetName());
             }
             {
-                if (dbPlayer.watchDialog > 0)
+                if (dbPlayer.WatchDialog > 0)
                 {
-                    dbPlayer.CloseUserDialog(dbPlayer.watchDialog);
+                    dbPlayer.CloseUserDialog(dbPlayer.WatchDialog);
                 }
 
                 if (!dbPlayer.RageExtension.IsInVehicle)
@@ -141,7 +141,7 @@ namespace VMP_CNR.Module.Players
                     //dbPlayer.Freeze(true);
                 }
 
-                dbPlayer.watchDialog = dialogid;
+                dbPlayer.WatchDialog = dialogid;
 
                 if (template == "login")
                 {   

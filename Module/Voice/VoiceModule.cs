@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.Voice
 
         public override void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint weapon)
         {
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
                 Instance.turnOffFunk(dbPlayer);
         }
 

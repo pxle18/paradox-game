@@ -86,7 +86,7 @@ namespace VMP_CNR.Module.Nutrition
         public void decreaseHealth(DbPlayer dbPlayer, int health)
         {
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            if (dbPlayer.isInjured()) return;
+            if (dbPlayer.IsInjured()) return;
             if (dbPlayer.Player.Health <= health)
             {
                 dbPlayer.SetData("injured_by_nutrition", true);

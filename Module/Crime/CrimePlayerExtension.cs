@@ -164,16 +164,16 @@ namespace VMP_CNR.Module.Crime
         {
             if (dbPlayer.IsACop()  && dbPlayer.IsInDuty()) return;
 
-            var wanteds = dbPlayer.wanteds[0];
-            if (dbPlayer.TempWanteds > 0 && dbPlayer.wanteds[0] < 30) wanteds = 30;
+            var wanteds = dbPlayer.Wanteds[0];
+            if (dbPlayer.TempWanteds > 0 && dbPlayer.Wanteds[0] < 30) wanteds = 30;
 
             int jailtime = CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes);
             int jailcosts = CrimeModule.Instance.CalcJailCosts(dbPlayer.Crimes, dbPlayer.EconomyIndex);
 
-            dbPlayer.jailtime[0] = jailtime;
+            dbPlayer.JailTime[0] = jailtime;
 
             // Checke auf Jailtime
-            if (dbPlayerCop != null && dbPlayer.jailtime[0] == 0)
+            if (dbPlayerCop != null && dbPlayer.JailTime[0] == 0)
             {
                 dbPlayerCop.SendNewNotification(dbPlayer.GetName() + " hat keine Haftzeit offen!");
                 return;
@@ -186,7 +186,7 @@ namespace VMP_CNR.Module.Crime
                 int uHaftJailTimeReverse = dbPlayer.UHaftTime > 60 ? 60 : dbPlayer.UHaftTime;
 
                 // Maximal bis auf 10 min runter
-                dbPlayer.jailtime[0] = dbPlayer.jailtime[0] - uHaftJailTimeReverse <= 10 ? 10 : dbPlayer.jailtime[0] - dbPlayer.UHaftTime;
+                dbPlayer.JailTime[0] = dbPlayer.JailTime[0] - uHaftJailTimeReverse <= 10 ? 10 : dbPlayer.JailTime[0] - dbPlayer.UHaftTime;
             }
 
             EmailModule.Instance.SendPlayerEmail(dbPlayer, "Inhaftierung", EmailTemplates.GetArrestTemplate(dbPlayer.Crimes, jailcosts, jailtime));
@@ -213,8 +213,8 @@ namespace VMP_CNR.Module.Crime
             if (dbPlayerCop != null)
             {
                 dbPlayerCop.ResetData("follow");
-                dbPlayerCop.SendNewNotification(GlobalMessages.General.hasArrested(dbPlayer.GetName(), dbPlayer.jailtime[0] - 1));
-                dbPlayer.SendNewNotification(GlobalMessages.General.isArrested(dbPlayerCop.GetName(), dbPlayer.jailtime[0] - 1));
+                dbPlayerCop.SendNewNotification(GlobalMessages.General.hasArrested(dbPlayer.GetName(), dbPlayer.JailTime[0] - 1));
+                dbPlayer.SendNewNotification(GlobalMessages.General.isArrested(dbPlayerCop.GetName(), dbPlayer.JailTime[0] - 1));
             }
 
             dbPlayer.TakeAnyMoney((int)jailcosts, true);
@@ -226,7 +226,7 @@ namespace VMP_CNR.Module.Crime
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, " + dbPlayer.GetName() +
                 " sitzt nun hinter Gittern!");
 
-            dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.jailtime[0] / 3);
+            dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
 
             dbPlayer.SendNewNotification(ListCrimes);
             dbPlayer.AddToCrimeHistory(JailStringHistroy);

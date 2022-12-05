@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.Service
         public override void OnMinuteUpdate()
         {
             if (!serviceList.ContainsKey((int)teams.TEAM_MEDIC)) return;
-            foreach(Service service in serviceList[(int)teams.TEAM_MEDIC].Where(s => s.Player != null && s.Player.IsValid() && s.Player.isInjured()))
+            foreach(Service service in serviceList[(int)teams.TEAM_MEDIC].Where(s => s.Player != null && s.Player.IsValid() && s.Player.IsInjured()))
             {
                 string optional = "";
 
@@ -255,7 +255,7 @@ namespace VMP_CNR.Module.Service
 
         public override void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
         {
-            if(dbPlayer.isInjured())
+            if(dbPlayer.IsInjured())
             {
                 CancelOwnService(dbPlayer, (int)teams.TEAM_MEDIC);
             }

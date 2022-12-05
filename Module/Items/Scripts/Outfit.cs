@@ -186,13 +186,13 @@ namespace VMP_CNR.Module.Items.Scripts
 
                 await NAPI.Task.WaitForMainThread(10000);
 
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured())
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured())
                 {
                     return false;
                 }
 
                 // something happend to officer || Out of range
-                if (closestPlayer.isInjured() || closestPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 3.0f)
+                if (closestPlayer.IsInjured() || closestPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 3.0f)
                 {
                     return false;
                 }

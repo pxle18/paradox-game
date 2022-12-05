@@ -75,11 +75,11 @@ namespace VMP_CNR.Module.Players.Sync
             var bankHistories = new List<Banks.BankHistory.BankHistory>();
 
             // Level System
-            if (dbPlayer.rp[0] >= dbPlayer.Level * RpMultiplikator)
+            if (dbPlayer.RP[0] >= dbPlayer.Level * RpMultiplikator)
             {
                 dbPlayer.Level++;
                 dbPlayer.uni_points[0]++;
-                dbPlayer.rp[0] = 0;
+                dbPlayer.RP[0] = 0;
                 dbPlayer.SendNewNotification($"Glueckwunsch, Sie haben nun Level {dbPlayer.Level} erreicht!", title: "Level aufgestiegen!", notificationType:PlayerNotification.NotificationType.SERVER);
 
                 LevelPoints lp = LevelPointModule.Instance.Get((uint)dbPlayer.Level);
@@ -92,11 +92,11 @@ namespace VMP_CNR.Module.Players.Sync
             }
             else
             {
-                dbPlayer.rp[0]++;
+                dbPlayer.RP[0]++;
             }
 
             //Stuff to do on Payday
-            dbPlayer.payday[0] = 1;
+            dbPlayer.PayDay[0] = 1;
             Main.lowerPlayerJobSkill(dbPlayer);
 
             // Money Money Money
@@ -311,13 +311,13 @@ namespace VMP_CNR.Module.Players.Sync
                 new Banks.BankHistory.BankHistory { Name = "Rundfunkbeitrag", Value = -50 });
 
             // HausSteuer
-            if (dbPlayer.ownHouse[0] > 0)
+            if (dbPlayer.OwnHouse[0] > 0)
             {
                 var tax = 0;
                 var wasser = 22;
                 var strom = 68;
                 House iHouse;
-                if ((iHouse = HouseModule.Instance.Get(dbPlayer.ownHouse[0])) != null)
+                if ((iHouse = HouseModule.Instance.Get(dbPlayer.OwnHouse[0])) != null)
                 {
 
                     float taxRate = 0.003f;
@@ -387,7 +387,7 @@ namespace VMP_CNR.Module.Players.Sync
                     }
                     else
                     {
-                        if (dbPlayer.bank_money[0] < -500000)
+                        if (dbPlayer.BankMoney[0] < -500000)
                         {
                             // No Money to Rent??!
                             dbPlayer.RemoveTenant();
@@ -440,7 +440,7 @@ namespace VMP_CNR.Module.Players.Sync
             dbPlayer.SendNewNotification("Sie haben ihren Payday erhalten, schauen Sie auf Ihrem Konto fuer mehr Informationen!", title: "Kontoveraenderung", notificationType:PlayerNotification.NotificationType.SUCCESS);
             dbPlayer.TakeOrGiveBankMoney(total, true);
             
-            bankHistories.Add(new BankHistory { Name = $"Neuer Kontostand nach Payday", Value = dbPlayer.bank_money[0] });
+            bankHistories.Add(new BankHistory { Name = $"Neuer Kontostand nach Payday", Value = dbPlayer.BankMoney[0] });
             dbPlayer.AddPlayerBankHistories(bankHistories);
 
             dbPlayer.LogVermoegen();
@@ -450,15 +450,15 @@ namespace VMP_CNR.Module.Players.Sync
         public static void CheckPayDay(DbPlayer dbPlayer)
         {
             //Bei Neuling keinen PayDay hochzählen
-            if (dbPlayer.hasPerso[0] == 0) return;
+            if (dbPlayer.HasPerso[0] == 0) return;
 
             //Payday System
-            if (dbPlayer.payday[0] < 60 && dbPlayer.jailtime[0] == 0)
+            if (dbPlayer.PayDay[0] < 60 && dbPlayer.JailTime[0] == 0)
             {
-                    dbPlayer.payday[0]++;
+                    dbPlayer.PayDay[0]++;
             }
             //The Payday
-            else if (dbPlayer.payday[0] >= 60)
+            else if (dbPlayer.PayDay[0] >= 60)
             {
                 PlayerPayday(dbPlayer);
                 dbPlayer.Save();
@@ -490,12 +490,12 @@ namespace VMP_CNR.Module.Players.Sync
             if (dbPlayer.Lic_Transfer[0] < 0) dbPlayer.Lic_Transfer[0]++;
                         
             //Jailtime
-            if (dbPlayer.jailtime[0] == 1)
+            if (dbPlayer.JailTime[0] == 1)
             {
                 // Erneute Wanteds?
                 if(CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes) > 0)
                 {
-                    dbPlayer.jailtime[0] += CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes);
+                    dbPlayer.JailTime[0] += CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes);
                     dbPlayer.SendNewNotification($"Durch erneute Verbrechen, haben Sie eine Haftzeitverlängerung von {CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes)} Minuten!");
                     dbPlayer.RemoveAllCrimes();
                     
@@ -516,7 +516,7 @@ namespace VMP_CNR.Module.Players.Sync
 
                     if (dbPlayer.HasData("inJailGroup") || dbPlayer.Player.Position.DistanceTo(JailModule.PrisonZone) <= JailModule.Range)
                     {
-                        dbPlayer.jailtime[0] = 0;
+                        dbPlayer.JailTime[0] = 0;
 
                         // SG
                         if (dbPlayer.Player.Position.DistanceTo(JailModule.PrisonZone) <= JailModule.Range)
@@ -573,14 +573,14 @@ namespace VMP_CNR.Module.Players.Sync
                             }
                         }
 
-                        dbPlayer.jailtime[0] = 0;
+                        dbPlayer.JailTime[0] = 0;
                         dbPlayer.SendNewNotification("Sie haben ihre Haftzeit nun vollständig abgesessen!");
                     }
                 }
             }
-            else if (dbPlayer.jailtime[0] > 1 && !dbPlayer.isInjured())
+            else if (dbPlayer.JailTime[0] > 1 && !dbPlayer.IsInjured())
             {
-                dbPlayer.jailtime[0]--;
+                dbPlayer.JailTime[0]--;
             }
 
             CheckSalary(dbPlayer);

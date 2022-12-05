@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.Heist.Prequest.Keycard
             if (dbPlayer.Dimension[0] == 0 && key == Key.E)
             {
                 if (!dbPlayer.IsAGangster() && !dbPlayer.IsBadOrga()) return false;
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return false;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return false;
 
                 if (dbPlayer.Player.Position.DistanceTo(PedPosition) < 5.0f && !dbPlayer.RageExtension.IsInVehicle)
                 {
@@ -82,12 +82,12 @@ namespace VMP_CNR.Module.Heist.Prequest.Keycard
 
             dbPlayer.SetCannotInteract(false);
 
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return;
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
             dbPlayer.StopAnimation();
 
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return;
                 if (vehicle.entity.Position.DistanceTo(PedPosition) > 20.0f) return;
 
                 Dictionary<string, dynamic> ItemData = new Dictionary<string, dynamic>();

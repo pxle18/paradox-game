@@ -162,7 +162,7 @@ namespace VMP_CNR.Module.Keys.Windows
                         return;
                     }
 
-                    if (dbPlayer.ownHouse[0] != id)
+                    if (dbPlayer.OwnHouse[0] != id)
                     {
                         dbPlayer.SendNewNotification( "Dieses Haus gehoert dir nicht!");
                         return;
@@ -302,7 +302,7 @@ namespace VMP_CNR.Module.Keys.Windows
             {
                 //Häuser
                 case "Häuser":
-                    if (id != 0 && id == dbPlayer.ownHouse[0])
+                    if (id != 0 && id == dbPlayer.OwnHouse[0])
                     {
                         //Spieler ist Besitzer von dem Haus, kann also nicht wegwerfen
                         dbPlayer.SendNewNotification("Du kannst den Hauptschlüssel nicht wegwerfen.");

@@ -49,7 +49,7 @@ namespace VMP_CNR.Module.Players.Crouch
         {
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.RageExtension.IsInVehicle || dbPlayer.isInjured())
+            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.RageExtension.IsInVehicle || dbPlayer.IsInjured())
                 return;
 
             if (ServerFeatures.IsActive("sync-crouch"))

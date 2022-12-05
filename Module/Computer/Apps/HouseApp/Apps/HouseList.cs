@@ -46,11 +46,11 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
 
             if (slotid == 0) return; // Gibts nicht
 
-            if (dbPlayer.ownHouse[0] != 0)
+            if (dbPlayer.OwnHouse[0] != 0)
             {
                 if (price < 0 || price > 15000) return;
 
-                HouseRent houseRent = HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.ownHouse[0] && hr.SlotId == slotid).FirstOrDefault();
+                HouseRent houseRent = HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0] && hr.SlotId == slotid).FirstOrDefault();
                 if (houseRent == null) return;
 
                 houseRent.RentPrice = price;
@@ -76,10 +76,10 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
 
             if (slotid == 0) return; // Gibts nicht
 
-            if (dbPlayer.ownHouse[0] != 0)
+            if (dbPlayer.OwnHouse[0] != 0)
             {
 
-                HouseRent houseRent = HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.ownHouse[0] && hr.SlotId == slotid).FirstOrDefault();
+                HouseRent houseRent = HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0] && hr.SlotId == slotid).FirstOrDefault();
                 if (houseRent == null || houseRent.PlayerId == 0) return;
 
                 var findPlayer = Players.Players.Instance.FindPlayer(houseRent.PlayerId);

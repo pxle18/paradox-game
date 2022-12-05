@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
                         Chat.Chats.sendProgressBar(dbPlayer, 10000);
                         await NAPI.Task.WaitForMainThread(10000);
 
-                        if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return;
+                        if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return;
 
                         dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                         dbPlayer.ResetData("userCannotInterrupt");
@@ -107,7 +107,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
                             Chat.Chats.sendProgressBar(dbPlayer, 10000);
                             await NAPI.Task.WaitForMainThread(10000);
 
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return;
 
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.ResetData("userCannotInterrupt");
@@ -145,7 +145,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
                             Chat.Chats.sendProgressBar(dbPlayer, 35000);
                             await NAPI.Task.WaitForMainThread(35000);
 
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return;
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return;
 
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.ResetData("userCannotInterrupt");

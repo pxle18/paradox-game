@@ -52,7 +52,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
                     iPlayer.MetaData.Position = playerPosition;
                 }
 
-                if ((iPlayer.hasPerso[0] == 0 || iPlayer.Level < 3) && (vehicle.Model == (uint)VehicleHash.Hydra || vehicle.Model == (uint)VehicleHash.Lazer || vehicle.Model == (uint)VehicleHash.Rhino ||
+                if ((iPlayer.HasPerso[0] == 0 || iPlayer.Level < 3) && (vehicle.Model == (uint)VehicleHash.Hydra || vehicle.Model == (uint)VehicleHash.Lazer || vehicle.Model == (uint)VehicleHash.Rhino ||
                     vehicle.Model == (uint)VehicleHash.Hunter || vehicle.Model == (uint)VehicleHash.Savage || vehicle.Model == (uint)VehicleHash.Buzzard))
                 {
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"DRINGENDER-Anticheat-Verdacht: {iPlayer.GetName()} (ARMY VEHICLE ENTERED)");
@@ -75,7 +75,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
                 //ac stuff
                 iPlayer.SetData("ac_lastPos", vehiclePosition);
 
-                if (iPlayer.NeuEingereist())
+                if (iPlayer.IsNewbie())
                 {
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"DRINGENDER-Anticheat-Verdacht: {iPlayer.GetName()} (ohne Einreiseamt - Fahrzeug betreten)");
                     Logging.Logger.LogToAcDetections(iPlayer.Id, Logging.ACTypes.EinreseVehicleEnter, $"");

@@ -108,7 +108,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = client.GetPlayer();
             if (!dbPlayer.CanAccessRemoteEvent()) return;
             
-            if (dbPlayer.hasPerso[0] == 0)
+            if (dbPlayer.HasPerso[0] == 0)
             {
                 dbPlayer.SendNewNotification("Du besitzt keinen Personalausweis!");
                 return;
@@ -129,9 +129,9 @@ namespace VMP_CNR.Module.Players
             if (!destinationDbPlayer.IsValid()) return;
             if (destinationDbPlayer.Id == dbPlayer.Id) return;
             if (destinationDbPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 20f) return;
-            if (destinationDbPlayer.isInjured()) return;
+            if (destinationDbPlayer.IsInjured()) return;
 
-            if (dbPlayer.hasPerso[0] == 0)
+            if (dbPlayer.HasPerso[0] == 0)
             {
                 dbPlayer.SendNewNotification("Du besitzt keinen Personalausweis!");
                 return;
@@ -155,9 +155,9 @@ namespace VMP_CNR.Module.Players
             if (destinationDbPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 2.5f) return;
 
 
-            if (destinationDbPlayer.isInjured() || destinationDbPlayer.IsTied || destinationDbPlayer.IsCuffed)
+            if (destinationDbPlayer.IsInjured() || destinationDbPlayer.IsTied || destinationDbPlayer.IsCuffed)
             {
-                if (destinationDbPlayer.hasPerso[0] == 0 || destinationDbPlayer.IsSwatDuty())
+                if (destinationDbPlayer.HasPerso[0] == 0 || destinationDbPlayer.IsSwatDuty())
                 {
                     dbPlayer.SendNewNotification("Spieler hat keinen Perso!");
                 }
@@ -502,9 +502,9 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = client.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.IsTied || dbPlayer.IsCuffed || !dbPlayer.CanInteract() || dbPlayer.RageExtension.IsInVehicle) return;
 
-            if (dbPlayer.blackmoney[0] > 0)
+            if (dbPlayer.BlackMoney[0] > 0)
             {
-                int blAmount = dbPlayer.blackmoney[0];
+                int blAmount = dbPlayer.BlackMoney[0];
                 int maxStackSize = ItemModelModule.Instance.GetById(SchwarzgeldModule.SchwarzgeldId).MaximumStacksize;
 
                 dbPlayer.Player.TriggerNewClient("freezePlayer", true);
@@ -646,7 +646,7 @@ namespace VMP_CNR.Module.Players
 
             if (distance > 45) return;
 
-            if (destinationDbPlayer.isInjured() || destinationDbPlayer.IsCuffed ||  destinationDbPlayer.GetData("lastCuffedTied") == "cuffed")
+            if (destinationDbPlayer.IsInjured() || destinationDbPlayer.IsCuffed ||  destinationDbPlayer.GetData("lastCuffedTied") == "cuffed")
             {
                 return;
             }
@@ -808,7 +808,7 @@ namespace VMP_CNR.Module.Players
 
             if (distance > 45 && !destinationDbPlayer.HasData("SMGkilledPos")) return;
 
-            if (destinationDbPlayer.isInjured()) return;
+            if (destinationDbPlayer.IsInjured()) return;
             if (!destinationDbPlayer.RageExtension.IsInVehicle)
             {
                 if (destinationDbPlayer.RageExtension.IsInVehicle) return;
@@ -905,7 +905,7 @@ namespace VMP_CNR.Module.Players
             ItemsModuleEvents.resetFriskInventoryFlags(dbPlayer);
             ItemsModuleEvents.resetDisabledInventoryFlag(dbPlayer);
             
-            if (!destinationDbPlayer.IsCuffed && !destinationDbPlayer.IsTied && !destinationDbPlayer.isInjured())
+            if (!destinationDbPlayer.IsCuffed && !destinationDbPlayer.IsTied && !destinationDbPlayer.IsInjured())
             {
                 dbPlayer.SendNewNotification("Person ist nicht gefesselt", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;
@@ -958,11 +958,11 @@ namespace VMP_CNR.Module.Players
             ItemsModuleEvents.resetDisabledInventoryFlag(dbPlayer);
             
             dbPlayer.SetData("friskInvUserID", destinationDbPlayer.Id);
-            destinationDbPlayer.Container.ShowFriskInventory(dbPlayer, destinationDbPlayer, "Spieler", (destinationDbPlayer.money[0] + destinationDbPlayer.blackmoney[0]));
+            destinationDbPlayer.Container.ShowFriskInventory(dbPlayer, destinationDbPlayer, "Spieler", (destinationDbPlayer.Money[0] + destinationDbPlayer.BlackMoney[0]));
 
-            if (destinationDbPlayer.blackmoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (destinationDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
             {
-                dbPlayer.SendNewNotification($"Sie konnten von ${(destinationDbPlayer.money[0] + destinationDbPlayer.blackmoney[0])} insgesamt ${destinationDbPlayer.blackmoney[0]} Schwarzgeld feststellen! (/takebm zum entfernen)");
+                dbPlayer.SendNewNotification($"Sie konnten von ${(destinationDbPlayer.Money[0] + destinationDbPlayer.BlackMoney[0])} insgesamt ${destinationDbPlayer.BlackMoney[0]} Schwarzgeld feststellen! (/takebm zum entfernen)");
             }
         }
 
@@ -1057,7 +1057,7 @@ namespace VMP_CNR.Module.Players
 
             if (destinationDbPlayer.Id == dbPlayer.Id) return;
             if (destinationDbPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 5.0f) return;
-            if (!destinationDbPlayer.isInjured()) return;
+            if (!destinationDbPlayer.IsInjured()) return;
 
             if (!dbPlayer.RageExtension.IsInVehicle)
             {
@@ -1106,14 +1106,14 @@ namespace VMP_CNR.Module.Players
                                 Chats.sendProgressBar(dbPlayer, 9000);
                                 await Task.Delay(9000);
                             }
-                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured())
+                            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured())
                             {
                                 dbPlayer.SendNewNotification("Stabilisierung fehlgeschlagen!");
                                 return;
                             }
                             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                             dbPlayer.StopAnimation();
-                            destinationDbPlayer.revive();
+                            destinationDbPlayer.Revive();
                             destinationDbPlayer.SendNewNotification($"Du wurdest vom Medic behandelt!");
 
                             //Prevent Weapon-Switch after Treatment
@@ -1244,7 +1244,7 @@ namespace VMP_CNR.Module.Players
                                 dbPlayer.PlayAnimation((int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl), Main.AnimationList["revive"].Split()[0], Main.AnimationList["revive"].Split()[1]);
                                 dbPlayer.Player.TriggerNewClient("freezePlayer", true);
                                 await Task.Delay(25000);
-                                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured())
+                                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured())
                                 {
                                     dbPlayer.SendNewNotification("Stabilisierung fehlgeschlagen!");
                                     return;
@@ -1350,7 +1350,7 @@ namespace VMP_CNR.Module.Players
             if (!destinationDbPlayer.IsValid()) return;
             if (destinationDbPlayer.Id == dbPlayer.Id) return;
             if (destinationDbPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 12f) return;
-            if (destinationDbPlayer.isInjured()) return;
+            if (destinationDbPlayer.IsInjured()) return;
 
             dbPlayer.ShowLicenses(destinationPlayer);
             dbPlayer.SendNewNotification(
@@ -1515,7 +1515,7 @@ namespace VMP_CNR.Module.Players
                     }
                 }
 
-                if (dbPlayer.IsInAdminDuty() || dbPlayer.jailtime[0] > 0) return;
+                if (dbPlayer.IsInAdminDuty() || dbPlayer.JailTime[0] > 0) return;
 
                 await MobileClothModule.Instance.PlayerSwitchMaskState(dbPlayer);
             }
@@ -1802,7 +1802,7 @@ namespace VMP_CNR.Module.Players
                 voicetype = dbPlayer.GetData("voiceType");
             }
 
-            if (dbPlayer.jailtime[0] > 0) return; // in jail ignore it...
+            if (dbPlayer.JailTime[0] > 0) return; // in jail ignore it...
 
             if (voicetype == 1)
             {

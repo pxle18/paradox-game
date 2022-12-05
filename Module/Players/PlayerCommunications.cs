@@ -7,7 +7,7 @@ namespace VMP_CNR.Module.Players
     {
         public static bool CanCommunicate(this DbPlayer dbPlayer)
         {
-            return !(dbPlayer.isInjured() || dbPlayer.jailtime[0] > 0 ||
+            return !(dbPlayer.IsInjured() || dbPlayer.JailTime[0] > 0 ||
                      dbPlayer.IsCuffed || dbPlayer.IsTied);
         }
 

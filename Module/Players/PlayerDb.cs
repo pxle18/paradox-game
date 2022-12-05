@@ -194,52 +194,52 @@ namespace VMP_CNR.Module.Players
                 ups.Add(query);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.money, "Money")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.Money, "Money")) != "")
             {
-                dbPlayer.money[1] = dbPlayer.money[0];
+                dbPlayer.Money[1] = dbPlayer.Money[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.blackmoney, "blackmoney")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.BlackMoney, "blackmoney")) != "")
             {
-                dbPlayer.blackmoney[1] = dbPlayer.blackmoney[0];
+                dbPlayer.BlackMoney[1] = dbPlayer.BlackMoney[0];
                 ups.Add(xstr);
             }
 
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.blackmoneybank, "blackmoneybank")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.BlackMoneyBank, "blackmoneybank")) != "")
             {
-                dbPlayer.blackmoneybank[1] = dbPlayer.blackmoneybank[0];
+                dbPlayer.BlackMoneyBank[1] = dbPlayer.BlackMoneyBank[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.bank_money, "BankMoney")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.BankMoney, "BankMoney")) != "")
             {
-                dbPlayer.bank_money[1] = dbPlayer.bank_money[0];
+                dbPlayer.BankMoney[1] = dbPlayer.BankMoney[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.payday, "payday")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.PayDay, "payday")) != "")
             {
-                dbPlayer.payday[1] = dbPlayer.payday[0];
+                dbPlayer.PayDay[1] = dbPlayer.PayDay[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.rp, "rp")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.RP, "rp")) != "")
             {
-                dbPlayer.rp[1] = dbPlayer.rp[0];
+                dbPlayer.RP[1] = dbPlayer.RP[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.ownHouse, "ownHouse")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.OwnHouse, "ownHouse")) != "")
             {
-                dbPlayer.ownHouse[1] = dbPlayer.ownHouse[0];
+                dbPlayer.OwnHouse[1] = dbPlayer.OwnHouse[0];
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.wanteds, "wanteds")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.Wanteds, "wanteds")) != "")
             {
-                dbPlayer.wanteds[1] = dbPlayer.wanteds[0];
+                dbPlayer.Wanteds[1] = dbPlayer.Wanteds[0];
                 ups.Add(xstr);
             }
 
@@ -328,15 +328,15 @@ namespace VMP_CNR.Module.Players
                 ups.Add(xstr);
             }
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.jobskill, "jobskills")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.JobSkill, "jobskills")) != "")
             {
-                dbPlayer.jobskill[1] = dbPlayer.jobskill[0];
+                dbPlayer.JobSkill[1] = dbPlayer.JobSkill[0];
                 ups.Add(xstr);
             }
                         
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.jailtime, "jailtime")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.JailTime, "jailtime")) != "")
             {
-                dbPlayer.jailtime[1] = dbPlayer.jailtime[0];
+                dbPlayer.JailTime[1] = dbPlayer.JailTime[0];
                 ups.Add(xstr);
             }
 
@@ -371,9 +371,9 @@ namespace VMP_CNR.Module.Players
             }
 
 
-            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.hasPerso, "Perso")) != "")
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.HasPerso, "Perso")) != "")
             {
-                dbPlayer.hasPerso[1] = dbPlayer.hasPerso[0];
+                dbPlayer.HasPerso[1] = dbPlayer.HasPerso[0];
                 ups.Add(xstr);
             }
 
@@ -535,7 +535,7 @@ namespace VMP_CNR.Module.Players
                         
 
             // Save immer Injured Position
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
             {
                 // Position Saving
                 string px = "";
@@ -623,7 +623,7 @@ namespace VMP_CNR.Module.Players
         {
             string playerjob = Convert.ToString(dbPlayer.job[0]);
             string jobskills = dbPlayer.job_skills[0];
-            int actualskill = Convert.ToInt32(dbPlayer.jobskill[0]);
+            int actualskill = Convert.ToInt32(dbPlayer.JobSkill[0]);
             string newinventory = "";
             bool found = false;
 

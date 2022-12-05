@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
             DbPlayer dbPlayer = client.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.ownHouse[0] == 0)
+            if (dbPlayer.OwnHouse[0] == 0)
             {
                 dbPlayer.SendNewNotification("Du besitzt kein Haus.");
                 return;
@@ -36,11 +36,11 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
             if (!client.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = client.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            if (dbPlayer.ownHouse[0] == 0) return;
+            if (dbPlayer.OwnHouse[0] == 0) return;
 
             House iHouse;
 
-            if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position)) == null || iHouse.Id != dbPlayer.ownHouse[0])
+            if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position)) == null || iHouse.Id != dbPlayer.OwnHouse[0])
             {
                 dbPlayer.SendNewNotification("Sie befinden sich nicht an Ihrem Haus!", title: "Hauskasse", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;

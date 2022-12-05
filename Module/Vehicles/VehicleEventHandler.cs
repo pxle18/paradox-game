@@ -758,7 +758,7 @@ namespace VMP_CNR.Module.Vehicles
             await x.useInventoryItem(client, dbPlayer.Container.GetSlotOfSimilairSingleItems(repairKitItem), key);
 
             // verfiy player can interact
-            if (dbPlayer.isInjured() || dbPlayer.IsCuffed)
+            if (dbPlayer.IsInjured() || dbPlayer.IsCuffed)
             {
                 dbPlayer.SendNewNotification(
                     "Sie koennen diese Funktion derzeit nicht benutzen.");

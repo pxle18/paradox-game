@@ -63,7 +63,7 @@ namespace VMP_CNR
                         Business biz = BusinessModule.Instance.GetById((uint)tattooShop.BusinessId);
                         if (biz != null)
                         {
-                            ComponentManager.Get<BankWindow>().Show()(dbPlayer, "TattooStudioBank", dbPlayer.GetName(), dbPlayer.money[0], tattooShop.Bank, 0, biz.BankHistory);
+                            ComponentManager.Get<BankWindow>().Show()(dbPlayer, "TattooStudioBank", dbPlayer.GetName(), dbPlayer.Money[0], tattooShop.Bank, 0, biz.BankHistory);
                         }
                         break;
                     case 1: // Tattowieren

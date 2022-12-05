@@ -134,7 +134,7 @@ namespace VMP_CNR.Module.Injury
                 return;
             }
 
-            if (iKiller != null && iKiller.IsValid() && iKiller.IsACop() && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.isInjured())
+            if (iKiller != null && iKiller.IsValid() && iKiller.IsACop() && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.IsInjured())
             {
                 dbPlayer.SetData("SMGkilledPos", dbPlayer.Player.Position);
                 dbPlayer.SetData("SMGkilledDim", dbPlayer.Player.Dimension);
@@ -153,21 +153,21 @@ namespace VMP_CNR.Module.Injury
                 dbPlayer.dead_z[0] = RacingModule.RacingMenuPosition.Z;
             }
 
-            if (dbPlayer.NeuEingereist())
+            if (dbPlayer.IsNewbie())
             {
-                dbPlayer.revive();
+                dbPlayer.Revive();
                 return;
             }
 
             // SetTMP Dimension
             dbPlayer.SetData("tmpDeathDimension", dbPlayer.Player.Dimension);
 
-            if (!dbPlayer.isAlive()) return; // Erneuter Tot verhindern
+            if (!dbPlayer.IsAlive()) return; // Erneuter Tot verhindern
 
             // if death in jail add jailtime +10
-            if (dbPlayer.jailtime[0] > 0)
+            if (dbPlayer.JailTime[0] > 0)
             {
-                dbPlayer.jailtime[0] += 10;
+                dbPlayer.JailTime[0] += 10;
             }
 
             dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
@@ -286,7 +286,7 @@ namespace VMP_CNR.Module.Injury
             if (dbPlayer == null || !dbPlayer.IsValid())
                 return;
 
-            if (!dbPlayer.isInjured()) return;
+            if (!dbPlayer.IsInjured()) return;
 
             if (dbPlayer.Injury.Id != InjuryModule.Instance.InjuryKrankentransport && !dbPlayer.RageExtension.IsInVehicle)
             {
@@ -297,7 +297,7 @@ namespace VMP_CNR.Module.Injury
             {
                 // isch da son medischiner in der näh? dann machn wa ken timer runna sonst gibbet huddel
                 if (TeamModule.Instance.Get((uint)teams.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() && 
-                m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 10.0f && !m.isInjured() && !m.IsCuffed && !m.IsTied && m.IsInDuty()).Count() <= 0)
+                m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 10.0f && !m.IsInjured() && !m.IsCuffed && !m.IsTied && m.IsInDuty()).Count() <= 0)
                 {
                     dbPlayer.deadtime[0]++;
                 }
@@ -311,7 +311,7 @@ namespace VMP_CNR.Module.Injury
 
             if (dbPlayer.Injury.Id == InjuryGangwar)
             {
-                dbPlayer.revive();
+                dbPlayer.Revive();
                 if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team))
                 {
                     dbPlayer.Player.SetPosition(GangwarTownModule.Instance.GetGangwarTownSpawnByTeam(dbPlayer.Team));
@@ -341,7 +341,7 @@ namespace VMP_CNR.Module.Injury
             }
             else if (dbPlayer.Injury.Id == InjuryTeamfight)
             {
-                dbPlayer.revive();
+                dbPlayer.Revive();
                 PlayerSpawn.OnPlayerSpawn(dbPlayer.Player);
                 return;
             }
@@ -359,7 +359,7 @@ namespace VMP_CNR.Module.Injury
         {
             if (colShapeState == ColShapeState.Enter && colShape.HasData("injuryDeliverId"))
             {
-                if (dbPlayer.isInjured() && dbPlayer.RageExtension.IsInVehicle)
+                if (dbPlayer.IsInjured() && dbPlayer.RageExtension.IsInVehicle)
                 {
                     SxVehicle sxVehicle = dbPlayer.Player.Vehicle.GetVehicle();
                     if (sxVehicle == null || !sxVehicle.IsTeamVehicle()) return false;
@@ -505,9 +505,9 @@ namespace VMP_CNR.Module.Injury
 
 
             var findPlayer = Players.Players.Instance.FindPlayer(name);
-            if (findPlayer == null || findPlayer.isAlive()) return;
+            if (findPlayer == null || findPlayer.IsAlive()) return;
 
-            findPlayer.revive();
+            findPlayer.Revive();
 
             dbPlayer.SendNewNotification(
           "Sie haben " + findPlayer.GetName() +

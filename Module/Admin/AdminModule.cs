@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             // Deathlog
-            LogHandler.LogDeath(dbPlayer.GetName(), iKiller.Id, iKiller.GetName(), killerweapon, type, dbPlayer.money[0]);
+            LogHandler.LogDeath(dbPlayer.GetName(), iKiller.Id, iKiller.GetName(), killerweapon, type, dbPlayer.Money[0]);
             return false;
         }
     }

@@ -149,7 +149,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
 
                 if (dbPlayer.Player.Position.DistanceTo(JobMenuPosition) < 1.0f)
                 {
-                    if(dbPlayer.jailtime[0] > 5)
+                    if(dbPlayer.JailTime[0] > 5)
                     {
                         Module.Menu.MenuManager.Instance.Build(VMP_CNR.Module.Menu.PlayerMenu.SGJobChooseMenu, dbPlayer).Show(dbPlayer);
                         return false;

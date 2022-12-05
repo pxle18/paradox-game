@@ -122,7 +122,7 @@ namespace VMP_CNR.Module.Players
             if (!dbPlayer.IsValid()) return false;
             if (dbPlayer.IsInAnimation()) return false;
             if (dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
-            if (dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsInjured()) return false;
             if (dbPlayer.HasData("follow")) return false;
             if (dbPlayer.HasData("userCannotInterrupt") && Convert.ToBoolean(dbPlayer.GetData("userCannotInterrupt"))) return false;
             if (FarmingModule.FarmingList.Contains(dbPlayer) && !ignoreFarming) return false;

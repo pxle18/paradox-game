@@ -35,7 +35,7 @@ namespace VMP_CNR.Module.Injury
             foreach (InjuryDeliverIntPoint injuryDeliverIntPoint in InjuryDeliverIntPointModule.Instance.GetAll().Values.Where(ijdip => ijdip.DeliverId == Id))
             {
                 // find player on that point
-                if (Players.Players.Instance.GetValidPlayers().Where(p => p.isInjured() && p.Player.Position.DistanceTo(injuryDeliverIntPoint.Position) < 1.2f).Count() > 0) continue;
+                if (Players.Players.Instance.GetValidPlayers().Where(p => p.IsInjured() && p.Player.Position.DistanceTo(injuryDeliverIntPoint.Position) < 1.2f).Count() > 0) continue;
                 else return injuryDeliverIntPoint;
             }
             return null;

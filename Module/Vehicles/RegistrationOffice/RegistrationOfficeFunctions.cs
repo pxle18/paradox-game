@@ -31,7 +31,7 @@ namespace VMP_CNR.Module.Vehicles.RegistrationOffice
 
             //calculate costs for plate 
             int costs = wish == true ? REGISTRATION_COST_WISH : REGISTRATION_COST_NORMAL;
-            if (owner.bank_money[0] < costs)
+            if (owner.BankMoney[0] < costs)
             {
                 worker.SendNewNotification($"Das Konto des Kunden ist nicht gedeckt. {costs}$");
                 owner.SendNewNotification("Ihr Konto ist nicht gedeckt... Sie benoetigen $" + costs);

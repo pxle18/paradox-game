@@ -28,26 +28,26 @@ namespace VMP_CNR.Module.Injury
 {
     public static class InjuryPlayerExtension
     {
-        private static uint FirstAidKitGangsterId = 676;
-        private static uint FirstAidKitCops = 677;
+        private static readonly uint FirstAidKitGangsterId = 676;
+        private static readonly uint FirstAidKitCops = 677;
 
-        public static bool isInjured(this DbPlayer dbPlayer)
+        public static bool IsInjured(this DbPlayer dbPlayer)
         {
             return dbPlayer.Injury.Id != 0;
         }
         
-        public static bool isAlive(this DbPlayer dbPlayer)
+        public static bool IsAlive(this DbPlayer dbPlayer)
         {
-            return !isInjured(dbPlayer);
+            return !IsInjured(dbPlayer);
         }
 
-        public static void revive(this DbPlayer dbPlayer)
+        public static void Revive(this DbPlayer dbPlayer)
         {
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
             {
                 dbPlayer.Player.TriggerNewClient("setInvincible", false);
                 dbPlayer.Freeze(false, false, true);
-                dbPlayer.Freezed = false;
+                dbPlayer.IsFreezed = false;
                 dbPlayer.StopAnimation();
                 //dbPlayer.Player.SetSharedData("death", false);
                 dbPlayer.Injury = InjuryTypeModule.Instance.Get(0); // Gets Alive Injury
@@ -103,7 +103,7 @@ namespace VMP_CNR.Module.Injury
         
         public static void SetWayToKH(this DbPlayer dbPlayer)
         {
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
             {
                 InjuryType WayToKh = InjuryTypeModule.Instance.Get(InjuryModule.Instance.InjuryKrankentransport);
                 dbPlayer.SetPlayerInjury(WayToKh);
@@ -128,7 +128,7 @@ namespace VMP_CNR.Module.Injury
             dbPlayer.Container.ClearInventory();
 
             dbPlayer.ResetBuffs();
-            dbPlayer.TakeBlackMoney(dbPlayer.blackmoney[0]); // reset lul
+            dbPlayer.TakeBlackMoney(dbPlayer.BlackMoney[0]); // reset lul
             dbPlayer.ResetHandMoney();
 
             VoiceListHandler.AddToDeath(dbPlayer);
@@ -153,7 +153,7 @@ namespace VMP_CNR.Module.Injury
             ComponentManager.Get<DeathWindow>().Close(dbPlayer.Player);
 
             dbPlayer.Injury = InjuryTypeModule.Instance.Get(0);
-            if(dbPlayer.jailtime[0] <= 0) dbPlayer.SetData("komaSpawn", true);
+            if(dbPlayer.JailTime[0] <= 0) dbPlayer.SetData("komaSpawn", true);
             PlayerSpawn.OnPlayerSpawn(dbPlayer.Player);
             VoiceListHandler.RemoveFromDeath(dbPlayer);
         }
@@ -161,7 +161,7 @@ namespace VMP_CNR.Module.Injury
         // Set Player to Stabilized Injury if exists
         public static void Stabilize(this DbPlayer dbPlayer)
         {
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
             {
                 if (dbPlayer.Injury.StabilizedInjuryId != 0 && dbPlayer.Injury.Id != InjuryModule.Instance.InjuryGangwar)
                 {
@@ -176,7 +176,7 @@ namespace VMP_CNR.Module.Injury
         public static async Task Medicate(this DbPlayer dbPlayer, DbPlayer medic)
         {
             if (dbPlayer == null || medic == null || !dbPlayer.IsValid() || !medic.IsValid()) return;
-            if (dbPlayer.isInjured())
+            if (dbPlayer.IsInjured())
             {
                 if(dbPlayer.Injury.Id == InjuryModule.Instance.InjuryDeathScreenId)
                 {
@@ -363,7 +363,7 @@ namespace VMP_CNR.Module.Injury
                             medic.StopAnimation();
 
                             //ToDo: Make player walk injured for some time
-                            dbPlayer.revive();
+                            dbPlayer.Revive();
                             NutritionModule.Instance.setHealthy(dbPlayer);
                             dbPlayer.SendNewNotification($"Du wurdest vom Medic behandelt!");
                             
@@ -507,7 +507,7 @@ namespace VMP_CNR.Module.Injury
         {
             try
             {
-                if (dbPlayer.isInjured())
+                if (dbPlayer.IsInjured())
                 {
                     // Set Voice To Normal
                     dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.normal);

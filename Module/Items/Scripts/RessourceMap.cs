@@ -36,7 +36,7 @@ namespace VMP_CNR.Module.Items.Scripts
             }
 
             dbPlayer.Player.TriggerNewClient("hideInventory");
-            dbPlayer.watchDialog = 0;
+            dbPlayer.WatchDialog = 0;
             dbPlayer.ResetData("invType");
 
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_ressourcemap);

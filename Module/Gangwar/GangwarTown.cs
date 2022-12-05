@@ -301,7 +301,7 @@ namespace VMP_CNR.Module.Gangwar
 
             foreach ((uint key, DbPlayer value) in gangwarTown.AttackerTeam.Members.Where(item => item.Value != null && item.Value.IsValid()))
             {
-                if (value.isInjured() || value.Dimension[0] != GangwarModule.Instance.DefaultDimension) continue;
+                if (value.IsInjured() || value.Dimension[0] != GangwarModule.Instance.DefaultDimension) continue;
 
                 TeamSpawn spawn = value.Team.TeamSpawns.FirstOrDefault().Value;
                 if (spawn == null) continue;
@@ -311,7 +311,7 @@ namespace VMP_CNR.Module.Gangwar
 
             foreach ((uint key, DbPlayer value) in gangwarTown.DefenderTeam.Members.Where(item => item.Value != null && item.Value.IsValid()).Where(item => item.Value != null))
             {
-                if (value.isInjured() || value.Dimension[0] != GangwarModule.Instance.DefaultDimension) continue;
+                if (value.IsInjured() || value.Dimension[0] != GangwarModule.Instance.DefaultDimension) continue;
 
                 TeamSpawn spawn = value.Team.TeamSpawns.FirstOrDefault().Value;
                 if (spawn == null) continue;

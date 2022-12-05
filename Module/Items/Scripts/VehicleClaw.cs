@@ -87,7 +87,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
             {
-                if (dbPlayer.isInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
+                if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
                 sxVehicle.WheelClamp = 0;
@@ -104,7 +104,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
         public static async Task<bool> DoVehicleClaw(DbPlayer dbPlayer, SxVehicle sxVehicle, bool isStaatsClaw, string reason)
         {
-            if (dbPlayer.isInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
+            if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
             if (reason == "")
             {
                 dbPlayer.SendNewNotification("Kein Grund angegeben");
@@ -132,7 +132,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             await NAPI.Task.WaitForMainThread(60000);
 
-            if (dbPlayer.isInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
+            if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
             dbPlayer.StopAnimation();
 

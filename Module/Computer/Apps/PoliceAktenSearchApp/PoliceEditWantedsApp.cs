@@ -148,7 +148,7 @@ namespace VMP_CNR.Module.Computer.Apps.PoliceAktenSearchApp
             List<uint> crimesList = JsonConvert.DeserializeObject<List<uint>>(crimes);
 
             var suspect = Players.Players.Instance.FindPlayer(name);
-            if (suspect == null || crimesList == null || suspect.isInjured()) return;
+            if (suspect == null || crimesList == null || suspect.IsInjured()) return;
             foreach(uint crime in crimesList)
             {
                 suspect.AddCrime(dbPlayer, CrimeReasonModule.Instance.Get((uint)crime));

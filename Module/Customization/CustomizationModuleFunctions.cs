@@ -28,7 +28,7 @@ namespace VMP_CNR.Module.Customization
         
         public static void ApplyCharacter(this DbPlayer dbPlayer, bool loadArmorHealthFromDBValue = false, bool ignoreOutfit = false)
         {
-            if (!dbPlayer.Firstspawn && !loadArmorHealthFromDBValue) dbPlayer.UpdatePlayerHealthAndArmor();
+            if (!dbPlayer.IsFirstSpawn && !loadArmorHealthFromDBValue) dbPlayer.UpdatePlayerHealthAndArmor();
 
             if (dbPlayer.HasData("clonePerson"))
             {
@@ -343,7 +343,7 @@ namespace VMP_CNR.Module.Customization
         {
             var player = dbPlayer.Player;
 
-            if (dbPlayer.NeuEingereist())
+            if (dbPlayer.IsNewbie())
             {
                 var pos = new GTANetworkAPI.Vector3(-1144.26, -2792.27, 27.708);
                 float heading = 237.428f;
@@ -427,7 +427,7 @@ namespace VMP_CNR.Module.Customization
                 dbPlayer.SetArmorPlayer(dbPlayer.GetData("lastArmor"));
             }
 
-            if(dbPlayer.NeuEingereist())
+            if(dbPlayer.IsNewbie())
             {
                 dbPlayer.SetDimension(dbPlayer.Id);
 

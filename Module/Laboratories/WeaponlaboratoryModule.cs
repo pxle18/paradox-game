@@ -101,9 +101,6 @@ namespace VMP_CNR.Module.Laboratories
             }
             if (weaponlaboratory != null && dbPlayer.Player.Position.DistanceTo(Coordinates.WeaponlaboratoryWeaponBuildMenuPosition) < 1.0f)
             {
-                dbPlayer.SendNewNotification("Die Werkbank scheint defekt zu sein...");
-                return true;
-
                 MenuManager.Instance.Build(PlayerMenu.LaboratoryWeaponMenu, dbPlayer).Show(dbPlayer);
                 return true;
             }

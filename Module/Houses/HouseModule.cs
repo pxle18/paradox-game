@@ -65,7 +65,7 @@ namespace VMP_CNR.Module.Houses
                 if (!dbPlayer.HasData("inHouse")) return false;
 
                 if ((iHouse = this[dbPlayer.GetData("inHouse")]) == null) return false;
-                if (iHouse.Id != dbPlayer.ownHouse[0] && !iHouse.IsTenant(dbPlayer) && !dbPlayer.HouseKeys.Contains(iHouse.Id)) return false;
+                if (iHouse.Id != dbPlayer.OwnHouse[0] && !iHouse.IsTenant(dbPlayer) && !dbPlayer.HouseKeys.Contains(iHouse.Id)) return false;
                 if (iHouse.LastBreak.AddMinutes(10) > DateTime.Now) return false;
                 if (iHouse.Locked)
                 {
@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Houses
             {
                 iHouse = this[dbPlayer.GetData("houseId")];
                 if (iHouse == null) return false;
-                if (iHouse.Id != dbPlayer.ownHouse[0] && !iHouse.IsTenant(dbPlayer) && !dbPlayer.HouseKeys.Contains(iHouse.Id)) return false;
+                if (iHouse.Id != dbPlayer.OwnHouse[0] && !iHouse.IsTenant(dbPlayer) && !dbPlayer.HouseKeys.Contains(iHouse.Id)) return false;
                 if (iHouse.LastBreak.AddMinutes(10) > DateTime.Now) return false;
                 if (iHouse.Locked)
                 {

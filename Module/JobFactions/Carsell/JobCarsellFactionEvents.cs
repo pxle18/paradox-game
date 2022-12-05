@@ -126,7 +126,7 @@ namespace VMP_CNR.Module.JobFactions.Carsell
                 return;
             }
 
-            if (customer.bank_money[0] < price)
+            if (customer.BankMoney[0] < price)
             {
                 dbPlayer.SendNewNotification($"Kunde hat nicht genug Geld auf dem Konto!");
                 return;

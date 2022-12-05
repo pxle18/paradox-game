@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Makler
                 return;
             }
 
-            if (buyer.ownHouse[0] > 0)
+            if (buyer.OwnHouse[0] > 0)
             {
                 dbPlayer.SendNewNotification("Der Kunde besitzt bereits ein Haus!");
                 return;
@@ -132,21 +132,21 @@ namespace VMP_CNR.Module.Makler
                     return;
                 }
 
-                if (price > 500000 && dbPlayer.jobskill[0] < 1000)
+                if (price > 500000 && dbPlayer.JobSkill[0] < 1000)
                 {
                     dbPlayer.SendNewNotification(
                         "Sie benötigen mindestens 1000 Skillpunkte bei einem Wert ueber $500.000");
                     return;
                 }
 
-                if (price > 1000000 && dbPlayer.jobskill[0] < 2500)
+                if (price > 1000000 && dbPlayer.JobSkill[0] < 2500)
                 {
                     dbPlayer.SendNewNotification(
                         "Sie benötigen mindestens 2500 Skillpunkte bei einem Wert ueber $1.000.000");
                     return;
                 }
 
-                if (price > 5000000 && dbPlayer.jobskill[0] < 5000)
+                if (price > 5000000 && dbPlayer.JobSkill[0] < 5000)
                 {
                     dbPlayer.SendNewNotification(
                         "Sie benötigen mindestens 5000 Skillpunkte bei einem Wert ueber $5.000.000");
@@ -234,9 +234,9 @@ namespace VMP_CNR.Module.Makler
             }
 
             // Haus switch Process
-            owner.ownHouse[0] = 0;
+            owner.OwnHouse[0] = 0;
             if (owner.IsTenant()) owner.RemoveTenant();
-            customer.ownHouse[0] = iHouse.Id;
+            customer.OwnHouse[0] = iHouse.Id;
 
             HouseKeyHandler.Instance.DeleteAllHouseKeys(iHouse);
             iHouse.OwnerId = customer.Id;

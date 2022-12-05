@@ -21,10 +21,10 @@ namespace VMP_CNR
             menu.Add(GlobalMessages.General.Close(), "");
 
 
-            if (dbPlayer.ownHouse[0] > 0)
+            if (dbPlayer.OwnHouse[0] > 0)
             {
                 menu.Add(
-                    "~g~Hausschluessel " + dbPlayer.ownHouse[0],
+                    "~g~Hausschluessel " + dbPlayer.OwnHouse[0],
                     "Klicken um Schluessel zu vergeben");
             }
 
@@ -61,9 +61,9 @@ namespace VMP_CNR
 
                 if (index == 1)
                 {
-                    if (dbPlayer.ownHouse[0] > 0)
+                    if (dbPlayer.OwnHouse[0] > 0)
                     {
-                        dbPlayer.SetData("sKeyId", (uint) dbPlayer.ownHouse[0]);
+                        dbPlayer.SetData("sKeyId", (uint) dbPlayer.OwnHouse[0]);
 
                         // Chose Menu
                         MenuManager.DismissMenu(dbPlayer.Player, (int) PlayerMenu.AccountHouseKeys);

@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Injury.InjuryMove
                 case ColShapeState.Enter:
                     dbPlayer.SetData("InjuryMovePointID", InjuryMoveID);
 
-                    if (dbPlayer.isInjured())
+                    if (dbPlayer.IsInjured())
                     {
                         dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.whisper);
                         dbPlayer.SetData("voiceType", 3);

@@ -168,7 +168,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
         public List<Main.GarageVehicle> GetAvailableVehicles(DbPlayer dbPlayer, int radius = 25)
         {
             var vehicles = new List<Main.GarageVehicle>();
-            if (HouseId > 0 && (dbPlayer.ownHouse[0] != HouseId)) return vehicles;
+            if (HouseId > 0 && (dbPlayer.OwnHouse[0] != HouseId)) return vehicles;
 
             // Fraktionsgarage
             if (IsTeamGarage())

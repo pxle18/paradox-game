@@ -7,9 +7,9 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static bool Houserent(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if(dbPlayer.ownHouse[0] > 0)
+            if(dbPlayer.OwnHouse[0] > 0)
             {
-                if (dbPlayer.HasData("houseId") && dbPlayer.GetData("houseId") == dbPlayer.ownHouse[0])
+                if (dbPlayer.HasData("houseId") && dbPlayer.GetData("houseId") == dbPlayer.OwnHouse[0])
                 {
                     Menu.MenuManager.Instance.Build(Menu.PlayerMenu.HouseRentContract, dbPlayer).Show(dbPlayer);
                     dbPlayer.SendNewNotification("Sie stellen nun den Mietvertrag aus!");

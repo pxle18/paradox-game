@@ -114,7 +114,7 @@ namespace VMP_CNR.Module.Menu
         public static void CloseUserDialog(Player player, uint dialogid)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            dbPlayer.watchDialog = 0;
+            dbPlayer.WatchDialog = 0;
             player.TriggerNewClient("deleteDialog");
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);

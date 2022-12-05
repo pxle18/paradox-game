@@ -156,7 +156,7 @@ namespace VMP_CNR.Module.Anticheat
                             dbPlayer.AcDimensionCheck();
                         }
 
-                        if (ServerFeatures.IsActive("ac-exiteacheck") && !dbPlayer.Firstspawn)
+                        if (ServerFeatures.IsActive("ac-exiteacheck") && !dbPlayer.IsFirstSpawn)
                         {
                             dbPlayer.AcEinreiseAmtCheck();
                         }
@@ -167,13 +167,13 @@ namespace VMP_CNR.Module.Anticheat
                         }
 
                         // Armorstuff AC
-                        if (ServerFeatures.IsActive("ac-armor") && !dbPlayer.Firstspawn)
+                        if (ServerFeatures.IsActive("ac-armor") && !dbPlayer.IsFirstSpawn)
                         {
                             dbPlayer.AcArmorCheck();
                         }
 
                         // Healthstuff AC
-                        if (ServerFeatures.IsActive("ac-health") && !dbPlayer.Firstspawn)
+                        if (ServerFeatures.IsActive("ac-health") && !dbPlayer.IsFirstSpawn)
                         {
                             dbPlayer.AcHealthCheck();
                         }
@@ -235,7 +235,7 @@ namespace VMP_CNR.Module.Anticheat
     {
         public static void AcEinreiseAmtCheck(this DbPlayer dbPlayer)
         {
-            if (dbPlayer.hasPerso[0] == 0)
+            if (dbPlayer.HasPerso[0] == 0)
             {
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(-1144.26, -2792.27, 27.7081)) > 150
                     && dbPlayer.Player.Position.DistanceTo(EinreiseamtModule.PositionPC1) > 150
@@ -428,9 +428,9 @@ namespace VMP_CNR.Module.Anticheat
         {
             if (dbPlayer.HasData("ac_lastPos"))
             {
-                if (dbPlayer.HasData("Teleport") || dbPlayer.RageExtension.IsInVehicle || dbPlayer.Firstspawn)
+                if (dbPlayer.HasData("Teleport") || dbPlayer.RageExtension.IsInVehicle || dbPlayer.IsFirstSpawn)
                 {
-                    if (dbPlayer.Firstspawn)
+                    if (dbPlayer.IsFirstSpawn)
                     {
                         if (dbPlayer.GetData("Teleport") < 5)
                         {

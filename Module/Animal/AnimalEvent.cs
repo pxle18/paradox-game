@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Animal
             {
                 DbPlayer targetPlayer = target.GetPlayer();
 
-                if (targetPlayer != null && targetPlayer.IsValid() && !targetPlayer.isInjured())
+                if (targetPlayer != null && targetPlayer.IsValid() && !targetPlayer.IsInjured())
                 {
                     if (dbPlayer.PlayerPed != null && dbPlayer.PlayerPed.Spawned)
                     {

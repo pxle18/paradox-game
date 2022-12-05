@@ -43,10 +43,10 @@ namespace VMP_CNR.Module.Jails
             {
                 if (dbPlayer.IsACop() && dbPlayer.IsInDuty()) return false;
 
-                var wanteds = dbPlayer.wanteds[0];
-                if (dbPlayer.TempWanteds > 0 && dbPlayer.wanteds[0] < 30) wanteds = 30;
+                var wanteds = dbPlayer.Wanteds[0];
+                if (dbPlayer.TempWanteds > 0 && dbPlayer.Wanteds[0] < 30) wanteds = 30;
 
-                if(dbPlayer.jailtime[0] > 0)
+                if(dbPlayer.JailTime[0] > 0)
                 {
                     // already inhaftiert
                     return false;
@@ -58,16 +58,16 @@ namespace VMP_CNR.Module.Jails
                 // Checke auf Jailtime
                 if (jailtime > 0 && jailtime <= 29 && colShape.GetData<int>("jailGroup") != 5)
                 {
-                    dbPlayer.jailtime[0] = jailtime;
-                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.jailtime[0] / 3);
+                    dbPlayer.JailTime[0] = jailtime;
+                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
                     dbPlayer.ArrestPlayer(null, false);
                     dbPlayer.ApplyCharacter();
                     dbPlayer.SetData("inJailGroup", colShape.GetData<int>("jailGroup"));
                 } // group 5 == sg
                 else if(colShape.GetData<int>("jailGroup") == 5 && jailtime >= 30)
                 {
-                    dbPlayer.jailtime[0] = jailtime;
-                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.jailtime[0] / 3);
+                    dbPlayer.JailTime[0] = jailtime;
+                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
                     dbPlayer.ArrestPlayer(null, false);
                     dbPlayer.ApplyCharacter();
                     dbPlayer.SetData("inJailGroup", colShape.GetData<int>("jailGroup"));

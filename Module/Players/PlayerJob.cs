@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Players
                     string[] parts = item.Split(':');
                     if (parts[0] == Convert.ToString(dbPlayer.job[0]))
                     {
-                        dbPlayer.jobskill[0] = Convert.ToInt32(parts[1]);
+                        dbPlayer.JobSkill[0] = Convert.ToInt32(parts[1]);
                         return;
                     }
                 }
@@ -53,8 +53,8 @@ namespace VMP_CNR.Module.Players
                 rand = pureinc;
             }
 
-            if (dbPlayer.jobskill[0] >= 5000) return;
-            if (dbPlayer.jobskill[0] + rand < 5000)
+            if (dbPlayer.JobSkill[0] >= 5000) return;
+            if (dbPlayer.JobSkill[0] + rand < 5000)
             {
                 if (dbPlayer.uni_workaholic[0] > 0)
                 {
@@ -62,14 +62,14 @@ namespace VMP_CNR.Module.Players
                     rand = Convert.ToInt32((rand * (multiplierx)) / 100);
                 }
 
-                dbPlayer.jobskill[0] += rand;
+                dbPlayer.JobSkill[0] += rand;
                 var xJob = JobsModule.Instance.GetJob(dbPlayer.job[0]);
                 dbPlayer.SendNewNotification(
                     "Skill erhoeht! Beruf: " + xJob.Name);
             }
             else
             {
-                dbPlayer.jobskill[0] = 5000;
+                dbPlayer.JobSkill[0] = 5000;
                 var xJob = JobsModule.Instance.GetJob(dbPlayer.job[0]);
                 dbPlayer.SendNewNotification(
                     "Skill erhoeht! Beruf: " + xJob.Name);

@@ -226,7 +226,7 @@ namespace VMP_CNR.Module.Government.Menu
                 return;
             }
 
-            if (playerToNameChange.ownHouse[0] != 0)
+            if (playerToNameChange.OwnHouse[0] != 0)
             {
                 House house = HouseModule.Instance.GetByOwner(playerToNameChange.Id);
                 house.OwnerName = newName;

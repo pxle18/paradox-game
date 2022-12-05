@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.Commands
             if (dbPlayer.Rank.Id == 6) return true;
             if (commandPermissions.TeamId != null && dbPlayer.TeamId != commandPermissions.TeamId) return false;
             if (commandPermissions.PlayerRankPermission && !dbPlayer.Rank.Commands.Contains(methodName)) return false;
-            if (!commandPermissions.AllowedDeath && dbPlayer.isInjured() && !dbPlayer.Rank.CanAccessFeature("deathCommands"))
+            if (!commandPermissions.AllowedDeath && dbPlayer.IsInjured() && !dbPlayer.Rank.CanAccessFeature("deathCommands"))
                 return false;
             if (!commandPermissions.AllowedOnCuff && dbPlayer.IsCuffed) return false;
             if (!commandPermissions.AllowedOnTied && dbPlayer.IsTied) return false;

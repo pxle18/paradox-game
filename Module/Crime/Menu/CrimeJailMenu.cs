@@ -29,9 +29,9 @@ namespace VMP_CNR.Module.Crime
 
             menu.Add($"Schließen");
 
-            foreach (DbPlayer jailPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.jailtime[0] > 0).ToList())
+            foreach (DbPlayer jailPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.JailTime[0] > 0).ToList())
             {
-                menu.Add($"{jailPlayer.GetName()} | {jailPlayer.jailtime[0]} Hafteinheiten");
+                menu.Add($"{jailPlayer.GetName()} | {jailPlayer.JailTime[0]} Hafteinheiten");
             }
             return menu;
         }

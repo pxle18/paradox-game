@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.RemoteEvents
             if (remoteEventPermission.TeamId != null && dbPlayer.TeamId != remoteEventPermission.TeamId) return false;
             if (remoteEventPermission.PlayerRankPermission && !dbPlayer.Rank.CanAccessEvent(methodName))
                 return false;
-            if (!remoteEventPermission.AllowedDeath && dbPlayer.isInjured()) return false;
+            if (!remoteEventPermission.AllowedDeath && dbPlayer.IsInjured()) return false;
             if (!remoteEventPermission.AllowedOnCuff && dbPlayer.IsCuffed) return false;
             if (!remoteEventPermission.AllowedOnTied && dbPlayer.IsTied) return false;
             return true;

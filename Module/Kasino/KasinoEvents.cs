@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Kasino
 
                             if (KasinoDiceModule.Instance.GetAll().Where(kd => kd.Value.Participant.Contains(targetDbPlayer)).Count() > 0) continue;
 
-                            if (targetDbPlayer.money[0] >= einsatz)
+                            if (targetDbPlayer.Money[0] >= einsatz)
                             {
                                 ComponentManager.Get<ConfirmationWindow>().Show()(targetDbPlayer, new ConfirmationObject($"Würfelparty", $"Möchtest du die Würfelrunde mit Einsatz von {einsatz} $ annehmen?", "addCasinoDiceConfirm", dbPlayer.GetName(), kasinoDice.Id.ToString()));
                             }

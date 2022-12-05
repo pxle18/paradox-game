@@ -96,8 +96,9 @@ namespace VMP_CNR.Module.Configurations
             MaxPlayers = data.ContainsKey("max_players") ? int.Parse(data["max_players"]) : 1000;
 
             // Damage Multipliers
-            WeaponDamageMultipier = 0.45f;
+            WeaponDamageMultipier = 0.35f;
             MeleeDamageMultipier = 0.25f;
+
             DamageLog = data.ContainsKey("damagelog") ? bool.Parse(data["damagelog"]) : false;
 
             disableAPILogin = false;

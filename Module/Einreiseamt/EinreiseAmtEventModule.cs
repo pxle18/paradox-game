@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Einreiseamt
             if (!dbPlayer.IsEinreiseAmt()) return;
 
             var findPlayer = Players.Players.Instance.FindPlayer(returnstring);
-            if (findPlayer == null || !findPlayer.IsValid() || !findPlayer.NeuEingereist())
+            if (findPlayer == null || !findPlayer.IsValid() || !findPlayer.IsNewbie())
             {
                 dbPlayer.SendNewNotification("Bürger nicht gefunden!");
                 return;

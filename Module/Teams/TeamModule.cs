@@ -210,9 +210,9 @@ namespace VMP_CNR.Module.Teams
                 int teamsumm = 0;
                 foreach(DbPlayer member in team.Members.Values.ToList())
                 {
-                    if(member.blackmoneybank[0] > 5000)
+                    if(member.BlackMoneyBank[0] > 5000)
                     {
-                        member.blackmoneybank[0] -= 400;
+                        member.BlackMoneyBank[0] -= 400;
                         teamsumm += 340; // 90% kurs
                         member.SaveBlackMoneyBank();
                     }

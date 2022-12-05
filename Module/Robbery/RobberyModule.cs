@@ -265,7 +265,7 @@ namespace VMP_CNR.Module.Robbery
                     dbPlayer.IsInRob = true;
                     if (rob.Type == RobType.Juwelier)
                     {
-                        if (rob.Player.Player.Position.DistanceTo(new Vector3(-622.5494, -229.5598, 38.05706)) < 10.0f && !dbPlayer.isInjured())
+                        if (rob.Player.Player.Position.DistanceTo(new Vector3(-622.5494, -229.5598, 38.05706)) < 10.0f && !dbPlayer.IsInjured())
                         {
                             if (rob.Interval > 0)
                             {
@@ -319,7 +319,7 @@ namespace VMP_CNR.Module.Robbery
                     else if (rob.Type == (int)RobType.Shop)
                     {
                         var shop = ShopsModule.Instance.GetThisShop(dbPlayer.Player.Position, 15.0f);
-                        if (shop != null && !dbPlayer.isInjured() && (Math.Abs(dbPlayer.Player.Position.Z - shop.Position.Z) <= 2f))
+                        if (shop != null && !dbPlayer.IsInjured() && (Math.Abs(dbPlayer.Player.Position.Z - shop.Position.Z) <= 2f))
                         {
                             if (rob.Interval >= 2)
                             {

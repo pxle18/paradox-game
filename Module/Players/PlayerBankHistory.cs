@@ -138,12 +138,12 @@ namespace VMP_CNR.Module.Players
 
         public static void LogVermoegen(this DbPlayer dbPlayer)
         {
-            int moneyvm = dbPlayer.money[0] + dbPlayer.bank_money[0];
+            int moneyvm = dbPlayer.Money[0] + dbPlayer.BankMoney[0];
             int vehiclevm = 0;
 
             int housevm = 0;
 
-            if(dbPlayer.ownHouse[0] != 0)
+            if(dbPlayer.OwnHouse[0] != 0)
             {
                 House xHouse = HouseModule.Instance.GetByOwner(dbPlayer.Id);
                 if(xHouse != null)

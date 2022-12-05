@@ -74,8 +74,8 @@ namespace VMP_CNR.Module.Doors
 
         public bool CanOpenHouseDoor(DbPlayer dbPlayer, Door door)
         {
-            House ownHouse = HouseModule.Instance.Get(dbPlayer.ownHouse[0]);
-            if (ownHouse != null && door.Houses.Contains(HouseModule.Instance.Get(dbPlayer.ownHouse[0]).Id)) return true;
+            House ownHouse = HouseModule.Instance.Get(dbPlayer.OwnHouse[0]);
+            if (ownHouse != null && door.Houses.Contains(HouseModule.Instance.Get(dbPlayer.OwnHouse[0]).Id)) return true;
 
             foreach (uint houseId in door.Houses)
             {

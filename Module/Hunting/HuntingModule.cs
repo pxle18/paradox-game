@@ -169,8 +169,8 @@ namespace VMP_CNR.Module.Hunting
                             // handle attacks
                             if (animalData.CanAttack) // mountainlion
                             {
-                                    DbPlayer target = Players.Players.Instance.GetPlayersInRange(entityPos, 15).ToList().Where(p => p != null && p.IsValid() && !p.isInjured()).FirstOrDefault();
-                                    if (target != null && target.IsValid() && !target.isInjured())
+                                    DbPlayer target = Players.Players.Instance.GetPlayersInRange(entityPos, 15).ToList().Where(p => p != null && p.IsValid() && !p.IsInjured()).FirstOrDefault();
+                                    if (target != null && target.IsValid() && !target.IsInjured())
                                     {
                                         kvp.Key.Controller.TriggerNewClient("animal_attack", kvp.Key, target.Player);
                                         continue;
@@ -249,7 +249,7 @@ namespace VMP_CNR.Module.Hunting
             if (!ServerFeatures.IsActive("hunting"))
                 return false;
 
-            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.isInjured()) return false;
+            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.IsInjured()) return false;
 
             if(colShapeState == ColShapeState.Enter)
             {

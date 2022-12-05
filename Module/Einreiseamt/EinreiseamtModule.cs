@@ -56,7 +56,7 @@ namespace VMP_CNR.Module.Einreiseamt
             if (!dbPlayer.IsEinreiseAmt()) return;
 
             string names = "";
-            foreach(DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(p => p.NeuEingereist()))
+            foreach(DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(p => p.IsNewbie()))
             {
                 names += xPlayer.GetName() + " ,";
             }
@@ -138,14 +138,9 @@ namespace VMP_CNR.Module.Einreiseamt
             return dbPlayer.Einwanderung == 1;
         }
 
-        public static void EinreiseSpawn(this DbPlayer dbPlayer)
+        public static bool IsNewbie(this DbPlayer dbPlayer)
         {
-            dbPlayer.SendNewNotification("Neuer Spieler im Einreiseamt | Insg: " + Players.Players.Instance.GetValidPlayers().Where(p => p.NeuEingereist()).Count());
-        }
-
-        public static bool NeuEingereist(this DbPlayer dbPlayer)
-        {
-            return dbPlayer.hasPerso[0] == 0;
+            return dbPlayer.HasPerso[0] == 0;
         }
     }
 }

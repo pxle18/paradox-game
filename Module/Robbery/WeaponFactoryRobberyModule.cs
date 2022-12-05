@@ -159,7 +159,7 @@ namespace VMP_CNR.Module.Robbery
             if(IsActive)
             {
                 // Check if Teamplayer is in Reange
-                if (RobberTeam == null || RobberTeam.GetTeamMembers().Where(p => p != null && p.IsValid() && !p.isInjured() && p.Player.Position.DistanceTo(RobPosition) < 20.0f).Count() <= 0)
+                if (RobberTeam == null || RobberTeam.GetTeamMembers().Where(p => p != null && p.IsValid() && !p.IsInjured() && p.Player.Position.DistanceTo(RobPosition) < 20.0f).Count() <= 0)
                 {
                     CancelRob();
                     return;

@@ -27,7 +27,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
             if (dbPlayer == null || !dbPlayer.IsValid())
                 return;
 
-            if (dbPlayer.ownHouse[0] == 0)
+            if (dbPlayer.OwnHouse[0] == 0)
             {
                 dbPlayer.SendNewNotification("Du besitzt kein Haus.");
                 return;
@@ -46,7 +46,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp.Apps
             if (dbPlayer == null || !dbPlayer.IsValid())
                 return;
 
-            if (dbPlayer.ownHouse[0] == 0) return;
+            if (dbPlayer.OwnHouse[0] == 0) return;
 
             House xHouse = HouseModule.Instance.GetByOwner(dbPlayer.Id);
             if (xHouse == null) return;

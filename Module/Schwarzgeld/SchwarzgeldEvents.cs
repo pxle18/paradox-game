@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Schwarzgeld
                 if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
                 {
                     House xHouse = HouseModule.Instance.Get((uint)dbPlayer.Player.Dimension);
-                    if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.ownHouse[0] == xHouse.Id))
+                    if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id))
                     {
                         if (dbPlayer.Player.Position.DistanceTo(SchwarzgeldModule.BlackMoneyEndPoint) < 1.5f)
                         {

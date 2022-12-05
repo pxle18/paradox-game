@@ -32,7 +32,7 @@ namespace VMP_CNR.Module.Banks.App
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null || !dbPlayer.CanAccessRemoteEvent() || !dbPlayer.IsValid()) return;
-                TriggerNewClient(player, "responseBankingAppOverview", dbPlayer.bank_money[0], NAPI.Util.ToJson(dbPlayer.BankHistory));
+                TriggerNewClient(player, "responseBankingAppOverview", dbPlayer.BankMoney[0], NAPI.Util.ToJson(dbPlayer.BankHistory));
             }
             catch (Exception ex)
             {

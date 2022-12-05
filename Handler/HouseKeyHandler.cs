@@ -110,7 +110,7 @@ namespace VMP_CNR.Handler
                 houses.Add(new VHKey("" + house, house));
             }
 
-            if (dbPlayer.ownHouse[0] != 0) houses.Add(new VHKey("" + dbPlayer.ownHouse[0], dbPlayer.ownHouse[0]));
+            if (dbPlayer.OwnHouse[0] != 0) houses.Add(new VHKey("" + dbPlayer.OwnHouse[0], dbPlayer.OwnHouse[0]));
 
             return houses;
         }
@@ -118,7 +118,7 @@ namespace VMP_CNR.Handler
         public List<VHKey> GetOwnHouseKey(DbPlayer dbPlayer)
         {
             List<VHKey> houses = new List<VHKey>();
-            if (dbPlayer.ownHouse[0] != 0) houses.Add(new VHKey("" + dbPlayer.ownHouse[0], dbPlayer.ownHouse[0]));
+            if (dbPlayer.OwnHouse[0] != 0) houses.Add(new VHKey("" + dbPlayer.OwnHouse[0], dbPlayer.OwnHouse[0]));
             return houses;
         }
 

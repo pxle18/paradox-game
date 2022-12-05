@@ -41,7 +41,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             await NAPI.Task.WaitForMainThread(time);
             dbPlayer.ResetData("userCannotInterrupt");
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return false;
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return false;
 
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 

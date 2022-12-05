@@ -22,7 +22,7 @@ namespace VMP_CNR.Module.Houses
             var menu = new Module.Menu.Menu(Menu, "Mietslot wählen");
 
             menu.Add($"Schließen");
-            foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.ownHouse[0] && hr.PlayerId == 0))
+            foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0] && hr.PlayerId == 0))
             {
                 menu.Add($"Freier Slot {houseRent.SlotId} | ${houseRent.RentPrice}");
             }
@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Houses
                 
                 
                 int count = 1;
-                foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.ownHouse[0] && hr.PlayerId == 0))
+                foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0] && hr.PlayerId == 0))
                 {
                     if (index == count)
                     {

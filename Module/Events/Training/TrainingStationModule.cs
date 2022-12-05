@@ -34,6 +34,8 @@ namespace VMP_CNR.Module.Events.Training
 
         public override void OnTenSecUpdate()
         {
+            if (TrainingsInUse.Count <= 0) return;
+
             foreach(KeyValuePair<Trainingstation, DbPlayer> kvp in TrainingsInUse.ToList())
             {
                 if(kvp.Value != null && kvp.Value.IsValid())

@@ -45,7 +45,7 @@ namespace VMP_CNR.Module.Teams.MetaData
             if (iKiller == null || !iKiller.IsValid()) return;
 
             // Killer is cop && team is not in active rob
-            if (iKiller.IsACop() && !dbPlayer.Team.IsInRobbery() && dbPlayer.jailtime[0] == 0)
+            if (iKiller.IsACop() && !dbPlayer.Team.IsInRobbery() && dbPlayer.JailTime[0] == 0)
             {
                 if (!dbPlayer.Team.IsNearSpawn(dbPlayer.Player.Position))
                 {

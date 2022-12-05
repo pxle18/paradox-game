@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.Players
         {
             if (!freeze)
             {
-                if (dbPlayer.deadtime[0] > 0 || dbPlayer.isInjured() ||
+                if (dbPlayer.deadtime[0] > 0 || dbPlayer.IsInjured() ||
                     dbPlayer.RageExtension.IsInVehicle
                     || dbPlayer.IsCuffed || dbPlayer.IsTied)
                 {

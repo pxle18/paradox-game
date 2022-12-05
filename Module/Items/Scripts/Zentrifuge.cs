@@ -45,7 +45,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await NAPI.Task.WaitForMainThread(LaboratoryModule.TimeToAnalyze);
                 dbPlayer.ResetData("userCannotInterrupt");
 
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
 
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 
@@ -91,7 +91,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 await NAPI.Task.WaitForMainThread(LaboratoryModule.TimeToAnalyze);
                 dbPlayer.ResetData("userCannotInterrupt");
 
-                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.isInjured()) return true;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured()) return true;
 
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 
