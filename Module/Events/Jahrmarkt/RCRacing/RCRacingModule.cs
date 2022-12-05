@@ -212,7 +212,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
             
             if(!dbPlayer.TakeMoney(500))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(1000));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(1000));
                 return;
             }
 

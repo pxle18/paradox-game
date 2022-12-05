@@ -45,7 +45,7 @@ namespace VMP_CNR
             }
 
             var menu = new Menu(Menu, "Tattoo Licenses");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
 
             for (uint itr = 0; itr < PagesAmount; itr++)
             {

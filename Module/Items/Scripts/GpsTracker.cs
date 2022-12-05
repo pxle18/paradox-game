@@ -14,7 +14,7 @@ namespace VMP_CNR.Module.Items.Scripts
             {
                 if (dbPlayer.job[0] != (int) jobs.JOB_MECH)
                 {
-                    dbPlayer.SendNewNotification( MSG.Error.NoPermissions());
+                    dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                     return false;
                 }
                 /*

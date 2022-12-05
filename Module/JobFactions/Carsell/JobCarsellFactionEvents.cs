@@ -212,7 +212,7 @@ namespace VMP_CNR.Module.JobFactions.Carsell
             
             if (!dbPlayer.TakeBankMoney(price, $"Fahrzeugkauf {(Data.mod_car_name.Length <= 0 ? Data.Model : Data.mod_car_name)}"))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                 return;
             }
             else

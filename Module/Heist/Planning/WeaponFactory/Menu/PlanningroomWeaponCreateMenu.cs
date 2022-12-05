@@ -65,7 +65,7 @@ namespace VMP_CNR.Module.Laboratories.Menu
 
                             if (!dbPlayer.TakeBlackMoney(planningWeaponFactoryItem.RequiredBlackMoney))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(planningWeaponFactoryItem.RequiredBlackMoney));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(planningWeaponFactoryItem.RequiredBlackMoney));
                                 return false;
                             }
 

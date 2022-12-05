@@ -18,7 +18,7 @@ namespace VMP_CNR
         {
             var menu = new Menu(Menu, "Business Verwaltung");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             if (!dbPlayer.IsMemberOfBusiness())
             {
@@ -56,7 +56,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.TakeBankMoney(createBusinessPrice))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(createBusinessPrice));
+                                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(createBusinessPrice));
                                     break;
                                 }
 

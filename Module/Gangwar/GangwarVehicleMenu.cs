@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Gangwar
         {
             Menu.Menu menu = new Menu.Menu(Menu, "Gangwar - Fahrzeuge");
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             menu.Add("Waffenkits");
             menu.Add("Revolter");
             return menu;

@@ -265,14 +265,14 @@ namespace VMP_CNR.Module.Business
         {
             SynchronizedTaskManager.Instance.Add(
                 new BusinessDepositeTask(this, dbPlayer, amount));
-            dbPlayer.SendNewNotification("Sie haben " + MSG.Money.fnumber(amount) + "$ in den Tresor gelegt.", title: "Tresor", notificationType: PlayerNotification.NotificationType.ERROR);
+            dbPlayer.SendNewNotification("Sie haben " + GlobalMessages.Money.fnumber(amount) + "$ in den Tresor gelegt.", title: "Tresor", notificationType: PlayerNotification.NotificationType.ERROR);
         }
 
         public void Disburse(DbPlayer dbPlayer, int amount)
         {
             SynchronizedTaskManager.Instance.Add(
                 new BusinessDisburseTask(this, dbPlayer, amount));
-            dbPlayer.SendNewNotification("Sie haben " + MSG.Money.fnumber(amount) + "$ aus den Tresor genommen.", title: "Tresor", notificationType: PlayerNotification.NotificationType.SUCCESS);
+            dbPlayer.SendNewNotification("Sie haben " + GlobalMessages.Money.fnumber(amount) + "$ aus den Tresor genommen.", title: "Tresor", notificationType: PlayerNotification.NotificationType.SUCCESS);
         }
 
         public void GiveMoney(int amount)

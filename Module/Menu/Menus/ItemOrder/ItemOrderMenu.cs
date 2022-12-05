@@ -16,7 +16,7 @@ namespace VMP_CNR
             var menu = new Menu(Menu, "Verarbeitung");
             menu.Add("Waren verarbeiten");
             menu.Add("Waren entnehmen");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

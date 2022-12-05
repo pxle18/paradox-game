@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Menu.Menus.Account
         public override Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu(Menu, "Schluessel");
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             menu.Add("Spieler geben", "Schluessel an Spieler geben");
 

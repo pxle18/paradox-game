@@ -16,7 +16,7 @@ namespace VMP_CNR
             menu.Add("Arbeit starten");
             menu.Add("Fahrzeug mieten 500$");
             menu.Add("Rückgabe");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
 
             return menu;
         }

@@ -117,7 +117,7 @@ namespace VMP_CNR.Module.Stadthalle
 
             if (!dbPlayer.TakeBankMoney(money, "Telefonnummer Änderung"))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(money));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(money));
                 return;
             }
 
@@ -171,7 +171,7 @@ namespace VMP_CNR.Module.Stadthalle
 
             if(!dbPlayer.TakeBankMoney(price, "Telefonnummer Änderung"))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                 return;
             }
 

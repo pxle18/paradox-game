@@ -127,7 +127,7 @@ namespace VMP_CNR.Module.Tattoo.Windows
 
                                 if (!dbPlayer.TakeMoney(assetsTattoo.Price))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(assetsTattoo.Price));
+                                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(assetsTattoo.Price));
                                     return;
                                 }
                                 Decoration decoration = new Decoration();

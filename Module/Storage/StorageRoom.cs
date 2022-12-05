@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Storage
                     }
                     else
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(storageRoomAusbaustufe.RequiredMoney));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(storageRoomAusbaustufe.RequiredMoney));
                     }
                 }
                 else

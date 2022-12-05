@@ -20,7 +20,7 @@ namespace VMP_CNR
             GangwarTown gangwar = GangwarTownModule.Instance.GetByPosition(dbPlayer.Player.Position);
             var menu = new Menu(Menu, gangwar.Name);
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             menu.Add("Information", "Informationen zum Gebiet");
 

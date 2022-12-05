@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Menu.Menus.Business
         {
             var menu = new Menu(Menu, "Business Tower");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             if (dbPlayer.IsMemberOfBusiness())
             {

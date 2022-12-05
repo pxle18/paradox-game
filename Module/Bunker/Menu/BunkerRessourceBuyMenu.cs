@@ -60,7 +60,7 @@ namespace VMP_CNR.Module.Bunker.Menu
 
                         if (!dbPlayer.TakeBlackMoney(price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(price));
                             return false;
                         }
                         else
@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Bunker.Menu
 
                         if (!dbPlayer.TakeBlackMoney(price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(price));
                             return false;
                         }
                         else
@@ -108,7 +108,7 @@ namespace VMP_CNR.Module.Bunker.Menu
 
                         if (!dbPlayer.TakeBlackMoney(price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(price));
                             return false;
                         }
                         else

@@ -557,7 +557,7 @@ namespace VMP_CNR.Module.Clothes.Windows
                     {
                         if (!dbPlayer.TakeCWS((CWSTypes)currentShop.CWSId, price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughCW(price, (CWSTypes)currentShop.CWSId));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughCW(price, (CWSTypes)currentShop.CWSId));
 
                             clothingShopReset(client, dbPlayer.RemoteHashKey);
 
@@ -578,7 +578,7 @@ namespace VMP_CNR.Module.Clothes.Windows
                         {
                             if (!dbPlayer.TakeMoney(price))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                 clothingShopReset(client, dbPlayer.RemoteHashKey);
                                 return;
                             }
@@ -587,7 +587,7 @@ namespace VMP_CNR.Module.Clothes.Windows
                         {
                             if (!dbPlayer.TakeBankMoney(price, "Ihre Zahlung im " + currentShop.Name + " ($" + price + ")"))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                 clothingShopReset(client, dbPlayer.RemoteHashKey);
                                 return;
                             }

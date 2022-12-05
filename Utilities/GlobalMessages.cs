@@ -2,9 +2,8 @@
 
 namespace VMP_CNR
 {
-    public static class MSG
+    public static class GlobalMessages
     {
-
         public static class Actions
         {
             public static string BuyAction(string ItemName, int price)

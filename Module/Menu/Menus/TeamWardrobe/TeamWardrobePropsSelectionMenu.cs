@@ -33,7 +33,7 @@ namespace VMP_CNR
 
             var slot = slots[slotId];
             var menu = new Menu(Menu, slot.Name);
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             menu.Add("Leer");
 
             if (dbPlayer.IsFreeMode())

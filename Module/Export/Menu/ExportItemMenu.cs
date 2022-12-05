@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Export.Menu
 
             var l_Menu = new Module.Menu.Menu(Menu, "Export Händler");
 
-            l_Menu.Add(MSG.General.Close(), "");
+            l_Menu.Add(GlobalMessages.General.Close(), "");
             foreach (var kvp in itemExportNpc.ItemExportList)
             {
                 l_Menu.Add(kvp.Item.Name + " - $" + kvp.Price, "");

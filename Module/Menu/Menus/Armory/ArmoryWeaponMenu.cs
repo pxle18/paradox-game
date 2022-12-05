@@ -25,7 +25,7 @@ namespace VMP_CNR
         {
             var menu = new Menu(Menu, "Armory Waffen");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             
             menu.Add("Zurueck", "");
             

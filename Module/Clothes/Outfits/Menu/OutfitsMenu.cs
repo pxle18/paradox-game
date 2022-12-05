@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Clothes.Outfits
         public override Menu.Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu.Menu(Menu, "Outfits");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             menu.Add("Aktuelles Outfit speichern");
             foreach (Outfit outfit in dbPlayer.Outfits.ToList())
             {

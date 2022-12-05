@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.Admin
             if (!dbPlayer.IsValid()) return;
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 

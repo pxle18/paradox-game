@@ -23,7 +23,7 @@ namespace VMP_CNR
         {
             var menu = new Menu(Menu, "Armory Rüstungen");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             if (!dbPlayer.HasData("ArmoryId")) return menu;
             var ArmoryId = dbPlayer.GetData("ArmoryId");

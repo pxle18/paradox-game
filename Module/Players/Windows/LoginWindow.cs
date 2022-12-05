@@ -83,8 +83,9 @@ namespace VMP_CNR.Module.Players.Windows
                         //player.SetSharedData("AC_Status", true);
 
                         // send phone data
-                        VMP_CNR.Phone.SetPlayerPhoneData(dbPlayer);
-
+                        var data = new { Credit = dbPlayer.guthaben[0], Number = dbPlayer.handy[0] };
+                        dbPlayer.Player.TriggerNewClient("RESPONSE_PHONE_SETTINGS", JsonConvert.SerializeObject(data));
+        
                         var duplicates = NAPI.Pools.GetAllPlayers().ToList().FindAll(p => p.Name == player.Name && p != player);
 
                         if (duplicates.Count > 0)

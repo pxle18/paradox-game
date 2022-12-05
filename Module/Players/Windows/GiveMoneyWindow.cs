@@ -66,8 +66,8 @@ namespace VMP_CNR.Module.Players.Windows
                         dbPlayer.SendNewNotification($"Das Geld konnte nicht uebergeben werden! Du hast {money} zurueckbekommen.", notificationType: PlayerNotification.NotificationType.ADMIN);
                         return;
                     }
-                    dbPlayer.SendNewNotification($"Du hast {MSG.Money.fnumber(money)}$ uebergeben!", notificationType: PlayerNotification.NotificationType.SUCCESS);
-                    destinationDbPlayer.SendNewNotification($"Dir wurden {MSG.Money.fnumber(money)}$ zugesteckt!", notificationType: PlayerNotification.NotificationType.SUCCESS);
+                    dbPlayer.SendNewNotification($"Du hast {GlobalMessages.Money.fnumber(money)}$ uebergeben!", notificationType: PlayerNotification.NotificationType.SUCCESS);
+                    destinationDbPlayer.SendNewNotification($"Dir wurden {GlobalMessages.Money.fnumber(money)}$ zugesteckt!", notificationType: PlayerNotification.NotificationType.SUCCESS);
 
 
                     SaveToPayLog(dbPlayer.Id.ToString(), destinationDbPlayer.Id.ToString(), money, TransferType.BAR);

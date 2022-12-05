@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.Attachments
 
             if (!Configurations.Configuration.Instance.DevMode)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
         }

@@ -75,7 +75,7 @@ namespace VMP_CNR.Module.Einreiseamt
 
             DialogMigrator.CreateMenu(player, Dialogs.menu_player, "Einreiseamt", "");
 
-            DialogMigrator.AddMenuItem(player, Dialogs.menu_player, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(player, Dialogs.menu_player, GlobalMessages.General.Close(), "");
 
             foreach (DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(p => p.IsEinreiseAmt()))
             {

@@ -23,7 +23,7 @@ namespace VMP_CNR
         {
             var menu = new Menu(Menu, $"Armory"); 
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             
             if (!dbPlayer.HasData("ArmoryId")) return menu;
             var ArmoryId = dbPlayer.GetData("ArmoryId");
@@ -94,7 +94,7 @@ namespace VMP_CNR
                         dbPlayer.ResetAllWeaponComponents();
 
                         if (dbPlayer.TeamId != (uint)teams.TEAM_SWAT)
-                            dbPlayer.Team.SendNotification(Lang.rang[0] + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich vom Dienst ab.");
+                            dbPlayer.Team.SendNotification("Rang " + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich vom Dienst ab.");
 
                         MenuManager.DismissMenu(dbPlayer.Player, (int)PlayerMenu.Armory);
                         break;
@@ -113,7 +113,7 @@ namespace VMP_CNR
                         dbPlayer.SetHealth(100);
 
                         if (dbPlayer.TeamId != (uint)teams.TEAM_SWAT)
-                            dbPlayer.Team.SendNotification(Lang.rang[0] + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich zum Dienst an.");
+                            dbPlayer.Team.SendNotification("Rang " + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich zum Dienst an.");
 
                         MenuManager.DismissMenu(dbPlayer.Player, (int)PlayerMenu.Armory);
                         break;

@@ -18,7 +18,7 @@ namespace VMP_CNR.Module.Menu.Menus.Business
 
             menu.Add("Geldtresor", "Geld abheben/einzahlen");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             return menu;
         }
 

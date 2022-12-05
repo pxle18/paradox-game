@@ -608,26 +608,24 @@ namespace VMP_CNR
 
             try
             {
-                String disconnect_reason = "Spiel verlassen";
+                String disconnectReason = "Spiel verlassen";
                 switch (type)
                 {
                     case DisconnectionType.Timeout:
-                        disconnect_reason = "Verbindung verloren";
+                        disconnectReason = "Verbindung verloren";
                         break;
                     case DisconnectionType.Kicked:
-                        disconnect_reason = "Gekickt";
+                        disconnectReason = "Gekickt";
                         break;
                 }
 
-                // Send Logout Message
                 foreach (DbPlayer dbPlayer in Players.Instance.GetValidPlayers())
                 {
                     if (dbPlayer != null && !dbPlayer.IsValid()) continue;
                     if (dbPlayer.Player.Dimension != player.Dimension) continue;
                     if (dbPlayer.Player.Position.DistanceTo(player.Position) <= 40.0f)
                     {
-                        dbPlayer.SendNewNotification(
-                            Lang.anticheat_offline(iPlayer.GetName(), disconnect_reason)[0], title: "ANTI-OFFLINEFLUCHT", notificationType: PlayerNotification.NotificationType.SERVER);
+                        dbPlayer.SendNewNotification($"Spieler {iPlayer.GetName()} ist disconnected! (Grund: {disconnectReason})", title: "ANTI-OFFLINEFLUCHT", notificationType: PlayerNotification.NotificationType.SERVER);
                     }
                 }
             }
@@ -1774,7 +1772,7 @@ namespace VMP_CNR
                         "Preis: $" + price);
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_changecar, "ACHTUNG TUNING WIRD RESETTET!",
                         "");
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_changecar, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_changecar, GlobalMessages.General.Close(), "");
                     DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_shop_changecar);
                     return;
                 }
@@ -1822,7 +1820,7 @@ namespace VMP_CNR
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_main, "Munition", "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_main, "Componenten", "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_main, "Fallschirm (1000$)", "");
-                        DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_main, MSG.General.Close(), "");
+                        DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_main, GlobalMessages.General.Close(), "");
                         DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_shop_ammunation_main);
                         return;
                     }
@@ -1859,7 +1857,7 @@ namespace VMP_CNR
                         // Dialog für Keller us
                         DialogMigrator.CreateMenu(player, Dialogs.menu_house_main, "Hausverwaltung",
                             (house.Locked ? "Abgeschlossen" : "Aufgeschlossen"));
-                        DialogMigrator.AddMenuItem(player, Dialogs.menu_house_main, MSG.General.Close(), "Schließen");
+                        DialogMigrator.AddMenuItem(player, Dialogs.menu_house_main, GlobalMessages.General.Close(), "Schließen");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_house_main, "Haus betreten", "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_house_main, "Keller", "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_house_main, "Haustiere", "");
@@ -1960,7 +1958,7 @@ namespace VMP_CNR
                             "");
                     }
 
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_carshop, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_carshop, GlobalMessages.General.Close(), "");
                     DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_carshop);
                     return;
                 }
@@ -2149,7 +2147,7 @@ namespace VMP_CNR
                         }
                     }
 
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_pd_su, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_pd_su, GlobalMessages.General.Close(), "");
                     DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_pd_su);
                     return;
                 }
@@ -2158,7 +2156,7 @@ namespace VMP_CNR
                 {
                     if (iPlayer.job[0] != (int) jobs.JOB_MECH) return;
                     DialogMigrator.CreateMenu(player, Dialogs.menu_shop_mechanic, "Mechaniker Store", "");
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, GlobalMessages.General.Close(), "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, "Spraydose (300$)", "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, "Schloss (1.000$)", "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, "GPS-Tracker (4.000$)", "");
@@ -2174,7 +2172,7 @@ namespace VMP_CNR
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_taxi, "Taxilizenz", "Preis: $4300");
                     if (iPlayer.HasData("taxi"))
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_taxi, "Aus dem Dienst gehen", "");
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_taxi, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_taxi, GlobalMessages.General.Close(), "");
                     DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_taxi);
                 }
                 else if (IsPlayerInRangeOfPoint(player, 10.0f,
@@ -2222,7 +2220,7 @@ namespace VMP_CNR
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_academic, "Punkte resetten",
                         "Kosten: $" + (5000 * (iPlayer.Level - 1)));
 
-                    DialogMigrator.AddMenuItem(player, Dialogs.menu_academic, MSG.General.Close(), "");
+                    DialogMigrator.AddMenuItem(player, Dialogs.menu_academic, GlobalMessages.General.Close(), "");
                     DialogMigrator.OpenUserMenu(iPlayer, Dialogs.menu_academic);
                     return;
                 }
@@ -2234,7 +2232,7 @@ namespace VMP_CNR
                 House iHouse;
                 if ((iHouse = HouseModule.Instance[iPlayer.ownHouse[0]]) == null) return;
                 DialogMigrator.CreateMenu(iPlayer.Player, Dialogs.menu_shop_interior, "Innenausstattung", "");
-                DialogMigrator.AddMenuItem(iPlayer.Player, Dialogs.menu_shop_interior, MSG.General.Close(), "");
+                DialogMigrator.AddMenuItem(iPlayer.Player, Dialogs.menu_shop_interior, GlobalMessages.General.Close(), "");
                 DialogMigrator.AddMenuItem(iPlayer.Player, Dialogs.menu_shop_interior, "Interior kaufen",
                     "Kauft das aktuell ausgewaehlte Interior");
                 foreach (var kvp in InteriorModule.Instance.GetAll())

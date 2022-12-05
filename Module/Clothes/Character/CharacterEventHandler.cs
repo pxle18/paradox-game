@@ -53,7 +53,7 @@ namespace VMP_CNR.Module.Clothes.Character
             
             if (price > 0 && !dbPlayer.TakeMoney(price))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price), notificationType:PlayerNotification.NotificationType.ERROR);
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price), notificationType:PlayerNotification.NotificationType.ERROR);
                 // revert back to last save data
                 if (dbPlayer.HasData("ChangedGender"))
                 {

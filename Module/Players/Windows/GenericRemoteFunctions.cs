@@ -76,7 +76,7 @@ namespace VMP_CNR.Module.Players.Windows
             if (!dbPlayer.TakeMoney(newsprice))
             {
                 dbPlayer.SendNewNotification(
-                     MSG.Money.NotEnoughMoney(newsprice));
+                     GlobalMessages.Money.NotEnoughMoney(newsprice));
                 return;
             }
 

@@ -36,7 +36,7 @@ namespace VMP_CNR
             menu.Add($"Bank öffnen");
             menu.Add($"Tattoowieren");
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

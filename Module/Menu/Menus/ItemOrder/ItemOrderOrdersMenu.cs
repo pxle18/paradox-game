@@ -28,7 +28,7 @@ namespace VMP_CNR
                 menu.Add($"{itemOrder.ItemAmount} {itemOrder.Item.Name}");
             }
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

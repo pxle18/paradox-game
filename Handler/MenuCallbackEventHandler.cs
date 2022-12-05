@@ -349,7 +349,7 @@ namespace VMP_CNR
                             {
                                 if (!dbPlayer.TakeCWS((CWSTypes)clothesShop.CWSId, price))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughCW(price, (CWSTypes)clothesShop.CWSId));
+                                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughCW(price, (CWSTypes)clothesShop.CWSId));
                                     return;
                                 }
                                 else
@@ -363,7 +363,7 @@ namespace VMP_CNR
                             {
                                 if (!dbPlayer.TakeMoney(price))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                     return;
                                 }
                                 else
@@ -477,7 +477,7 @@ namespace VMP_CNR
 
                         DialogMigrator.CreateMenu(player, Dialogs.menu_shop_clothes, "Kleiderladen", "");
 
-                        DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_clothes, MSG.General.Close(), "");
+                        DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_clothes, GlobalMessages.General.Close(), "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_clothes, "Kaufen: $" + ClothesShopModule.Instance.GetActualClothesPrice(dbPlayer), "");
 
                         var clothesSlots = shop.GetClothesSlotsForPlayer(dbPlayer);
@@ -661,7 +661,7 @@ namespace VMP_CNR
                         Character playerCharacter = dbPlayer.Character;
                         var playerWardrobe = playerCharacter.Wardrobe;
                         DialogMigrator.CreateMenu(player, Dialogs.menu_wardrobe, "Kleiderschrank", "");
-                        DialogMigrator.AddMenuItem(player, Dialogs.menu_wardrobe, MSG.General.Close(), "");
+                        DialogMigrator.AddMenuItem(player, Dialogs.menu_wardrobe, GlobalMessages.General.Close(), "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_wardrobe, "Outfits", "");
                         DialogMigrator.AddMenuItem(player, Dialogs.menu_wardrobe, "Altkleider packen", "");
 
@@ -756,7 +756,7 @@ namespace VMP_CNR
 
                         if (!dbPlayer.TakeMoney(300))
                         {
-                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + MSG.Money.NotEnoughMoney(300));
+                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + GlobalMessages.Money.NotEnoughMoney(300));
                             return;
                         }
 
@@ -774,7 +774,7 @@ namespace VMP_CNR
 
                         if (!dbPlayer.TakeMoney(1000))
                         {
-                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + MSG.Money.NotEnoughMoney(1000));
+                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + GlobalMessages.Money.NotEnoughMoney(1000));
                             return;
                         }
 
@@ -791,7 +791,7 @@ namespace VMP_CNR
 
                         if (!dbPlayer.TakeMoney(4000))
                         {
-                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + MSG.Money.NotEnoughMoney(4000));
+                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + GlobalMessages.Money.NotEnoughMoney(4000));
                             return;
                         }
 
@@ -808,7 +808,7 @@ namespace VMP_CNR
 
                         if (!dbPlayer.TakeMoney(2000))
                         {
-                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + MSG.Money.NotEnoughMoney(2000));
+                            dbPlayer.SendNewNotification("Du hast nicht genug Geld!" + GlobalMessages.Money.NotEnoughMoney(2000));
                             return;
                         }
 
@@ -950,7 +950,7 @@ namespace VMP_CNR
 
                             DialogMigrator.CreateMenu(player, Dialogs.menu_house_keller, "Hauskeller", "");
 
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_house_keller, MSG.General.Close(),
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_house_keller, GlobalMessages.General.Close(),
                                 "");
 
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_house_keller, "Keller betreten",
@@ -1007,7 +1007,7 @@ namespace VMP_CNR
                                 if (garage == null) return;
                                 if (garage.IsTeamGarage()) return;
                                 DialogMigrator.CreateMenu(player, Dialogs.menu_garage_overlay, "Fahrzeug-Garage", "");
-                                DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, MSG.General.Close(), "");
+                                DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, GlobalMessages.General.Close(), "");
                                 DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, "Fahrzeug entnehmen", "");
                                 DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, "Fahrzeug einlagern", "");
                                 
@@ -1039,7 +1039,7 @@ namespace VMP_CNR
                                     if (!dbPlayer.TakeMoney(cost))
                                     {
                                         dbPlayer.SendNewNotification(
-                                             MSG.Money.NotEnoughMoney(cost));
+                                             GlobalMessages.Money.NotEnoughMoney(cost));
                                         DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_main);
                                         return;
                                     }
@@ -1174,7 +1174,7 @@ namespace VMP_CNR
                                     if (!dbPlayer.TakeMoney(cost))
                                     {
                                         dbPlayer.SendNewNotification(
-                                             MSG.Money.NotEnoughMoney(cost));
+                                             GlobalMessages.Money.NotEnoughMoney(cost));
                                         DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                         return;
                                     }
@@ -1222,7 +1222,7 @@ namespace VMP_CNR
                                     if (!dbPlayer.TakeMoney(cost))
                                     {
                                         dbPlayer.SendNewNotification(
-                                             MSG.Money.NotEnoughMoney(cost));
+                                             GlobalMessages.Money.NotEnoughMoney(cost));
                                         DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                         return;
                                     }
@@ -1281,7 +1281,7 @@ namespace VMP_CNR
                                     if (!dbPlayer.TakeMoney(cost))
                                     {
                                         dbPlayer.SendNewNotification(
-                                             MSG.Money.NotEnoughMoney(cost));
+                                             GlobalMessages.Money.NotEnoughMoney(cost));
                                         DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                         return;
                                     }
@@ -1431,7 +1431,7 @@ namespace VMP_CNR
                                 if (!dbPlayer.TakeMoney(price))
                                 {
                                     dbPlayer.SendNewNotification(
-                                         MSG.Money.NotEnoughMoney(price));
+                                         GlobalMessages.Money.NotEnoughMoney(price));
                                     return;
                                 }
 
@@ -1662,8 +1662,8 @@ namespace VMP_CNR
                         case 1: // Getlist
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_garage_overlay, true);
                             DialogMigrator.CreateMenu(player, Dialogs.menu_garage_getlist, "Fahrzeug-Garage", "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_getlist, MSG.General.Close(), "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_getlist, MSG.General.Back(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_getlist, GlobalMessages.General.Close(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_getlist, GlobalMessages.General.Back(), "");
 
                             if (garage != null)
                             {
@@ -1704,8 +1704,8 @@ namespace VMP_CNR
                             if (garage.Type == GarageType.VehicleCollection) return;
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_garage_overlay, true);
                             DialogMigrator.CreateMenu(player, Dialogs.menu_garage_setlist, "Fahrzeug-Garage", "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_setlist, MSG.General.Close(), "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_setlist, MSG.General.Back(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_setlist, GlobalMessages.General.Close(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_setlist, GlobalMessages.General.Back(), "");
 
                             if (garage != null)
                             {
@@ -1951,8 +1951,8 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_shop_ammunation_main, true);
                             //Waffenshop
                             DialogMigrator.CreateMenu(player, Dialogs.menu_shop_ammunation, "Ammunation", "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, MSG.General.Close(), "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, MSG.General.Back(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, GlobalMessages.General.Close(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, GlobalMessages.General.Back(), "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, "Pistole (12000$)", "");
                             //DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, "Pistole 50 (8000$)", "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation, "Schwere Pistole (15000$)", "");
@@ -1964,8 +1964,8 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_shop_ammunation_main, true);
                             //ammo
                             DialogMigrator.CreateMenu(player, Dialogs.menu_shop_ammunation_ammo, "Ammunation", "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, MSG.General.Close(), "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, MSG.General.Back(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, GlobalMessages.General.Close(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, GlobalMessages.General.Back(), "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, "Pistole Ammo (500$)", "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, "Pistole 50 Ammo (1000$)", "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_ammo, "Schwere Pistole Ammo (800$)", "");
@@ -1977,8 +1977,8 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_shop_ammunation_main, true);
                             //ammo
                             DialogMigrator.CreateMenu(player, Dialogs.menu_shop_ammunation_components, "Ammunation", "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, MSG.General.Close(), "");
-                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, MSG.General.Back(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, GlobalMessages.General.Close(), "");
+                            DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, GlobalMessages.General.Back(), "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, "Pistole Schalldämpfer ($5000)", "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, "Pistole Licht ($3000)", "");
                             DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_ammunation_components, "Schwere Pistole Schalldämpfer ($5000)", "");
@@ -2244,7 +2244,7 @@ namespace VMP_CNR
                             if (!dbPlayer.TakeMoney(4300))
                             {
                                 dbPlayer.SendNewNotification(
-                                     MSG.Money.NotEnoughMoney(4300));
+                                     GlobalMessages.Money.NotEnoughMoney(4300));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_taxi);
                                 break;
                             }
@@ -2307,7 +2307,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.Car));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.Car));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2316,20 +2316,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.Car));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.Car));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_Car[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.Car, Content.License.Car));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.Car));
+                                GlobalMessages.License.HaveGetLicense(Content.License.Car));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.Car));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2362,7 +2362,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.Lkw));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.Lkw));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2371,20 +2371,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.Lkw));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.Lkw));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_LKW[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.Lkw, Content.License.Lkw));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.Lkw));
+                                GlobalMessages.License.HaveGetLicense(Content.License.Lkw));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.Lkw));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2417,7 +2417,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.Bike));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.Bike));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2426,20 +2426,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.Bike));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.Bike));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_Bike[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.Bike, Content.License.Bike));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.Bike));
+                                GlobalMessages.License.HaveGetLicense(Content.License.Bike));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.Bike));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2472,7 +2472,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.Boot));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.Boot));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2481,20 +2481,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.Boot));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.Boot));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_Boot[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.Boot, Content.License.Boot));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.Boot));
+                                GlobalMessages.License.HaveGetLicense(Content.License.Boot));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.Boot));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2527,7 +2527,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.PlaneA));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.PlaneA));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2536,20 +2536,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.PlaneA));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.PlaneA));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_PlaneA[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.PlaneA, Content.License.PlaneA));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.PlaneA));
+                                GlobalMessages.License.HaveGetLicense(Content.License.PlaneA));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.PlaneA));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2582,7 +2582,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.PlaneB));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.PlaneB));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2591,20 +2591,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.PlaneB));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.PlaneB));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_PlaneB[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.PlaneB, Content.License.PlaneB));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.PlaneB));
+                                GlobalMessages.License.HaveGetLicense(Content.License.PlaneB));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.PlaneB));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2638,7 +2638,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.License.PlayerAlreadyOwnLic(Content.License.Transfer));
+                                    GlobalMessages.License.PlayerAlreadyOwnLic(Content.License.Transfer));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 break;
                             }
@@ -2647,20 +2647,20 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.PlayerNotEnoughMoney(Price.License.Transfer));
+                                    GlobalMessages.Money.PlayerNotEnoughMoney(Price.License.Transfer));
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
                                 return;
                             }
 
                             xPlayer.Lic_Transfer[0] = 1;
                             xPlayer.SendNewNotification(
-                                 MSG.License.HasGiveYouLicense(
+                                 GlobalMessages.License.HasGiveYouLicense(
                                     dbPlayer.GetName(),
                                     Price.License.Transfer, Content.License.Transfer));
                             xPlayer.SendNewNotification(
-                                MSG.License.HaveGetLicense(Content.License.Transfer));
+                                GlobalMessages.License.HaveGetLicense(Content.License.Transfer));
                             dbPlayer.SendNewNotification(
-                                 MSG.License.YouHaveGiveLicense(
+                                 GlobalMessages.License.YouHaveGiveLicense(
                                     xPlayer.GetName(),
                                     Content.License.Transfer));
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_givelicenses);
@@ -2701,7 +2701,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Car));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Car));
                                     return;
                                 }
 
@@ -2710,7 +2710,7 @@ namespace VMP_CNR
 
                                 if(!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2740,7 +2740,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Lkw));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Lkw));
                                     return;
                                 }
 
@@ -2749,7 +2749,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2779,7 +2779,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Bike));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Bike));
                                     return;
                                 }
 
@@ -2788,7 +2788,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2818,7 +2818,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Boot));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Boot));
                                     return;
                                 }
 
@@ -2827,7 +2827,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2857,7 +2857,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.PlaneA));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.PlaneA));
                                     return;
                                 }
 
@@ -2866,7 +2866,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2896,7 +2896,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.PlaneB));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.PlaneB));
                                     return;
                                 }
 
@@ -2905,7 +2905,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2935,7 +2935,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Gun));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Gun));
                                     return;
                                 }
 
@@ -2944,7 +2944,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -2974,7 +2974,7 @@ namespace VMP_CNR
                                 {
                                     dbPlayer.SendNewNotification(
                                         
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Transfer));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Transfer));
                                     return;
                                 }
 
@@ -2983,7 +2983,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -3011,7 +3011,7 @@ namespace VMP_CNR
                                 if (dbPlayer.jobskill[0] < JobContent.Plagiat.Requiredskill.Hunting) {
                                     dbPlayer.SendNewNotification(
 
-                                        MSG.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Hunting));
+                                        GlobalMessages.Job.NotEnoughSkill(JobContent.Plagiat.Requiredskill.Hunting));
                                     return;
                                 }
 
@@ -3020,7 +3020,7 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.Container.CanInventoryItemAdded(itemModel.Id))
                                 {
-                                    dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                    dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                     return;
                                 }
 
@@ -3268,7 +3268,7 @@ namespace VMP_CNR
                     {
                         if (dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty())
                         {
-                            dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                            dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                             return;
                         }
                         int idx = 1;
@@ -3396,7 +3396,7 @@ namespace VMP_CNR
                             {
                                 dbPlayer.SendNewNotification(
                                     
-                                    MSG.Money.NotEnoughMoney(5000 * academicpoints));
+                                    GlobalMessages.Money.NotEnoughMoney(5000 * academicpoints));
                                 return;
                             }
 
@@ -3477,20 +3477,20 @@ namespace VMP_CNR
                                 if (!dbPlayer.TakeMoney(price))
                                 {
                                     dbPlayer.SendNewNotification(
-                                         MSG.Money.NotEnoughMoney(price));
+                                         GlobalMessages.Money.NotEnoughMoney(price));
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_pd_su);
                                     return;
                                 }
 
                                 dbPlayer.Lic_Gun[0] = 1;
-                                dbPlayer.SendNewNotification(MSG.License.HaveGetLicense(Lic), title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
+                                dbPlayer.SendNewNotification(GlobalMessages.License.HaveGetLicense(Lic), title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
                                 KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price);
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_pd_su);
                                 return;
                             }
 
                             dbPlayer.SendNewNotification(
-                                 MSG.License.AlreadyOwnLic(Lic));
+                                 GlobalMessages.License.AlreadyOwnLic(Lic));
                             break;
                         case 1: // Waffenschein
                             int h_price = Price.License.Hunting;
@@ -3503,20 +3503,20 @@ namespace VMP_CNR
 
                                 if (!dbPlayer.TakeMoney(h_price)) {
                                     dbPlayer.SendNewNotification(
-                                        MSG.Money.NotEnoughMoney(h_price));
+                                        GlobalMessages.Money.NotEnoughMoney(h_price));
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_pd_su);
                                     return;
                                 }
 
                                 dbPlayer.Lic_Hunting[0] = 1;
-                                dbPlayer.SendNewNotification(MSG.License.HaveGetLicense(Lic_Hunting), title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
+                                dbPlayer.SendNewNotification(GlobalMessages.License.HaveGetLicense(Lic_Hunting), title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
                                 KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, h_price);
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_pd_su);
                                 return;
                             }
 
                             dbPlayer.SendNewNotification(
-                                MSG.License.AlreadyOwnLic(Lic_Hunting));
+                                GlobalMessages.License.AlreadyOwnLic(Lic_Hunting));
                             break;
                         case 2: // Ticket
 
@@ -3537,7 +3537,7 @@ namespace VMP_CNR
                                         {
                                             if (!dbPlayer.TakeMoney(l_Price))
                                             {
-                                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(l_Price));
+                                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(l_Price));
                                                 return;
                                             }
                                         }
@@ -3545,7 +3545,7 @@ namespace VMP_CNR
                                         {
                                             if (!dbPlayer.TakeBankMoney(l_Price, "Ihre Zahlung im LSPD ($" + l_Price + ")"))
                                             {
-                                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(l_Price));
+                                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(l_Price));
                                                 return;
                                             }
                                         }
@@ -3770,11 +3770,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Car[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3782,11 +3782,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_LKW[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3794,11 +3794,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Bike[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3806,11 +3806,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_PlaneA[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3818,11 +3818,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_PlaneB[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3830,11 +3830,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Boot[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3842,11 +3842,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Gun[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3854,11 +3854,11 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Biz[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3866,20 +3866,20 @@ namespace VMP_CNR
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Transfer[0] == 1)
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
                         case 10: // Hunting
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_mdc);
                             if (xPlayer.Lic_Hunting[0] == 1) {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(true));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(true));
                             } else {
-                                dbPlayer.SendNewNotification(MSG.MDC_LicCheck(false));
+                                dbPlayer.SendNewNotification(GlobalMessages.MDC_LicCheck(false));
                             }
 
                             break;
@@ -3901,7 +3901,7 @@ namespace VMP_CNR
 
                             if (dbPlayer.TeamId == (int)teams.TEAM_CIVILIAN)
                             {
-                                dbPlayer.SendNewNotification( MSG.Error.NoTeam());
+                                dbPlayer.SendNewNotification( GlobalMessages.Error.NoTeam());
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_help);
                                 break;
                             }
@@ -3910,22 +3910,22 @@ namespace VMP_CNR
                             {
                                 case (int)teams.TEAM_POLICE:
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice());
+                                         GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice2());
+                                         GlobalMessages.HelpPolice2());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_ARMY:
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice());
+                                         GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice2());
-                                    dbPlayer.SendNewNotification(MSG.HelpArmy());
+                                         GlobalMessages.HelpPolice2());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpArmy());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_DPOS:
                                     dbPlayer.SendNewNotification(
@@ -3933,107 +3933,107 @@ namespace VMP_CNR
                                         "/m(egaphone) /r(adio) /d(epartment)");
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_GOV:
                                     dbPlayer.SendNewNotification("/gov");
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_FIB:
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice());
+                                         GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpPolice2());
+                                         GlobalMessages.HelpPolice2());
                                     dbPlayer.SendNewNotification(
                                         "FIB Befehle: /find (Person) R3+: /fakename Neuer_Name /resetfakename R5+ /findhouse (Hausnummer)");
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_BALLAS:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_LOST:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_NEWS:
-                                    dbPlayer.SendNewNotification(MSG.HelpNews());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpNews());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_DRIVINGSCHOOL:
                                     dbPlayer.SendNewNotification(
-                                         MSG.HelpDrivingSchool());
+                                         GlobalMessages.HelpDrivingSchool());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_MEDIC:
-                                    dbPlayer.SendNewNotification(MSG.HelpMedic());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpMedic());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_IRISHMOB:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_LCN:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_YAKUZA:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_HUSTLER:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_BRATWA:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_NNM:
-                                    dbPlayer.Player.SendNotification(MSG.HelpGang());
+                                    dbPlayer.Player.SendNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.Player.SendNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_GROVE:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 case (int)teams.TEAM_ICA:
-                                    dbPlayer.SendNewNotification(MSG.HelpGang());
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
-                                             MSG.HelpLeader());
+                                             GlobalMessages.HelpLeader());
                                     break;
                                 default:
                                     dbPlayer.SendNewNotification(
-                                         MSG.Error.NoTeam());
+                                         GlobalMessages.Error.NoTeam());
                                     break;
                             }
 
@@ -4050,7 +4050,7 @@ namespace VMP_CNR
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification( MSG.Error.NoJob());
+                                dbPlayer.SendNewNotification( GlobalMessages.Error.NoJob());
                             }
 
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_help);
@@ -4134,7 +4134,7 @@ namespace VMP_CNR
                                     {
                                         dbPlayer.SendNewNotification(
                                             
-                                            MSG.Money.NotEnoughMoney(price));
+                                            GlobalMessages.Money.NotEnoughMoney(price));
                                         return;
                                     }
 
@@ -4271,7 +4271,7 @@ namespace VMP_CNR
                                     {
                                         if (!dbPlayer.TakeMoney(price))
                                         {
-                                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                             return;
                                         }
                                     }
@@ -4279,7 +4279,7 @@ namespace VMP_CNR
                                     {
                                         if (!dbPlayer.TakeBankMoney(price, "Ihre Zahlung im Autohaus für " + Vehicle.Name +" ($" + price + ")"))
                                         {
-                                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                             return;
                                         }
                                     }
@@ -4518,7 +4518,7 @@ namespace VMP_CNR
         private static void CreateUserMenuFahrzeugGarage(Player player, DbPlayer dbPlayer, Garage garage)
         {
             DialogMigrator.CreateMenu(player, Dialogs.menu_garage_overlay, "Fahrzeug-Garage", "");
-            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, GlobalMessages.General.Close(), "");
             DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, "Fahrzeug entnehmen", "");
             DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, "Fahrzeug einlagern", "");
          

@@ -21,7 +21,7 @@ namespace VMP_CNR.Module.Clothes.Outfits
         {
             if (!dbPlayer.HasData("outfit")) return null;
             var menu = new Menu.Menu(Menu, "Outfits");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             menu.Add("Anlegen");
             menu.Add("Löschen");
             return menu;

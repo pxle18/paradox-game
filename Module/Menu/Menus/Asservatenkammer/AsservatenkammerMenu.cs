@@ -11,7 +11,7 @@ namespace VMP_CNR.Module.Menu.Menus.Asservatenkammer
         public override Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu(Menu, "Asservatenkammer");
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             menu.Add("Transport", "Brickade beladen");
 
             return menu;

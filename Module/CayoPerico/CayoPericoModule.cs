@@ -223,7 +223,7 @@ namespace VMP_CNR.Module.CayoPerico
 
             if (!dbPlayer.TakeMoney(price))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                 return;
             }
 
@@ -253,7 +253,7 @@ namespace VMP_CNR.Module.CayoPerico
 
             if (!dbPlayer.TakeMoney(price))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                 return;
             }
 

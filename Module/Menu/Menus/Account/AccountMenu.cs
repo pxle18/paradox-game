@@ -75,7 +75,7 @@ namespace VMP_CNR
             menu.Add("Warns: " + dbPlayer.warns[0] + "/3", "");
             menu.Add("Handynummer: " + dbPlayer.handy[0],
                 "Guthaben: $" + dbPlayer.guthaben[0]);
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             return menu;
         }
 

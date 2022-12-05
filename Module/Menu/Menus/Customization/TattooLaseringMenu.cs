@@ -31,7 +31,7 @@ namespace VMP_CNR
                 menu.Add($"{assetsTattoo.Name} {price}$");
             }
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 
@@ -57,7 +57,7 @@ namespace VMP_CNR
 
                             if(!dbPlayer.TakeMoney(price))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                                 return false;
                             }
 

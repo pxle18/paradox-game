@@ -162,7 +162,7 @@ namespace VMP_CNR.Module.Animal
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -185,7 +185,7 @@ namespace VMP_CNR.Module.Animal
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -202,7 +202,7 @@ namespace VMP_CNR.Module.Animal
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -225,7 +225,7 @@ namespace VMP_CNR.Module.Animal
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -244,7 +244,7 @@ namespace VMP_CNR.Module.Animal
             DbPlayer l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 

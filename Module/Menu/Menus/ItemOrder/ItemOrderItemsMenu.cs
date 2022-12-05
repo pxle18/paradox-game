@@ -34,7 +34,7 @@ namespace VMP_CNR
                 }
             }
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

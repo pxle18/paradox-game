@@ -81,7 +81,7 @@ namespace VMP_CNR.Module.Weapons.Component
 
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace VMP_CNR.Module.Weapons.Component
 
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -126,7 +126,7 @@ namespace VMP_CNR.Module.Weapons.Component
 
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -150,7 +150,7 @@ namespace VMP_CNR.Module.Weapons.Component
 
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace VMP_CNR.Module.Weapons.Component
 
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 

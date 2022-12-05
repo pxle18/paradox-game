@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
                 if(!dbPlayer.TakeMoney(price))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                     return;
                 }
                 var biz = dbPlayer.GetActiveBusiness();
@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Keys.Windows
                 if (dbPlayer.Player.Position.DistanceTo(targetPlayer.Player.Position) > 5.0f)
                 {
                     dbPlayer.SendNewNotification(
-                         MSG.General.notInRange);
+                         GlobalMessages.General.notInRange);
                     return;
                 }
             }

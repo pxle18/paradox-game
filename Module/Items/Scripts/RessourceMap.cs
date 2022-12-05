@@ -13,7 +13,7 @@ namespace VMP_CNR.Module.Items.Scripts
         public static bool RessourceMap(DbPlayer dbPlayer, ItemModel ItemData)
         {
             DialogMigrator.CreateMenu(dbPlayer.Player, Dialogs.menu_ressourcemap, "Ressourcen Karte", "");
-            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_ressourcemap, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_ressourcemap, GlobalMessages.General.Close(), "");
 
             foreach (var xFarm in FarmSpotModule.Instance.GetAll())
             {

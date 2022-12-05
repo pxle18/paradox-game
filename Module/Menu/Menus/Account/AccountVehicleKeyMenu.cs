@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Menu.Menus.Account
         public override Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu(Menu, "Schluessel");
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
 
             // List Fahrzeuge
             foreach (SxVehicle Vehicle in VehicleHandler.Instance.GetPlayerVehicles(dbPlayer.Id))

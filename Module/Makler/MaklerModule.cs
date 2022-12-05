@@ -229,7 +229,7 @@ namespace VMP_CNR.Module.Makler
             {
                 dbPlayer.SendNewNotification(
                     "Der Kunde hat nicht genug Geld!");
-                customer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                 return;
             }
 

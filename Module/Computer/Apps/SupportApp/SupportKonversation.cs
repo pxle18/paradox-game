@@ -28,7 +28,7 @@ namespace VMP_CNR.Module.Computer.Apps.SupportApp
 
             if (dbPlayer.RankId == 0)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.Computer.Apps.SupportApp
 
             if (dbPlayer.RankId == 0)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -103,7 +103,7 @@ namespace VMP_CNR.Module.Computer.Apps.SupportApp
 
             if (dbPlayer.RankId == 0)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 

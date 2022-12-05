@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -181,7 +181,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -205,7 +205,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -272,7 +272,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -294,7 +294,7 @@ namespace VMP_CNR.Module.Players
 
             if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -391,7 +391,7 @@ namespace VMP_CNR.Module.Players
                     if (string.IsNullOrWhiteSpace(asCommand))
                     {
                         dbPlayer.SendNewNotification(
-                            MSG.General.Usage("/acceptservice", "[Name]"));
+                            GlobalMessages.General.Usage("/acceptservice", "[Name]"));
                         return;
                     }
 
@@ -430,7 +430,7 @@ namespace VMP_CNR.Module.Players
                         if (!PlayerMoney.TakeMoney(findPlayer, taxiprice))
                         {
                             dbPlayer.SendNewNotification("Spieler kann sich die Anfahrtskosten nicht leisten!");
-                            String awdawd = MSG.Money.NotEnoughMoney(taxiprice);
+                            String awdawd = GlobalMessages.Money.NotEnoughMoney(taxiprice);
                             findPlayer.SendNewNotification(awdawd);
                             return;
                         }
@@ -566,7 +566,7 @@ namespace VMP_CNR.Module.Players
 
                 if (!findPlayer.TakeMoney(6000))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.PlayerNotEnoughMoney(6000));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.PlayerNotEnoughMoney(6000));
                     return;
                 }
 
@@ -682,7 +682,7 @@ namespace VMP_CNR.Module.Players
                 }
                 else
                 {
-                    dbPlayer.SendNewNotification(MSG.General.notInRange);
+                    dbPlayer.SendNewNotification(GlobalMessages.General.notInRange);
                 }
             }));
         }
@@ -724,7 +724,7 @@ namespace VMP_CNR.Module.Players
                 }
                 else
                 {
-                    dbPlayer.SendNewNotification(MSG.General.notInRange);
+                    dbPlayer.SendNewNotification(GlobalMessages.General.notInRange);
                 }
             }));
         }
@@ -840,7 +840,7 @@ namespace VMP_CNR.Module.Players
                 }
                 else
                 {
-                    dbPlayer.SendNewNotification(MSG.General.notInRange);
+                    dbPlayer.SendNewNotification(GlobalMessages.General.notInRange);
                 }
             }));
         }
@@ -897,7 +897,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/givemarrylic", "[Vorname_Nachname]"), notificationType: PlayerNotification.NotificationType.SERVER);
+                    GlobalMessages.General.Usage("/givemarrylic", "[Vorname_Nachname]"), notificationType: PlayerNotification.NotificationType.SERVER);
                 return;
             }
 
@@ -929,7 +929,7 @@ namespace VMP_CNR.Module.Players
                 if (!dbPlayer.CanAccessMethod() || dbPlayer.Player == null) return;
                 if (dbPlayer.marryLic != 1)
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoMarry(), title: "SERVER" ,notificationType: PlayerNotification.NotificationType.SERVER);
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoMarry(), title: "SERVER" ,notificationType: PlayerNotification.NotificationType.SERVER);
                     return;
                 }
 
@@ -939,7 +939,7 @@ namespace VMP_CNR.Module.Players
                 {
                     dbPlayer.SendNewNotification(
 
-                        MSG.General.Usage("/marry", "Name der ersten Person", "& Name der zweiten Person"), title: "SERVER", notificationType: PlayerNotification.NotificationType.SERVER);
+                        GlobalMessages.General.Usage("/marry", "Name der ersten Person", "& Name der zweiten Person"), title: "SERVER", notificationType: PlayerNotification.NotificationType.SERVER);
                     return;
                 }
 
@@ -1154,7 +1154,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.TeamId != (int) teams.TEAM_ARMY && dbPlayer.TeamId != (int)teams.TEAM_GOV) return;
 
             DialogMigrator.CreateMenu(player, Dialogs.menu_show_wanteds, "Gesuchte Personen", "");
-            DialogMigrator.AddMenuItem(player, Dialogs.menu_show_wanteds, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(player, Dialogs.menu_show_wanteds, GlobalMessages.General.Close(), "");
 
             foreach (DbPlayer xPlayer in Players.Instance.GetValidPlayers())
             {
@@ -1256,7 +1256,7 @@ namespace VMP_CNR.Module.Players
 
                 if (!dbPlayer.TakeMoney(price))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(house.Price));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(house.Price));
                     return;
                 }
                 
@@ -1300,7 +1300,7 @@ namespace VMP_CNR.Module.Players
 
                 if (!dbPlayer.TakeMoney(betrag))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(betrag));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(betrag));
                     return;
                 }
 
@@ -1606,7 +1606,7 @@ namespace VMP_CNR.Module.Players
                 }
                 
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("Hier können Sie nichts ausrauben!"));
+                    GlobalMessages.General.Usage("Hier können Sie nichts ausrauben!"));
             }));
         }
         
@@ -1619,7 +1619,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.IsACop())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1635,7 +1635,7 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             await AsyncCommands.Instance.HandleFindDealer(dbPlayer);
@@ -1718,7 +1718,7 @@ namespace VMP_CNR.Module.Players
                 "Job annehmen und beitreten");
             DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_jobaccept, "Job annehmen",
                 "Nimmt den Job an.");
-            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_jobaccept, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_jobaccept, GlobalMessages.General.Close(), "");
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_jobaccept);
         }
 
@@ -1733,7 +1733,7 @@ namespace VMP_CNR.Module.Players
             {
                 if (string.IsNullOrWhiteSpace(govMessage) || govMessage.Length < 2)
                 {
-                    dbPlayer.SendNewNotification(MSG.General.Usage("/gov", "[Message]"));
+                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/gov", "[Message]"));
                     return;
                 }
                 await AsyncCommands.Instance.SendGovMessage(dbPlayer, govMessage);
@@ -1742,7 +1742,7 @@ namespace VMP_CNR.Module.Players
             {
                 if (string.IsNullOrWhiteSpace(govMessage) || govMessage.Length < 2)
                 {
-                    dbPlayer.SendNewNotification(MSG.General.Usage("/gov", "[Message]"));
+                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/gov", "[Message]"));
                     return;
                 }
                 await AsyncCommands.Instance.SendCayoMessage(dbPlayer, govMessage);
@@ -1766,7 +1766,7 @@ namespace VMP_CNR.Module.Players
             //DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_help, "Business Hilfe", "");
             if (dbPlayer.RankId > 0)
                 DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_help, "Administrator Hilfe", "");
-            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_help, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_help, GlobalMessages.General.Close(), "");
 
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_help);
         }
@@ -1801,7 +1801,7 @@ namespace VMP_CNR.Module.Players
                 "Wenn Sie ihren Job kuendigen, werden Sie ueber Zeit Erfahrungspunkte verlieren, bis Sie wieder in diesem Beruf arbeiten.");
             DialogMigrator.CreateMenu(dbPlayer.Player, Dialogs.menu_quitjob, "Kuendigung", "");
             DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_quitjob, "Kuendigung bestaetigen", "");
-            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_quitjob, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_quitjob, GlobalMessages.General.Close(), "");
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_quitjob);
             return;
         }
@@ -1809,7 +1809,7 @@ namespace VMP_CNR.Module.Players
         private static void IncorrectUsageOfServiceParameter(DbPlayer dbPlayer)
         {
             dbPlayer.SendNewNotification(
-                MSG.General.Usage("/service",
+                GlobalMessages.General.Usage("/service",
                     "[police/medic/fahrlehrer/taxi/tow/news/cancel] [Grund/Nachricht]"));
             return;
         }
@@ -1824,7 +1824,7 @@ namespace VMP_CNR.Module.Players
 
                 if (string.IsNullOrWhiteSpace(nachricht))
                 {
-                    dbPlayer.SendNewNotification(MSG.General.Usage("/support", "[Grund/Nachricht]"));
+                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/support", "[Grund/Nachricht]"));
                     return;
             }
             
@@ -1865,7 +1865,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(oocText))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/ooc", "[Nachricht]"));
+                    GlobalMessages.General.Usage("/ooc", "[Nachricht]"));
                 return;
             }
 
@@ -1919,7 +1919,7 @@ namespace VMP_CNR.Module.Players
             if ((!(dbPlayer.Player.Position.DistanceTo(iHouse.Position) <= 5.0f)) &&
                 (!dbPlayer.HasData("tempInt") || Main.CToInt(dbPlayer.GetData("tempInt")) <= 0)) return;
             DialogMigrator.CreateMenu(dbPlayer.Player, Dialogs.menu_shop_interior, "Innenausstattung", "");
-            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_shop_interior, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_shop_interior, GlobalMessages.General.Close(), "");
             DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_shop_interior, "Interior kaufen",
                 "Kauft das aktuell ausgewaehlte Interior");
             //DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_shop_interior, "Interior ansehen",
@@ -1987,7 +1987,7 @@ namespace VMP_CNR.Module.Players
             }
 
             dbPlayer.SendNewNotification(
-                MSG.General.Usage("/spawnchange", "[Haus/Fraktion]"));
+                GlobalMessages.General.Usage("/spawnchange", "[Haus/Fraktion]"));
             return;
         }
 
@@ -2001,7 +2001,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/givelic", "[PlayerName]"), notificationType:PlayerNotification.NotificationType.SERVER);
+                    GlobalMessages.General.Usage("/givelic", "[PlayerName]"), notificationType:PlayerNotification.NotificationType.SERVER);
                 return;
             }
 
@@ -2017,7 +2017,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/takelic", "[PlayerName]"), notificationType: PlayerNotification.NotificationType.SERVER);
+                    GlobalMessages.General.Usage("/takelic", "[PlayerName]"), notificationType: PlayerNotification.NotificationType.SERVER);
                 return;
             }
 
@@ -2032,7 +2032,7 @@ namespace VMP_CNR.Module.Players
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             if (string.IsNullOrWhiteSpace(playerName))
             {
-                dbPlayer.SendNewNotification(MSG.General.Usage("/grab", "[playerName]"), notificationType: PlayerNotification.NotificationType.SERVER);
+                dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/grab", "[playerName]"), notificationType: PlayerNotification.NotificationType.SERVER);
                 return;
             }
 
@@ -2051,7 +2051,7 @@ namespace VMP_CNR.Module.Players
                 if (!dbPlayer.IsACop() && !dbPlayer.IsAMedic()) return;
                     if (string.IsNullOrWhiteSpace(commandParams))
                 {
-                    dbPlayer.SendNewNotification(MSG.General.Usage("/drugtest", "name"));
+                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/drugtest", "name"));
                     return;
                 }
 
@@ -2068,7 +2068,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (!findPlayer.isAlive())
                     {
-                        dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                        dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                         return;
                     }
                 }
@@ -2116,7 +2116,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(commandText))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/taxi", "[Betrag|End]"));
+                    GlobalMessages.General.Usage("/taxi", "[Betrag|End]"));
                 return;
             }
 
@@ -2242,7 +2242,7 @@ namespace VMP_CNR.Module.Players
                 (dbPlayer.TeamRank < 5 && dbPlayer.TeamId == (int)teams.TEAM_FIB) ||
                 (dbPlayer.TeamRank <= 7 && dbPlayer.TeamId == (int)teams.TEAM_GOV))
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -2291,13 +2291,13 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.TeamId != (int) teams.TEAM_FIB && dbPlayer.TeamId != (int) teams.TEAM_POLICE && dbPlayer.TeamId != (int)teams.TEAM_FIB)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
             if ((dbPlayer.TeamId == (int)teams.TEAM_FIB && !dbPlayer.IsNSADuty) && (dbPlayer.TeamId == (int)teams.TEAM_FIB && !dbPlayer.FindFlags.HasFlag(FindFlags.Phonehistory)))
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             
@@ -2336,7 +2336,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2357,7 +2357,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             return;
@@ -2602,7 +2602,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(eventDonation) || !Main.validateArgs(eventDonation, 2, true))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/eventkasse", "[giveplayer/deposit]", "Betrag"));
+                    GlobalMessages.General.Usage("/eventkasse", "[giveplayer/deposit]", "Betrag"));
                 if (dbPlayer.TeamId == (int) teams.TEAM_NEWS)
                 {
                     dbPlayer.SendNewNotification(
@@ -2629,7 +2629,7 @@ namespace VMP_CNR.Module.Players
                     if (!Main.validateArgs(eventDonation, 3))
                     {
                         dbPlayer.SendNewNotification(
-                            MSG.General.Usage("/eventkasse", "[giveplayer]",
+                            GlobalMessages.General.Usage("/eventkasse", "[giveplayer]",
                                 "[Betrag] [Spieler]"));
                         return;
                     }
@@ -2677,7 +2677,7 @@ namespace VMP_CNR.Module.Players
                     if (!Main.validateArgs(eventDonation, 2))
                     {
                         dbPlayer.SendNewNotification(
-                            MSG.General.Usage("/eventkasse",
+                            GlobalMessages.General.Usage("/eventkasse",
                                 "[giveplayer/deposit]",
                                 "Betrag"));
                         return;
@@ -2691,7 +2691,7 @@ namespace VMP_CNR.Module.Players
 
                     if (!dbPlayer.TakeMoney(betrag))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(betrag));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(betrag));
                         return;
                     }
 
@@ -2705,7 +2705,7 @@ namespace VMP_CNR.Module.Players
                     return;
                 default:
                     dbPlayer.SendNewNotification(
-                        MSG.General.Usage("/eventkasse",
+                        GlobalMessages.General.Usage("/eventkasse",
                             "[giveplayer/deposit]", "Betrag"));
                     break;
             }
@@ -2966,7 +2966,7 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.job[0] != (int)jobs.JOB_MECH)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3149,14 +3149,14 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(colors) || !Main.validateArgs(colors, 3))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/neoncar", "R", "G B"));
+                    GlobalMessages.General.Usage("/neoncar", "R", "G B"));
                 dbPlayer.SendNewNotification(
                     "Die Farbwerte muessen zwischen 0 und 255 liegen.");
                 return;
@@ -3173,7 +3173,7 @@ namespace VMP_CNR.Module.Players
             if (color1 < 0 || color2 < 0 || color3 < 0 || color1 > 255 || color2 > 255 || color3 > 255)
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/neoncar", "Name", "Primaer Sekundaer"));
+                    GlobalMessages.General.Usage("/neoncar", "Name", "Primaer Sekundaer"));
                 dbPlayer.SendNewNotification(
                     "Die Farbwerte muessen zwischen 0 und 255 liegen.");
                 return;
@@ -3207,13 +3207,13 @@ namespace VMP_CNR.Module.Players
             if (!dbPlayer.RageExtension.IsInVehicle) return;
             if (dbPlayer.TeamId != (int)teams.TEAM_LSC)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(hornCarId))
             {
-                dbPlayer.SendNewNotification(MSG.General.Usage("/horncar", "ID"));
+                dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/horncar", "ID"));
                 dbPlayer.SendNewNotification(
                     "Hupen koennen zwischen 0 und 51 gewaehlt werden.");
                 return;
@@ -3227,7 +3227,7 @@ namespace VMP_CNR.Module.Players
 
             if (horn < 0 || horn > 51)
             {
-                dbPlayer.SendNewNotification(MSG.General.Usage("/horncar", "ID"));
+                dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/horncar", "ID"));
                 dbPlayer.SendNewNotification(
                     "Hupen koennen zwischen 0 und 51 gewaehlt werden.");
                 return;
@@ -3768,7 +3768,7 @@ namespace VMP_CNR.Module.Players
                     {
                         dbPlayer.SendNewNotification(
                             "Der Kunde hat nicht genug Geld!");
-                        customer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                        customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                         return;
                     }
 
@@ -3827,7 +3827,7 @@ namespace VMP_CNR.Module.Players
                     {
                         dbPlayer.SendNewNotification(
                             "Der Kunde hat nicht genug Geld!");
-                        customer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                        customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                         return;
                     }
 
@@ -3882,7 +3882,7 @@ namespace VMP_CNR.Module.Players
                         {
                             dbPlayer.SendNewNotification(
                                 "Der Kaeufer hat nicht genug Geld!");
-                            customer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                            customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
                         // Vehicle switch Process
@@ -4007,7 +4007,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(newsText))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/news", "Nachricht"));
+                    GlobalMessages.General.Usage("/news", "Nachricht"));
                 return;
             }
 
@@ -4025,7 +4025,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(weedCommand))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/weed", "[plant/harvest/grind]"));
+                    GlobalMessages.General.Usage("/weed", "[plant/harvest/grind]"));
                 return;
             }
 
@@ -4071,10 +4071,10 @@ namespace VMP_CNR.Module.Players
             {
                 if (dbPlayer.TeamId == (int) teams.TEAM_POLICE)
                     dbPlayer.SendNewNotification(
-                        MSG.General.Usage("/fspawnchange", "[LS/County/LS2]"));
+                        GlobalMessages.General.Usage("/fspawnchange", "[LS/County/LS2]"));
                 if (dbPlayer.TeamId == (int) teams.TEAM_MEDIC)
                     dbPlayer.SendNewNotification(
-                        MSG.General.Usage("/fspawnchange", "[LS/LS2/County/Fire]"));
+                        GlobalMessages.General.Usage("/fspawnchange", "[LS/LS2/County/Fire]"));
                 return;
             }
 
@@ -4118,7 +4118,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -4149,7 +4149,7 @@ namespace VMP_CNR.Module.Players
             xjob = JobsModule.Instance.GetJob(dbPlayer.job[0]);
             if (dbPlayer.job[0] != (int) jobs.JOB_PLAGIAT)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -4251,7 +4251,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(commandParameter))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/buildweapon", "[start/end]"));
+                    GlobalMessages.General.Usage("/buildweapon", "[start/end]"));
                 return;
             }
 
@@ -4267,7 +4267,7 @@ namespace VMP_CNR.Module.Players
 
             //Waffenshop
             DialogMigrator.CreateMenu(player, Dialogs.menu_weapondealer, "Waffenfabrik", "");
-            DialogMigrator.AddMenuItem(player, Dialogs.menu_weapondealer, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(player, Dialogs.menu_weapondealer, GlobalMessages.General.Close(), "");
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_weapondealer);
             return;
         }
@@ -4282,7 +4282,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(commandParameter))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/materials", "[get/deliver]"));
+                    GlobalMessages.General.Usage("/materials", "[get/deliver]"));
                 return;
             }
 
@@ -4299,7 +4299,7 @@ namespace VMP_CNR.Module.Players
                             if (!dbPlayer.TakeMoney(300))
                             {
                                 dbPlayer.SendNewNotification(
-                                    MSG.Money.NotEnoughMoney(300));
+                                    GlobalMessages.Money.NotEnoughMoney(300));
                                 return;
                             }
 
@@ -4347,7 +4347,7 @@ namespace VMP_CNR.Module.Players
                 else
                 {
                     dbPlayer.SendNewNotification(
-                        MSG.General.Usage("/materials", "[get/deliver]"));
+                        GlobalMessages.General.Usage("/materials", "[get/deliver]"));
                     return;
                 }
             }
@@ -4364,13 +4364,13 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(commandParameter))
             {
                 dbPlayer.SendNewNotification(
-                    MSG.General.Usage("/takeweapons", "[name]"));
+                    GlobalMessages.General.Usage("/takeweapons", "[name]"));
                 return;
             }
 
             if (!dbPlayer.IsACop() || !dbPlayer.IsInDuty())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -4381,7 +4381,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.IsCuffed && !dbPlayer.IsTied && !dbPlayer.isInjured())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -4438,7 +4438,7 @@ namespace VMP_CNR.Module.Players
                     if (string.IsNullOrWhiteSpace(loadParameter))
                     {
                         dbPlayer.SendNewNotification(
-                            MSG.General.Usage("/loadwk", "Amount"));
+                            GlobalMessages.General.Usage("/loadwk", "Amount"));
                         return;
                     }
 

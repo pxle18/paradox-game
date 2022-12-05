@@ -25,7 +25,7 @@ namespace VMP_CNR
             menu.Add($"Schönheitschirugie");
             menu.Add($"Tattoos lasern");
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

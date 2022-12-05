@@ -24,6 +24,7 @@ using VMP_CNR.Module.Players.Windows;
 using MySql.Data.MySqlClient;
 using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Business;
+using VMP_CNR.Module.Voice;
 
 namespace VMP_CNR.Module.Players.Events
 {
@@ -392,7 +393,7 @@ namespace VMP_CNR.Module.Players.Events
                         DialogMigrator.CloseUserDialog(player, Dialogs.menu_info);
 
                         // Connect to TS
-                        Teamspeak.Connect(player, dbPlayer.GetName());
+                        VoiceModule.Instance.Connect(player, dbPlayer.GetName());
 
                         var crumbs = player.Name.Split('_');
                         if (crumbs.Length > 1)

@@ -56,5 +56,6 @@
     <Folder Include="Module\Kasino\Enum\" />
     <Folder Include="Module\Players\Ragdoll\" />
     <Folder Include="Module\Threading\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
 </Project>

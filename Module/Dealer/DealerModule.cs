@@ -146,7 +146,7 @@ namespace VMP_CNR.Module.Dealer
 
             if (!Configurations.Configuration.Instance.DevMode)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace VMP_CNR.Module.Dealer
 
             if (!Configurations.Configuration.Instance.DevMode)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -186,7 +186,7 @@ namespace VMP_CNR.Module.Dealer
 
             if (!Configurations.Configuration.Instance.DevMode)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Dealer
 
             if (!Configurations.Configuration.Instance.DevMode)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 

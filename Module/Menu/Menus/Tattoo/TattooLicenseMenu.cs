@@ -77,7 +77,7 @@ namespace VMP_CNR
                 menu.Add($"{tatlic.Name} {tatlic.Price}$");
             }
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 
@@ -142,7 +142,7 @@ namespace VMP_CNR
                     {
                         if (!dbPlayer.TakeMoney(tatlic.Price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(tatlic.Price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(tatlic.Price));
                             return false;
                         }
                         TattooShop tattooShop = dbPlayer.GetTattooShop();

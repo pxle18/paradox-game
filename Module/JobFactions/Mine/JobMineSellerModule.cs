@@ -169,7 +169,7 @@ namespace VMP_CNR.Module.JobFactions.Mine
                     {
                         if (!dbPlayer.TakeMoney(price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
                     }
@@ -177,7 +177,7 @@ namespace VMP_CNR.Module.JobFactions.Mine
                     {
                         if (!dbPlayer.TakeBankMoney(price, "Ihre Zahlung Mine-Batterienverkauf ($" + price + ")"))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
                     }

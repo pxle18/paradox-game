@@ -97,7 +97,7 @@ namespace VMP_CNR.Module.Business.FuelStations
                             fuelstation.OwnerBusiness = dbPlayer.GetActiveBusiness();
                         }
                         else {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(fuelstation.BuyPrice));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(fuelstation.BuyPrice));
                         }
                     }
                     return true;

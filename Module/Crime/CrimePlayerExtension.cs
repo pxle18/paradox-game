@@ -213,8 +213,8 @@ namespace VMP_CNR.Module.Crime
             if (dbPlayerCop != null)
             {
                 dbPlayerCop.ResetData("follow");
-                dbPlayerCop.SendNewNotification(MSG.General.hasArrested(dbPlayer.GetName(), dbPlayer.jailtime[0] - 1));
-                dbPlayer.SendNewNotification(MSG.General.isArrested(dbPlayerCop.GetName(), dbPlayer.jailtime[0] - 1));
+                dbPlayerCop.SendNewNotification(GlobalMessages.General.hasArrested(dbPlayer.GetName(), dbPlayer.jailtime[0] - 1));
+                dbPlayer.SendNewNotification(GlobalMessages.General.isArrested(dbPlayerCop.GetName(), dbPlayer.jailtime[0] - 1));
             }
 
             dbPlayer.TakeAnyMoney((int)jailcosts, true);

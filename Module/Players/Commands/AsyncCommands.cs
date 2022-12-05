@@ -29,7 +29,7 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (string.IsNullOrWhiteSpace(playerName))
             {
-                dbPlayer.SendNewNotification( MSG.General.Usage("/grab", "[playerName]"));
+                dbPlayer.SendNewNotification( GlobalMessages.General.Usage("/grab", "[playerName]"));
                 return;
             }
             
@@ -99,7 +99,7 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (!dbPlayer.IsACop() || !dbPlayer.IsInDuty())
             {
-                dbPlayer.SendNewNotification( MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -166,7 +166,7 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (dbPlayer.TeamId != (int)teams.TEAM_DRIVINGSCHOOL || !dbPlayer.IsInDuty() || dbPlayer.TeamRank < 1)
             {
-                dbPlayer.SendNewNotification( MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -227,7 +227,7 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (dbPlayer.TeamId != (int)teams.TEAM_GOV || !dbPlayer.IsInDuty())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             if (dbPlayer.TeamRank < 9)
@@ -270,7 +270,7 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (dbPlayer.TeamId != (int)teams.TEAM_GOV || !dbPlayer.IsInDuty())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             if (dbPlayer.TeamRank < 9)
@@ -350,7 +350,7 @@ namespace VMP_CNR.Module.Players.Commands
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -430,7 +430,7 @@ namespace VMP_CNR.Module.Players.Commands
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 

@@ -473,7 +473,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
 
             if (!dbPlayer.TakeMoney(500))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(1000));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(1000));
                 return;
             }
 
@@ -496,7 +496,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
 
             if (!dbPlayer.TakeMoney(500))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(500));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(500));
                 return;
             }
 
@@ -525,7 +525,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
 
             if (!dbPlayer.TakeMoney(5000))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(5000));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(5000));
                 return;
             }
 

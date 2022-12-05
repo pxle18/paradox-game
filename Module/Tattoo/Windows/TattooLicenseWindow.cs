@@ -181,7 +181,7 @@ namespace VMP_CNR.Module.Tattoo.Windows
 
                 if (!dbPlayer.TakeMoney(price))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
 
                     return;
                 }
@@ -191,7 +191,7 @@ namespace VMP_CNR.Module.Tattoo.Windows
                     tattooShop.AddLicense(tattooLicense);
                 }
 
-                dbPlayer.SendNewNotification($"Lizenzen im Wert von ${MSG.Money.fnumber(price)} erworben!");
+                dbPlayer.SendNewNotification($"Lizenzen im Wert von ${GlobalMessages.Money.fnumber(price)} erworben!");
             }
             catch (Exception e)
             {

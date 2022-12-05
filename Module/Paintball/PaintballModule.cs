@@ -394,7 +394,7 @@ namespace VMP_CNR.Module.Paintball
 
             if (!dbPlayer.TakeMoney(pba.LobbyEnterPrice))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(pba.LobbyEnterPrice));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(pba.LobbyEnterPrice));
                 return;
             }
 

@@ -177,7 +177,7 @@ namespace VMP_CNR.Module.Business.FuelStations
                 {
                     if (!dbPlayer.TakeMoney(price))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                         return;
                     }
                 }
@@ -185,7 +185,7 @@ namespace VMP_CNR.Module.Business.FuelStations
                 {
                     if (!dbPlayer.TakeBankMoney(price, "Ihre Zahlung " + fuel.Name + " ($" + price + ")"))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                         return;
                     }
                 }

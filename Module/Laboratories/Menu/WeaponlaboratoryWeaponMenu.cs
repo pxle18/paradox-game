@@ -64,13 +64,13 @@ namespace VMP_CNR.Module.Laboratories.Menu
 
                             if (!dbPlayer.Container.CanInventoryItemAdded(kvp.Key))
                             {
-                                dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                 return false;
                             }
 
                             if (!dbPlayer.TakeBlackMoney(kvp.Value))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(kvp.Value));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(kvp.Value));
                                 return false;
                             }
 

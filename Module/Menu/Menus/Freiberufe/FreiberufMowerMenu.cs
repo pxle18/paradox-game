@@ -21,7 +21,7 @@ namespace VMP_CNR
             var menu = new Menu(Menu, "Freiberuf Rasenarbeiten");
             menu.Add("Arbeit starten");
             menu.Add("Rückgabe");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

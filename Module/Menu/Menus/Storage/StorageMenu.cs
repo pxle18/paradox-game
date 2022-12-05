@@ -35,7 +35,7 @@ namespace VMP_CNR
                     menu.Add("als Hauptlager setzen");
                     if (!storageRoom.CocainLabor) menu.Add("Kokainlabor ausbauen");
                 }
-                menu.Add(MSG.General.Close());
+                menu.Add(GlobalMessages.General.Close());
                 return menu;
             }
             return null;

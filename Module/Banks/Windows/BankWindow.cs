@@ -387,7 +387,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                 bank.WithdrawMoney(auszahlen);
                                 bank.SaveActMoneyToDb();
                                 dbPlayer.SendNewNotification(
-                                    "Sie haben " + MSG.Money.fnumber(auszahlen) + "$ von Ihrem Konto abgehoben.",
+                                    "Sie haben " + GlobalMessages.Money.fnumber(auszahlen) + "$ von Ihrem Konto abgehoben.",
                                     title: "Konto", 
                                     notificationType: PlayerNotification.NotificationType.SUCCESS
                                 );
@@ -426,7 +426,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                 bank.DepositMoney(einzahlen);
                                 bank.SaveActMoneyToDb();
                                 dbPlayer.SendNewNotification(
-                                    "Sie haben " + MSG.Money.fnumber(einzahlen) + "$ auf Ihr Konto eingezahlt.",
+                                    "Sie haben " + GlobalMessages.Money.fnumber(einzahlen) + "$ auf Ihr Konto eingezahlt.",
                                     title: "Konto", 
                                     notificationType: PlayerNotification.NotificationType.SUCCESS
                                 );

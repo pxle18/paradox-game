@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.LSCustoms
                 return;
             }
 
-            dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+            dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
             return;
         }
 

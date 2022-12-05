@@ -18,7 +18,7 @@ namespace VMP_CNR.Module.Menu.Menus.Guenther
             var menu = new Menu(Menu, "Fahrstuhl");
             menu.Add("Eingangstür");
             menu.Add("Garage");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 

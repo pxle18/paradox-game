@@ -35,7 +35,7 @@ namespace VMP_CNR
             menu.Add($"Schließen");
             menu.Add($"Shop erwerben {tattooShop.Price}$");
 
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             return menu;
         }
 
@@ -67,7 +67,7 @@ namespace VMP_CNR
 
                     if (!dbPlayer.TakeMoney(tattooShop.Price))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(tattooShop.Price));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(tattooShop.Price));
                         return false;
                     }
 

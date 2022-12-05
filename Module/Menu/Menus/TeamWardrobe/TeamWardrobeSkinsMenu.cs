@@ -16,7 +16,7 @@ namespace VMP_CNR
         public override Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu(Menu, "Fraktionskleiderschrank");
-            menu.Add(MSG.General.Close());
+            menu.Add(GlobalMessages.General.Close());
             menu.Add("Normal");
             foreach (var skin in TeamSkinModule.Instance.GetSkinsForTeam(dbPlayer.TeamId))
             {

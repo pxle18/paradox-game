@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                             if (!dbPlayer.TakeMoney(900))
                             {
                                 dbPlayer.SendNewNotification(
-                                    MSG.Money.NotEnoughMoney(900));
+                                    GlobalMessages.Money.NotEnoughMoney(900));
                                 return true;
                             }
 
@@ -346,7 +346,7 @@ namespace VMP_CNR.Module.Teams.Shelter
 
                                     if (!dbPlayer.Container.CanInventoryItemAdded(resultItemId, ResultAmount))
                                     {
-                                        dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                        dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                         return true;
                                     }
 
@@ -408,7 +408,7 @@ namespace VMP_CNR.Module.Teams.Shelter
 
                                     if (!dbPlayer.Container.CanInventoryItemAdded(resultItemId, ResultAmount))
                                     {
-                                        dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                        dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                         return true;
                                     }
 
@@ -455,7 +455,7 @@ namespace VMP_CNR.Module.Teams.Shelter
 
                                     if (!dbPlayer.Container.CanInventoryItemAdded(resultItemId, ResultAmount))
                                     {
-                                        dbPlayer.SendNewNotification(MSG.Inventory.NotEnoughSpace());
+                                        dbPlayer.SendNewNotification(GlobalMessages.Inventory.NotEnoughSpace());
                                         return true;
                                     }
 
@@ -515,7 +515,7 @@ namespace VMP_CNR.Module.Teams.Shelter
 
                             if (!dbPlayer.TakeMoney(2500))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(2500));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(2500));
                                 return true;
                             }
                             dbPlayer.WorkstationEndContainer.ClearInventory();
@@ -607,7 +607,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                             int price = FingerPrintedWeaponCount * 25000;
                             if (!dbPlayer.TakeBlackMoney(price))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(price));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(price));
                                 return true;
                             }
 

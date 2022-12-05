@@ -77,7 +77,7 @@ namespace VMP_CNR.Module.Barber.Windows
                 }
                 else
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(cost), notificationType: PlayerNotification.NotificationType.ERROR);
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(cost), notificationType: PlayerNotification.NotificationType.ERROR);
                     dbPlayer.ApplyCharacter();
                     return;
                 }

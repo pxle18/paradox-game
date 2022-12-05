@@ -182,7 +182,7 @@ namespace VMP_CNR.Module.Shops.Windows
                 {
                     if (!dbPlayer.TakeBlackMoney(price))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughSWMoney(price));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughSWMoney(price));
                         return;
                     }
                 }
@@ -190,7 +190,7 @@ namespace VMP_CNR.Module.Shops.Windows
                 {
                     if (!dbPlayer.TakeCWS((CWSTypes)accessedShop.CWSId, price))
                     {
-                        dbPlayer.SendNewNotification(MSG.Money.NotEnoughCW(price, (CWSTypes)accessedShop.CWSId));
+                        dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughCW(price, (CWSTypes)accessedShop.CWSId));
                         return;
                     }
                 }
@@ -202,7 +202,7 @@ namespace VMP_CNR.Module.Shops.Windows
                     {
                         if (!dbPlayer.TakeMoney(price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
                     }
@@ -216,7 +216,7 @@ namespace VMP_CNR.Module.Shops.Windows
 
                         if (!dbPlayer.TakeBankMoney(price, "Ihre Zahlung im " + storename + " ($" + price + ")"))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
                     }

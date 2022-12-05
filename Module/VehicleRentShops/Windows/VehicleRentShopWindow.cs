@@ -89,7 +89,7 @@ namespace VMP_CNR.Module.VehicleRentShops.Windows
 
                         if (!dbPlayer.TakeMoney(vehicleRentShopItem.Price))
                         {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(vehicleRentShopItem.Price));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(vehicleRentShopItem.Price));
                             return;
                         }
 

@@ -72,6 +72,16 @@ namespace VMP_CNR.Module.Voice
             AddToVoice(dbPlayer);
         }
 
+        public void ChangeVoiceRange(Player player, float range = 15.0f)
+        {
+            player.SetSharedData("VOICE_RANGE", range);
+        }
+
+        public void Connect(Player player, string characterName)
+        {
+            player.TriggerNewClient("ConnectTeamspeak");
+        }
+
         public void refreshFQVoiceForPlayerFrequenz(DbPlayer dbPlayer)
         {
             if (dbPlayer == null)
@@ -92,7 +102,6 @@ namespace VMP_CNR.Module.Voice
                 dbPlayer.Player.TriggerNewClient("setRadioChatPlayers", "");
             }
         }
-
 
         public void refreshAirFunk()
         {

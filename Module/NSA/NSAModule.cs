@@ -450,7 +450,7 @@ namespace VMP_CNR.Module.NSA
                 if (!dbPlayer.IsACop()) return;
                 if (string.IsNullOrWhiteSpace(commandParams))
                 {
-                    dbPlayer.SendNewNotification(MSG.General.Usage("/takebm", "name"));
+                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/takebm", "name"));
                     return;
                 }
 

@@ -61,7 +61,7 @@ namespace VMP_CNR.Module.Racing.Menu
                             
                             if(!dbPlayer.TakeMoney(RacingModule.LobbyEnterPrice))
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(RacingModule.LobbyEnterPrice));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(RacingModule.LobbyEnterPrice));
                                 return false;
                             }
 

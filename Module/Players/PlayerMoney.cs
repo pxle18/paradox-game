@@ -166,36 +166,36 @@ namespace VMP_CNR.Module.Players
             // not a valid destination player
             if (dPlayer == null)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPlayer());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPlayer());
                 return;
             }
 
             // destination is source
             if (dbPlayer.Id == dPlayer.Id)
             {
-                dbPlayer.SendNewNotification(MSG.Money.PlayerSelfMoney());
+                dbPlayer.SendNewNotification(GlobalMessages.Money.PlayerSelfMoney());
                 return;
             }
 
             // not a valid amount
             if (amount + dPlayer.money[0] < dPlayer.money[0])
             {
-                dbPlayer.SendNewNotification(MSG.Money.InvalidAmount());
+                dbPlayer.SendNewNotification(GlobalMessages.Money.InvalidAmount());
                 return;
             }
 
             // Take money from source or error
             if (!dbPlayer.TakeMoney(amount))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(amount));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(amount));
                 return;
             }
 
             // transfer money to destination
             dPlayer.GiveMoney(amount);
             
-            dbPlayer.SendNewNotification(MSG.Money.PlayerGiveMoney(amount));
-            dPlayer.SendNewNotification(MSG.Money.PlayerGotMoney(amount));
+            dbPlayer.SendNewNotification(GlobalMessages.Money.PlayerGiveMoney(amount));
+            dPlayer.SendNewNotification(GlobalMessages.Money.PlayerGotMoney(amount));
 
             SaveToPayLog(dbPlayer.GetName(), dPlayer.GetName(), amount);
         }

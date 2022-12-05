@@ -103,7 +103,7 @@ namespace VMP_CNR.Module.Workstation.Windows
                 }
                 if (!dbPlayer.TakeMoney(2500))
                 {
-                    dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(2500));
+                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(2500));
                     return;
                 }
 

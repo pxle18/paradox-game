@@ -21,7 +21,7 @@ namespace VMP_CNR
         {
             var menu = new Menu(Menu, "Armory Components");
 
-            menu.Add(MSG.General.Close(), "");
+            menu.Add(GlobalMessages.General.Close(), "");
             menu.Add("Zurueck", "");
 
             if (!dbPlayer.HasData("ArmoryId")) return null;

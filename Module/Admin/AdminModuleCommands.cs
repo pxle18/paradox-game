@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -153,7 +153,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -184,7 +184,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -205,7 +205,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -223,7 +223,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -237,7 +237,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -251,7 +251,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -276,7 +276,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             l_DbPlayer.Player.TriggerNewClient("unloadStorageRoom");
@@ -291,7 +291,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             var sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
@@ -317,7 +317,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             var sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
@@ -341,7 +341,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -379,7 +379,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -399,7 +399,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             foreach (var user in Players.Players.Instance.GetValidPlayers())
@@ -417,7 +417,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -480,7 +480,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -499,7 +499,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -518,7 +518,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -546,7 +546,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -610,7 +610,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -692,7 +692,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -720,7 +720,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -825,7 +825,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -915,7 +915,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -965,7 +965,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1004,7 +1004,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1054,7 +1054,7 @@ namespace VMP_CNR.Module.Admin
 
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1090,7 +1090,7 @@ namespace VMP_CNR.Module.Admin
 
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1125,7 +1125,7 @@ namespace VMP_CNR.Module.Admin
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
             {
-                l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1167,7 +1167,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1192,7 +1192,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1214,7 +1214,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1238,7 +1238,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1262,20 +1262,20 @@ namespace VMP_CNR.Module.Admin
                 var l_DbPlayer = p_Player.GetPlayer();
                 if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
                 {
-                    l_DbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
                 var l_Command = p_Args.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
                 if (l_Command.Length != 2)
                 {
-                    l_DbPlayer.SendNewNotification(MSG.General.Usage("/restart", "Minuten", "Grund"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    l_DbPlayer.SendNewNotification(GlobalMessages.General.Usage("/restart", "Minuten", "Grund"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
                 if (!uint.TryParse(l_Command[0], out uint l_Minuten))
                 {
-                    l_DbPlayer.SendNewNotification(MSG.General.Usage("/restart", "Minuten", "Grund"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    l_DbPlayer.SendNewNotification(GlobalMessages.General.Usage("/restart", "Minuten", "Grund"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -1291,7 +1291,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1316,7 +1316,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1340,7 +1340,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1365,7 +1365,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1399,7 +1399,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1418,7 +1418,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1488,7 +1488,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             if (!Int32.TryParse(args, out int attachid))
@@ -1508,7 +1508,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1525,7 +1525,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1544,13 +1544,13 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
             if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)adminlevel.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)adminlevel.Manager)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1568,13 +1568,13 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
             if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)adminlevel.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)adminlevel.Manager)
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1601,7 +1601,7 @@ namespace VMP_CNR.Module.Admin
                 {
                     dbPlayer.SendNewNotification(
 
-                        MSG.General.Usage("/setlevel", "Name", "Level"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                        GlobalMessages.General.Usage("/setlevel", "Name", "Level"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -1635,7 +1635,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1654,7 +1654,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1673,7 +1673,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1692,7 +1692,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1711,7 +1711,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1730,7 +1730,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1749,7 +1749,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1768,7 +1768,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1784,7 +1784,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1807,7 +1807,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1836,7 +1836,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -1946,7 +1946,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
@@ -2016,7 +2016,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2051,7 +2051,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2069,7 +2069,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             var command = commandParams.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
@@ -2085,7 +2085,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2104,7 +2104,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2126,7 +2126,7 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2168,7 +2168,7 @@ namespace VMP_CNR.Module.Admin
             if (dbPlayer == null) return;
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -2332,7 +2332,7 @@ namespace VMP_CNR.Module.Admin
                 {
                     dbPlayer.SendNewNotification(
 
-                        MSG.General.Usage("/setitem", "Name", "Itemname Anzahl"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                        GlobalMessages.General.Usage("/setitem", "Name", "Itemname Anzahl"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -2435,7 +2435,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -2454,7 +2454,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -2582,7 +2582,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -2916,7 +2916,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3451,7 +3451,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!l_Player.CanAccessMethod())
                 {
-                    l_Player.SendNewNotification(MSG.Error.NoPermissions());
+                    l_Player.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -3500,7 +3500,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -3543,7 +3543,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -3574,7 +3574,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3619,7 +3619,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3674,7 +3674,7 @@ namespace VMP_CNR.Module.Admin
                 var iPlayer = player.GetPlayer();
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
                 }
 
@@ -3739,7 +3739,7 @@ namespace VMP_CNR.Module.Admin
 
                     if (!iPlayer.CanAccessMethod())
                     {
-                        iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                        iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                         return;
                     }
 
@@ -3797,7 +3797,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3813,7 +3813,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3829,7 +3829,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3847,7 +3847,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -3865,7 +3865,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -3894,7 +3894,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -3929,7 +3929,7 @@ namespace VMP_CNR.Module.Admin
                     if (iPlayer == null || !iPlayer.IsValid()) return;
                     if (!iPlayer.CanAccessMethod())
                     {
-                        iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                        iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                         return;
                     }
                     if (String.IsNullOrEmpty(commandParams)) return;
@@ -3969,7 +3969,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4007,7 +4007,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4027,7 +4027,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4060,7 +4060,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4088,7 +4088,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4105,7 +4105,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4131,7 +4131,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4165,7 +4165,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!Configuration.Instance.DevMode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4205,7 +4205,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4220,7 +4220,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4237,7 +4237,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4272,7 +4272,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4294,7 +4294,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4332,7 +4332,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4403,7 +4403,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4464,7 +4464,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4504,7 +4504,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4532,7 +4532,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4551,7 +4551,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4579,7 +4579,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
             if (!iPlayer.HasData("mark")) return;
@@ -4602,7 +4602,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4622,7 +4622,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4646,7 +4646,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4679,7 +4679,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod() && !iPlayer.HasData("tmpWhisper"))
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4702,7 +4702,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4743,7 +4743,7 @@ namespace VMP_CNR.Module.Admin
 
             if (iPlayer == null || !iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4777,7 +4777,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4826,7 +4826,7 @@ namespace VMP_CNR.Module.Admin
 
             if (dbPlayer == null || !dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             if (dbPlayer.RageExtension.IsInVehicle)
@@ -4854,7 +4854,7 @@ namespace VMP_CNR.Module.Admin
 
                 if (!dbPlayer.CanAccessMethod())
                 {
-                    dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
@@ -4895,7 +4895,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -4948,7 +4948,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5000,13 +5000,13 @@ namespace VMP_CNR.Module.Admin
 
                 if (!iPlayer.CanAccessMethod())
                 {
-                    iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     return;
                 }
 
                 DialogMigrator.CreateMenu(player, Dialogs.menu_player,
                     "Spielerliste (" + Players.Players.Instance.GetValidPlayers().Count + ")", "Alle verbundenen Spieler");
-                DialogMigrator.AddMenuItem(player, Dialogs.menu_player, MSG.General.Close(), "");
+                DialogMigrator.AddMenuItem(player, Dialogs.menu_player, GlobalMessages.General.Close(), "");
 
                 foreach (var user in Players.Players.Instance.GetValidPlayers())
                 {
@@ -5026,7 +5026,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5072,7 +5072,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5100,7 +5100,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5122,7 +5122,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5188,7 +5188,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             try
@@ -5291,13 +5291,13 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
             DialogMigrator.CreateMenu(player, Dialogs.menu_player, "GVMP Team", "Teammitglieder");
 
-            DialogMigrator.AddMenuItem(player, Dialogs.menu_player, MSG.General.Close(), "");
+            DialogMigrator.AddMenuItem(player, Dialogs.menu_player, GlobalMessages.General.Close(), "");
             foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.Rank.Id!=0).OrderByDescending(x => x.Rank.Salary))
             {
                 if (!dbPlayer.IsValid()) continue;
@@ -5320,7 +5320,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5365,7 +5365,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5391,7 +5391,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
             if (!Int32.TryParse(command[0], out int intAutoHausId)) return;
@@ -5417,7 +5417,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5491,7 +5491,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod() && !Devmode && iPlayer.RankId != (int)adminlevel.Projektleitung)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5593,7 +5593,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod() && !Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5613,7 +5613,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5638,7 +5638,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5654,7 +5654,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5683,7 +5683,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             NAPI.Task.Run(() =>
@@ -5700,7 +5700,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5715,7 +5715,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5756,7 +5756,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5773,7 +5773,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod() || !Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5789,7 +5789,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5806,7 +5806,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5822,7 +5822,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5838,7 +5838,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod() && !Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5872,7 +5872,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5890,7 +5890,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!Devmode)
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
@@ -5927,7 +5927,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5950,7 +5950,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -5976,7 +5976,7 @@ namespace VMP_CNR.Module.Admin
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6011,7 +6011,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6049,7 +6049,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6085,7 +6085,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6112,7 +6112,7 @@ namespace VMP_CNR.Module.Admin
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6141,7 +6141,7 @@ namespace VMP_CNR.Module.Admin
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             if (!dbPlayer.CanAccessMethod())
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6162,7 +6162,7 @@ namespace VMP_CNR.Module.Admin
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             if (!dbPlayer.Rank.CanAccessFeature("casino"))
             {
-                dbPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 
@@ -6262,7 +6262,7 @@ namespace VMP_CNR.Module.Admin
             if (!iPlayer.CanAccessMethod())
             {
 
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions());
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
             var args = input.Split(" ");
@@ -6284,7 +6284,7 @@ namespace VMP_CNR.Module.Admin
 
             if (!iPlayer.CanAccessMethod())
             {
-                iPlayer.SendNewNotification(MSG.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 return;
             }
 

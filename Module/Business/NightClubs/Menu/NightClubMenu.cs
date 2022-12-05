@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Business.NightClubs
                             }
                             else
                             {
-                                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(nightClub.Price));
+                                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(nightClub.Price));
                             }
                         }
                         return true;

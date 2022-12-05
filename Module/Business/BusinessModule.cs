@@ -350,7 +350,7 @@ namespace VMP_CNR.Module.Business
 
             if(!dbPlayer.TakeBankMoney(nameChangeBizPrice))
             {
-                dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(nameChangeBizPrice));
+                dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(nameChangeBizPrice));
                 return;
             }
 

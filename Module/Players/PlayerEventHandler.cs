@@ -205,7 +205,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.CanAccessRemoteEvent())
             {
-                dbPlayer.SendNewNotification( MSG.Error.NoPermissions());
+                dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                 return;
             }
 

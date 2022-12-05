@@ -118,7 +118,7 @@ namespace VMP_CNR.Module.Business.Raffinery
                             raffinery.OwnerBusiness = dbPlayer.GetActiveBusiness();
                         }
                         else {
-                            dbPlayer.SendNewNotification(MSG.Money.NotEnoughMoney(raffinery.BuyPrice));
+                            dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(raffinery.BuyPrice));
                         }
                     }
                     return true;
