@@ -1,0 +1,21 @@
+# vs
+.vs/
+obj/
+bin/
+types-gt-mp/
+packages/
+
+# intellij
+.idea/
+
+# django
+website/.env/
+*.pyc
+website/database/
+
+.DS_STORE
+*.DotSettings
+
+*.user
+
+.vscode/
