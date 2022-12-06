@@ -1115,7 +1115,7 @@ namespace VMP_CNR
                                 if (!ServerFeatures.IsActive("blackmoney"))
                                 {
                                     dbPlayer.SendNewNotification("Die Geldwäsche ist aufgrund von Problemen deaktiviert. Wir arbeiten an der Lösung des Problems. Sobald dieses Feature wieder verfügbar ist," +
-                                        "geben wir im Forum und/oder GVMP-Launcher Bescheid.");
+                                        "geben wir im Forum und/oder PARADOX-Discord Bescheid.");
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                     return;
                                 }

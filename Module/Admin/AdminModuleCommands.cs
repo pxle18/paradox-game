@@ -5280,7 +5280,7 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            DialogMigrator.CreateMenu(player, Dialogs.menu_player, "GVMP Team", "Teammitglieder");
+            DialogMigrator.CreateMenu(player, Dialogs.menu_player, "PARADOX Team", "Teammitglieder");
 
             DialogMigrator.AddMenuItem(player, Dialogs.menu_player, GlobalMessages.General.Close(), "");
             foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.Rank.Id!=0).OrderByDescending(x => x.Rank.Salary))

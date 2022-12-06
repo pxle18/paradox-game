@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Players.Sync
             {
                 bankHistories.Add(new Banks.BankHistory.BankHistory
                 {
-                    Name = "GVMP Bonus",
+                    Name = "PARADOX Bonus",
                     Value = dbPlayer.Rank.Salary
                 });
                 total += dbPlayer.Rank.Salary;

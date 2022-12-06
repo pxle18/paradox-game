@@ -82,7 +82,7 @@ namespace VMP_CNR.Module.Einreiseamt
                         foundPlayer.HasPerso[0] = 1;
                         foundPlayer.Save();
 
-                        foundPlayer.SendNewNotification("Ihnen wurde die Einreise gestattet! Viel Spaß auf GVMP!");
+                        foundPlayer.SendNewNotification("Ihnen wurde die Einreise gestattet! Viel Spaß auf PARADOX!");
                         dbPlayer.SendNewNotification($"Sie haben {foundPlayer.GetName()} die Einreise gestattet!");
                         MenuManager.DismissCurrent(dbPlayer);
 
