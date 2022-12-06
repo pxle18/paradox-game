@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using GTANetworkAPI;
@@ -46,169 +47,62 @@ namespace VMP_CNR.Module
 
     public abstract class BaseModule
     {
-        private bool loaded = false;
-        private DateTime loadTime = DateTime.Now;
+        private bool _loaded = false;
+        private StringBuilder _currentLog;
 
-        private StringBuilder currentLog;
+        public void Log(string log) => _currentLog?.AppendLine(log);
 
-        public void Log(string log)
-        {
-            currentLog?.AppendLine(log);
-        }
+        public virtual bool OnClientConnected(Player client) => true;
         
-        public virtual bool OnClientConnected(Player client)
-        {
-            return true;
-        }
+        public virtual void OnPlayerFirstSpawn(DbPlayer dbPlayer) { }
 
-        public virtual void OnPlayerFirstSpawn(DbPlayer dbPlayer)
-        {
-        }
+        public virtual void OnVehicleSpawn(SxVehicle sxvehicle) { }
 
-        public virtual void OnVehicleSpawn(SxVehicle sxvehicle)
-        {
-        }
+        public virtual void OnServerBeforeRestart() { }
 
-        public virtual void OnServerBeforeRestart()
-        {
-        }
+        public virtual void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer) { }
 
-        public virtual void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer)
-        {
-        }
+        public virtual void OnPlayerSpawn(DbPlayer dbPlayer) { }
 
-        public virtual void OnPlayerSpawn(DbPlayer dbPlayer)
-        {
-        }
+        public virtual void OnPlayerConnected(DbPlayer dbPlayer) { }
+        public virtual void OnPlayerLoggedIn(DbPlayer dbPlayer) { }
+        public virtual void OnPlayerDisconnected(DbPlayer dbPlayer, string reason) { }
 
-        public virtual void OnPlayerConnected(DbPlayer dbPlayer)
-        {
-        }
+        public virtual bool OnPlayerDeathBefore(DbPlayer dbPlayer, NetHandle killer, uint weapon) => false;
 
-        public virtual void OnPlayerLoggedIn(DbPlayer dbPlayer)
-        {
+        public virtual bool HasDoorAccess(DbPlayer dbPlayer, Door door) => false;
 
-        }
+        public virtual void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint weapon) { }
 
-        public virtual void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
-        {
-        }
+        public virtual void OnVehicleDeleteTask(SxVehicle sxVehicle) { }
+        public virtual void OnPlayerEnterVehicle(DbPlayer dbPlayer, Vehicle vehicle, sbyte seat) { }
 
-        public virtual bool OnPlayerDeathBefore(DbPlayer dbPlayer, NetHandle killer, uint weapon)
-        {
-            return false;
-        }
+        public virtual void OnPlayerExitVehicle(DbPlayer dbPlayer, Vehicle vehicle) { }
 
-        public virtual bool HasDoorAccess(DbPlayer dbPlayer, Door door)
-        {
-            return false;
-        }
+        public virtual void OnPlayerWeaponSwitch(DbPlayer dbPlayer, WeaponHash oldWeapon, WeaponHash newWeapon) { }
+        public virtual bool OnKeyPressed(DbPlayer dbPlayer, Key key) => false;
 
-        public virtual void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint weapon)
-        {
-        }
+        public virtual bool OnChatCommand(DbPlayer dbPlayer, string command, string[] args) => false;
+        public virtual bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState) => false;
 
-        public virtual void OnVehicleDeleteTask(SxVehicle sxVehicle)
-        {
-        }
+        protected virtual bool OnLoad() => true;
+        public virtual void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader) { }
+        public virtual void OnMinuteUpdate() { }
+        public virtual async Task OnMinuteUpdateAsync() => await Task.Delay(0);
+        public virtual void OnTwoMinutesUpdate() { }
+        public virtual void OnFiveMinuteUpdate() { }
+        public virtual void OnFifteenMinuteUpdate() { }
+        public virtual void OnPlayerMinuteUpdate(DbPlayer dbPlayer) { }
+        public virtual void OnTenSecUpdate() { }
+        public virtual async Task OnTenSecUpdateAsync() => await Task.Delay(0);
+        public virtual void OnFiveSecUpdate() { }
 
-        public virtual void OnPlayerEnterVehicle(DbPlayer dbPlayer, Vehicle vehicle, sbyte seat)
-        {
-        }
-
-        public virtual void OnPlayerExitVehicle(DbPlayer dbPlayer, Vehicle vehicle)
-        {
-        }
-
-        public virtual void OnPlayerWeaponSwitch(DbPlayer dbPlayer, WeaponHash oldgun, WeaponHash newgun)
-        {
-        }
-
-        public virtual bool OnKeyPressed(DbPlayer dbPlayer, Key key)
-        {
-            return false;
-        }
-
-        public virtual bool OnChatCommand(DbPlayer dbPlayer, string command, string[] args)
-        {
-            return false;
-        }
-
-        public virtual bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
-        {
-            return false;
-        }
-
-        protected virtual bool OnLoad()
-        {
-            return true;
-        }
-
-        public virtual void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
-        {
-        }
-
-        public bool IsLoaded()
-        {
-            return loaded;
-        }
-
-        public virtual void OnMinuteUpdate()
-        {
-        }
-
-        public virtual async Task OnMinuteUpdateAsync()
-        {
-            await Task.Delay(0);
-        }
-
-        public virtual void OnTwoMinutesUpdate()
-        {
-        }
-
-        public virtual void OnFiveMinuteUpdate()
-        {
-        }
-        
-        public virtual void OnFifteenMinuteUpdate()
-        {
-
-        }
-
-        public virtual void OnPlayerMinuteUpdate(DbPlayer dbPlayer)
-        {
-        }
-
-        public virtual void OnVehicleMinuteUpdate(SxVehicle sxVehicle) //TODO
-        {
-        }
-
-        public virtual void OnTenSecUpdate()
-        {
-        }
-
-        public virtual async Task OnTenSecUpdateAsync()
-        {
-            await Task.Delay(0);
-        }
-
-        public virtual void OnFiveSecUpdate()
-        {
-        }
-
-        public virtual int GetOrder()
-        {
-            return 0;
-        }
-        
-        public virtual void OnDailyReset()
-        {
-        }
+        public virtual int GetOrder() => 0;
+        public virtual void OnDailyReset() { }
 
         protected bool UpdateSetting(string key, string value)
         {
             Settings.Setting  setting = Settings.SettingsModule.Instance.GetAll().ToList().Where(s => s.Value.Key.ToLower() == key.ToLower()).FirstOrDefault().Value;
-
             if (setting == null) return false;
 
             setting.Value = value;
@@ -219,10 +113,15 @@ namespace VMP_CNR.Module
 
         public virtual bool Load(bool reload = false)
         {
-            Logging.Logger.Print("Loading Module " + this.ToString());
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            Logger.Print($"Loading Module {ToString()}");
+
             try
             {
-                if (loaded && !reload) return true;
+                if (_loaded && !reload) return true;
+
                 var requiredModules = RequiredModules();
                 if (requiredModules != null)
                 {
@@ -232,26 +131,26 @@ namespace VMP_CNR.Module
                     }
                 }
 
-                currentLog = new StringBuilder();
+                _currentLog = new StringBuilder();
 
-                loaded = OnLoad();
+                _loaded = OnLoad();
 
             }
             catch(Exception e)
             {
+                stopwatch.Stop();
                 Logging.Logger.Crash(e);
                 Logging.Logger.Print("!!!! CRITICAL ERROR IN Module " + this.ToString() + " !!!!");
             }
             finally
             {
-                Logging.Logger.Print("Loaded Module " + this.ToString() + " succesfully");
+                stopwatch.Stop();
+                Logger.Print($"Loaded Module {ToString()} in {stopwatch.ElapsedMilliseconds}ms succesfully");
             }
-            return loaded;
+            
+            return _loaded;
         }
 
-        public virtual Type[] RequiredModules()
-        {
-            return null;
-        }
+        public virtual Type[] RequiredModules() => null;
     }
 }

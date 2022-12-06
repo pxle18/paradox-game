@@ -23,14 +23,9 @@ namespace VMP_CNR.Module.Vehicles.Garages
         protected override void OnItemLoaded(GarageSpawn garageSpawn)
         {
             var garage = GarageModule.Instance[garageSpawn.GarageId];
-            if (garage == null)
-            {
-                Logger.Print($"Unknown GarageId {garageSpawn.GarageId}");
-            }
-            else
-            {
-                garage.Spawns.Add(garageSpawn);
-            }
+            if (garage == null) return;
+            
+            garage.Spawns.Add(garageSpawn);
         }
 
         [CommandPermission(PlayerRankPermission = true)]

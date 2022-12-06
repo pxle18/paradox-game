@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using VMP_CNR.Module.Logging;
+﻿using System.Collections.Generic;
 
 namespace VMP_CNR.Module
 {
@@ -9,11 +6,12 @@ namespace VMP_CNR.Module
         where T : Module<T> //, new()
         where TLoadable : Loadable<TId>
     {
-        private Dictionary<TId, TLoadable> list;
+        private Dictionary<TId, TLoadable> _list;
 
         protected override bool OnLoad()
         {
-            list = new Dictionary<TId, TLoadable>();
+            _list = new Dictionary<TId, TLoadable>();
+
             return base.OnLoad();
         }
 
@@ -21,46 +19,31 @@ namespace VMP_CNR.Module
         {
             if (u == null) return;
             var identifier = u.GetIdentifier();
-            if (list.ContainsKey(identifier))
-            {
-                Logger.Print($"Duplicate: {typeof(TLoadable)} ID: {identifier}");
-                return;
-            }
 
-            list.Add(identifier, u);
+            if (_list.ContainsKey(identifier)) return;
+
+            _list.Add(identifier, u);
         }
 
-        public Dictionary<TId, TLoadable> GetAll()
-        {
-            return list;
-        }
+        public Dictionary<TId, TLoadable> GetAll() => _list;
 
-        public bool Contains(TId key)
-        {
-            return list.ContainsKey(key);
-        }
+        public bool Contains(TId key) => _list.ContainsKey(key);
 
         public TLoadable this[TId key]
         {
-            get => !list.TryGetValue(key, out var value) ? null : value;
-            set => list[key] = value;
+            get => !_list.TryGetValue(key, out TLoadable value) ? null : value;
+            set => _list[key] = value;
         }
 
-        public /*static*/ TLoadable Get(TId key) //Todo: make static
+        public TLoadable Get(TId key)
         {
             var module = Instance as SqlModule<T, TLoadable, TId>;
             return module?[key];
         }
 
-        public void Add(TId key, TLoadable value)
-        {
-            list.Add(key, value);
-        }
+        public void Add(TId key, TLoadable value) => _list.Add(key, value);
 
-        public void Edit(TId key, TLoadable value)
-        {
-            list[key] = value;
-        }
+        public void Edit(TId key, TLoadable value) => _list[key] = value;
 
         public void Update(TId key, TLoadable value, string tableName, string condition, params object[] data)
         {

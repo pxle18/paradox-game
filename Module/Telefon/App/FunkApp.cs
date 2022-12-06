@@ -7,13 +7,11 @@ using System;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Voice;
 
-namespace VMP_CNR.Module.Funk.App
+namespace VMP_CNR.Module.Telefon.App
 {
     public class FunkApp : SimpleApp
     {
-        public FunkApp() : base("FunkApp")
-        {
-        }
+        public FunkApp() : base("FunkApp") { }
 
         [RemoteEvent]
         public void requestVoiceSettings(Player client, string key)

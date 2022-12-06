@@ -23,11 +23,11 @@ namespace VMP_CNR.Module
     {
         public static Modules Instance { get; } = new Modules();
 
-        private readonly Dictionary<Type, BaseModule> modules;
+        private readonly Dictionary<Type, BaseModule> _modules;
 
         private Modules()
         {
-            modules = new Dictionary<Type, BaseModule>();
+            _modules = new Dictionary<Type, BaseModule>();
 
             var objects = Assembly.GetAssembly(typeof(BaseModule))
                 .GetTypes()
@@ -46,7 +46,7 @@ namespace VMP_CNR.Module
 
         public Dictionary<Type, BaseModule> GetModules()
         {
-            return modules;
+            return _modules;
         }
 
         public MethodInfo GetCommand(string methodName)
@@ -54,17 +54,17 @@ namespace VMP_CNR.Module
             // For Using Syntax if /mychatcommand then void Commandmychatcommand
             try
             {
-                foreach (var module in modules)
+                foreach (var module in _modules)
                 {
-                    if (module.Value.GetType().GetMethod("Command" + methodName) != null)
-                    {
-                        return module.Value.GetType().GetMethod("Command" + methodName);
-                    }
+                    if (module.Value.GetType().GetMethod("Command" + methodName) == null)
+                        continue;
+                    
+                    return module.Value.GetType().GetMethod("Command" + methodName);
                 }
             }
             catch(Exception e)
             {
-                Logging.Logger.Crash(e);
+                Logger.Crash(e);
             }
             return null;
         }
@@ -74,7 +74,7 @@ namespace VMP_CNR.Module
             // For Using Syntax if /mychatcommand then void Commandmychatcommand
             try 
             { 
-                foreach (var module in modules)
+                foreach (var module in _modules)
                 {
                     if (module.Value.GetType().GetMethod("Command" + methodName) != null)
                     {
@@ -91,7 +91,7 @@ namespace VMP_CNR.Module
         
         public void OnPlayerWeaponSwitch(DbPlayer dbPlayer, WeaponHash oldGun, WeaponHash newGun)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -108,7 +108,7 @@ namespace VMP_CNR.Module
 
         public bool HasDoorAccess(DbPlayer dbPlayer, Door door)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -126,7 +126,7 @@ namespace VMP_CNR.Module
 
         public bool OnClientConnected(Player client)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -144,7 +144,7 @@ namespace VMP_CNR.Module
         
         public void OnPlayerFirstSpawn(DbPlayer dbPlayer)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -161,7 +161,7 @@ namespace VMP_CNR.Module
 
         public void OnVehicleSpawn(SxVehicle sxvehicle)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -180,7 +180,7 @@ namespace VMP_CNR.Module
             if (Settings.SettingsModule.Instance.CanDailyReset())
             {
 
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     try
                     {
@@ -204,7 +204,7 @@ namespace VMP_CNR.Module
 
         public void OnServerBeforeRestart()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -220,7 +220,7 @@ namespace VMP_CNR.Module
 
         public void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -236,7 +236,7 @@ namespace VMP_CNR.Module
 
         public void OnPlayerSpawn(DbPlayer dbPlayer)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -252,7 +252,7 @@ namespace VMP_CNR.Module
 
         public void OnPlayerEnterVehicle(DbPlayer dbPlayer, Vehicle vehicle, sbyte seat)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -268,7 +268,7 @@ namespace VMP_CNR.Module
 
         public void OnPlayerExitVehicle(DbPlayer dbPlayer, Vehicle vehicle)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -284,7 +284,7 @@ namespace VMP_CNR.Module
 
         public void OnTenSecUpdate()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -300,7 +300,7 @@ namespace VMP_CNR.Module
 
         public async Task OnTenSecUpdateAsync()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -316,7 +316,7 @@ namespace VMP_CNR.Module
 
         public void OnFiveSecUpdate()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -332,7 +332,7 @@ namespace VMP_CNR.Module
 
         public void OnVehicleDeleteTask(SxVehicle sxVehicle)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -348,7 +348,7 @@ namespace VMP_CNR.Module
 
         public void OnPlayerConnect(DbPlayer dbPlayer)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -363,11 +363,10 @@ namespace VMP_CNR.Module
 
         public void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
-                    //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     module.OnPlayerLoadData(dbPlayer, reader);
                 }
                 catch (Exception e)
@@ -380,7 +379,7 @@ namespace VMP_CNR.Module
         public void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint weapon)
         {
             bool IgnoreFutureDeath = false;
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -395,7 +394,7 @@ namespace VMP_CNR.Module
 
             if (!IgnoreFutureDeath)
             {
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     try
                     {
@@ -412,7 +411,7 @@ namespace VMP_CNR.Module
         
         public void OnPlayerLoggedIn(DbPlayer dbPlayer)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -430,7 +429,7 @@ namespace VMP_CNR.Module
         {
             Main.m_AsyncThread.AddToAsyncThread(new Task(() =>
             {
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     try
                     {
@@ -449,7 +448,7 @@ namespace VMP_CNR.Module
         {
             return await Task.Run<bool>(() =>
             {
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     try
                     {
@@ -496,7 +495,7 @@ namespace VMP_CNR.Module
                     }
                 }
 
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     try
                     {
@@ -520,7 +519,7 @@ namespace VMP_CNR.Module
 
         public bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -539,26 +538,26 @@ namespace VMP_CNR.Module
 
         public void LoadAll()
         {
-            foreach (var module in modules.Values)
+            foreach(var module in _modules.Values)
             {
                 module.Load();
             }
         }
-
+        
         public void Load(Type moduleType, bool reload = false)
         {
-            if (!modules.ContainsKey(moduleType))
+            if (!_modules.ContainsKey(moduleType))
             {
                 //Logger.Print($"Module not found: {moduleType}");
                 return;
             }
             
-            modules[moduleType].Load(reload);
+            _modules[moduleType].Load(reload);
         }
 
         public bool Reload(string name)
         {
-            foreach (var module in modules)
+            foreach (var module in _modules)
             {
                 if (!module.Value.GetType().ToString().Equals(name)) continue;
                 module.Value.Load(true);
@@ -570,7 +569,7 @@ namespace VMP_CNR.Module
 
         public void OnMinuteUpdate()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -586,7 +585,7 @@ namespace VMP_CNR.Module
 
         public async Task OnMinuteUpdateAsync()
         {
-            foreach (var module in modules.Values)
+            foreach (var module in _modules.Values)
             {
                 try
                 {
@@ -604,7 +603,7 @@ namespace VMP_CNR.Module
         {
             try
             {
-                foreach (var l_Module in modules.Values)
+                foreach (var l_Module in _modules.Values)
                 {
                     //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {l_Module.ToString()}");
                     l_Module.OnTwoMinutesUpdate();
@@ -620,7 +619,7 @@ namespace VMP_CNR.Module
         {
             try 
             { 
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
 
                     module.OnFiveMinuteUpdate();
@@ -636,7 +635,7 @@ namespace VMP_CNR.Module
         {
             try 
             { 
-                foreach(var module in modules.Values)
+                foreach(var module in _modules.Values)
                 {
                     //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     module.OnFifteenMinuteUpdate();
@@ -652,7 +651,7 @@ namespace VMP_CNR.Module
         {
             try 
             { 
-                foreach (var module in modules.Values)
+                foreach (var module in _modules.Values)
                 {
                     //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
@@ -670,12 +669,12 @@ namespace VMP_CNR.Module
 
         public Dictionary<Type, BaseModule> GetAll()
         {
-            return modules;
+            return _modules;
         }
 
         private void Register(BaseModule module)
         {
-            modules.Add(module.GetType(), module);
+            _modules.Add(module.GetType(), module);
         }
     }
 }

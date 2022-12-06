@@ -1,23 +1,7 @@
-﻿//  ____________________________________________________________________________
-// |=========================[  GVMP.DE v0.1a  ]===============================|
-// |========= Dieses Script ist Uhreberrechtlich geschuetzt! ==================|
-// |====== _________________________ ==========================================|
-// |======| Scripter bzw Uhrheber:  |========= ________________ ===============|
-// |======| Daniel Albert           |=========| Version: 0.1a  |===============|
-// |======| Puettlingerstraße 87    |=========|________________|===============|
-// |======| 66773 Schwalbach/Saar   |==========================================|
-// |======|_________________________|==========================================|
-// |===========================================================================|
-// |===========================================================================|
-// |===========================================================================|
-// |_____________________|   Urheberrecht   |__________________________________
-// |                                                                           |
-// |  Die durch den Scripter erstellten Inhalte und Werke auf diesem           |
-// |  Script unterliegen dem deutschen Urheberrecht.                           |
-// |  Die Vervielfaeltigung, Bearbeitung, Verbreitung und jede Art der         |
-// |  Verwertung außerhalb der Grenzen des Urheberrechtes beduerfen der        |
-// |  schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.          |
-// |___________________________________________________________________________|
+﻿/**
+ * VMP_CNR - GVMP.de
+ * Rework by PARADOX Role Play
+ */
 
 using System;
 using MySql.Data.MySqlClient;
@@ -351,9 +335,6 @@ namespace VMP_CNR
 
         public void InitGameMode()
         {
-            //SecureEventThread.Instance.Init();
-
-            //connection.Open();
             Modules.Instance.LoadAll();
 
             StartupScripts.OnStartup();

@@ -12,7 +12,6 @@ namespace VMP_CNR.Module.Players.Events
 {
     public class PlayerConnect : Script
     {
-        
         public static void OnPlayerConnected(Player player)
         {
             if (player == null) return;
