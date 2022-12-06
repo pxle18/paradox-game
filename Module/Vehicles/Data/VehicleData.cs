@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.Vehicles.Data
         public Vector3 Offset { get; }
         public int InventorySize { get; }
         public int InventoryWeight { get; }
-        public int modded_car { get; }
+        public int IsModdedCar { get; }
         public string mod_car_name { get; }
         public bool InGarageOnRestart { get; }
         public HashSet<uint> AllowedItems { get; set; }
@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Vehicles.Data
             Tax = reader.GetInt32("tax");
             InventorySize = reader.GetInt32("inv_size");
             InventoryWeight = reader.GetInt32("inv_weight");
-            modded_car = reader.GetInt32("mod_car");
+            IsModdedCar = reader.GetInt32("mod_car");
             mod_car_name = reader.GetString("mod_car_name");
             InGarageOnRestart = reader.GetInt32("ingarage_onrestart") == 1;
             Slots = reader.GetInt32("slots");

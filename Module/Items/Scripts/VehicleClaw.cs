@@ -121,12 +121,12 @@ namespace VMP_CNR.Module.Items.Scripts
                 if (sxVehicle.ownerId != 0)
                 {
                     DbPlayer findPlayer = Players.Players.Instance.FindPlayer(sxVehicle.ownerId);
-                    findPlayer.SendNewNotification($"Dein Fahrzeug [{sxVehicle.databaseId}] - [{(sxVehicle.Data.modded_car == 1 ? sxVehicle.Data.mod_car_name : sxVehicle.Data.Model)}] schlägt Alarm", PlayerNotification.NotificationType.ERROR, "HOOKER SECURITY SYSTEM");
+                    findPlayer.SendNewNotification($"Dein Fahrzeug [{sxVehicle.databaseId}] - [{(sxVehicle.Data.IsModdedCar == 1 ? sxVehicle.Data.mod_car_name : sxVehicle.Data.Model)}] schlägt Alarm", PlayerNotification.NotificationType.ERROR, "HOOKER SECURITY SYSTEM");
                 }
                 else if (sxVehicle.IsTeamVehicle())
                 {
                     Team team = sxVehicle.Team;
-                    team.SendNotification("HOOKER SECURITY SYSTEM", $"Dein Fahrzeug [{sxVehicle.databaseId}] - [{(sxVehicle.Data.modded_car == 1 ? sxVehicle.Data.mod_car_name : sxVehicle.Data.Model)}] schlägt Alarm");
+                    team.SendNotification("HOOKER SECURITY SYSTEM", $"Dein Fahrzeug [{sxVehicle.databaseId}] - [{(sxVehicle.Data.IsModdedCar == 1 ? sxVehicle.Data.mod_car_name : sxVehicle.Data.Model)}] schlägt Alarm");
                 }
             }
 

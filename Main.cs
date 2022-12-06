@@ -884,7 +884,7 @@ namespace VMP_CNR
                             if (!garage.Classifications.Contains(data.ClassificationId)) continue;
                             string note = (reader.GetString("note") != "") ? $"({reader.GetString("note")})" : "";
                             vehList.Add(reader.GetUInt32("id"),
-                                data.modded_car == 1 ? $"{data.mod_car_name} {note}" : $"{data.Model} {note}");
+                                data.IsModdedCar == 1 ? $"{data.mod_car_name} {note}" : $"{data.Model} {note}");
                             continue;
                         }
                     }
@@ -904,7 +904,7 @@ namespace VMP_CNR
                                 if (data == null) continue;
                                 if (!garage.Classifications.Contains(data.ClassificationId)) continue;
                                 vehList.Add(reader.GetUInt32("id"),
-                                    data.modded_car == 1 ? data.mod_car_name : data.Model);
+                                    data.IsModdedCar == 1 ? data.mod_car_name : data.Model);
                                 continue;
                             }
                         }
@@ -982,7 +982,7 @@ namespace VMP_CNR
                                 if (data == null) continue;
                                 if (!garage.Classifications.Contains(data.ClassificationId)) continue;
                                 return reader.GetInt32(0) + "," +
-                                       (data.modded_car == 1 ? data.mod_car_name : data.Model);
+                                       (data.IsModdedCar == 1 ? data.mod_car_name : data.Model);
                             }
                         }
                     }
@@ -1020,7 +1020,7 @@ namespace VMP_CNR
                                 var note = reader.GetString("note");
                                 if (data == null) continue;
                                 if (!garage.Classifications.Contains(data.ClassificationId)) continue;
-                                if (data.modded_car == 1)
+                                if (data.IsModdedCar == 1)
                                     return new GarageVehicle(reader.GetUInt32(0), reader.GetFloat(10), data.mod_car_name, note);
                                 else
                                     return new GarageVehicle(reader.GetUInt32(0), reader.GetFloat(10), data.Model, note);
@@ -1065,7 +1065,7 @@ namespace VMP_CNR
                             if (!garage.Classifications.Contains(data.ClassificationId)) continue;
                             // es ist ein fahrzeug und eine garage für fahrzeuge
                             vehList.Add(reader.GetUInt32("id"),
-                                data.modded_car == 1 ? $"{data.mod_car_name} {note}" : $"{data.Model} {note}");
+                                data.IsModdedCar == 1 ? $"{data.mod_car_name} {note}" : $"{data.Model} {note}");
                             continue;
                         }
                     }

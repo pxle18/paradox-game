@@ -4011,7 +4011,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             int countVehicles = VehicleHandler.Instance.GetAllVehicles().Count();
-            int countModVehicles = VehicleHandler.Instance.GetAllVehicles().Where(sx => sx.Data.modded_car > 0).Count();
+            int countModVehicles = VehicleHandler.Instance.GetAllVehicles().Where(sx => sx.Data.IsModdedCar > 0).Count();
 
             iPlayer.SendNewNotification($"Ausgeparkte Fahrzeuge: {countVehicles} (davon Modfahrzeuge: {countModVehicles})");
         }

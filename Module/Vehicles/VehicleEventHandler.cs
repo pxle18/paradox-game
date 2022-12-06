@@ -233,7 +233,7 @@ namespace VMP_CNR.Module.Vehicles
             msg += "Nummernschild: " + dbVehicle.entity.NumberPlate;
             
             // vehicle model name
-            if (dbVehicle.Data.modded_car == 1)
+            if (dbVehicle.Data.IsModdedCar == 1)
                 msg += " Modell: " + dbVehicle.Data.mod_car_name;
             else
                 msg += " Modell: " + dbVehicle.Data.Model;

@@ -496,7 +496,7 @@ namespace VMP_CNR.Handler
                 return null;
             }
 
-            if (data.modded_car == 0)
+            if (data.IsModdedCar == 0)
             {
                 if (data.Hash < 0)
                 {
@@ -944,7 +944,7 @@ namespace VMP_CNR.Handler
         public bool EngineDisabled { get; set; }
         public string GetName()
         {
-            return (Data.modded_car == 1) ? Data.mod_car_name : Data.Model;
+            return (Data.IsModdedCar == 1) ? Data.mod_car_name : Data.Model;
         }
 
         public bool IsTrunkOpen()

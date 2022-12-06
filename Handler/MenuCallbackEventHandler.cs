@@ -1726,7 +1726,7 @@ namespace VMP_CNR
                                                 Vehicle.entity.Position))
                                         {
                                             string l_Name = "";
-                                            if (Vehicle.Data.modded_car == 1)
+                                            if (Vehicle.Data.IsModdedCar == 1)
                                                 l_Name = Vehicle.Data.mod_car_name;
                                             else
                                                 l_Name = Vehicle.Data.Model;
@@ -1750,7 +1750,7 @@ namespace VMP_CNR
                                                 Vehicle.entity.Position))
                                         {
                                             string l_Name = "";
-                                            if (Vehicle.Data.modded_car == 1)
+                                            if (Vehicle.Data.IsModdedCar == 1)
                                                 l_Name = Vehicle.Data.mod_car_name;
                                             else
                                                 l_Name = Vehicle.Data.Model;
@@ -4352,7 +4352,7 @@ namespace VMP_CNR
                                             dbPlayer.Id, x, y, z, heading2,
                                             Vehicle.PrimaryColor,
                                             Vehicle.SecondaryColor,
-                                            plate, Vehicle.Data.Id, Vehicle.Data.modded_car == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model, defaultgarage, GpsSender ? 1 : 0, registered);
+                                            plate, Vehicle.Data.Id, Vehicle.Data.IsModdedCar == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model, defaultgarage, GpsSender ? 1 : 0, registered);
                                     MySQLHandler.Execute(query);
                                     Logger.AddVehiclePurchaseLog(dbPlayer.Id, cShop.Id, Vehicle.Data.Id, price, 0);
 
@@ -4393,7 +4393,7 @@ namespace VMP_CNR
                                     dbPlayer.GetName(), id, 0, dbPlayer.Id, 100, VehicleHandler.MaxVehicleHealth,
                                     "", "", 0, ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE, Vehicle.Data.InventorySize, Vehicle.Data.InventoryWeight),
                                     plate, container2: ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE2));
-                                    dbPlayer.OwnVehicles.Add(id, Vehicle.Data.modded_car == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model);
+                                    dbPlayer.OwnVehicles.Add(id, Vehicle.Data.IsModdedCar == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model);
 
                                     while (sxVehicle.entity == null)
                                     {
@@ -4450,7 +4450,7 @@ namespace VMP_CNR
                                 teamShelter.TakeMoney(price);
                                 string query = String.Format(
                                     "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100');",
-                                    Vehicle.Data.modded_car == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model, dbPlayer.TeamId, dbPlayer.Team.ColorId, dbPlayer.Team.ColorId,
+                                    Vehicle.Data.IsModdedCar == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model, dbPlayer.TeamId, dbPlayer.Team.ColorId, dbPlayer.Team.ColorId,
                                     Vehicle.Data.Id);
                                 MySQLHandler.Execute(query);
                                 Logger.AddVehiclePurchaseLog(dbPlayer.Id, cShop.Id, Vehicle.Data.Id, price, dbPlayer.TeamId);

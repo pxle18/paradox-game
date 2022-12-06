@@ -43,7 +43,7 @@ namespace VMP_CNR.Module.PointsOfInterest
                 if (dbPlayer.CanControl(vehicle) && vehicle.GpsTracker)
                 {
                     var l_Name = "";
-                    if (vehicle.Data.modded_car == 1)
+                    if (vehicle.Data.IsModdedCar == 1)
                         l_Name = $" ({vehicle.databaseId.ToString()}) {vehicle.Data.mod_car_name}";
                     else
                         l_Name = $"({vehicle.databaseId.ToString()}) {vehicle.Data.Model}";

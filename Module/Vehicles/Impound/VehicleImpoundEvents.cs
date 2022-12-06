@@ -75,7 +75,7 @@ namespace VMP_CNR.Module.Vehicles.Impound
                     {
                         VehicleImpoundOverview vehicleImpoundOverview = new VehicleImpoundOverview()
                         {
-                            Model = vehicle.Data.modded_car == 1 ? vehicle.Data.mod_car_name : vehicle.Data.Model,
+                            Model = vehicle.Data.IsModdedCar == 1 ? vehicle.Data.mod_car_name : vehicle.Data.Model,
                             Officer = client.GetPlayer().GetName(),
                             Reason = reason,
                             VehicleId = vehicle.databaseId,

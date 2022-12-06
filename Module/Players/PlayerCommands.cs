@@ -3292,7 +3292,7 @@ namespace VMP_CNR.Module.Players
                         TeamShelter teamShelter = TeamShelterModule.Instance.GetByTeam(dbPlayer.Team.Id);
                         teamShelter.GiveMoney(price);
                         dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
-                        string carName = sxVeh.Data.modded_car == 1 ? sxVeh.Data.mod_car_name : sxVeh.Data.Model;
+                        string carName = sxVeh.Data.IsModdedCar == 1 ? sxVeh.Data.mod_car_name : sxVeh.Data.Model;
                         dbPlayer.Team.SendNotification(dbPlayer.GetName() + " hat das Fahrzeug " + carName + " verschrottet");
                         KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
                         RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVeh, dbPlayer, dbPlayer, sxVeh.plate, false);

@@ -131,8 +131,6 @@ namespace VMP_CNR.Module.Items.Scripts
         {
             string weaponstring = ItemData.Script.ToLower().Replace("zw_", "");
 
-            if (!dbPlayer.IsAGangster()) return false;
-
             if (weaponstring.Length <= 0 || !uint.TryParse(weaponstring, out uint WeaponItemId))
             {
                 return false;

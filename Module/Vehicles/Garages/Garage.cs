@@ -186,7 +186,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
 
                         if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
                         {
-                            if (vehicle.Data.modded_car == 1)
+                            if (vehicle.Data.IsModdedCar == 1)
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
                             else
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.Model, ""));
@@ -211,7 +211,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
 
                         if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
                         {
-                            if (vehicle.Data.modded_car == 1)
+                            if (vehicle.Data.IsModdedCar == 1)
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
                             else
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.Model, ""));
@@ -230,7 +230,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
 
                     if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
                     {
-                        if (vehicle.Data.modded_car == 1)
+                        if (vehicle.Data.IsModdedCar == 1)
                             vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
                         else
                             vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.Model,""));

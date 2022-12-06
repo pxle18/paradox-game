@@ -23,11 +23,11 @@ namespace VMP_CNR.Module.Keys.Windows
         {
             [JsonProperty(PropertyName = "Spielername")]
             private string PlayerName { get; }
-            
+
             [JsonProperty(PropertyName = "Keys")]
             private Dictionary<string, List<VHKey>> Keys { get; }
 
-            public ShowEvent(DbPlayer dbPlayer,string playerName, Dictionary<string, List<VHKey>> keys) :
+            public ShowEvent(DbPlayer dbPlayer, string playerName, Dictionary<string, List<VHKey>> keys) :
                 base(dbPlayer)
             {
                 PlayerName = playerName;
@@ -35,16 +35,12 @@ namespace VMP_CNR.Module.Keys.Windows
             }
         }
 
-        public KeyWindow() : base("Keys")
-        {
-
-        }
+        public KeyWindow() : base("Keys") { }
 
         public override Func<DbPlayer, string, Dictionary<string, List<VHKey>>, bool> Show()
         {
             return (player, playerName, keys) => OnShow(new ShowEvent(player, playerName, keys));
         }
-
 
         [RemoteEvent]
         public void BizVehicleAddConfirm(Player p_Player, string pb_map, string none, string key)
@@ -66,45 +62,23 @@ namespace VMP_CNR.Module.Keys.Windows
                 dbPlayer.SendNewNotification("Dieses Fahrzeug gehört ihnen nicht (darf nicht in der Garage sein!).");
                 return;
             }
-            String carName = vehicle.Data.modded_car == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
 
+            string carName = vehicle.Data.IsModdedCar == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
 
-            if ((dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 6.0f 
-                && dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 6.0f) 
-                ||
-                (vehicle.entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 8.0f 
-                && vehicle.entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 8.0f))
+            if (vehicle.Data != null) return;
+
+            var biz = dbPlayer.GetActiveBusiness();
+
+            if (biz.VehicleKeys.ContainsKey(id))
             {
-                dbPlayer.SendNewNotification("Sie müssen mit ihrem Fahrzeug in der Business-Tower-Tiefgarage oder am Airport sein!");
+                dbPlayer.SendNewNotification("Das Business besitzt diesen Schluessel bereits!");
                 return;
             }
-            if (vehicle.Data != null && vehicle.Data.IsBusinessVehicle)
-            {
-                int price = Convert.ToInt32(vehicle.Data.Price * 0.02);
 
-                if(!dbPlayer.TakeMoney(price))
-                {
-                    dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
-                    return;
-                }
-                var biz = dbPlayer.GetActiveBusiness();
-
-                //schlüssel geht ans business
-                if (biz.VehicleKeys.ContainsKey(id))
-                {
-                    dbPlayer.SendNewNotification("Das Business besitzt diesen Schluessel bereits!");
-                    return;
-                }
-
-                Business.BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
-                dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
-                biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
-            }
-            else
-            {
-                dbPlayer.SendNewNotification("Dieser Fahrzeug-Typ kann nicht im Business hinterlegt werden!");
-                return;
-            }
+            BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
+            
+            dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+            biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
         }
 
         [RemoteEvent]
@@ -158,21 +132,21 @@ namespace VMP_CNR.Module.Keys.Windows
 
                     if (business != 0)
                     {
-                        dbPlayer.SendNewNotification( "Hausschlüssel können aktuell nicht im Business hinterlegt werden.");
+                        dbPlayer.SendNewNotification("Hausschlüssel können aktuell nicht im Business hinterlegt werden.");
                         return;
                     }
 
                     if (dbPlayer.OwnHouse[0] != id)
                     {
-                        dbPlayer.SendNewNotification( "Dieses Haus gehoert dir nicht!");
+                        dbPlayer.SendNewNotification("Dieses Haus gehoert dir nicht!");
                         return;
                     }
-                    
+
                     if (targetPlayer == null || !targetPlayer.IsValid()) return;
 
                     if (targetPlayer.HouseKeys.Contains(id))
                     {
-                        dbPlayer.SendNewNotification( "Der Buerger besitzt diesen Schluessel bereits!");
+                        dbPlayer.SendNewNotification("Der Buerger besitzt diesen Schluessel bereits!");
                         return;
                     }
 
@@ -194,7 +168,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
                     if (StorageRoomModule.Instance.Get(id).OwnerId != dbPlayer.Id)
                     {
-                        dbPlayer.SendNewNotification( "Dieser Lagerraum gehoert dir nicht!");
+                        dbPlayer.SendNewNotification("Dieser Lagerraum gehoert dir nicht!");
                         return;
                     }
 
@@ -205,7 +179,7 @@ namespace VMP_CNR.Module.Keys.Windows
                         //schlüssel geht ans business
                         if (biz.StorageKeys.Contains(id))
                         {
-                            dbPlayer.SendNewNotification( "Das Business besitzt diesen Schluessel bereits!");
+                            dbPlayer.SendNewNotification("Das Business besitzt diesen Schluessel bereits!");
                             return;
                         }
                         Business.BusinessStorageExtension.AddStorageKey(biz, id);
@@ -217,7 +191,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
                     if (targetPlayer.StorageKeys.Contains(id))
                     {
-                        dbPlayer.SendNewNotification( "Der Buerger besitzt diesen Schluessel bereits!");
+                        dbPlayer.SendNewNotification("Der Buerger besitzt diesen Schluessel bereits!");
                         return;
                     }
 
@@ -233,11 +207,11 @@ namespace VMP_CNR.Module.Keys.Windows
 
                     if (vehicle == null || !dbPlayer.IsOwner(vehicle))
                     {
-                        dbPlayer.SendNewNotification( "Dieses Fahrzeug gehört ihnen nicht (darf nicht in der Garage sein!).");
+                        dbPlayer.SendNewNotification("Dieses Fahrzeug gehört ihnen nicht (darf nicht in der Garage sein!).");
                         return;
                     }
 
-                    String carName = vehicle.Data.modded_car == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
+                    String carName = vehicle.Data.IsModdedCar == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
 
                     if (business != 0)
                     {
@@ -256,7 +230,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
                             dbPlayer.SetData("vehBizAdd", id);
 
-                            ComponentManager.Get<ConfirmationWindow>().Show()(dbPlayer, 
+                            ComponentManager.Get<ConfirmationWindow>().Show()(dbPlayer,
                                 new ConfirmationObject($"Business Fahrzeug", $"Wollen Sie einen Schlüssel von {carName} ({vehicle.databaseId}) für ${price} für das Business registrieren?", "BizVehicleAddConfirm", "", ""));
                             return;
                         }
@@ -279,7 +253,7 @@ namespace VMP_CNR.Module.Keys.Windows
                         //schlüssel geht an player
                         if (targetPlayer.VehicleKeys.ContainsKey(id))
                         {
-                            dbPlayer.SendNewNotification( "Der Buerger besitzt diesen Schluessel bereits!");
+                            dbPlayer.SendNewNotification("Der Buerger besitzt diesen Schluessel bereits!");
                             return;
                         }
 
@@ -316,7 +290,7 @@ namespace VMP_CNR.Module.Keys.Windows
                     if (id != 0 && dbPlayer.GetStoragesOwned().ContainsKey(id))
                     {
                         //Spieler ist Besitzer von dem Haus, kann also nicht wegwerfen
-                        dbPlayer.SendNewNotification( "Du kannst den Hauptschlüssel nicht wegwerfen.");
+                        dbPlayer.SendNewNotification("Du kannst den Hauptschlüssel nicht wegwerfen.");
                     }
                     //Schlüssel wegwerfen
                     StorageKeyHandler.Instance.DeleteStorageKey(dbPlayer, StorageRoomModule.Instance.Get(id));
@@ -334,7 +308,7 @@ namespace VMP_CNR.Module.Keys.Windows
                     }
                     else
                     {
-                        if ( dbPlayer.IsOwner(vehicle))
+                        if (dbPlayer.IsOwner(vehicle))
                         {
                             dbPlayer.SendNewNotification("Du kannst den Hauptschlüssel nicht wegwerfen.");
                             return;
@@ -342,7 +316,7 @@ namespace VMP_CNR.Module.Keys.Windows
                     }
 
 
-                    dbPlayer.SendNewNotification("Sie haben den Schluessel fuer das Fahrzeug " + dbPlayer.VehicleKeys.GetValueOrDefault(id) +" (" + id +") fallen gelassen!");
+                    dbPlayer.SendNewNotification("Sie haben den Schluessel fuer das Fahrzeug " + dbPlayer.VehicleKeys.GetValueOrDefault(id) + " (" + id + ") fallen gelassen!");
                     VehicleKeyHandler.Instance.DeletePlayerKey(dbPlayer, id);
                     break;
             }

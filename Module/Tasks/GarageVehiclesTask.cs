@@ -92,7 +92,7 @@ namespace VMP_CNR.Module.Tasks
                         continue;
                     }
 
-                    if (data.modded_car == 1)
+                    if (data.IsModdedCar == 1)
                         vehList.Add(new Main.GarageVehicle(vehicleId, fuel, data.mod_car_name, reader.GetString("note")));
                     else
                         vehList.Add(new Main.GarageVehicle(vehicleId, fuel, data.Model, reader.GetString("note")));
@@ -161,7 +161,7 @@ namespace VMP_CNR.Module.Tasks
                                 var data = VehicleDataModule.Instance.GetDataById(reader.GetUInt32("model"));
                                 if (data == null) continue;
                                 if (!garage.Classifications.Contains(data.ClassificationId)) continue;
-                                if (data.modded_car == 1)
+                                if (data.IsModdedCar == 1)
                                     return new Main.GarageVehicle(reader.GetUInt32("id"), reader.GetFloat("fuel"), data.mod_car_name, reader.GetString("note"));
                                 else
                                     return new Main.GarageVehicle(reader.GetUInt32("id"), reader.GetFloat("fuel"), data.Model, reader.GetString("note"));
