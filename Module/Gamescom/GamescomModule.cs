@@ -19,6 +19,8 @@ namespace VMP_CNR.Module.Gamescom
 
         protected override void OnItemLoaded(GamescomCode code)
         {
+            if (Codes.ContainsKey(code.Code)) return;
+
             Codes.Add(code.Code, code);
         }
 
