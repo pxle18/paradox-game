@@ -5888,7 +5888,7 @@ namespace VMP_CNR.Module.Admin
         [Command]
         public void prop(Player player, string commandParams)
         {
-            var iPlayer = player.GetPlayer(); //test
+            var iPlayer = player.GetPlayer(); 
 
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
