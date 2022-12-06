@@ -47,11 +47,11 @@ namespace VMP_CNR.Module.Teams.Apps
             members = members.OrderByDescending(t => t.Rank).ToList();
 
             // FIB
-            if (dbPlayer.TeamId == (uint)teams.TEAM_FIB)
+            if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_FIB)
             {
                 var tmp = new List<TeamMember>();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_GOV).Members)
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_GOV).Members)
                 {
                     var l_FIBPlayer = l_Member.Value;
                     if (l_FIBPlayer == null || !l_FIBPlayer.IsValid())
@@ -95,7 +95,7 @@ namespace VMP_CNR.Module.Teams.Apps
             {
                 var tmp = new List<TeamMember>();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_ARMY).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_ARMY).Members.ToList())
                 {
                     var l_FIBPlayer = l_Member.Value;
                     if (l_FIBPlayer == null || !l_FIBPlayer.IsValid())
@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Teams.Apps
                 members = members.Concat(tmp).ToList();
                 tmp.Clear();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_POLICE).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).Members.ToList())
                 {
                     var l_PDPlayer = l_Member.Value;
                     if (l_PDPlayer == null || !l_PDPlayer.IsValid())
@@ -169,7 +169,7 @@ namespace VMP_CNR.Module.Teams.Apps
                 members = members.Concat(tmp).ToList();
                 tmp.Clear();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_SWAT).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_SWAT).Members.ToList())
                 {
                     var l_PDPlayer = l_Member.Value;
                     if (l_PDPlayer == null || !l_PDPlayer.IsValid())
@@ -205,7 +205,7 @@ namespace VMP_CNR.Module.Teams.Apps
                 members = members.Concat(tmp).ToList();
                 tmp.Clear();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_FIB).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_FIB).Members.ToList())
                 {
                     var l_PDPlayer = l_Member.Value;
                     if (l_PDPlayer == null || !l_PDPlayer.IsValid())
@@ -240,7 +240,7 @@ namespace VMP_CNR.Module.Teams.Apps
                 members = members.Concat(tmp).ToList();
                 tmp.Clear();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_MEDIC).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_MEDIC).Members.ToList())
                 {
                     var l_PDPlayer = l_Member.Value;
                     if (l_PDPlayer == null || !l_PDPlayer.IsValid())
@@ -275,7 +275,7 @@ namespace VMP_CNR.Module.Teams.Apps
                 members = members.Concat(tmp).ToList();
                 tmp.Clear();
 
-                foreach (var l_Member in TeamModule.Instance.GetById((int)teams.TEAM_DPOS).Members.ToList())
+                foreach (var l_Member in TeamModule.Instance.GetById((int)TeamTypes.TEAM_DPOS).Members.ToList())
                 {
                     var l_PDPlayer = l_Member.Value;
                     if (l_PDPlayer == null || !l_PDPlayer.IsValid())

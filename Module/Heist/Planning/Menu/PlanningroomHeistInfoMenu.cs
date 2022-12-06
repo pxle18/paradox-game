@@ -51,7 +51,7 @@ namespace VMP_CNR.Module.Heist.Planning.Menu
                     {
                         canStarted = false;
                     }
-                    if ((TeamModule.Instance.Get((int)teams.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() < 30) && !Configurations.Configuration.Instance.DevMode)
+                    if ((TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() < 30) && !Configurations.Configuration.Instance.DevMode)
                     {
                         //dbPlayer.SendNewNotification("Es muessen mindestens 30 Soldaten im Dienst sein!");
                         canStarted = false;

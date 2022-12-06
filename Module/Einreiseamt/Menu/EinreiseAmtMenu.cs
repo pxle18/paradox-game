@@ -61,7 +61,7 @@ namespace VMP_CNR.Module.Einreiseamt
                         foundPlayer.SendNewNotification("Bitte melden Sie sich bei Fragen im Support!");
                         dbPlayer.SendNewNotification($"Sie haben {foundPlayer.GetName()} die Einreise verweigert!");
 
-                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, foundPlayer.GetName(), adminLogTypes.perm, "Einreiseamt", 0, Configurations.Configuration.Instance.DevMode);
+                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, foundPlayer.GetName(), AdminLogTypes.perm, "Einreiseamt", 0, Configurations.Configuration.Instance.DevMode);
                         foundPlayer.warns[0] = 3;
 
                         Logging.Logger.AddToEinreiseLog(dbPlayer.Id, foundPlayer.Id, false);
@@ -82,7 +82,7 @@ namespace VMP_CNR.Module.Einreiseamt
                         foundPlayer.HasPerso[0] = 1;
                         foundPlayer.Save();
 
-                        foundPlayer.SendNewNotification("Ihnen wurde die Einreise gestattet! Viel Spaß auf PARADOX!");
+                        foundPlayer.SendNewNotification("Ihnen wurde die Einreise gestattet! Viel Spaß auf GVMP!");
                         dbPlayer.SendNewNotification($"Sie haben {foundPlayer.GetName()} die Einreise gestattet!");
                         MenuManager.DismissCurrent(dbPlayer);
 

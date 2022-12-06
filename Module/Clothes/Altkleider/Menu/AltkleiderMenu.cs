@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Clothes.Altkleider
             foreach (var clothId in dbPlayer.Character.Wardrobe.ToList())
             {
                 var cloth = ClothModule.Instance.Get(clothId);
-                if (cloth == null || !cloth.Teams.Contains((int)teams.TEAM_CIVILIAN) || cloth.Gender != dbPlayer.Customization.Gender) continue;
+                if (cloth == null || !cloth.Teams.Contains((int)TeamTypes.TEAM_CIVILIAN) || cloth.Gender != dbPlayer.Customization.Gender) continue;
                 if (cloth.Slot == 3) continue; //Körper
                 menu.Add($"{cloth.Name}");
             }
@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Clothes.Altkleider
                 foreach (var clothId in dbPlayer.Character.Wardrobe.ToList())
                 {
                     var cloth = ClothModule.Instance.Get(clothId);
-                    if (cloth == null || !cloth.Teams.Contains((int)teams.TEAM_CIVILIAN) || cloth.Gender != dbPlayer.Customization.Gender) continue;
+                    if (cloth == null || !cloth.Teams.Contains((int)TeamTypes.TEAM_CIVILIAN) || cloth.Gender != dbPlayer.Customization.Gender) continue;
                     if (cloth.Slot == 3) continue; //Körper
 
                     if (idx == index)

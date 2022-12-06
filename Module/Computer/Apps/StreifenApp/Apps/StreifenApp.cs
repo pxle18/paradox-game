@@ -424,12 +424,12 @@ namespace VMP_CNR.Module.Computer.Apps.ExportApp.Apps
             DbPlayer target = Players.Players.Instance.FindPlayer(OfficerName);
             if(target == null || !target.IsValid() || !target.IsInDuty() ||
                 (
-                target.TeamId != (int)teams.TEAM_POLICE && 
-                target.TeamId != (int)teams.TEAM_ARMY && 
-                target.TeamId != (int)teams.TEAM_FIB &&
-                target.TeamId != (int)teams.TEAM_DPOS &&
-                target.TeamId != (int)teams.TEAM_SWAT &&
-                target.TeamId != (int)teams.TEAM_MEDIC
+                target.TeamId != (int)TeamTypes.TEAM_POLICE && 
+                target.TeamId != (int)TeamTypes.TEAM_ARMY && 
+                target.TeamId != (int)TeamTypes.TEAM_FIB &&
+                target.TeamId != (int)TeamTypes.TEAM_DPOS &&
+                target.TeamId != (int)TeamTypes.TEAM_SWAT &&
+                target.TeamId != (int)TeamTypes.TEAM_MEDIC
                 ))
             {
                 return;
@@ -441,13 +441,13 @@ namespace VMP_CNR.Module.Computer.Apps.ExportApp.Apps
             {
                 if (dbPlayer.IsSwatDuty()) // SWAT soll FIB, LSPD, SWAT hinzufügen können
                 {
-                    if (target.TeamId != (int)teams.TEAM_POLICE && target.TeamId != (int)teams.TEAM_FIB && !target.IsSwatDuty())
+                    if (target.TeamId != (int)TeamTypes.TEAM_POLICE && target.TeamId != (int)TeamTypes.TEAM_FIB && !target.IsSwatDuty())
                         return;
                 }
                 else
                 {
                     // LSPD, FIB soll gegenseitig nur hinzufügen können, falls der Beamte der anderen Behörde im SWAT Dienst ist
-                    if ((dbPlayer.TeamId == (int)teams.TEAM_POLICE || dbPlayer.TeamId == (int)teams.TEAM_FIB) && !target.IsSwatDuty())
+                    if ((dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE || dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB) && !target.IsSwatDuty())
                         return;
                 }
             }
@@ -564,79 +564,79 @@ namespace VMP_CNR.Module.Computer.Apps.ExportApp.Apps
 
             Infos.Add(new StreifenInfoItem("Leitstelle", Leitstelle));
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_POLICE)
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE)
             {
                 Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 if(dbPlayer.TeamRank >= 2)
                 {
-                    Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)teams.TEAM_FIB).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("US ARMY", "" + TeamModule.Instance.GetById((int)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)teams.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_FIB).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("US ARMY", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
                 if(dbPlayer.TeamRank >= 6)
                 {
-                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)teams.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
             }
-            else if(dbPlayer.TeamId == (int)teams.TEAM_MEDIC)
+            else if(dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC)
             {
                 Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 if (dbPlayer.TeamRank >= 6)
                 {
-                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)teams.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
             }
-            else if (dbPlayer.TeamId == (int)teams.TEAM_ARMY)
+            else if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
             {
                 Infos.Add(new StreifenInfoItem("ARMY", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 if (dbPlayer.TeamRank >= 2)
                 {
-                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)teams.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)teams.TEAM_FIB).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)teams.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_FIB).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
 
                 if (dbPlayer.TeamRank >= 6)
                 {
-                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)teams.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
             }
-            else if (dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            else if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
             {
                 Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 if (dbPlayer.TeamRank >= 1)
                 {
-                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)teams.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("US Army", "" + TeamModule.Instance.GetById((int)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)teams.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("US Army", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
 
                 if (dbPlayer.TeamRank >= 6)
                 {
-                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)teams.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_SWAT).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
             }
-            else if (dbPlayer.TeamId == (int)teams.TEAM_DPOS)
+            else if (dbPlayer.TeamId == (int)TeamTypes.TEAM_DPOS)
             {
                 Infos.Add(new StreifenInfoItem("DPOS", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 if (dbPlayer.TeamRank >= 6)
                 {
-                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)teams.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                    Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
                 }
             }
-            else if (dbPlayer.TeamId == (int)teams.TEAM_SWAT)
+            else if (dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT)
             {
                 Infos.Add(new StreifenInfoItem("SWAT", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
 
                 Infos.Add(new StreifenInfoItem("FIB", "" + TeamModule.Instance.GetById((int)dbPlayer.TeamId).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)teams.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                Infos.Add(new StreifenInfoItem("US Army", "" + TeamModule.Instance.GetById((int)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
-                Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)teams.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                Infos.Add(new StreifenInfoItem("LSPD", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_POLICE).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                Infos.Add(new StreifenInfoItem("US Army", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
+                Infos.Add(new StreifenInfoItem("LSMC", "" + TeamModule.Instance.GetById((int)TeamTypes.TEAM_MEDIC).GetTeamMembers().Where(t => t.IsInDuty() && !t.IsInAdminDuty()).Count()));
             }
 
             infoData.State = 2;

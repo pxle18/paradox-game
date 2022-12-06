@@ -367,6 +367,7 @@ namespace VMP_CNR.Module
             {
                 try
                 {
+                    //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     module.OnPlayerLoadData(dbPlayer, reader);
                 }
                 catch (Exception e)

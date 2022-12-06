@@ -1115,7 +1115,7 @@ namespace VMP_CNR
                                 if (!ServerFeatures.IsActive("blackmoney"))
                                 {
                                     dbPlayer.SendNewNotification("Die Geldwäsche ist aufgrund von Problemen deaktiviert. Wir arbeiten an der Lösung des Problems. Sobald dieses Feature wieder verfügbar ist," +
-                                        "geben wir im Forum und/oder PARADOX-Discord Bescheid.");
+                                        "geben wir im Forum und/oder GVMP-Launcher Bescheid.");
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                     return;
                                 }
@@ -1242,6 +1242,7 @@ namespace VMP_CNR
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                 return;
                             }
+                            break;
                         case 4:
                             if (iHouse.MoneyKeller != 1) // Ausbau auf Geldwäsche
                             {
@@ -1670,7 +1671,7 @@ namespace VMP_CNR
                                 if (garage.IsTeamGarage() && garage.Teams.Contains(dbPlayer.TeamId))
                                 {
                                     // Exclude GWD
-                                    if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank == 0) return;
+                                    if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank == 0) return;
 
                                     dbPlayer.SetData("garage_getlist", Main.getTeamGarageVehicleList(
                                         dbPlayer.TeamId, garage));
@@ -2678,14 +2679,14 @@ namespace VMP_CNR
 
                     if (licence != "")
                     {
-                        TeamModule.Instance.SendMessageToTeam($"{dbPlayer.GetName()} hat einen {licence} an {xPlayer.GetName()} vergeben", teams.TEAM_DRIVINGSCHOOL);
+                        TeamModule.Instance.SendMessageToTeam($"{dbPlayer.GetName()} hat einen {licence} an {xPlayer.GetName()} vergeben", TeamTypes.TEAM_DRIVINGSCHOOL);
                     }
 
                     return;
                 }
                 else if (menuid == Dialogs.menu_job_createlicenses)
                 {
-                    if (dbPlayer.job[0] != (int)jobs.JOB_PLAGIAT)
+                    if (dbPlayer.job[0] != (int)JobTypes.JOB_PLAGIAT)
                     {
                         return;
                     }
@@ -3265,7 +3266,7 @@ namespace VMP_CNR
                     }
                     else
                     {
-                        if (dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty())
+                        if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || !dbPlayer.IsInDuty())
                         {
                             dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                             return;
@@ -3898,7 +3899,7 @@ namespace VMP_CNR
                             break;
                         case 1: // Fraktions Hilfe
 
-                            if (dbPlayer.TeamId == (int)teams.TEAM_CIVILIAN)
+                            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_CIVILIAN)
                             {
                                 dbPlayer.SendNewNotification( GlobalMessages.Error.NoTeam());
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_help);
@@ -3907,7 +3908,7 @@ namespace VMP_CNR
 
                             switch (dbPlayer.TeamId)
                             {
-                                case (int)teams.TEAM_POLICE:
+                                case (int)TeamTypes.TEAM_POLICE:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
@@ -3916,7 +3917,7 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_ARMY:
+                                case (int)TeamTypes.TEAM_ARMY:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
@@ -3926,7 +3927,7 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_DPOS:
+                                case (int)TeamTypes.TEAM_DPOS:
                                     dbPlayer.SendNewNotification(
 
                                         "/m(egaphone) /r(adio) /d(epartment)");
@@ -3934,13 +3935,13 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_GOV:
+                                case (int)TeamTypes.TEAM_GOV:
                                     dbPlayer.SendNewNotification("/gov");
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_FIB:
+                                case (int)TeamTypes.TEAM_FIB:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.HelpPolice());
                                     dbPlayer.SendNewNotification(
@@ -3951,80 +3952,80 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_BALLAS:
+                                case (int)TeamTypes.TEAM_BALLAS:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_LOST:
+                                case (int)TeamTypes.TEAM_LOST:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_NEWS:
+                                case (int)TeamTypes.TEAM_NEWS:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpNews());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_DRIVINGSCHOOL:
+                                case (int)TeamTypes.TEAM_DRIVINGSCHOOL:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.HelpDrivingSchool());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_MEDIC:
+                                case (int)TeamTypes.TEAM_MEDIC:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpMedic());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_IRISHMOB:
+                                case (int)TeamTypes.TEAM_IRISHMOB:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_LCN:
+                                case (int)TeamTypes.TEAM_LCN:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_YAKUZA:
+                                case (int)TeamTypes.TEAM_YAKUZA:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_HUSTLER:
+                                case (int)TeamTypes.TEAM_HUSTLER:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_BRATWA:
+                                case (int)TeamTypes.TEAM_BRATWA:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_NNM:
+                                case (int)TeamTypes.TEAM_NNM:
                                     dbPlayer.Player.SendNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.Player.SendNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_GROVE:
+                                case (int)TeamTypes.TEAM_GROVE:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)teams.TEAM_ICA:
+                                case (int)TeamTypes.TEAM_ICA:
                                     dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)
                                         dbPlayer.SendNewNotification(

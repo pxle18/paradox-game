@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 else
                 {
                     SxVehicle sxVehicle = VehicleHandler.Instance.GetClosestVehicle(dbPlayer.Player.Position);
-                    if (sxVehicle != null && dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.IsInDuty())
+                    if (sxVehicle != null && dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.IsInDuty())
                     {
                         if (sxVehicle.WheelClamp == 0)
                         {

@@ -27,13 +27,14 @@ namespace VMP_CNR.Module.Meth
         public static List<DbPlayer> CookingPlayers = new List<DbPlayer>();
 
         public static List<SxVehicle> CookingVehicles = new List<SxVehicle>();
-        private Random random = new Random();
 
         public int morphin = 0;
         public int essigsaeure = 0;
         public int natriumcarbonat = 0;
         public int cooker = 0;
         public int heroinampullen = 0;
+
+        private readonly Random _random = new Random();
 
         public static uint morphinId = 386;
         public static uint essigsaeureId = 1439;
@@ -107,7 +108,7 @@ namespace VMP_CNR.Module.Meth
                     {
                         Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                             dbPlayer.GetName() + " Camper glitch (kochend entfernt) wurde gekickt!");
-                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.kick, "Camper kochend entfernt", 0,
+                        DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), AdminLogTypes.kick, "Camper kochend entfernt", 0,
                             Configuration.Instance.DevMode);
                         dbPlayer.ResetData("cooking");
                         if (CookingPlayers.Contains(dbPlayer)) CookingPlayers.Remove(dbPlayer);
@@ -120,7 +121,7 @@ namespace VMP_CNR.Module.Meth
                         dbPlayer.Container.GetItemAmount(essigsaeureId) >=
                         1 && dbPlayer.Container.GetItemAmount(morphinId) >= 1)
                     {
-                        var explode = random.Next(1, 16);
+                        var explode = _random.Next(1, 16);
                         if (explode == 1)
                         {
                             dbPlayer.SendNewNotification("1337Allahuakbar$explode");
@@ -153,7 +154,7 @@ namespace VMP_CNR.Module.Meth
                                 sxVeh.respawnInterval = 0;
                             }
 
-                            var heroinAmount = random.Next(6, 11); //4 included, 11 excluded
+                            var heroinAmount = _random.Next(6, 11); //4 included, 11 excluded
                             
                             dbPlayer.Container.RemoveItem(morphinId, 1);
                             dbPlayer.Container.RemoveItem(natriumcarbonatId, 1);

@@ -565,7 +565,7 @@ namespace VMP_CNR.Handler
 
             if (teamid > 0)
             {
-                if (teamid == (int)teams.TEAM_FIB && color1 == -1 && color2 == -1)
+                if (teamid == (int)TeamTypes.TEAM_FIB && color1 == -1 && color2 == -1)
                 {
                     xVeh.Undercover = true;
                 }
@@ -708,7 +708,7 @@ namespace VMP_CNR.Handler
                     if (xVeh.Undercover)
                     {
                         var l_Rand = new Random();
-                        if (xVeh.teamid == (int)teams.TEAM_FIB)
+                        if (xVeh.teamid == (int)TeamTypes.TEAM_FIB)
                         {
                             var color = l_Rand.Next(0, 150);
                             xVeh.color1 = color;

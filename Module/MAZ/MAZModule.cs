@@ -156,7 +156,7 @@ namespace VMP_CNR.Module.MAZ
             if (loadedAmount > 0 && LastActive.AddHours(3) > DateTime.Now) return; // wenn schonma, dann mind 3h pause
 
             // Unter 20 Soldaten im Dienst
-            if (TeamModule.Instance.Get((uint)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
+            if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
 
             bool ChanceRequireSuccess = false;
             Random random = new Random();

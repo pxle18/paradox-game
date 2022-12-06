@@ -396,7 +396,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                 {
                                     TeamModule.Instance.SendMessageToTeam(
                                         $"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} hat eine Auszahlung von ${auszahlen} getätigt! (Standort: {bank.Name})",
-                                        teams.TEAM_FIB, 
+                                        TeamTypes.TEAM_FIB, 
                                         10000, 
                                         3
                                     );
@@ -435,7 +435,7 @@ namespace VMP_CNR.Module.Banks.Windows
                                 {
                                     TeamModule.Instance.SendMessageToTeam(
                                         $"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} hat eine Einzahlung von ${einzahlen} getätigt! (Standort: {bank.Name})",
-                                        teams.TEAM_FIB, 
+                                        TeamTypes.TEAM_FIB, 
                                         10000, 
                                         3
                                     );

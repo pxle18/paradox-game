@@ -94,7 +94,7 @@ namespace VMP_CNR.Module.JobFactions.Mine
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || (dbPlayer.TeamId != (int)teams.TEAM_MINE1 && dbPlayer.TeamId != (int)teams.TEAM_MINE2) || !dbPlayer.RageExtension.IsInVehicle) return false;
+            if (key != Key.E || (dbPlayer.TeamId != (int)TeamTypes.TEAM_MINE1 && dbPlayer.TeamId != (int)TeamTypes.TEAM_MINE2) || !dbPlayer.RageExtension.IsInVehicle) return false;
 
             SxVehicle sxVehicle = dbPlayer.Player.Vehicle.GetVehicle();
             if (sxVehicle == null || !sxVehicle.IsValid()) return false;
@@ -358,7 +358,7 @@ namespace VMP_CNR.Module.JobFactions.Mine
 
         public override void OnFiveMinuteUpdate()
         {
-            foreach (DbPlayer member in TeamModule.Instance.Get((uint)teams.TEAM_MINE1).Members.Values.ToList().Concat(TeamModule.Instance.Get((uint)teams.TEAM_MINE2).Members.Values.ToList()))
+            foreach (DbPlayer member in TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE1).Members.Values.ToList().Concat(TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE2).Members.Values.ToList()))
             {
                 if (PlayerSourceStorage.ContainsKey(member.Id) && PlayerSourceStorage[member.Id] >= 50)
                 {
@@ -373,14 +373,14 @@ namespace VMP_CNR.Module.JobFactions.Mine
             }
 
             // Check mine 1 Team
-            Team Mine1 = TeamModule.Instance.Get((uint)teams.TEAM_MINE1);
+            Team Mine1 = TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE1);
             if(Mine1 != null)
             {
                 if (Mine1.MineContainerSchmelze != null && Mine1.MineContainerSchmelzCoal != null)
                 {
                     if (Mine1.MineContainerSchmelzCoal.GetItemAmount(Coal) >= 15)
                     {
-                        int playerCountOnline = TeamModule.Instance.Get((uint)teams.TEAM_MINE1).GetTeamMembers().Where(m => m.AccountStatus == AccountStatus.LoggedIn).Count();
+                        int playerCountOnline = TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE1).GetTeamMembers().Where(m => m.AccountStatus == AccountStatus.LoggedIn).Count();
                         Container MineSchmelzeOutPutContainer = TeamModule.Instance.Get(Mine1.Id).MineContainerSchmelzeOutput;
 
                         int amountToConvert = Mine1.MineContainerSchmelze.GetItemAmount(IronErz);
@@ -428,14 +428,14 @@ namespace VMP_CNR.Module.JobFactions.Mine
             }
 
             // Check mine 2 Team (just use old var, faulheit)
-            Mine1 = TeamModule.Instance.Get((uint)teams.TEAM_MINE2);
+            Mine1 = TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE2);
             if (Mine1 != null)
             {
                 if (Mine1.MineContainerSchmelze != null && Mine1.MineContainerSchmelzCoal != null)
                 {
                     if (Mine1.MineContainerSchmelzCoal.GetItemAmount(Coal) >= 15)
                     {
-                        int playerCountOnline = TeamModule.Instance.Get((uint)teams.TEAM_MINE2).GetTeamMembers().Where(m => m.AccountStatus == AccountStatus.LoggedIn).Count();
+                        int playerCountOnline = TeamModule.Instance.Get((uint)TeamTypes.TEAM_MINE2).GetTeamMembers().Where(m => m.AccountStatus == AccountStatus.LoggedIn).Count();
 
                         int amountToConvert = Mine1.MineContainerSchmelze.GetItemAmount(IronErz);
                         if (amountToConvert > (200 * playerCountOnline)) amountToConvert = (200 * playerCountOnline);

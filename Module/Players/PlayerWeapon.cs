@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Players
 
                 int maxWeight = MaxPlayerWeaponWeight;
 
-                if(dbPlayer.TeamId == (uint)teams.TEAM_SWAT || dbPlayer.TeamId == (uint)teams.TEAM_ARMY)
+                if(dbPlayer.TeamId == (uint)TeamTypes.TEAM_SWAT || dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY)
                 {
                     if(dbPlayer.Container.GetItemAmount(1134) >= 1)
                     {
@@ -82,7 +82,7 @@ namespace VMP_CNR.Module.Players
         {
             int maxWeight = MaxPlayerWeaponWeight;
 
-            if (dbPlayer.TeamId == (uint)teams.TEAM_SWAT || dbPlayer.TeamId == (uint)teams.TEAM_ARMY)
+            if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_SWAT || dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY)
             {
                 if (dbPlayer.Container.GetItemAmount(1134) >= 1)
                 {

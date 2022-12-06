@@ -139,52 +139,52 @@ namespace VMP_CNR.Module.Teams.Shelter
                             {
                                 switch (dbPlayer.TeamId)
                                 {
-                                    case (int)teams.TEAM_LCN:
+                                    case (int)TeamTypes.TEAM_LCN:
                                         dbPlayer.GiveWeapon(WeaponHash.Golfclub, 0);
                                         break;
-                                    case (int)teams.TEAM_HOH:
+                                    case (int)TeamTypes.TEAM_HOH:
                                         dbPlayer.GiveWeapon(WeaponHash.Stone_hatchet, 0);
                                         break;
-                                    case (int)teams.TEAM_BOSOZOKUKAI:
-                                    case (int)teams.TEAM_BRATWA:
+                                    case (int)TeamTypes.TEAM_BOSOZOKUKAI:
+                                    case (int)TeamTypes.TEAM_BRATWA:
                                         dbPlayer.GiveWeapon(WeaponHash.Wrench, 0);
                                         break;
-                                    case (int)teams.TEAM_ORGANISAZIJA:
+                                    case (int)TeamTypes.TEAM_ORGANISAZIJA:
                                         dbPlayer.GiveWeapon(WeaponHash.Hammer, 0);
                                         break;
-                                    case (int)teams.TEAM_LOST:
+                                    case (int)TeamTypes.TEAM_LOST:
                                         dbPlayer.GiveWeapon(WeaponHash.Battleaxe, 0);
                                         break;
-                                    case (int)teams.TEAM_BALLAS:
+                                    case (int)TeamTypes.TEAM_BALLAS:
                                         dbPlayer.GiveWeapon(WeaponHash.Knuckle, 0);
                                         break;
-                                    case (int)teams.TEAM_YAKUZA:
+                                    case (int)TeamTypes.TEAM_YAKUZA:
                                         dbPlayer.GiveWeapon(WeaponHash.Switchblade, 0);
                                         break;
-                                    case (int)teams.TEAM_GROVE:
+                                    case (int)TeamTypes.TEAM_GROVE:
                                         dbPlayer.GiveWeapon(WeaponHash.Bat, 0);
                                         break;
-                                    case (int)teams.TEAM_TRIADEN:
-                                    case (int)teams.TEAM_IRISHMOB:
+                                    case (int)TeamTypes.TEAM_TRIADEN:
+                                    case (int)TeamTypes.TEAM_IRISHMOB:
                                         dbPlayer.GiveWeapon(WeaponHash.Poolcue, 0);
                                         break;
                                     // case (int)teams.TEAM_MIDNIGHT:
                                     //     dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
                                     //     break;
-                                    case (int)teams.TEAM_MARABUNTA:
-                                    case (int)teams.TEAM_VAGOS:
+                                    case (int)TeamTypes.TEAM_MARABUNTA:
+                                    case (int)TeamTypes.TEAM_VAGOS:
                                         dbPlayer.GiveWeapon(WeaponHash.Machete, 0);
                                         break;
-                                    case (int)teams.TEAM_REDNECKS:
+                                    case (int)TeamTypes.TEAM_REDNECKS:
                                         dbPlayer.GiveWeapon(WeaponHash.Bottle, 0);
                                         break;
-                                    case (int)teams.TEAM_HUSTLER:
+                                    case (int)TeamTypes.TEAM_HUSTLER:
                                         dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
                                         break;
-                                    case (int)teams.TEAM_ICA:
+                                    case (int)TeamTypes.TEAM_ICA:
                                         dbPlayer.GiveWeapon(WeaponHash.Dagger, 0);
                                         break;
-                                    case (int)teams.TEAM_MADRAZO:
+                                    case (int)TeamTypes.TEAM_MADRAZO:
                                         dbPlayer.GiveWeapon(WeaponHash.Hatchet, 0);
                                         break;
                                     default:
@@ -289,53 +289,53 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     //Add Fraktion Item
                                     switch (dbPlayer.TeamId)
                                     {
-                                        case (int)teams.TEAM_BOSOZOKUKAI:
+                                        case (int)TeamTypes.TEAM_BOSOZOKUKAI:
                                             resultItemId = 1432;
                                             break;
-                                        case (int)teams.TEAM_IRISHMOB:
+                                        case (int)TeamTypes.TEAM_IRISHMOB:
                                             resultItemId = 1312;
                                             break;
-                                        case (int)teams.TEAM_BALLAS:
+                                        case (int)TeamTypes.TEAM_BALLAS:
                                             resultItemId = 999;
                                             break;
-                                        case (int)teams.TEAM_GROVE:
+                                        case (int)TeamTypes.TEAM_GROVE:
                                             resultItemId = 1000;
                                             break;
-                                        case (int)teams.TEAM_MARABUNTA:
+                                        case (int)TeamTypes.TEAM_MARABUNTA:
                                             resultItemId = 1001;
                                             break;
                                         // case (int)teams.TEAM_MIDNIGHT:
                                         //     resultItemId = 1002;
                                         //     break;
-                                        case (int)teams.TEAM_LOST:
+                                        case (int)TeamTypes.TEAM_LOST:
                                             resultItemId = 1003;
                                             break;
-                                        case (int)teams.TEAM_REDNECKS:
+                                        case (int)TeamTypes.TEAM_REDNECKS:
                                             resultItemId = 1004;
                                             break;
-                                        case (int)teams.TEAM_HOH:
+                                        case (int)TeamTypes.TEAM_HOH:
                                             resultItemId = 1311;
                                             break;
-                                        case (int)teams.TEAM_VAGOS:
+                                        case (int)TeamTypes.TEAM_VAGOS:
                                             resultItemId = 998;
                                             break;
-                                        case (int)teams.TEAM_MADRAZO:
+                                        case (int)TeamTypes.TEAM_MADRAZO:
                                             resultItemId = 646;
                                             ResultAmount = 15;
                                             break;
-                                        case (int)teams.TEAM_TRIADEN:
+                                        case (int)TeamTypes.TEAM_TRIADEN:
                                             resultItemId = 1005;
                                             ResultAmount = 15;
                                             break;
-                                        case (int)teams.TEAM_YAKUZA:
+                                        case (int)TeamTypes.TEAM_YAKUZA:
                                             resultItemId = 1006;
                                             ResultAmount = 15;
                                             break;
-                                        case (int)teams.TEAM_LCN:
+                                        case (int)TeamTypes.TEAM_LCN:
                                             resultItemId = 1007;
                                             ResultAmount = 15;
                                             break;
-                                        case (int)teams.TEAM_BRATWA:
+                                        case (int)TeamTypes.TEAM_BRATWA:
                                             resultItemId = 1132;
                                             ResultAmount = 15;
                                             break;
@@ -371,34 +371,34 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     // Add Fraktion item
                                     switch (dbPlayer.TeamId)
                                     {
-                                        case (int)teams.TEAM_BOSOZOKUKAI:
+                                        case (int)TeamTypes.TEAM_BOSOZOKUKAI:
                                             resultItemId = 1432;
                                             break;
-                                        case (int)teams.TEAM_IRISHMOB:
+                                        case (int)TeamTypes.TEAM_IRISHMOB:
                                             resultItemId = 1312;
                                             break;
-                                        case (int)teams.TEAM_BALLAS:
+                                        case (int)TeamTypes.TEAM_BALLAS:
                                             resultItemId = 999;
                                             break;
-                                        case (int)teams.TEAM_GROVE:
+                                        case (int)TeamTypes.TEAM_GROVE:
                                             resultItemId = 1000;
                                             break;
-                                        case (int)teams.TEAM_MARABUNTA:
+                                        case (int)TeamTypes.TEAM_MARABUNTA:
                                             resultItemId = 1001;
                                             break;
                                         // case (int)teams.TEAM_MIDNIGHT:
                                         //     resultItemId = 1002;
                                         //     break;
-                                        case (int)teams.TEAM_LOST:
+                                        case (int)TeamTypes.TEAM_LOST:
                                             resultItemId = 1003;
                                             break;
-                                        case (int)teams.TEAM_REDNECKS:
+                                        case (int)TeamTypes.TEAM_REDNECKS:
                                             resultItemId = 1004;
                                             break;
-                                        case (int)teams.TEAM_HOH:
+                                        case (int)TeamTypes.TEAM_HOH:
                                             resultItemId = 1311;
                                             break;
-                                        case (int)teams.TEAM_VAGOS:
+                                        case (int)TeamTypes.TEAM_VAGOS:
                                             resultItemId = 998;
                                             break;
                                         default:
@@ -433,19 +433,19 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     // Add Fraktion item
                                     switch (dbPlayer.TeamId)
                                     {
-                                        case (int)teams.TEAM_MADRAZO:
+                                        case (int)TeamTypes.TEAM_MADRAZO:
                                             resultItemId = 646;
                                             break;
-                                        case (int)teams.TEAM_TRIADEN:
+                                        case (int)TeamTypes.TEAM_TRIADEN:
                                             resultItemId = 1005;
                                             break;
-                                        case (int)teams.TEAM_YAKUZA:
+                                        case (int)TeamTypes.TEAM_YAKUZA:
                                             resultItemId = 1006;
                                             break;
-                                        case (int)teams.TEAM_LCN:
+                                        case (int)TeamTypes.TEAM_LCN:
                                             resultItemId = 1007;
                                             break;
-                                        case (int)teams.TEAM_BRATWA:
+                                        case (int)TeamTypes.TEAM_BRATWA:
                                             resultItemId = 1132;
                                             break;
                                         default:

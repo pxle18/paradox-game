@@ -28,13 +28,13 @@ namespace VMP_CNR.Module.Items.Scripts
             {
                 switch (dbPlayer.TeamId)
                 {
-                    case (int)teams.TEAM_FIB:
+                    case (int)TeamTypes.TEAM_FIB:
                         itemModelId = 712;
                         break;
-                    case (int)teams.TEAM_ARMY:
+                    case (int)TeamTypes.TEAM_ARMY:
                         itemModelId = 722;
                         break;
-                    case (int)teams.TEAM_POLICE:
+                    case (int)TeamTypes.TEAM_POLICE:
                         itemModelId = 697;
                         break;
                     default:

@@ -844,7 +844,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsCopPackGun()
         {
-            return Team != null && (Duty && (Team.IsCops() || Team.IsDpos() || Team.IsMedics() || Team.Id == (int)teams.TEAM_DRIVINGSCHOOL || Team.Id == (int)teams.TEAM_NEWS) || IsNSADuty);
+            return Team != null && (Duty && (Team.IsCops() || Team.IsDpos() || Team.IsMedics() || Team.Id == (int)TeamTypes.TEAM_DRIVINGSCHOOL || Team.Id == (int)TeamTypes.TEAM_NEWS) || IsNSADuty);
         }
 
         public bool IsACop()

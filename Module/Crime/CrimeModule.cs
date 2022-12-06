@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.Crime
         {
             if (key != Key.J || !dbPlayer.RageExtension.IsInVehicle) return false;
             SxVehicle sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
-            if (!sxVeh.IsValid() || sxVeh.teamid != dbPlayer.TeamId || dbPlayer.TeamId != (int)teams.TEAM_POLICE) return false;
+            if (!sxVeh.IsValid() || sxVeh.teamid != dbPlayer.TeamId || dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE) return false;
             try
             {
                 if (sxVeh.Data.ClassificationId == 3) return false; // Disable Boote

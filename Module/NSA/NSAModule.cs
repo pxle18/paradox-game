@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.NSA
         public override void OnTenSecUpdate()
         {
             // Aktiv-Ortung für normalo FIB Agenten, falls Lizenz vorhanden
-            foreach (DbPlayer member in TeamModule.Instance.Get((uint)teams.TEAM_FIB).GetTeamMembers())
+            foreach (DbPlayer member in TeamModule.Instance.Get((uint)TeamTypes.TEAM_FIB).GetTeamMembers())
             {
                 if (member.HasData("nsaOrtung") == false)
                     continue;
@@ -165,7 +165,7 @@ namespace VMP_CNR.Module.NSA
 
         public void StopNASCAll(int phoneNumber, int phoneNumber2 = 0)
         {
-            foreach (DbPlayer xPlayer in TeamModule.Instance.Get((uint)teams.TEAM_FIB).Members.Values.ToList())
+            foreach (DbPlayer xPlayer in TeamModule.Instance.Get((uint)TeamTypes.TEAM_FIB).Members.Values.ToList())
             {
                 if (xPlayer == null || !xPlayer.IsValid()) continue;
                 if (xPlayer.HasData("nsa_activePhone"))
@@ -426,7 +426,7 @@ namespace VMP_CNR.Module.NSA
                 return true;
             }
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.IsUndercover())
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.IsUndercover())
             {
                 if (dbPlayer.Player.Position.DistanceTo(NSAVehicleModifyPosition) < 2.0f)
                 {
@@ -443,7 +443,7 @@ namespace VMP_CNR.Module.NSA
         public void Commandtakebm(Player player, string commandParams)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty()) return;
+            if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || !dbPlayer.IsInDuty()) return;
 
             try
             {
@@ -555,9 +555,9 @@ namespace VMP_CNR.Module.NSA
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null) return;
 
-            if (!dbPlayer.IsValid() || (dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.GovLevel.ToLower() != "a" && dbPlayer.IsNSAState != (int)NSARangs.LEAD)) return;
+            if (!dbPlayer.IsValid() || (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.GovLevel.ToLower() != "a" && dbPlayer.IsNSAState != (int)NSARangs.LEAD)) return;
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.TeamRank < 11 && dbPlayer.IsNSAState != (int)NSARangs.LEAD) return;
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank < 11 && dbPlayer.IsNSAState != (int)NSARangs.LEAD) return;
 
             ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Suspendierung", Callback = "NSASuspendate", Message = "Bitte einen Namen angeben:" });
             return;
@@ -580,7 +580,7 @@ namespace VMP_CNR.Module.NSA
                 return;
             }
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
             {
                 ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "PIS - Person Identifying System", Callback = "NSAClonePlayer", Message = "Bitte geben Sie einen Namen ein:" });
             }
@@ -624,7 +624,7 @@ namespace VMP_CNR.Module.NSA
         public void Commandresetgovlevel(Player player, string name)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || (dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.TeamId != (int)teams.TEAM_POLICE && dbPlayer.TeamId != (int)teams.TEAM_ARMY && dbPlayer.TeamId != (int)teams.TEAM_GOV) || dbPlayer.TeamRank < 11) return;
+            if (dbPlayer == null || (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) || dbPlayer.TeamRank < 11) return;
 
 
             var findPlayer = Players.Players.Instance.FindPlayer(name);
@@ -636,7 +636,7 @@ namespace VMP_CNR.Module.NSA
 
             if (Level == "A" || Level == "B" || Level == "C")
             {
-                if ((dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.TeamId != (int)teams.TEAM_POLICE && dbPlayer.TeamId != (int)teams.TEAM_ARMY && dbPlayer.TeamId != (int)teams.TEAM_GOV) || dbPlayer.TeamRank < 11) return;
+                if ((dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) || dbPlayer.TeamRank < 11) return;
             }
 
             if (Level == "D")

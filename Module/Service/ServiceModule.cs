@@ -71,7 +71,7 @@ namespace VMP_CNR.Module.Service
         public List<Service> GetServicesForTeam(uint teamId)
         {
             // CopSpecials
-            if (teamId == (int)teams.TEAM_FIB) teamId = (int)teams.TEAM_POLICE;
+            if (teamId == (int)TeamTypes.TEAM_FIB) teamId = (int)TeamTypes.TEAM_POLICE;
 
             List<Service> teamServices;
 
@@ -130,8 +130,8 @@ namespace VMP_CNR.Module.Service
 
         public override void OnMinuteUpdate()
         {
-            if (!serviceList.ContainsKey((int)teams.TEAM_MEDIC)) return;
-            foreach(Service service in serviceList[(int)teams.TEAM_MEDIC].Where(s => s.Player != null && s.Player.IsValid() && s.Player.IsInjured()))
+            if (!serviceList.ContainsKey((int)TeamTypes.TEAM_MEDIC)) return;
+            foreach(Service service in serviceList[(int)TeamTypes.TEAM_MEDIC].Where(s => s.Player != null && s.Player.IsValid() && s.Player.IsInjured()))
             {
                 string optional = "";
 
@@ -141,7 +141,7 @@ namespace VMP_CNR.Module.Service
                     optional = "[PRIORISIERT]";
                     service.Message = $"{optional} Verletzung: {service.Player.Injury.Name} - {service.Player.Injury.TimeToDeath - service.Player.deadtime[0]} Min";
                 }
-                if (service.Player.TeamId == (int)teams.TEAM_MEDIC)
+                if (service.Player.TeamId == (int)TeamTypes.TEAM_MEDIC)
                 {
                     optional = "[LSMC]"; 
                     service.Message = $"{optional} Verletzung: {service.Player.Injury.Name} - {service.Player.Injury.TimeToDeath - service.Player.deadtime[0]} Min";
@@ -176,7 +176,7 @@ namespace VMP_CNR.Module.Service
         public string GetSpecialDescriptionForPlayer(DbPlayer dbPlayer, Service service)
         {
             string desc = "[" + Convert.ToInt32(service.Position.DistanceTo(dbPlayer.Player.Position)) + "m - gesendet: " + service.Created.ToString("HH:mm:ss") + " ";
-            if (service.TeamId == (int)teams.TEAM_MEDIC)
+            if (service.TeamId == (int)TeamTypes.TEAM_MEDIC)
             {
                 desc += ZoneModule.Instance.IsInNorthZone(service.Position) ? " | Norden]" : "]";
 
@@ -193,7 +193,7 @@ namespace VMP_CNR.Module.Service
             var createdService = GetCreatedServices(destinationPlayer);
             if (createdService == null || createdService.Count() <= 0) return false;
 
-            uint playerTeam = (dbPlayer.TeamId != (uint)teams.TEAM_FIB) ? (uint)dbPlayer.TeamId : (uint)teams.TEAM_POLICE;
+            uint playerTeam = (dbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB) ? (uint)dbPlayer.TeamId : (uint)TeamTypes.TEAM_POLICE;
 
             if (playerTeam != createdService[0].TeamId) return false;
             if (createdService[0].Accepted.Contains(dbPlayer.GetName())) return false;
@@ -257,7 +257,7 @@ namespace VMP_CNR.Module.Service
         {
             if(dbPlayer.IsInjured())
             {
-                CancelOwnService(dbPlayer, (int)teams.TEAM_MEDIC);
+                CancelOwnService(dbPlayer, (int)TeamTypes.TEAM_MEDIC);
             }
         }
     }

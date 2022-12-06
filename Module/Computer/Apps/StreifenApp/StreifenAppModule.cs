@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Computer.Apps.StreifenApp
         public uint countId = 1;
 
         public static List<uint> registredStreifenAppAccess = new List<uint>() { 
-            (uint)teams.TEAM_POLICE, (uint)teams.TEAM_ARMY, (uint)teams.TEAM_FIB, (uint)teams.TEAM_MEDIC, (uint)teams.TEAM_SWAT, (uint)teams.TEAM_DPOS 
+            (uint)TeamTypes.TEAM_POLICE, (uint)TeamTypes.TEAM_ARMY, (uint)TeamTypes.TEAM_FIB, (uint)TeamTypes.TEAM_MEDIC, (uint)TeamTypes.TEAM_SWAT, (uint)TeamTypes.TEAM_DPOS 
         };
 
         protected override bool OnLoad()

@@ -81,7 +81,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                     {
                         if (dbPlayer.Player.Position.DistanceTo(AirforceInteriorPos) < 1.0f)
                         {
-                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
 
                             if (sxVeh == null) return false;
                             if (sxVeh.SyncExtension.Locked) return false;
@@ -100,7 +100,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                         // Ins Cockpit
                         else if (dbPlayer.Player.Position.DistanceTo(AirforceCockpitPos) < 1.0f)
                         {
-                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
 
                             if (sxVeh == null) return false;
                             if (sxVeh.SyncExtension.Locked) return false;
@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                         return false;
                     }
 
-                    sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)teams.TEAM_GOV, 17.0f);
+                    sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)TeamTypes.TEAM_GOV, 17.0f);
                     
 
                     if (sxVeh != null && sxVeh.IsValid() && sxVeh.databaseId != 0 && !sxVeh.SyncExtension.Locked && sxVeh.Data.Id == AirforceDataId)
@@ -188,7 +188,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                     {
                         if (dbPlayer.Player.Position.DistanceTo(AirforceInteriorPos) > 2.5f) return false;
 
-                        sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                        sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
                         if (sxVeh == null) return false;
 
                         // player has no right to operate vehicle

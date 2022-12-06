@@ -12,7 +12,7 @@ namespace VMP_CNR.Module.Items.Scripts
         {
             if (!dbPlayer.RageExtension.IsInVehicle) return false;
             {
-                if (dbPlayer.Team.Id == (int)teams.TEAM_LSC)
+                if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_LSC)
                 {
                     var vehicle = dbPlayer.Player.Vehicle.GetVehicle();
                     if (vehicle.databaseId == 0) return false;

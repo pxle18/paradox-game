@@ -7,11 +7,11 @@ namespace VMP_CNR.Module.Players
         public static bool CanUseMegaphone(this DbPlayer dbPlayer)
         {
             return dbPlayer.IsACop() || 
-                   dbPlayer.TeamId == (int) teams.TEAM_MEDIC ||
-                   dbPlayer.TeamId == (int) teams.TEAM_DPOS || 
-                   dbPlayer.TeamId == (int) teams.TEAM_NEWS ||
-                   dbPlayer.TeamId == (int) teams.TEAM_GOV ||
-                   dbPlayer.TeamId == (int) teams.TEAM_DRIVINGSCHOOL;
+                   dbPlayer.TeamId == (int) TeamTypes.TEAM_MEDIC ||
+                   dbPlayer.TeamId == (int) TeamTypes.TEAM_DPOS || 
+                   dbPlayer.TeamId == (int) TeamTypes.TEAM_NEWS ||
+                   dbPlayer.TeamId == (int) TeamTypes.TEAM_GOV ||
+                   dbPlayer.TeamId == (int) TeamTypes.TEAM_DRIVINGSCHOOL;
         }
 
         //Todo: needs externalized player module

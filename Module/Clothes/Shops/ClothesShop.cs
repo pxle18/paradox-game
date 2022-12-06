@@ -140,7 +140,7 @@ namespace VMP_CNR.Module.Clothes.Shops
             if (!props.ContainsKey(slot)) return new List<Prop>();
 
             return props[slot].Where(
-                prop => (prop.TeamId == player.TeamId || prop.TeamId == (uint) teams.TEAM_CIVILIAN)
+                prop => (prop.TeamId == player.TeamId || prop.TeamId == (uint) TeamTypes.TEAM_CIVILIAN)
                     && (prop.Gender == player.Customization.Gender || prop.Gender == 3)
                     && prop.SubCatId == category
             ).ToList();
@@ -151,7 +151,7 @@ namespace VMP_CNR.Module.Clothes.Shops
             if (!clothes.ContainsKey(slot)) return new List<Cloth>();
 
             return clothes[slot].Where(
-                cloth => (cloth.Teams.Contains(player.TeamId) || cloth.Teams.Contains((uint) teams.TEAM_CIVILIAN))
+                cloth => (cloth.Teams.Contains(player.TeamId) || cloth.Teams.Contains((uint) TeamTypes.TEAM_CIVILIAN))
                          && (cloth.Gender == player.Customization.Gender || cloth.Gender == 3)
                          && cloth.SubCatId == category
             ).ToList();
@@ -172,15 +172,15 @@ namespace VMP_CNR.Module.Clothes.Shops
                 currClothes.AddRange(slotClothesAllGender);
             }
 
-            if (player.TeamId == (int) teams.TEAM_CIVILIAN) return currClothes;
+            if (player.TeamId == (int) TeamTypes.TEAM_CIVILIAN) return currClothes;
             var slotTeamClothes =
-                GetClothesBySlotAndTeam(slot, (int) teams.TEAM_CIVILIAN, player.Customization.Gender);
+                GetClothesBySlotAndTeam(slot, (int) TeamTypes.TEAM_CIVILIAN, player.Customization.Gender);
             if (slotTeamClothes != null)
             {
                 currClothes.AddRange(slotTeamClothes);
             }
 
-            var slotTeamClothesAllGender = GetClothesBySlotAndTeam(slot, (int) teams.TEAM_CIVILIAN, 3);
+            var slotTeamClothesAllGender = GetClothesBySlotAndTeam(slot, (int) TeamTypes.TEAM_CIVILIAN, 3);
             if (slotTeamClothesAllGender != null)
             {
                 currClothes.AddRange(slotTeamClothesAllGender);
@@ -204,15 +204,15 @@ namespace VMP_CNR.Module.Clothes.Shops
                 currClothes.AddRange(slotClothesAllGender);
             }
 
-            if (player.TeamId == (int) teams.TEAM_CIVILIAN) return currClothes;
+            if (player.TeamId == (int) TeamTypes.TEAM_CIVILIAN) return currClothes;
             var slotTeamClothes =
-                GetPropsBySlotAndTeam(slot, (int) teams.TEAM_CIVILIAN, player.Customization.Gender);
+                GetPropsBySlotAndTeam(slot, (int) TeamTypes.TEAM_CIVILIAN, player.Customization.Gender);
             if (slotTeamClothes != null)
             {
                 currClothes.AddRange(slotTeamClothes);
             }
 
-            var slotTeamClothesAllGender = GetPropsBySlotAndTeam(slot, (int) teams.TEAM_CIVILIAN, 3);
+            var slotTeamClothesAllGender = GetPropsBySlotAndTeam(slot, (int) TeamTypes.TEAM_CIVILIAN, 3);
             if (slotTeamClothesAllGender != null)
             {
                 currClothes.AddRange(slotTeamClothesAllGender);

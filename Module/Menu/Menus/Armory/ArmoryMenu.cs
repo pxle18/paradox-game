@@ -64,7 +64,7 @@ namespace VMP_CNR
                 switch (index)
                 {
                     case 1:
-                        if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)teams.TEAM_IAA))) return false;
+                        if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA))) return false;
                         // Out of Duty
                         dbPlayer.SendNewNotification("Sie haben sich vom Dienst abgemeldet!", title:"Dienstende", notificationType:PlayerNotification.NotificationType.ERROR);
                         dbPlayer.SetArmor(0);
@@ -93,15 +93,15 @@ namespace VMP_CNR
                         dbPlayer.RemoveWeapons();
                         dbPlayer.ResetAllWeaponComponents();
 
-                        if (dbPlayer.TeamId != (uint)teams.TEAM_SWAT)
+                        if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_SWAT)
                             dbPlayer.Team.SendNotification("Rang " + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich vom Dienst ab.");
 
                         MenuManager.DismissMenu(dbPlayer.Player, (int)PlayerMenu.Armory);
                         break;
                     case 2:
-                        if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)teams.TEAM_IAA))) return false;
+                        if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA))) return false;
 
-                        if (dbPlayer.Suspension && (dbPlayer.IsACop() || dbPlayer.TeamId == (int)teams.TEAM_DPOS || dbPlayer.TeamId == (int)teams.TEAM_DRIVINGSCHOOL || dbPlayer.TeamId == (int)teams.TEAM_MEDIC))
+                        if (dbPlayer.Suspension && (dbPlayer.IsACop() || dbPlayer.TeamId == (int)TeamTypes.TEAM_DPOS || dbPlayer.TeamId == (int)TeamTypes.TEAM_DRIVINGSCHOOL || dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC))
                         {
                             dbPlayer.SendNewNotification("Sie koennen nicht in Dienst gehen, wenn sie suspendiert sind!");
                             return false;
@@ -112,7 +112,7 @@ namespace VMP_CNR
                         dbPlayer.SetDuty(true);
                         dbPlayer.SetHealth(100);
 
-                        if (dbPlayer.TeamId != (uint)teams.TEAM_SWAT)
+                        if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_SWAT)
                             dbPlayer.Team.SendNotification("Rang " + dbPlayer.TeamRank + " | " + $"{dbPlayer.GetName()} meldet sich zum Dienst an.");
 
                         MenuManager.DismissMenu(dbPlayer.Player, (int)PlayerMenu.Armory);

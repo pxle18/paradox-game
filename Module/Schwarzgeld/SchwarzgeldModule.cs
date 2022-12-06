@@ -76,7 +76,7 @@ namespace VMP_CNR.Module.Schwarzgeld
                                 if (!housesVoltage.DetectedHouses.Contains(house.Id))
                                 {
                                     housesVoltage.DetectedHouses.Add(house.Id);
-                                    TeamModule.Instance.SendMessageToTeam($"Energie-Detection: Es wurde ein erhöhter Stromverbrauch gemeldet!", teams.TEAM_FIB, 10000, 3);
+                                    TeamModule.Instance.SendMessageToTeam($"Energie-Detection: Es wurde ein erhöhter Stromverbrauch gemeldet!", TeamTypes.TEAM_FIB, 10000, 3);
                                     NSAPlayerExtension.AddEnergyHistory($"Energieverbrauch Meldung (Stromkasten)", housesVoltage.Position);
                                 }
                             }

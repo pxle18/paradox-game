@@ -274,7 +274,7 @@ namespace VMP_CNR.Module.Injury
 
             if (dbPlayer.GovLevel.ToLower() == "a" || dbPlayer.GovLevel.ToLower() == "b" || dbPlayer.GovLevel.ToLower() == "c")
             {
-                foreach (DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(m => m.ParamedicLicense && m.TeamId == (uint)teams.TEAM_ARMY && m.IsInDuty()).ToList())
+                foreach (DbPlayer xPlayer in Players.Players.Instance.GetValidPlayers().Where(m => m.ParamedicLicense && m.TeamId == (uint)TeamTypes.TEAM_ARMY && m.IsInDuty()).ToList())
                 {
                     xPlayer.SendNewNotification($"Eine verletzte Person der Sicherheitsfreigabe {dbPlayer.GovLevel} wurde gemeldet!");
                 }
@@ -296,7 +296,7 @@ namespace VMP_CNR.Module.Injury
             if (!dbPlayer.HasData("InjuryMovePointID"))
             {
                 // isch da son medischiner in der näh? dann machn wa ken timer runna sonst gibbet huddel
-                if (TeamModule.Instance.Get((uint)teams.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() && 
+                if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() && 
                 m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 10.0f && !m.IsInjured() && !m.IsCuffed && !m.IsTied && m.IsInDuty()).Count() <= 0)
                 {
                     dbPlayer.deadtime[0]++;
@@ -501,7 +501,7 @@ namespace VMP_CNR.Module.Injury
         public void Commandinstrev(Player player, string name)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || dbPlayer.TeamId != (int)teams.TEAM_MEDIC) return;
+            if (dbPlayer == null || dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC) return;
 
 
             var findPlayer = Players.Players.Instance.FindPlayer(name);
@@ -529,7 +529,7 @@ namespace VMP_CNR.Module.Injury
         public void Commandgiveparalic(Player player, string name)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || dbPlayer.TeamId != (int)teams.TEAM_MEDIC) return;
+            if (dbPlayer == null || dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC) return;
 
 
             var findPlayer = Players.Players.Instance.FindPlayer(name);
@@ -565,7 +565,7 @@ namespace VMP_CNR.Module.Injury
         public void Commandremoveparalic(Player player, string name)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || dbPlayer.TeamId != (int)teams.TEAM_MEDIC) return;
+            if (dbPlayer == null || dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC) return;
 
 
             var findPlayer = Players.Players.Instance.FindPlayer(name);

@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Computer
                 if (computerApp.Rang > 0 && dbPlayer.TeamRank < computerApp.Rang) return false;
 
                 // Wenn Duty vorrausgesetzt wird und nicht duty ist
-                if (computerApp.Duty && !dbPlayer.Duty && dbPlayer.TeamId != (int)teams.TEAM_LSC) return false;
+                if (computerApp.Duty && !dbPlayer.Duty && dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return false;
 
                 return true;
             }

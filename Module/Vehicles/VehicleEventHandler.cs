@@ -243,7 +243,7 @@ namespace VMP_CNR.Module.Vehicles
             {
                 msg += " Seriennummer: " + dbVehicle.entity.GetData<int>("nsa_veh_id");
 
-                if (dbVehicle.teamid == (uint)teams.TEAM_FIB && dbPlayer.TeamId == (uint)teams.TEAM_FIB && dbPlayer.TeamRank >= 11)
+                if (dbVehicle.teamid == (uint)TeamTypes.TEAM_FIB && dbPlayer.TeamId == (uint)TeamTypes.TEAM_FIB && dbPlayer.TeamRank >= 11)
                 {
                     dbPlayer.SendNewNotification($"Interne Nummer: {dbVehicle.databaseId.ToString()}");
                 }

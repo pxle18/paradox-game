@@ -94,15 +94,15 @@ namespace VMP_CNR.Module.Telefon.App
                 }
 
                 uint acceptorTeam = teamLeitstellenObject.Acceptor.TeamId; 
-                if (teamLeitstellenObject.TeamId == (uint)teams.TEAM_IAA && teamLeitstellenObject.Acceptor.IsNSADuty) acceptorTeam = (uint)teams.TEAM_IAA;
+                if (teamLeitstellenObject.TeamId == (uint)TeamTypes.TEAM_IAA && teamLeitstellenObject.Acceptor.IsNSADuty) acceptorTeam = (uint)TeamTypes.TEAM_IAA;
 
                 if (acceptorTeam != teamLeitstellenObject.TeamId) {
                     l_Caller.SendNewNotification("Die angegebene Rufnummer ist derzeit nicht verfuegbar.", notificationType: PlayerNotification.NotificationType.ERROR);
                     return;
                 }
-                if(teamLeitstellenObject.StaatsFrakOnly && !l_Caller.IsACop() && l_Caller.TeamId != (int)teams.TEAM_NEWS &&
-                    l_Caller.TeamId != (int)teams.TEAM_FIB && l_Caller.TeamId != (int)teams.TEAM_DPOS && l_Caller.TeamId != (int)teams.TEAM_MEDIC &&
-                    l_Caller.TeamId != (int) teams.TEAM_DRIVINGSCHOOL)
+                if(teamLeitstellenObject.StaatsFrakOnly && !l_Caller.IsACop() && l_Caller.TeamId != (int)TeamTypes.TEAM_NEWS &&
+                    l_Caller.TeamId != (int)TeamTypes.TEAM_FIB && l_Caller.TeamId != (int)TeamTypes.TEAM_DPOS && l_Caller.TeamId != (int)TeamTypes.TEAM_MEDIC &&
+                    l_Caller.TeamId != (int) TeamTypes.TEAM_DRIVINGSCHOOL)
                 {
                     l_Caller.SendNewNotification("Diese Nummer ist für Sie nicht verfügbar!.", notificationType: PlayerNotification.NotificationType.ERROR);
                     return;

@@ -95,7 +95,7 @@ namespace VMP_CNR.Module.Doors
             var door = Get(doorId);
             if (door == null) return false;
 
-            if (door.Teams.Contains(TeamModule.Instance.Get((uint)teams.TEAM_IAA)) && dbPlayer.IsNSADuty) return true;
+            if (door.Teams.Contains(TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA)) && dbPlayer.IsNSADuty) return true;
 
             if ((door.Teams.Contains(dbPlayer.Team) && dbPlayer.TeamRank >= door.RangRestriction) || 
                 dbPlayer.Rank.CanAccessFeature("enter_all") || 

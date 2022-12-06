@@ -376,7 +376,7 @@ namespace VMP_CNR.Module.Items
                                 findPlayer.SendNewNotification($"{findPlayer.Container.Slots[slot].Amount} - {findPlayer.Container.Slots[slot].Model.Name} wurden beschlagnahmt.");
 
                                 // FIB
-                                if (dbPlayer.TeamId == (int)teams.TEAM_FIB)
+                                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
                                 {
                                     if (findPlayer.Container.Slots[slot].Data != null && findPlayer.Container.Slots[slot].Data.ContainsKey("fingerprint"))
                                     {

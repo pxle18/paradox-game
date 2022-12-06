@@ -37,7 +37,7 @@ namespace VMP_CNR.Module.DPOSnew
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_DPOS || !dbPlayer.IsInDuty()) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_DPOS || !dbPlayer.IsInDuty()) return;
                 SxVehicle sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
                 if (sxVeh == null) return;
                 if (!sxVeh.Data.Model.Contains("Cargobob")) { dbPlayer.SendNewNotification("Bitte verwende einen Cargobob"); return; }
@@ -120,7 +120,7 @@ namespace VMP_CNR.Module.DPOSnew
             try
             {
                 DbPlayer dbPlayer = p_Player.GetPlayer();
-            if (dbPlayer.TeamId != (int)teams.TEAM_DPOS || !dbPlayer.IsInDuty()) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_DPOS || !dbPlayer.IsInDuty()) return;
 
             var Vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(Convert.ToUInt32(vehId));
             if (dbPlayer == null || !dbPlayer.IsValid() || Vehicle == null)
@@ -139,7 +139,7 @@ namespace VMP_CNR.Module.DPOSnew
             {
                 Vehicle.SetTeamCarGarage(true);
 
-                if (Vehicle.teamid != (int)teams.TEAM_DPOS)
+                if (Vehicle.teamid != (int)TeamTypes.TEAM_DPOS)
                 {
                     dbPlayer.SendNewNotification(
                         "Fahrzeug wurde geborgen! (Provision 1000$)");

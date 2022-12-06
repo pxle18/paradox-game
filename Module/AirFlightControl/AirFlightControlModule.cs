@@ -53,7 +53,7 @@ namespace VMP_CNR.Module.AirFlightControl
                     {
                         colorCode = 2;
                     }
-                    if (sxVeh.teamid == (uint)teams.TEAM_ARMY || sxVeh.teamid == (uint)teams.TEAM_POLICE || sxVeh.teamid == (uint)teams.TEAM_MEDIC)
+                    if (sxVeh.teamid == (uint)TeamTypes.TEAM_ARMY || sxVeh.teamid == (uint)TeamTypes.TEAM_POLICE || sxVeh.teamid == (uint)TeamTypes.TEAM_MEDIC)
                     {
                         continue;
                     }
@@ -74,12 +74,12 @@ namespace VMP_CNR.Module.AirFlightControl
 
                 NAPI.Task.Run(() =>
                 {
-                    foreach (DbPlayer dbPlayer in TeamModule.Instance.Get((uint)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.RageExtension.IsInVehicle).ToList())
+                    foreach (DbPlayer dbPlayer in TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.RageExtension.IsInVehicle).ToList())
                     {
                         if (dbPlayer == null || !dbPlayer.IsValid()) continue;
 
                         SxVehicle sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
-                        if (sxVeh == null || !sxVeh.IsValid() || sxVeh.teamid != (uint)teams.TEAM_ARMY || (sxVeh.Data.ClassificationId != 9 && sxVeh.Data.ClassificationId != 8)) continue;
+                        if (sxVeh == null || !sxVeh.IsValid() || sxVeh.teamid != (uint)TeamTypes.TEAM_ARMY || (sxVeh.Data.ClassificationId != 9 && sxVeh.Data.ClassificationId != 8)) continue;
 
                         dbPlayer.Player.TriggerNewClient("setcustommarks", CustomMarkersKeys.AirFlightControl, false, NAPI.Util.ToJson(Planes));
                         dbPlayer.SetData("planeMarks", true);
@@ -99,7 +99,7 @@ namespace VMP_CNR.Module.AirFlightControl
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
             SxVehicle veh = vehicle.GetVehicle();
-            if(veh != null && veh.IsValid() && veh.Data != null && (veh.Data.ClassificationId == 9 || (veh.Data.ClassificationId == 8 && veh.teamid == (uint)teams.TEAM_ARMY)) && veh.GpsTracker)
+            if(veh != null && veh.IsValid() && veh.Data != null && (veh.Data.ClassificationId == 9 || (veh.Data.ClassificationId == 8 && veh.teamid == (uint)TeamTypes.TEAM_ARMY)) && veh.GpsTracker)
             {
                 string kennung = veh.GetName() + " (" + veh.databaseId + ")";
                 dbPlayer.SendNewNotification("Sie befinden sich nun im Funk für Luftverkehr! (Funk mit M aus/anschaltbar)", PlayerNotification.NotificationType.INFO, "Air-Control Tower", 10000);
@@ -130,7 +130,7 @@ namespace VMP_CNR.Module.AirFlightControl
             if (vehicle != null)
             {
                 SxVehicle veh = vehicle.GetVehicle();
-                if (veh != null && veh.IsValid() && veh.teamid == (uint)teams.TEAM_ARMY && (veh.Data.ClassificationId == 8 || veh.Data.ClassificationId == 9))
+                if (veh != null && veh.IsValid() && veh.teamid == (uint)TeamTypes.TEAM_ARMY && (veh.Data.ClassificationId == 8 || veh.Data.ClassificationId == 9))
                 {
                     dbPlayer.Player.TriggerNewClient("clearcustommarks", CustomMarkersKeys.AirFlightControl);
                     dbPlayer.ResetData("planeMarks");
@@ -180,13 +180,13 @@ namespace VMP_CNR.Module.AirFlightControl
             {
                 if(dbPlayer != null && dbPlayer.IsValid())
                 {
-                    if(dbPlayer.Player.Position.DistanceTo(ApplyWorkersPosition) < 3.0f && dbPlayer.TeamId == (uint)teams.TEAM_ARMY && dbPlayer.TeamRank >= 6)
+                    if(dbPlayer.Player.Position.DistanceTo(ApplyWorkersPosition) < 3.0f && dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank >= 6)
                     {
                         // Menu
                         ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Air Control Freigabe", Callback = "armysetacf", Message = "Wem möchten Sie eine Freigabe erteilen/entziehen:" });
                         return true;
                     }
-                    if (dbPlayer.Player.Position.DistanceTo(TowerPosition) < 3.0f && (dbPlayer.TeamId == (uint)teams.TEAM_ARMY || Workers.Contains(dbPlayer)))
+                    if (dbPlayer.Player.Position.DistanceTo(TowerPosition) < 3.0f && (dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY || Workers.Contains(dbPlayer)))
                     {
                         // Menu
                         ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Air Control Registration", Callback = "armyaddflight", Message = "Flugobjekt registrieren (Kennung):" });
@@ -217,7 +217,7 @@ namespace VMP_CNR.Module.AirFlightControl
                 {
                     if(!TowerPlayers.Contains(dbPlayer))
                     {
-                        if (dbPlayer.TeamId != (uint)teams.TEAM_ARMY && !Workers.Contains(dbPlayer)) return false;
+                        if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY && !Workers.Contains(dbPlayer)) return false;
 
                         TowerPlayers.Add(dbPlayer);
                         dbPlayer.SendNewNotification("Sie befinden sich nun im Funk für Luftverkehr!", PlayerNotification.NotificationType.INFO, "Air-Control Tower");
@@ -352,12 +352,12 @@ namespace VMP_CNR.Module.AirFlightControl
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_ARMY && dbPlayer.TeamRank < 6) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank < 6) return;
 
             DbPlayer target = Players.Players.Instance.FindPlayer(returnstring);
             if (target != null && target.IsValid())
             {
-                if (target.TeamId != (uint)teams.TEAM_CIVILIAN) return;
+                if (target.TeamId != (uint)TeamTypes.TEAM_CIVILIAN) return;
 
                 if(AirFlightControlModule.Instance.Workers.ToList().Contains(target))
                 {
@@ -389,7 +389,7 @@ namespace VMP_CNR.Module.AirFlightControl
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_ARMY && dbPlayer.TeamRank < 6) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank < 6) return;
 
             if(!UInt32.TryParse(returnstring, out uint FlightNumber))
             {

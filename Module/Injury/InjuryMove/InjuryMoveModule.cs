@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Injury.InjuryMove
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if(key == Key.E && (dbPlayer.TeamId == (int)teams.TEAM_MEDIC || (dbPlayer.TeamId == (int)teams.TEAM_ARMY && dbPlayer.ParamedicLicense)))
+            if(key == Key.E && (dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC || (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY && dbPlayer.ParamedicLicense)))
             {
                 if(dbPlayer.IsInDuty())
                 {
@@ -61,7 +61,7 @@ namespace VMP_CNR.Module.Injury.InjuryMove
 
                     if (dbPlayer.IsInjured())
                     {
-                        dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.whisper);
+                        dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Whisper);
                         dbPlayer.SetData("voiceType", 3);
                         dbPlayer.Player.TriggerNewClient("setVoiceType", 3);
                     }

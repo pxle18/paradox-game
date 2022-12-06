@@ -23,17 +23,17 @@ namespace VMP_CNR.Module.LeitstellenPhone
         {
             TeamNumberPhones = new Dictionary<int, TeamLeitstellenObject>();
 
-            RegisterNumber((uint)teams.TEAM_GOV, 910, true);
-            RegisterNumber((uint)teams.TEAM_POLICE, 911, true);
-            RegisterNumber((uint)teams.TEAM_FIB, 912, true);
-            RegisterNumber((uint)teams.TEAM_ARMY, 913, true);
-            RegisterNumber((uint)teams.TEAM_MEDIC, 914, true);
-            RegisterNumber((uint)teams.TEAM_DPOS, 915, true);
-            RegisterNumber((uint)teams.TEAM_SWAT, 999, true);
-            RegisterNumber((uint)teams.TEAM_NEWS, 916, true);
-            RegisterNumber((uint)teams.TEAM_DRIVINGSCHOOL, 917, true);
-            RegisterNumber((uint)teams.TEAM_IAA, 111, true);
-            RegisterNumber((uint)teams.TEAM_LSC, 926, false);
+            RegisterNumber((uint)TeamTypes.TEAM_GOV, 910, true);
+            RegisterNumber((uint)TeamTypes.TEAM_POLICE, 911, true);
+            RegisterNumber((uint)TeamTypes.TEAM_FIB, 912, true);
+            RegisterNumber((uint)TeamTypes.TEAM_ARMY, 913, true);
+            RegisterNumber((uint)TeamTypes.TEAM_MEDIC, 914, true);
+            RegisterNumber((uint)TeamTypes.TEAM_DPOS, 915, true);
+            RegisterNumber((uint)TeamTypes.TEAM_SWAT, 999, true);
+            RegisterNumber((uint)TeamTypes.TEAM_NEWS, 916, true);
+            RegisterNumber((uint)TeamTypes.TEAM_DRIVINGSCHOOL, 917, true);
+            RegisterNumber((uint)TeamTypes.TEAM_IAA, 111, true);
+            RegisterNumber((uint)TeamTypes.TEAM_LSC, 926, false);
             return base.OnLoad();
         }
 

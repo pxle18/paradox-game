@@ -60,7 +60,7 @@ namespace VMP_CNR.Module.Players
                 destinationDbPlayer.Player.TriggerNewClient("showPerso", dbPlayer.fakeName, dbPlayer.fakeSurname, dbPlayer.birthday[0], "Haus " + dbPlayer.OwnHouse[0], dbPlayer.Level, dbPlayer.Id, isCasinoGuest, "");
             }
             //Wenn Spieler COP || FIB und OnDuty -> Dienstausweis
-            else if ((dbPlayer.TeamId == (int)teams.TEAM_MEDIC || dbPlayer.TeamId == (int)teams.TEAM_FIB || dbPlayer.TeamId == (int)teams.TEAM_POLICE || dbPlayer.TeamId == (int)teams.TEAM_GOV || dbPlayer.TeamId == (int)teams.TEAM_NEWS || dbPlayer.TeamId == (int)teams.TEAM_ARMY || dbPlayer.TeamId == (int)teams.TEAM_DRIVINGSCHOOL || dbPlayer.TeamId == (int)teams.TEAM_DPOS || dbPlayer.TeamId == (int)teams.TEAM_SWAT) && dbPlayer.IsInDuty())
+            else if ((dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC || dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB || dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE || dbPlayer.TeamId == (int)TeamTypes.TEAM_GOV || dbPlayer.TeamId == (int)TeamTypes.TEAM_NEWS || dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY || dbPlayer.TeamId == (int)TeamTypes.TEAM_DRIVINGSCHOOL || dbPlayer.TeamId == (int)TeamTypes.TEAM_DPOS || dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT) && dbPlayer.IsInDuty())
             {
                 var crumbs = dbPlayer.GetName().Split('_');
 
@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Players
                 }
                 else
                 {
-                    if (destinationDbPlayer.Team.IsCops() || destinationDbPlayer.TeamId == (int)teams.TEAM_GOV || destinationDbPlayer.GovLevel.Length > 0)
+                    if (destinationDbPlayer.Team.IsCops() || destinationDbPlayer.TeamId == (int)TeamTypes.TEAM_GOV || destinationDbPlayer.GovLevel.Length > 0)
                     {
                         if (dbPlayer.OwnHouse[0] == 0)
                         {

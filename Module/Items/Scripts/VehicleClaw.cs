@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.Items.Scripts
             bool isStaatClaw = ItemData.Id == 731;
 
 
-            if ((dbPlayer.TeamId == (int)teams.TEAM_POLICE && isStaatClaw && dbPlayer.IsInDuty()) || (dbPlayer.Team.IsGangsters() && !isStaatClaw))
+            if ((dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE && isStaatClaw && dbPlayer.IsInDuty()) || (dbPlayer.Team.IsGangsters() && !isStaatClaw))
             {
                 //LSPD hat eine Staatskralle oder Badfraktion hat eine Badkralle
 

@@ -79,8 +79,8 @@ namespace VMP_CNR.Module.Carsell.Menu
 
                         uint GarageId = JobCarsellFactionModule.GarageTeam1;
 
-                        if (dbPlayer.TeamId == (int)teams.TEAM_CARSELL2) GarageId = JobCarsellFactionModule.GarageTeam2;
-                        if (dbPlayer.TeamId == (int)teams.TEAM_CARSELL3) GarageId = JobCarsellFactionModule.GarageTeam3;
+                        if (dbPlayer.TeamId == (int)TeamTypes.TEAM_CARSELL2) GarageId = JobCarsellFactionModule.GarageTeam2;
+                        if (dbPlayer.TeamId == (int)TeamTypes.TEAM_CARSELL3) GarageId = JobCarsellFactionModule.GarageTeam3;
 
                         // INSERT VEHICLE
                         MySQLHandler.Execute($"INSERT INTO `vehicles` (`team_id`, `owner`, `color1`, `color2`, `tuning`, `inGarage`, `garage_id`, `model`, `vehiclehash`) " +

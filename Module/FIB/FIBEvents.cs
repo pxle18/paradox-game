@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.FIB
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return;
             
             if(!returnstring.Contains("_") || returnstring.Length < 3)
             {
@@ -46,7 +46,7 @@ namespace VMP_CNR.Module.FIB
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return;
             if (dbPlayer.TeamRank < 11) return;
 
             if (!returnstring.Contains("_") || returnstring.Length < 3)
@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.FIB
                 return;
             }
 
-            if (targetAgent.TeamId != (int)teams.TEAM_FIB)
+            if (targetAgent.TeamId != (int)TeamTypes.TEAM_FIB)
             {
                 dbPlayer.SendNewNotification("Der Bürger ist nicht beim FIB angestellt!");
                 return;

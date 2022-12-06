@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
             uint currTeam = dbPlayer.TeamId;
 
             // Wenn NSA Duty und IAA Garage ist...
-            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = (uint)teams.TEAM_IAA;
+            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = (uint)TeamTypes.TEAM_IAA;
 
             switch (state)
             {

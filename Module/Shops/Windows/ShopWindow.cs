@@ -265,7 +265,7 @@ namespace VMP_CNR.Module.Shops.Windows
 
                     if(dbPlayer.HasMoneyTransferWantedStatus() && !dbPlayer.IsMasked())
                     {
-                        TeamModule.Instance.SendMessageToTeam($"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} hat einen Einkauf getätigt! (Standort: {accessedShop.Name})", teams.TEAM_FIB, 10000, 3);
+                        TeamModule.Instance.SendMessageToTeam($"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} hat einen Einkauf getätigt! (Standort: {accessedShop.Name})", TeamTypes.TEAM_FIB, 10000, 3);
                         NSAPlayerExtension.AddTransferHistory($"{dbPlayer.GetName()} Shop {accessedShop.Name}", accessedShop.Position);
                     }
                 }

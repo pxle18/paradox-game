@@ -94,7 +94,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
 
                 if(voltage != null)
                 {
-                    if(dbPlayer.TeamId == (int)teams.TEAM_ARMY)
+                    if(dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                     {
                         // repair as army
                         Task.Run(async () =>
@@ -173,7 +173,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
             if (Configurations.Configuration.Instance.DevMode) return true;
 
             // Unter 10 Soldaten im Dienst
-            if (TeamModule.Instance.Get((uint)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 10) return false;
+            if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 10) return false;
 
             // Timecheck +- 30 min restarts
             var hour = DateTime.Now.Hour;

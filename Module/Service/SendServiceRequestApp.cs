@@ -40,31 +40,31 @@ namespace VMP_CNR.Module.Service
             {
                 case "police":
                     
-                    if (dbPlayer.IsACop() && dbPlayer.IsInDuty() && dbPlayer.TeamId != (int)teams.TEAM_GOV)
+                    if (dbPlayer.IsACop() && dbPlayer.IsInDuty() && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV)
                     {
                         return;
                     }
                     
-                    if (TeamModule.Instance[(int)teams.TEAM_POLICE].GetTeamMembers().Where(c => c.Duty).Count() 
-                        - TeamModule.Instance[(int)teams.TEAM_POLICE].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count() 
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_POLICE].GetTeamMembers().Where(c => c.Duty).Count() 
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_POLICE].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count() 
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_POLICE].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_POLICE].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
-                    if (TeamModule.Instance[(int)teams.TEAM_FIB].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_FIB].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_FIB].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_FIB].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_FIB].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_FIB].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_POLICE, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_POLICE, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_POLICE, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_POLICE, service);
 
                         dbPlayer.SetData("service", 1);
 
@@ -81,24 +81,24 @@ namespace VMP_CNR.Module.Service
                     break;
                 case "medic":
                     
-                    if(ServiceModule.Instance.IsServiceInRangeOfTeam((uint)teams.TEAM_MEDIC, dbPlayer.Player.Position))
+                    if(ServiceModule.Instance.IsServiceInRangeOfTeam((uint)TeamTypes.TEAM_MEDIC, dbPlayer.Player.Position))
                     {
                         dbPlayer.SendNewNotification("In der Nähe wurde bereits ein Notruf an das LSMC abgesendet!");
                         return;
                     }
 
-                    if (TeamModule.Instance[(int)teams.TEAM_MEDIC].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_MEDIC].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_MEDIC].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_MEDIC].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_MEDIC].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_MEDIC].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_MEDIC, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_MEDIC, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_MEDIC, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_MEDIC, service);
 
                         dbPlayer.SetData("service", 7);
 
@@ -120,18 +120,18 @@ namespace VMP_CNR.Module.Service
                         return;
                     }
 
-                    if (TeamModule.Instance[(int)teams.TEAM_DRIVINGSCHOOL].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_DRIVINGSCHOOL].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_DRIVINGSCHOOL].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_DRIVINGSCHOOL].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_DRIVINGSCHOOL].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_DRIVINGSCHOOL].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_DRIVINGSCHOOL, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_DRIVINGSCHOOL, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_DRIVINGSCHOOL, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_DRIVINGSCHOOL, service);
 
                         dbPlayer.SetData("service", 3);
 
@@ -147,18 +147,18 @@ namespace VMP_CNR.Module.Service
 
                     break;
                 case "tow":
-                    if (TeamModule.Instance[(int)teams.TEAM_DPOS].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_DPOS].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_DPOS].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_DPOS].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_DPOS].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_DPOS].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_DPOS, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_DPOS, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_DPOS, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_DPOS, service);
 
                         dbPlayer.SetData("service", 16);
 
@@ -174,18 +174,18 @@ namespace VMP_CNR.Module.Service
 
                     break;
                 case "news":
-                    if (TeamModule.Instance[(int)teams.TEAM_NEWS].GetTeamMembers().Where(c => c.AccountStatus == AccountStatus.LoggedIn).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_NEWS].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_NEWS].GetTeamMembers().Where(c => c.AccountStatus == AccountStatus.LoggedIn).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_NEWS].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_NEWS].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_NEWS].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_NEWS, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_NEWS, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_NEWS, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_NEWS, service);
 
                         dbPlayer.SetData("service", 4);
 
@@ -201,14 +201,14 @@ namespace VMP_CNR.Module.Service
 
                     break;
                 case "lsc":
-                    TeamModule.Instance[(int)teams.TEAM_LSC].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                    TeamModule.Instance[(int)TeamTypes.TEAM_LSC].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                     requestSuccess = true;
 
                     // Trzdm Prüfung weil man sonst für jeden case andere Variablen-Namen drin lassen muss. #Much
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_LSC, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_LSC, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_LSC, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_LSC, service);
 
                         dbPlayer.SetData("service", 26);
 
@@ -218,18 +218,18 @@ namespace VMP_CNR.Module.Service
 
                     break;
                 case "government":
-                    if (TeamModule.Instance[(int) teams.TEAM_GOV].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_GOV].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int) TeamTypes.TEAM_GOV].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_GOV].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int) teams.TEAM_GOV].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int) TeamTypes.TEAM_GOV].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint) teams.TEAM_GOV, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint) teams.TEAM_GOV, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint) TeamTypes.TEAM_GOV, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint) TeamTypes.TEAM_GOV, service);
 
                         dbPlayer.SetData("service", 14);
 
@@ -246,20 +246,20 @@ namespace VMP_CNR.Module.Service
                     break;
                 case "army":
 
-                    if (dbPlayer.TeamId == (int)teams.TEAM_ARMY) return;
+                    if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY) return;
 
-                    if (TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers().Where(c => c.Duty).Count()
-                        - TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers().Where(c => c.Duty).Count()
+                        - TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                         > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_ARMY].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_ARMY, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_ARMY, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_ARMY, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_ARMY, service);
 
                         dbPlayer.SetData("service", 13);
 
@@ -275,16 +275,16 @@ namespace VMP_CNR.Module.Service
 
                     break;
                 case "auction":
-                    if (TeamModule.Instance[(int)teams.TEAM_AUCTION].GetTeamMembers().Where(c => c.Duty).Count() > 0)
+                    if (TeamModule.Instance[(int)TeamTypes.TEAM_AUCTION].GetTeamMembers().Where(c => c.Duty).Count() > 0)
                     {
-                        TeamModule.Instance[(int)teams.TEAM_AUCTION].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                        TeamModule.Instance[(int)TeamTypes.TEAM_AUCTION].SendNotification($"Eine Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                         requestSuccess = true;
                     }
 
                     if (requestSuccess)
                     {
-                        Service service = new Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_AUCTION, dbPlayer, "", telnr);
-                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_AUCTION, service);
+                        Service service = new Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_AUCTION, dbPlayer, "", telnr);
+                        bool status = ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_AUCTION, service);
 
                         dbPlayer.SetData("service", 40);
 

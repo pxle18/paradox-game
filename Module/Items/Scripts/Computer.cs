@@ -17,12 +17,12 @@ namespace VMP_CNR.Module.Items.Scripts
                 Module.Menu.MenuManager.Instance.Build(VMP_CNR.Module.Menu.PlayerMenu.NSAComputerMenu, dbPlayer).Show(dbPlayer);
                 return true;
             }
-            if (dbPlayer.IsInDuty() && dbPlayer.TeamId == (uint)teams.TEAM_FIB)
+            if (dbPlayer.IsInDuty() && dbPlayer.TeamId == (uint)TeamTypes.TEAM_FIB)
             {
                 Module.Menu.MenuManager.Instance.Build(VMP_CNR.Module.Menu.PlayerMenu.NSAComputerMenu, dbPlayer).Show(dbPlayer);
                 return true;
             }
-            if ((dbPlayer.IsInDuty() && dbPlayer.Team.Id == (int)teams.TEAM_GOV))
+            if ((dbPlayer.IsInDuty() && dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV))
             {
                 Module.Menu.MenuManager.Instance.Build(VMP_CNR.Module.Menu.PlayerMenu.GOVComputerMenu, dbPlayer).Show(dbPlayer);
                 return true;

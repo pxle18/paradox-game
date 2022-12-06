@@ -135,10 +135,10 @@ namespace VMP_CNR.Module.Crime.PoliceAkten
 
             if (!dbPlayer.IsInDuty()) return false;
 
-            if (dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_FIB && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_GOV && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamRank > 6) return true;
 
             return false;
         }
@@ -148,10 +148,10 @@ namespace VMP_CNR.Module.Crime.PoliceAkten
             if (dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL) return true;
             if (!dbPlayer.IsInDuty()) return false;
 
-            if (dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_FIB && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank > 6) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_GOV && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank > 6) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamRank > 6) return true;
 
             return false;
         }
@@ -161,10 +161,10 @@ namespace VMP_CNR.Module.Crime.PoliceAkten
             if (dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL) return true;
             if (!dbPlayer.IsInDuty()) return false;
 
-            if (dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.TeamRank > 0) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_FIB && dbPlayer.TeamRank > 0) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank > 3) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_GOV && dbPlayer.TeamRank > 3) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamRank > 0) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank > 0) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank > 3) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamRank > 3) return true;
             return false;
         }
 
@@ -173,10 +173,10 @@ namespace VMP_CNR.Module.Crime.PoliceAkten
             if (dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL) return true;
             if (!dbPlayer.IsInDuty()) return false;
 
-            if (dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.TeamRank > 1) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_FIB && dbPlayer.TeamRank > 1) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank > 4) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_GOV && dbPlayer.TeamRank > 4) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamRank > 1) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank > 1) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank > 4) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamRank > 4) return true;
 
             return false;
         }
@@ -185,10 +185,10 @@ namespace VMP_CNR.Module.Crime.PoliceAkten
             if (dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL) return true;
             if (!dbPlayer.IsInDuty()) return false;
 
-            if (dbPlayer.Team.Id == (int)teams.TEAM_POLICE && dbPlayer.TeamRank > 9) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_FIB && dbPlayer.TeamRank > 9) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_ARMY && dbPlayer.TeamRank > 9) return true;
-            if (dbPlayer.Team.Id == (int)teams.TEAM_GOV && dbPlayer.TeamRank > 9) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamRank > 9) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB && dbPlayer.TeamRank > 9) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank > 9) return true;
+            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamRank > 9) return true;
 
             return false;
         }

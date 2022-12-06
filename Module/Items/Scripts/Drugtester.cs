@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static async Task<bool> DrugtestAir(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)teams.TEAM_FIB) return false;
+            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return false;
         
             if (dbPlayer.HasData("lastDrugAirUsed"))
             {

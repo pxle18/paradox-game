@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
             Teams.Team currTeam = dbPlayer.Team;
 
             // Wenn NSA Duty und IAA Garage ist...
-            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = TeamModule.Instance.Get((uint)teams.TEAM_IAA);
+            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA);
 
             return $"UPDATE `fvehicles` SET `inGarage` = '0', `lastGarage`='{garage.Id}' WHERE `inGarage` = '1' AND `id` = '{vehicleId}' AND `team` = '{currTeam.Id}';";
         }

@@ -204,7 +204,7 @@ namespace VMP_CNR.Module.Robbery
 
                     // Messages
                     TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, ein Einbruch in der Staatsbank wurde gemeldet!");
-                    TeamModule.Instance.SendMessageToTeam("Sie beginnen einen Ueberfall auf die Staatsbank!", (teams)RobberTeam.Id);
+                    TeamModule.Instance.SendMessageToTeam("Sie beginnen einen Ueberfall auf die Staatsbank!", (TeamTypes)RobberTeam.Id);
 
                     LastStaatsbank = DateTime.Now;
                     dbPlayer.SaveLastBankRobbery();
@@ -266,7 +266,7 @@ namespace VMP_CNR.Module.Robbery
         public void CancelRob()
         {
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, der Einbruch auf die Staatsbank wurde erfolgreich verhindert!");
-            TeamModule.Instance.SendMessageToTeam("Der Überfall ist gescheitert!", (teams)RobberTeam.Id);
+            TeamModule.Instance.SendMessageToTeam("Der Überfall ist gescheitert!", (TeamTypes)RobberTeam.Id);
 
             IsActive = false;
             RobberTeam = null;
@@ -289,7 +289,7 @@ namespace VMP_CNR.Module.Robbery
                     // Get Players For Respect
                     int playersAtRob = RobberTeam.GetTeamMembers().Where(m => m.Player.Position.DistanceTo(RobPosition) < 300f).Count();
                     RobberTeam.TeamMetaData.AddRespect(playersAtRob * 100);
-                    TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 100 + "P)", (teams)RobberTeam.Id);
+                    TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 100 + "P)", (TeamTypes)RobberTeam.Id);
                     
                 }
                 if(TimeLeft == 60)

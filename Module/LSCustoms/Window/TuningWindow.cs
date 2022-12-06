@@ -54,7 +54,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
                 if (!dbPlayer.HasData("tuneVeh")) return;
                 SxVehicle veh = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.GetData("tuneVeh"));
                 if (veh == null) return;
@@ -77,7 +77,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
                 if (!dbPlayer.HasData("tuneVeh")) return;
                 SxVehicle veh = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.GetData("tuneVeh"));
                 if (veh == null) return;
@@ -99,7 +99,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
                 if (!dbPlayer.HasData("tuneVeh")) return;
                 SxVehicle veh = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.GetData("tuneVeh"));
                 if (veh == null) return;
@@ -122,7 +122,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
                 if (!dbPlayer.HasData("tuneVeh")) return;
                 SxVehicle veh = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.GetData("tuneVeh"));
                 if (veh == null) return;

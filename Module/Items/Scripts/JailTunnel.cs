@@ -113,7 +113,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 dbPlayer.SendNewNotification("Du hast den Tunnel gegraben, beeil dich er ist max 2 Minuten geöffnet!");
                 //dbPlayer.SendNewNotification("Gehen zu viele Menschen durch, kann der Tunnel einbrechen!");
 
-                TeamModule.Instance.Get((int)teams.TEAM_ARMY).SendNotification("Achtung: Es wurde ein Tunnelbau im Staatsgefängnis bemerkt!");
+                TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).SendNotification("Achtung: Es wurde ein Tunnelbau im Staatsgefängnis bemerkt!");
 
                 dbPlayer.StopAnimation();
 
