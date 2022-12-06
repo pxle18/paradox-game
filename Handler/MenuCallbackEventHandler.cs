@@ -1242,7 +1242,6 @@ namespace VMP_CNR
                                 DialogMigrator.CloseUserMenu(player, Dialogs.menu_house_keller);
                                 return;
                             }
-                            break;
                         case 4:
                             if (iHouse.MoneyKeller != 1) // Ausbau auf Geldwäsche
                             {
