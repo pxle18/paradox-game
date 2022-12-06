@@ -181,7 +181,7 @@ namespace VMP_CNR.Module.Anticheat
 
 
         [RemoteEvent]
-        public void wrongScreenScale(Player player, float res, string key) 
+        public void wrongScreenScale(Player player, float res, string key) // disabled for now, remove clientside event too
         {
             /* if (!player.CheckRemoteEventKey(key)) return;
 
