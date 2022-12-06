@@ -43,9 +43,9 @@ namespace VMP_CNR.Module.Tasks
 
             if (!reader.HasRows)
             {
-                _player.SendNotification("Sie benoetigen einen Account (www.gvmp.de)! Name richtig gesetzt? Vorname_Nachname");
+                _player.SendNotification("Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
                 _player.Kick(
-                    "Sie benoetigen einen Account (www.gvmp.de)! Name richtig gesetzt? Vorname_Nachname");
+                    "Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
                 Logger.Debug($"Player was kicked, no Account found for {_player.Name}");
 
                 return;
@@ -65,7 +65,7 @@ namespace VMP_CNR.Module.Tasks
 
                     PlayerLoginDataValidationModule.SyncUserBanToForum(reader.GetInt32("forumid"));
 
-                    _player.SendNotification($"Dein GVMP (IC-)Account wurde gesperrt. Melde dich im Teamspeak!");
+                    _player.SendNotification($"Dein PARADOX (IC-)Account wurde gesperrt. Melde dich im Teamspeak!");
                     _player.Kick();
                     return;
                 }

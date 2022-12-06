@@ -240,7 +240,7 @@ namespace VMP_CNR.Module.Government.Menu
             Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                 playerToNameChange.GetName() + $"({playerToNameChange.Id}) hat den Namen zu {newName} geändert | Beamter: {dbPlayer.GetName()}");
             MySQLHandler.ExecuteAsync($"UPDATE player SET name = '{newName}' WHERE id = '{playerToNameChange.Id}'");
-            playerToNameChange.SendNewNotification($"Du hast deinen Namen erfolgreich zu {newName} geändert! Bitte beende nun das Spiel und trag deinen neuen Namen in den GVMP-Launcher ein!", PlayerNotification.NotificationType.ADMIN, duration: 30000);
+            playerToNameChange.SendNewNotification($"Du hast deinen Namen erfolgreich zu {newName} geändert! Bitte beende nun das Spiel und trag deinen neuen Namen in den RAGE-Launcher ein!", PlayerNotification.NotificationType.ADMIN, duration: 30000);
             playerToNameChange.Kick("Namensaenderung");
 
             dbPlayer.ResetData("playerToChangeNameGov");
