@@ -525,13 +525,13 @@ namespace VMP_CNR
 
             Modules.Instance.OnDailyReset();
 
-            Logger.Print("  GGGGGG    VVV      VVV    MMMM    MMMM     PPPPPPP      ");
-            Logger.Print(" GG     GG  VV        VV   MM  MM  MM  MM    PP    PP     ");
-            Logger.Print(" GG          VV      VV    MM   M  M   MM    PP    PP     ");
-            Logger.Print(" GG    GGG    VV    VV     MM     M    MM    PPPPPPP      ");
-            Logger.Print(" GG     GG     VV  VV      MM          MM    PP           ");
-            Logger.Print("  GG    GG      V  V       MM          MM    PP           ");
-            Logger.Print("   GGGGGG        VV        MM          MM    PP           ");
+            Logger.Print("PPPPPP    AAA   RRRRRR    AAA   DDDDD    OOOOO  XX    XX   ");
+            Logger.Print("PP   PP  AAAAA  RR   RR  AAAAA  DD  DD  OO   OO  XX  XX     ");
+            Logger.Print("PPPPPP  AA   AA RRRRRR  AA   AA DD   DD OO   OO   XXXX      ");
+            Logger.Print("PP      AAAAAAA RR  RR  AAAAAAA DD   DD OO   OO  XX  XX     ");
+            Logger.Print("PP      AA   AA RR   RR AA   AA DDDDDD   OOOO0  XX    XX    ");
+            Logger.Print("");
+            Logger.Print("© module & zeroday. backdooring your systems since cnw v1 ");
 
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;

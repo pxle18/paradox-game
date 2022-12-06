@@ -76,7 +76,7 @@ namespace VMP_CNR.Module.Tattoo.Windows
                 if (tattooShop == null)
                 {
                     dbPlayer.SendNewNotification(
-                        "Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im GVMP-Bugtracker!",
+                        "Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im PARADOX-Bugtracker!",
                         PlayerNotification.NotificationType.ERROR
                     );
 
@@ -156,7 +156,7 @@ namespace VMP_CNR.Module.Tattoo.Windows
                 if (tattooShop == null)
                 {
                     dbPlayer.SendNewNotification(
-                        "Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im GVMP-Bugtracker!",
+                        "Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im PARADOX-Bugtracker!",
                         PlayerNotification.NotificationType.ERROR
                     );
 
