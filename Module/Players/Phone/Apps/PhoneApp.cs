@@ -36,9 +36,7 @@ namespace VMP_CNR.Module.Players.Phone.Apps
     
     public class HomeApp : SimpleApp
     {
-        public HomeApp() : base("HomeApp")
-        {
-        }
+        public HomeApp() : base("HomeApp") { }
 
         [RemoteEvent]
         public void requestApps(Player player, string key)
@@ -47,9 +45,9 @@ namespace VMP_CNR.Module.Players.Phone.Apps
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            Logger.Print(dbPlayer.PhoneApps?.GetJson());
             TriggerNewClient(player, "responseApps", dbPlayer.PhoneApps?.GetJson());
         }
+
         [RemoteEvent]
         public void requestPhoneWallpaper(Player player, string key)
         {

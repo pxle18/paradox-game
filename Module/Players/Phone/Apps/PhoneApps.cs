@@ -100,13 +100,12 @@ namespace VMP_CNR.Module.Players.Phone.Apps
             DbPlayer dbPlayer = Players.Instance.GetByDbId(PlayerId);
             if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.phoneSetting.flugmodus)
             {
-
-                //keine SMS, Telefon app
                 var temp = Apps.Values.ToList();
                 if (dbPlayer.ActiveBusinessId != 0)
                 {
                     temp.Remove(PhoneAppsModule.Instance["BusinessApp"]);
                 }
+
                 temp.Remove(PhoneAppsModule.Instance["TelefonApp"]);
                 temp.Remove(PhoneAppsModule.Instance["MessengerApp"]);
                 temp.Remove(PhoneAppsModule.Instance["TaxiApp"]);
