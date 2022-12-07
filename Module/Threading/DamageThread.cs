@@ -14,8 +14,8 @@ namespace VMP_CNR.Module.Threading
         private DamageThread() { }
 
         private bool Started = false;
-        private ConcurrentQueue<DamageLogItem> m_PendingLogs    = new ConcurrentQueue<DamageLogItem>();
-        private ConcurrentBag<Thread> m_DamageThreads           = new ConcurrentBag<Thread>();
+        private readonly ConcurrentQueue<DamageLogItem> m_PendingLogs    = new ConcurrentQueue<DamageLogItem>();
+        private readonly ConcurrentBag<Thread> m_DamageThreads           = new ConcurrentBag<Thread>();
 
         public void InitThreads()
         {

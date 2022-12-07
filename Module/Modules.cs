@@ -165,7 +165,6 @@ namespace VMP_CNR.Module
             {
                 try
                 {
-                    //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     module.OnVehicleSpawn(sxvehicle);
                 }
                 catch (Exception e)
@@ -389,8 +388,6 @@ namespace VMP_CNR.Module
                     Logger.Print(e.Message);
                 }
             }*/
-
-
 
             Parallel.ForEach(_modules.Values, module =>
             {
