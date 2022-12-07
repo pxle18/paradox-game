@@ -218,7 +218,7 @@ namespace VMP_CNR.Module.Items
             if (!dbPlayer.RageExtension.IsInVehicle)
             {
                 SxVehicle delVeh = VehicleHandler.Instance.GetClosestVehicle(playerPosition);
-                if (delVeh != null && delVeh.entity != null && delVeh.IsValid() && !delVeh.SyncExtension.Locked && playerPosition.DistanceTo(delVeh.entity.Position) < 15.0f && playerDimension == delVeh.entity.Dimension)
+                if (delVeh != null && delVeh.Entity != null && delVeh.IsValid() && !delVeh.SyncExtension.Locked && playerPosition.DistanceTo(delVeh.Entity.Position) < 15.0f && playerDimension == delVeh.Entity.Dimension)
                 {
                     if (delVeh.TrunkStateOpen)
                     {

@@ -25,7 +25,7 @@ namespace VMP_CNR.Module.Vehicles
 
                     if (sxVehicle == null || !sxVehicle.IsValid()) return false;
 
-                    new VehicleEventHandler().handleVehicleLockOutside(dbPlayer.Player, sxVehicle.entity);
+                    new VehicleEventHandler().handleVehicleLockOutside(dbPlayer.Player, sxVehicle.Entity);
                 }
             }
             else if (key == Key.K)
@@ -40,7 +40,7 @@ namespace VMP_CNR.Module.Vehicles
 
                     if (sxVehicle == null || !sxVehicle.IsValid()) return false;
 
-                    new VehicleEventHandler().handleVehicleDoorOutside(dbPlayer.Player, sxVehicle.entity, 5);
+                    new VehicleEventHandler().handleVehicleDoorOutside(dbPlayer.Player, sxVehicle.Entity, 5);
                 }
             }
 

@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Blitzer
 
                                 // Z Koordinate < -3Blitzer (wegen Tunnel etc) oder > +10 (flugzeug bla)
                                 if (sxVeh == null || !sxVeh.IsValid() ||
-                                    sxVeh.entity.Position.Z < (xBlitzer.Position.Z - 5.0f) || sxVeh.entity.Position.Z > (xBlitzer.Position.Z + 5.0f))
+                                    sxVeh.Entity.Position.Z < (xBlitzer.Position.Z - 5.0f) || sxVeh.Entity.Position.Z > (xBlitzer.Position.Z + 5.0f))
                                 {
 
                                     dbPlayer.ResetData("inBlitzerRange");

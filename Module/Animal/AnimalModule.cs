@@ -259,12 +259,12 @@ namespace VMP_CNR.Module.Animal
                                 true, false, false, 0,
                                 l_DbPlayer.GetName(), 0, 999, (uint)l_DbPlayer.Id, 100, 1000, "", "", 0, null, null, true);
 
-                while (myveh.entity == null)
+                while (myveh.Entity == null)
                 {
                     await NAPI.Task.WaitForMainThread(100);
                 }
 
-                l_DbPlayer.Player.TriggerNewClient("testcop", l_DbPlayer.PlayerPed.Ped, myveh.entity, l_DbPlayer.Player.Position.X, l_DbPlayer.Player.Position.Y, l_DbPlayer.Player.Position.Z);
+                l_DbPlayer.Player.TriggerNewClient("testcop", l_DbPlayer.PlayerPed.Ped, myveh.Entity, l_DbPlayer.Player.Position.X, l_DbPlayer.Player.Position.Y, l_DbPlayer.Player.Position.Z);
             });
         }
 

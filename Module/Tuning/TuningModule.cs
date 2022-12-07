@@ -95,17 +95,17 @@ namespace VMP_CNR.Module.Tuning
         {
             if (type == 1337)
             {
-                NAPI.Vehicle.SetVehicleWheelType(sxVehicle.entity,mod);
+                NAPI.Vehicle.SetVehicleWheelType(sxVehicle.Entity,mod);
                 return;
             }
             if (type == 98)
             {
-                NAPI.Vehicle.SetVehiclePearlescentColor(sxVehicle.entity, mod);
+                NAPI.Vehicle.SetVehiclePearlescentColor(sxVehicle.Entity, mod);
                 return;
             }
             if (type == 99)
             {
-                NAPI.Vehicle.SetVehicleWheelColor(sxVehicle.entity, mod);
+                NAPI.Vehicle.SetVehicleWheelColor(sxVehicle.Entity, mod);
                 return;
             }
             
@@ -116,7 +116,7 @@ namespace VMP_CNR.Module.Tuning
                 return;
             }
 
-            NAPI.Vehicle.SetVehicleMod(sxVehicle.entity, type, mod);
+            NAPI.Vehicle.SetVehicleMod(sxVehicle.Entity, type, mod);
 
         }
 
@@ -125,17 +125,17 @@ namespace VMP_CNR.Module.Tuning
 
             if (type == 1337)
             {
-                NAPI.Vehicle.SetVehicleWheelType(sxVehicle.entity, -1);
+                NAPI.Vehicle.SetVehicleWheelType(sxVehicle.Entity, -1);
                 return;
             }
             if (type == 98)
             {
-                NAPI.Vehicle.SetVehiclePearlescentColor(sxVehicle.entity, 0);
+                NAPI.Vehicle.SetVehiclePearlescentColor(sxVehicle.Entity, 0);
                 return;
             }
             if (type == 99)
             {
-                NAPI.Vehicle.SetVehicleWheelColor(sxVehicle.entity, 0);
+                NAPI.Vehicle.SetVehicleWheelColor(sxVehicle.Entity, 0);
                 return;
             }
 
@@ -146,7 +146,7 @@ namespace VMP_CNR.Module.Tuning
                 return;
             }
 
-            NAPI.Vehicle.RemoveVehicleMod(sxVehicle.entity,type);
+            NAPI.Vehicle.RemoveVehicleMod(sxVehicle.Entity,type);
 
         }
 
@@ -157,8 +157,8 @@ namespace VMP_CNR.Module.Tuning
                 sxVehicle.RemoveMod((int)l_Tuning.Value.ID);
             }
             
-            sxVehicle.entity.PrimaryColor = sxVehicle.color1;
-            sxVehicle.entity.SecondaryColor = sxVehicle.color2;
+            sxVehicle.Entity.PrimaryColor = sxVehicle.color1;
+            sxVehicle.Entity.SecondaryColor = sxVehicle.color2;
         }
 
         public static void AddSavedMod(this SxVehicle sxVehicle, int type, int mod, bool sync = true)

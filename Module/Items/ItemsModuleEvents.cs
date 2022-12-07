@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Items
                 if (dbPlayer.HasData("friskInvVeh"))
                 {
                     SxVehicle vehicle = VehicleHandler.Instance.GetClosestVehicle(dbPlayer.Player.Position);
-                    if (vehicle == null || dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) > 10.0f)
+                    if (vehicle == null || dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) > 10.0f)
                     {
                         return;
                     }

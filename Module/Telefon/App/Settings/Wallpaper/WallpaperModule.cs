@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Telefon.App.Settings.Wallpaper
 
         public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
-            dbPlayer.wallpaper = Instance.Get(reader.GetUInt32("wallpaperId"));
+            dbPlayer.Wallpaper = Instance.Get(reader.GetUInt32("wallpaperId"));
         }
 
         public String getJsonWallpapersForPlayer(DbPlayer dbPlayer)

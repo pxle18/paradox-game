@@ -1091,13 +1091,13 @@ namespace VMP_CNR
                                             VehicleHandler.MaxVehicleHealth, reader.GetString("tuning"), "", 0, ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE), 
                                             WheelClamp:reader.GetInt32("WheelClamp"), AlarmSystem:reader.GetInt32("alarm_system") == 1, lastgarageId:garage.Id, container2: ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE2));
 
-                                        while (xVeh.entity == null)
+                                        while (xVeh.Entity == null)
                                         {
                                             await NAPI.Task.WaitForMainThread(100);
                                         }
 
                                         xVeh.SetTeamCarGarage(false);
-                                        return xVeh.entity;
+                                        return xVeh.Entity;
                                     }
 
                                     idx++;

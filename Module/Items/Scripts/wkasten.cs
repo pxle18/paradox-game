@@ -50,7 +50,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 dbPlayer.SetCannotInteract(true);
                 await NAPI.Task.WaitForMainThread(25000);
                 dbPlayer.SetCannotInteract(false);
-                sxVehicle.entity.NumberPlate = "";
+                sxVehicle.Entity.NumberPlate = "";
                 dbPlayer.SendNewNotification("Sie haben das Kennzeichen entfernt");
                 sxVehicle.CanInteract = true;
 
@@ -83,7 +83,7 @@ namespace VMP_CNR.Module.Items.Scripts
                         dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                         dbPlayer.StopAnimation();
 
-                        if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
+                        if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.Entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
                         {
                             if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
                             sxVehicle.WheelClamp = 0;

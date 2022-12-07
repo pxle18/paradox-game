@@ -192,7 +192,7 @@ namespace VMP_CNR.Module.Admin
 
             if (sxVehicle != null && sxVehicle.IsValid())
             {
-                l_Handler.ToggleDoorState(p_Player, sxVehicle.entity, Convert.ToUInt32(p_Door));
+                l_Handler.ToggleDoorState(p_Player, sxVehicle.Entity, Convert.ToUInt32(p_Door));
             }
         }
 
@@ -301,7 +301,7 @@ namespace VMP_CNR.Module.Admin
             if (!int.TryParse(strings[0], out int type)) return;
             if (!int.TryParse(strings[1], out int mod)) return;
 
-            NAPI.Vehicle.SetVehicleMod(sxVeh.entity, type, mod);
+            NAPI.Vehicle.SetVehicleMod(sxVeh.Entity, type, mod);
         }
 
 
@@ -322,7 +322,7 @@ namespace VMP_CNR.Module.Admin
             var sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
             if (sxVeh == null) return;
 
-            player.TriggerNewClient("livery", sxVeh.entity, liveryindexint);
+            player.TriggerNewClient("livery", sxVeh.Entity, liveryindexint);
 
         }
 
@@ -2239,7 +2239,7 @@ namespace VMP_CNR.Module.Admin
                     var vehicle =
                         VehicleHandler.Instance.GetByVehicleDatabaseId(foundPlayer.Player.Dimension);
                     if (vehicle == null) return;
-                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.entity.Position.X, vehicle.entity.Position.Y);
+                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
                 case DimensionType.Business:
                     break;
@@ -2589,7 +2589,7 @@ namespace VMP_CNR.Module.Admin
                 {
                     if (vehicle.Data.ClassificationId == (int)VehicleClassificationTypes.Helikopter || vehicle.Data.ClassificationId == (int)VehicleClassificationTypes.Flugzeug)
                     {
-                        if (vehicle.GetOccupants().IsEmpty() && vehicle.entity.Position.Z >= 100 && vehicle.LastInteracted.AddMinutes(15) < DateTime.Now)
+                        if (vehicle.GetOccupants().IsEmpty() && vehicle.Entity.Position.Z >= 100 && vehicle.LastInteracted.AddMinutes(15) < DateTime.Now)
                         {
                             possibleVehicles.Add(vehicle);
                         }
@@ -2598,7 +2598,7 @@ namespace VMP_CNR.Module.Admin
 
                 foreach (DbPlayer iPlayer in Players.Players.Instance.players.Values)
                 {
-                    possibleVehicles.RemoveAll(vehicle => vehicle.entity.Position.DistanceTo(iPlayer.Player.Position) < 20.0f);
+                    possibleVehicles.RemoveAll(vehicle => vehicle.Entity.Position.DistanceTo(iPlayer.Player.Position) < 20.0f);
                 }
 
                 foreach (SxVehicle vehicle in possibleVehicles)
@@ -2607,7 +2607,7 @@ namespace VMP_CNR.Module.Admin
                     else if (vehicle.IsTeamVehicle())
                         vehicle.SetTeamCarGarage(true);
                     else
-                        VehicleHandler.Instance.DeleteVehicleByEntity(vehicle.entity);
+                        VehicleHandler.Instance.DeleteVehicleByEntity(vehicle.Entity);
                     dbPlayer.SendNewNotification($"Fahrzeug (ID: {vehicle.databaseId}) respawnt / geloescht", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 }
             }
@@ -3007,12 +3007,12 @@ namespace VMP_CNR.Module.Admin
                     {
                         SxVehicle Sxveh = VehicleHandler.Instance.CreateServerVehicle(1237, true, dbPlayer.Player.Position, dbPlayer.Player.Rotation.Z, 131, 131, dbPlayer.Player.Dimension, true, false, false, 0, dbPlayer.GetName(), 0, 999, (uint)dbPlayer.Id, 100, 1000, "", "", 0, null, null, true);
 
-                        while (Sxveh.entity == null)
+                        while (Sxveh.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }
 
-                        Vehicle myveh = Sxveh.entity; 
+                        Vehicle myveh = Sxveh.Entity; 
                         
                         dbPlayer.SetData("guideveh", myveh);
 
@@ -3071,13 +3071,13 @@ namespace VMP_CNR.Module.Admin
                             true, false, false, 0,
                             dbPlayer.GetName(), 0, 999, (uint)dbPlayer.Id, 100, 1000, "", "", 0, null, null, true);
 
-                        while (myveh.entity == null)
+                        while (myveh.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }
-                        dbPlayer.SetData("adminveh", myveh.entity);
+                        dbPlayer.SetData("adminveh", myveh.Entity);
                         
-                        player.SetIntoVehicleSave(myveh.entity, 0);
+                        player.SetIntoVehicleSave(myveh.Entity, 0);
                     });
                 }
                 else
@@ -3979,7 +3979,7 @@ namespace VMP_CNR.Module.Admin
                 SxVehicle Vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(dbId);
                 if (Vehicle == null) return;
 
-                Vector3 _pos = Vehicle.entity.Position;
+                Vector3 _pos = Vehicle.Entity.Position;
                 if (iPlayer.RageExtension.IsInVehicle)
                 {
                     player.Vehicle.Position = _pos;
@@ -4746,7 +4746,7 @@ namespace VMP_CNR.Module.Admin
             }
             else
             {
-                vehicle.entity.Position = player.Position;
+                vehicle.Entity.Position = player.Position;
                 iPlayer.SendNewNotification("Fahrzeug mit der Nummer " + id +
                                     " teleportiert", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             }
@@ -4789,12 +4789,12 @@ namespace VMP_CNR.Module.Admin
                     player.Rotation.Z, color1, color2, iPlayer.Player.Dimension, true, false, false, 0, iPlayer.GetName(),
                     0, 999, (uint)iPlayer.Id, 200, 1000, "", "", 0, null, null, true);
 
-                    while (myveh.entity == null)
+                    while (myveh.Entity == null)
                     {
                         await NAPI.Task.WaitForMainThread(100);
                     }
 
-                    player.SetIntoVehicleSave(myveh.entity, 0);
+                    player.SetIntoVehicleSave(myveh.Entity, 0);
                 });
 
 
@@ -4859,11 +4859,11 @@ namespace VMP_CNR.Module.Admin
                     data.Id, true, new Vector3(-689.973f, 8941.77f, 320.589f),
                     180f, 0, 0, dbPlayer.Id, true, false, false, 0, dbPlayer.GetName(),
                     0, 999, (uint)dbPlayer.Id, 200, 1000, "", "", 0, null, null, true);
-                    while (Sxveh.entity == null)
+                    while (Sxveh.Entity == null)
                     {
                         await NAPI.Task.WaitForMainThread(100);
                     }
-                    Vehicle myveh = Sxveh.entity;
+                    Vehicle myveh = Sxveh.Entity;
 
                     await NAPI.Task.WaitForMainThread(2000);
                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
@@ -5041,7 +5041,7 @@ namespace VMP_CNR.Module.Admin
                 else if (delVeh.IsTeamVehicle())
                     delVeh.SetTeamCarGarage(true);
                 else
-                    VehicleHandler.Instance.DeleteVehicleByEntity(delVeh.entity);
+                    VehicleHandler.Instance.DeleteVehicleByEntity(delVeh.Entity);
                 iPlayer.SendNewNotification("Fahrzeug respawnt / geloescht", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             }
 
@@ -5136,15 +5136,15 @@ namespace VMP_CNR.Module.Admin
                         player.Position, player.Rotation.Z, 1, color, iPlayer.Player.Dimension, true, false, false, 0, iPlayer.GetName(), 0,
                         999, iPlayer.Id, 100, 1000, plate: null);
 
-                        while (myveh.entity == null)
+                        while (myveh.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }
 
                         if (myveh != null)
                         {
-                            player.SetIntoVehicleSave(myveh.entity, 0);
-                            iPlayer.SetData("adminfly", myveh.entity);
+                            player.SetIntoVehicleSave(myveh.Entity, 0);
+                            iPlayer.SetData("adminfly", myveh.Entity);
                         }
                     });
                 }
@@ -5209,15 +5209,15 @@ namespace VMP_CNR.Module.Admin
                         player.Position, player.Rotation.Z, 1, color, iPlayer.Player.Dimension, true, false, false, 0, iPlayer.GetName(), 0,
                         999, iPlayer.Id, 100, 1000, plate: null);
 
-                        while (myveh.entity == null)
+                        while (myveh.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }
 
                         if (myveh != null)
                         {
-                            player.SetIntoVehicleSave(myveh.entity, 0);
-                            iPlayer.SetData("adminfly", myveh.entity);
+                            player.SetIntoVehicleSave(myveh.Entity, 0);
+                            iPlayer.SetData("adminfly", myveh.Entity);
                         }
                     });
                     iPlayer.SendNewNotification("Sie haben ein Administrator Fahrzeug gespawnt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.SUCCESS);

@@ -43,7 +43,7 @@ namespace VMP_CNR.Module.DPOSnew
                 if (!sxVeh.Data.Model.Contains("Cargobob")) { dbPlayer.SendNewNotification("Bitte verwende einen Cargobob"); return; }
                 var catchVeh = new SxVehicle();
                 var whitelist = new List<uint> { 1, 2, 4, 5, 6, 7, 10 };
-                foreach (var veh in VehicleHandler.Instance.GetClosestVehicles(sxVeh.entity.Position,15))
+                foreach (var veh in VehicleHandler.Instance.GetClosestVehicles(sxVeh.Entity.Position,15))
                 {
                     if (whitelist.Contains(veh.Data.ClassificationId) && veh.Occupants.IsEmpty())
                     {
@@ -148,7 +148,7 @@ namespace VMP_CNR.Module.DPOSnew
             }
             else
             {
-                VehicleHandler.Instance.DeleteVehicleByEntity(Vehicle.entity);
+                VehicleHandler.Instance.DeleteVehicleByEntity(Vehicle.Entity);
                 dbPlayer.SendNewNotification("Fahrzeug wurde geborgen! (Provision 500$)");
                 dbPlayer.GiveMoney(500);
             }

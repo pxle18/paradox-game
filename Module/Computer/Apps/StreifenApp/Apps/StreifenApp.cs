@@ -146,7 +146,7 @@ namespace VMP_CNR.Module.Computer.Apps.ExportApp.Apps
                 else
                 {
                     streife.VehicleName = streifeVeh.GetName();
-                    Zone.Zone loc = ZoneModule.Instance.GetZone(streifeVeh.entity.Position);
+                    Zone.Zone loc = ZoneModule.Instance.GetZone(streifeVeh.Entity.Position);
                     if (loc != null)
                     {
                         streife.Location = loc.Name;
@@ -377,7 +377,7 @@ namespace VMP_CNR.Module.Computer.Apps.ExportApp.Apps
             SxVehicle streifeVeh = StreifenAppModule.Instance.GetVehicleByStreife(streife);
             if (streifeVeh == null || !streifeVeh.IsValid() || streifeVeh.teamid != dbPlayer.TeamId) return;
 
-            client.TriggerNewClient("setPlayerGpsMarker", streifeVeh.entity.Position.X, streifeVeh.entity.Position.Y);
+            client.TriggerNewClient("setPlayerGpsMarker", streifeVeh.Entity.Position.X, streifeVeh.Entity.Position.Y);
             dbPlayer.SendNewNotification($"Sie haben die Streife {streife.Name} geortet!");
         }
 

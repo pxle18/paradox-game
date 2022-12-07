@@ -395,7 +395,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public PhoneSetting phoneSetting { get; set; }
 
-        public Wallpaper wallpaper { get; set; }
+        public Wallpaper Wallpaper { get; set; }
         public Ringtone ringtone { get; set; }
         public List<DbPlayer> playerWhoHearRingtone { get; set; }
 

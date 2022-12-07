@@ -19,12 +19,6 @@ namespace VMP_CNR.Module.Laboratories.Menu
 
         public override Module.Menu.Menu Build(DbPlayer dbPlayer)
         {
-            if (dbPlayer.Container.GetItemAmount(976) <= 0)
-            {
-                dbPlayer.SendNewNotification("Sie benötigen ein Waffenset!");
-                return null;
-            }
-
             var menu = new Module.Menu.Menu(Menu, "Herstellung");
 
             menu.Add($"Schließen");

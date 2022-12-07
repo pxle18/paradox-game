@@ -1309,7 +1309,7 @@ namespace VMP_CNR
                             if (!dbPlayer.RageExtension.IsInVehicle) return;
                             SxVehicle playerVeh = player.Vehicle.GetVehicle();
                             if (playerVeh == null || !dbPlayer.IsOwner(playerVeh) || !playerVeh.IsValid()) return;
-                            VehicleHash model = playerVeh.entity.GetModel();
+                            VehicleHash model = playerVeh.Entity.GetModel();
                             int price = (VehicleShopModule.Instance.GetVehiclePriceFromHash(playerVeh.Data) / 100) * 20;
 
                             string newmodel = "";
@@ -1457,7 +1457,7 @@ namespace VMP_CNR
                                 uint ownerid = playerVeh.databaseId;
 
                                 // Spawn new Vehicle XX
-                                VehicleHandler.Instance.DeleteVehicleByEntity(playerVeh.entity);
+                                VehicleHandler.Instance.DeleteVehicleByEntity(playerVeh.Entity);
 
                                 try
                                 {
@@ -1489,7 +1489,7 @@ namespace VMP_CNR
 
                                                     Task.Run(async () =>
                                                     {
-                                                        while (xVeh.entity == null)
+                                                        while (xVeh.Entity == null)
                                                         {
                                                             await Task.Delay(500);
                                                         }
@@ -1497,7 +1497,7 @@ namespace VMP_CNR
 
                                                     NAPI.Task.Run(() =>
                                                     {
-                                                        xVeh.entity.NumberPlate = reader.GetString("plate");
+                                                        xVeh.Entity.NumberPlate = reader.GetString("plate");
                                                     });
                                                     break;
                                                 }
@@ -1723,7 +1723,7 @@ namespace VMP_CNR
 
                                         if (Vehicle.teamid == dbPlayer.TeamId &&
                                             Utils.IsPointNearPoint(25.0f, player.Position,
-                                                Vehicle.entity.Position))
+                                                Vehicle.Entity.Position))
                                         {
                                             string l_Name = "";
                                             if (Vehicle.Data.IsModdedCar == 1)
@@ -1747,7 +1747,7 @@ namespace VMP_CNR
                                         if (Vehicle.databaseId == 0) continue;
                                         if (dbPlayer.CanControl(Vehicle) &&
                                             Utils.IsPointNearPoint(15.0f, garage.Spawns.First().Position,
-                                                Vehicle.entity.Position))
+                                                Vehicle.Entity.Position))
                                         {
                                             string l_Name = "";
                                             if (Vehicle.Data.IsModdedCar == 1)
@@ -1815,7 +1815,7 @@ namespace VMP_CNR
                                     if (!garage.Classifications.Contains(Vehicle.Data.ClassificationId)) continue;
                                     if (garage.Classifications.Contains(Vehicle.Data.ClassificationId) &&
                                         dbPlayer.CanControl(Vehicle) &&
-                                        garage.Spawns.First().Position.DistanceTo(Vehicle.entity.Position) <= 15.0f)
+                                        garage.Spawns.First().Position.DistanceTo(Vehicle.Entity.Position) <= 15.0f)
                                     {
                                             if (idx == index - 2)
                                             {
@@ -4344,7 +4344,6 @@ namespace VMP_CNR
                                         GpsSender = true;
                                         registered = 1;
                                         plate = RegistrationOfficeFunctions.GetRandomPlate(true);
-
                                     }
 
                                     string query = String.Format(
@@ -4385,29 +4384,32 @@ namespace VMP_CNR
                                         }
                                         conn.Close();
                                     }
-
-                                    SxVehicle sxVehicle = VehicleHandler.Instance.CreateServerVehicle(Vehicle.Data.Id, false,
-                                    cShop.SpawnPosition, cShop.SpawnHeading, Vehicle.PrimaryColor,
-                                    Vehicle.SecondaryColor, 0, GpsSender, true,
-                                    false, 0,
-                                    dbPlayer.GetName(), id, 0, dbPlayer.Id, 100, VehicleHandler.MaxVehicleHealth,
-                                    "", "", 0, ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE, Vehicle.Data.InventorySize, Vehicle.Data.InventoryWeight),
-                                    plate, container2: ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE2));
-                                    dbPlayer.OwnVehicles.Add(id, Vehicle.Data.IsModdedCar == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model);
-
-                                    while (sxVehicle.entity == null)
+                                    NAPI.Task.Run(async () =>
                                     {
-                                        await Task.Delay(100);
-                                    }
+                                        SxVehicle sxVehicle = VehicleHandler.Instance.CreateServerVehicle(Vehicle.Data.Id, false,
+                                        cShop.SpawnPosition, cShop.SpawnHeading, Vehicle.PrimaryColor,
+                                        Vehicle.SecondaryColor, 0, GpsSender, true,
+                                        false, 0,
+                                        "", id, 0, dbPlayer.Id, 100, VehicleHandler.MaxVehicleHealth,
+                                        "", "", 0, ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE, Vehicle.Data.InventorySize, Vehicle.Data.InventoryWeight),
+                                        plate, container2: ContainerManager.LoadContainer(id, ContainerTypes.VEHICLE2));
 
-                                    if (cShop.Id != 12)
-                                    {
-                                        RegistrationOfficeFunctions.GiveVehicleContract(dbPlayer, sxVehicle, "Fahrzeugshop " + cShop.Description);
-                                    }
-                                    else
-                                    {
-                                        RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVehicle, dbPlayer, dbPlayer, plate, true);
-                                    }
+                                        while (sxVehicle.Entity == null)
+                                        {
+                                            await NAPI.Task.WaitForMainThread(100);
+                                        }
+
+                                        dbPlayer.OwnVehicles.Add(id, Vehicle.Data.IsModdedCar == 1 ? Vehicle.Data.mod_car_name : Vehicle.Data.Model);
+
+                                        if (cShop.Id != 12)
+                                        {
+                                            RegistrationOfficeFunctions.GiveVehicleContract(dbPlayer, sxVehicle, "Fahrzeugshop " + cShop.Description);
+                                        }
+                                        else
+                                        {
+                                            RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVehicle, dbPlayer, dbPlayer, plate, true);
+                                        }
+                                    });
 
                                     dbPlayer.Save();
                                 });

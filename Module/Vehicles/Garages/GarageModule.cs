@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
 
                         if (garage.Classifications.Contains(sxVehicle.Data.ClassificationId))
                         {
-                            if (sxVehicle.entity.Position.DistanceTo(garage.Position) < 100.0f)
+                            if (sxVehicle.Entity.Position.DistanceTo(garage.Position) < 100.0f)
                             {
                                 //einparken
                                 if (sxVehicle.IsTeamVehicle())
@@ -86,7 +86,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                             
                             if (garage.Classifications.Contains(sxVehicle.Data.ClassificationId))
                             {
-                                if (sxVehicle.entity.Position.DistanceTo(garage.Position) < 50.0f)
+                                if (sxVehicle.Entity.Position.DistanceTo(garage.Position) < 50.0f)
                                 {
                                     //einparken
                                     sxVehicle.SetPrivateCarGarage(1, garage.Id);

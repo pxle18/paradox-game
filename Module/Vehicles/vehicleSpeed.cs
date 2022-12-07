@@ -11,7 +11,7 @@ namespace VMP_CNR.Module.Vehicles
 
         public static int GetSpeed(this SxVehicle sxVeh)
         {
-            var velocity = NAPI.Entity.GetEntityVelocity(sxVeh.entity);
+            var velocity = NAPI.Entity.GetEntityVelocity(sxVeh.Entity);
             var speed = Math.Sqrt(
                 velocity.X * velocity.X +
                 velocity.Y * velocity.Y +

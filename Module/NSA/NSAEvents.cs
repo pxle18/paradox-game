@@ -378,8 +378,8 @@ namespace VMP_CNR.Module.NSA
             sxVehicle.color1 = color1;
             sxVehicle.color2 = color2;
 
-            sxVehicle.entity.PrimaryColor = color1;
-            sxVehicle.entity.SecondaryColor = color2;
+            sxVehicle.Entity.PrimaryColor = color1;
+            sxVehicle.Entity.SecondaryColor = color2;
 
             dbPlayer.SendNewNotification($"Fahrzeugfarbe auf {color1} {color2} geändert!");
             return;
@@ -402,7 +402,7 @@ namespace VMP_CNR.Module.NSA
             
             sxVehicle.plate = returnstring;
 
-            sxVehicle.entity.NumberPlate = returnstring;
+            sxVehicle.Entity.NumberPlate = returnstring;
 
             dbPlayer.SendNewNotification($"Kennzeichen auf {returnstring} geändert!");
             return;

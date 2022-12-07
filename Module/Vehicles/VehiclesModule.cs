@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Vehicles
                                         if (xVeh == null)
                                             continue;
 
-                                        while (xVeh.entity == null)
+                                        while (xVeh.Entity == null)
                                         {
                                             await NAPI.Task.WaitForMainThread(100);
                                         }
@@ -201,7 +201,7 @@ namespace VMP_CNR.Module.Vehicles
 
                                     await NAPI.Task.WaitForMainThread(3000);
                                     
-                                    if (sxVeh != null && sxVeh.entity != null)
+                                    if (sxVeh != null && sxVeh.Entity != null)
                                     {
                                         await Task.Delay(5);
                                         sxVeh.Save(false, 0, garage.Id);
@@ -269,17 +269,17 @@ namespace VMP_CNR.Module.Vehicles
 
             if (sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 9)
             {
-                if (sxVehicle.teamid != 13 && sxVehicle.entity.Position.DistanceTo(AntiFlightZonePrison) < 200) return true; // Heli, Planes in Flightzoneprison
+                if (sxVehicle.teamid != 13 && sxVehicle.Entity.Position.DistanceTo(AntiFlightZonePrison) < 200) return true; // Heli, Planes in Flightzoneprison
             }
 
             if ((sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 9) && sxVehicle.teamid != (uint)TeamTypes.TEAM_CAYO)
             {
-                if (sxVehicle.teamid != 13 && sxVehicle.entity.Position.DistanceTo(AntiFlightZoneCayoPerico) < 800) return true; // Heli, Planes in Flightzoneprison
+                if (sxVehicle.teamid != 13 && sxVehicle.Entity.Position.DistanceTo(AntiFlightZoneCayoPerico) < 800) return true; // Heli, Planes in Flightzoneprison
             }
 
             if (sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 3)
             {
-                if (sxVehicle.entity.Position.DistanceTo(AntiFlightZoneIsland) < 400) return true; // Heli, Boote in FlightIsland
+                if (sxVehicle.Entity.Position.DistanceTo(AntiFlightZoneIsland) < 400) return true; // Heli, Boote in FlightIsland
             }
 
             return false;

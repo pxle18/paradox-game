@@ -2987,7 +2987,7 @@ namespace VMP_CNR.Module.Players
                     DbPlayer vehOwner = Players.Instance.GetByDbId(sxVeh.ownerId);
                     if (vehOwner == null || !vehOwner.IsValid()) return;
 
-                    if(vehOwner.Player.Position.DistanceTo(sxVeh.entity.Position) > 10.0f)
+                    if(vehOwner.Player.Position.DistanceTo(sxVeh.Entity.Position) > 10.0f)
                     {
                         dbPlayer.SendNewNotification(
                             "Besitzer muss in der Nähe des Fahrzeuges sein!");
@@ -3246,7 +3246,7 @@ namespace VMP_CNR.Module.Players
             dbPlayer.SetData("hornCar", 1);
             dbPlayer.SetData("n_horn", horn);
 
-            sxVeh.entity.SetMod(14, horn);
+            sxVeh.Entity.SetMod(14, horn);
 
             dbPlayer.SendNewNotification(
                 "Sie haben die Hupe (ID " + horn + ") eingebaut!");
@@ -3379,7 +3379,7 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    if (!Owner.IsOwner(vehicle) || Owner.Player.Vehicle != vehicle.entity
+                    if (!Owner.IsOwner(vehicle) || Owner.Player.Vehicle != vehicle.Entity
                                                 || vehicle.teamid >= 1
                                                 || Owner.CurrentSeat != 0) return;
 
@@ -3869,7 +3869,7 @@ namespace VMP_CNR.Module.Players
                     foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
                     {
                         if (vehicle == null) continue;
-                        if (!(dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= 10.0f)) continue;
+                        if (!(dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= 10.0f)) continue;
                         if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
 
                         if (vehicle.Registered)
@@ -3933,7 +3933,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.RageExtension.IsInVehicle || dbPlayer.Player.VehicleSeat == 0) return;
             var vehicle = dbPlayer.Player.Vehicle.GetVehicle();
-            if (vehicle.entity.GetModel() != VehicleHash.Taxi) return;
+            if (vehicle.Entity.GetModel() != VehicleHash.Taxi) return;
             if (vehicle.ownerId != dbPlayer.Id) return;
 
             if (!int.TryParse(price, out var priceInt))
@@ -3962,7 +3962,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.RageExtension.IsInVehicle || dbPlayer.Player.VehicleSeat == 0) return;
             var vehicle = dbPlayer.Player.Vehicle.GetVehicle();
-            if (vehicle.entity.GetModel() != VehicleHash.Taxi) return;
+            if (vehicle.Entity.GetModel() != VehicleHash.Taxi) return;
             if (vehicle.ownerId != dbPlayer.Id) return;
             dbPlayer.SendNewNotification("Taxometer gestoppt.");
             dbPlayer.Player.TriggerNewClient("stopTaxometer");

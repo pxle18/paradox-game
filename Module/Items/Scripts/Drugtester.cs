@@ -41,7 +41,7 @@ namespace VMP_CNR.Module.Items.Scripts
             foreach (SxVehicle sxvehicle in HeroinModule.CookingVehicles.ToList())
             {
                 if (sxvehicle == null || !sxvehicle.IsValid()) continue;
-                float Distance = dbPlayer.Player.Position.DistanceTo(sxvehicle.entity.Position);
+                float Distance = dbPlayer.Player.Position.DistanceTo(sxvehicle.Entity.Position);
                 if (Distance < HeroinModule.CamperDrugAirRange)
                 {
                     // get percent

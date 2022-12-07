@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.Items;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Teams;
@@ -34,6 +35,8 @@ namespace VMP_CNR.Module.MAZ
         protected override void OnItemLoad(MAZ u)
         {
             NAPI.World.RemoveIpl(u.DlcName);
+            Logger.Print(u.DlcName);
+
             base.OnItemLoad(u);
         }
 

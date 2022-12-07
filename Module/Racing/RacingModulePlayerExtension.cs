@@ -82,12 +82,12 @@ namespace VMP_CNR.Module.Racing
                 spawnPosition, RacingModule.BoxVehHeading, Main.rndColor(),
                 Main.rndColor(), racingLobby.RacingDimension, true, true, false, 0, dbPlayer.GetName(), 0, 999, dbPlayer.Id);
 
-            while (sxVehicle.entity == null)
+            while (sxVehicle.Entity == null)
             {
                 await NAPI.Task.WaitForMainThread(100);
             }
 
-            if (sxVehicle != null && sxVehicle.entity != null) dbPlayer.Player.SetIntoVehicleSave(sxVehicle.entity, 0);
+            if (sxVehicle != null && sxVehicle.Entity != null) dbPlayer.Player.SetIntoVehicleSave(sxVehicle.Entity, 0);
 
             racingLobby.RacingVehicles.Add(sxVehicle);
 

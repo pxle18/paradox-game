@@ -193,13 +193,13 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.Scooter
                 if (kvp.Value == null) continue;
 
 
-                if (kvp.Value.sxVehicle == null  || !kvp.Value.sxVehicle.IsValid() ||  kvp.Value.sxVehicle.entity == null)
+                if (kvp.Value.sxVehicle == null  || !kvp.Value.sxVehicle.IsValid() ||  kvp.Value.sxVehicle.Entity == null)
                 {
                     NAPI.Task.Run(async () =>
                     {
                         Scooters[kvp.Key].sxVehicle = VehicleHandler.Instance.CreateServerVehicle(866, false, Scooters[kvp.Key].SpawnPos, Scooters[kvp.Key].SpawnRot, -1, -1, 0, false, false, true);
 
-                        while (Scooters[kvp.Key].sxVehicle.entity == null)
+                        while (Scooters[kvp.Key].sxVehicle.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }
@@ -210,7 +210,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.Scooter
                 }
                 else
                 {
-                    if(kvp.Value.sxVehicle.entity.Position.DistanceTo(kvp.Value.SpawnPos) > 80)
+                    if(kvp.Value.sxVehicle.Entity.Position.DistanceTo(kvp.Value.SpawnPos) > 80)
                     {
                         VehicleHandler.Instance.DeleteVehicle(kvp.Value.sxVehicle, false);
                         continue;

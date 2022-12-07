@@ -82,8 +82,8 @@ namespace VMP_CNR.Module.Meth
                     Logger.Crash(e);
                 }
 
-                dbPlayer.Player.SetPosition(new Vector3(sxVehicle.entity.Position.X + 3, sxVehicle.entity.Position.Y,
-                    sxVehicle.entity.Position.Z));
+                dbPlayer.Player.SetPosition(new Vector3(sxVehicle.Entity.Position.X + 3, sxVehicle.Entity.Position.Y,
+                    sxVehicle.Entity.Position.Z));
             }
         }
 
@@ -139,9 +139,9 @@ namespace VMP_CNR.Module.Meth
                                 sendMethVehs.Add(journeyDbId);
                                 var sxveh =
                                     VehicleHandler.Instance.GetByVehicleDatabaseId(journeyDbId);
-                                if (sxveh != null && sxveh.entity != null)
+                                if (sxveh != null && sxveh.Entity != null)
                                 {
-                                    Messages.Add(sxveh.entity.Position, "1337Allahuakbar$explode");
+                                    Messages.Add(sxveh.Entity.Position, "1337Allahuakbar$explode");
                                 }
                             }
                         }
@@ -183,7 +183,7 @@ namespace VMP_CNR.Module.Meth
                                     var sxveh =
                                         VehicleHandler.Instance.GetByVehicleDatabaseId(journeyDbId);
                                     
-                                    if (sxveh != null && sxveh.entity != null)
+                                    if (sxveh != null && sxveh.Entity != null)
                                     {
                                         if (!CookingVehicles.Contains(sxveh)) CookingVehicles.Add(sxveh);
                                     }
@@ -231,8 +231,8 @@ namespace VMP_CNR.Module.Meth
                         sxVeh = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.Player.Dimension);
                         if (sxVeh == null) return false;
                         if (sxVeh.SyncExtension.Locked) return false;
-                        if (sxVeh.entity.Model != (uint) VehicleHash.Journey &&
-                            sxVeh.entity.Model != (uint) VehicleHash.Camper)
+                        if (sxVeh.Entity.Model != (uint) VehicleHash.Journey &&
+                            sxVeh.Entity.Model != (uint) VehicleHash.Camper)
 
                             if (sxVeh.Visitors.Contains(dbPlayer))
                                 sxVeh.Visitors.Remove(dbPlayer);
@@ -248,8 +248,8 @@ namespace VMP_CNR.Module.Meth
                         if (CookingPlayers.Contains(dbPlayer)) CookingPlayers.Remove(dbPlayer);
 
                         
-                        dbPlayer.Player.SetPosition(new Vector3(sxVeh.entity.Position.X + 3.0f, sxVeh.entity.Position.Y,
-                            sxVeh.entity.Position.Z + 0.5f));
+                        dbPlayer.Player.SetPosition(new Vector3(sxVeh.Entity.Position.X + 3.0f, sxVeh.Entity.Position.Y,
+                            sxVeh.Entity.Position.Z + 0.5f));
                         dbPlayer.ResetData("CamperEnterPos");
                         return true;
                     }
@@ -257,8 +257,8 @@ namespace VMP_CNR.Module.Meth
                     sxVeh = VehicleHandler.Instance.GetClosestVehicle(dbPlayer.Player.Position);
 
                     if (sxVeh == null || sxVeh.databaseId == 0) return false;
-                    if (sxVeh.entity.Model != (uint) VehicleHash.Journey &&
-                        sxVeh.entity.Model != (uint) VehicleHash.Camper)
+                    if (sxVeh.Entity.Model != (uint) VehicleHash.Journey &&
+                        sxVeh.Entity.Model != (uint) VehicleHash.Camper)
                         return false;
                     if (sxVeh.SyncExtension.Locked) return false;
                     

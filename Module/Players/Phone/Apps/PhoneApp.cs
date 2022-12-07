@@ -54,11 +54,12 @@ namespace VMP_CNR.Module.Players.Phone.Apps
         public void requestPhoneWallpaper(Player player, string key)
         {
             if (!player.CheckRemoteEventKey(key)) return;
+
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            Logger.Print("Wallpaper: " + dbPlayer.wallpaper.File);
-            TriggerNewClient(player, "responsePhoneWallpaper", dbPlayer.wallpaper.File);
+            if (dbPlayer.Wallpaper == null) return;
+            TriggerNewClient(player, "responsePhoneWallpaper", dbPlayer.Wallpaper.File);
         }
 
     }

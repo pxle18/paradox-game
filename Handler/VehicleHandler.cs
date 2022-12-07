@@ -222,7 +222,7 @@ namespace VMP_CNR.Handler
         {
             try
             {
-                return SxVehicles.Values.ToList().Where(sx => sx != null && sx.IsValid() && sx.jobid != 0 && sx.entity.Position.DistanceTo(positon) < range);
+                return SxVehicles.Values.ToList().Where(sx => sx != null && sx.IsValid() && sx.jobid != 0 && sx.Entity.Position.DistanceTo(positon) < range);
             }
             catch (Exception e)
             {
@@ -255,7 +255,7 @@ namespace VMP_CNR.Handler
         {
             try
             {
-                return GetAllVehicles().Where(sx => sx.IsValid() && sx.entity.Position.DistanceTo(dbPlayer.Player.Position) < range && dbPlayer.CanControl(sx)).ToList();
+                return GetAllVehicles().Where(sx => sx.IsValid() && sx.Entity.Position.DistanceTo(dbPlayer.Player.Position) < range && dbPlayer.CanControl(sx)).ToList();
             }
             catch (Exception e)
             {
@@ -282,9 +282,9 @@ namespace VMP_CNR.Handler
 
             foreach (var vehicle in GetAllVehicles())
             {
-                if (vehicle.entity == null || vehicle.entity.Dimension != dimension) continue;
+                if (vehicle.Entity == null || vehicle.Entity.Dimension != dimension) continue;
 
-                var _range = vehicle.entity.Position.DistanceTo(position);
+                var _range = vehicle.Entity.Position.DistanceTo(position);
 
                 if (_range <= range && !dictionary.ContainsKey(_range))
                 {
@@ -302,7 +302,7 @@ namespace VMP_CNR.Handler
         {
             try
             {
-                return GetAllVehicles().Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range).ToList();
+                return GetAllVehicles().Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
             }
             catch (Exception e)
             {
@@ -315,7 +315,7 @@ namespace VMP_CNR.Handler
         {
             try
             {
-                return GetAllTeamVehicles().Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range).ToList();
+                return GetAllTeamVehicles().Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
             }
             catch (Exception e)
             {
@@ -345,7 +345,7 @@ namespace VMP_CNR.Handler
         {
             try
             {
-                IEnumerable<SxVehicle> sxVehicleList = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range);
+                IEnumerable<SxVehicle> sxVehicleList = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range);
                 return sxVehicleList.Count() > 0 ? sxVehicleList.FirstOrDefault() : null;
             }
             catch(Exception e)
@@ -358,21 +358,21 @@ namespace VMP_CNR.Handler
         public List<SxVehicle> GetClosestVehiclesFromTeam(Vector3 position, int teamid, float range = 4.0f)
         {
             List<SxVehicle> sxVehicles = new List<SxVehicle>();
-            sxVehicles = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range).ToList();
+            sxVehicles = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
             return sxVehicles;
         }
 
         public List<SxVehicle> GetClosestPlanningVehiclesFromTeam(Vector3 position, int teamid, float range = 4.0f)
         {
             List<SxVehicle> sxVehicles = new List<SxVehicle>();
-            sxVehicles = GetTeamPlanningVehicles((uint)teamid).Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range).ToList();
+            sxVehicles = GetTeamPlanningVehicles((uint)teamid).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
             return sxVehicles;
         }
 
         public List<SxVehicle> GetClosestVehiclesFromTeamWithContainerOpen(Vector3 position, int teamid, float range = 8.0f)
         {
             List<SxVehicle> sxVehicles = new List<SxVehicle>();
-            sxVehicles = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.entity.Position.DistanceTo(position) <= range && !sxVeh.SyncExtension.Locked && sxVeh.TrunkStateOpen).ToList();
+            sxVehicles = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range && !sxVeh.SyncExtension.Locked && sxVeh.TrunkStateOpen).ToList();
             return sxVehicles;
         }
 
@@ -383,14 +383,14 @@ namespace VMP_CNR.Handler
                 IEnumerable<SxVehicle> sxVehicleList = GetClosestVehiclesFromTeam(position, teamid, range);
                 if (sxVehicleList.Count() == 0) return null;
                 SxVehicle sxVehicle = sxVehicleList.FirstOrDefault();
-                var pos = sxVehicle.entity.Position.DistanceTo(position);
+                var pos = sxVehicle.Entity.Position.DistanceTo(position);
                 foreach(var sx in sxVehicleList)
                 {
-                    if (sx.entity.GetNextFreeSeat() == -2) continue;
+                    if (sx.Entity.GetNextFreeSeat() == -2) continue;
                     if (sx.Data.Slots < seats) continue;
-                    if(pos > sx.entity.Position.DistanceTo(position))
+                    if(pos > sx.Entity.Position.DistanceTo(position))
                     {
-                        pos = sx.entity.Position.DistanceTo(position);
+                        pos = sx.Entity.Position.DistanceTo(position);
                         sxVehicle = sx;
                     }
                 }
@@ -425,7 +425,7 @@ namespace VMP_CNR.Handler
                 {
                     if (sxVehicle.Occupants.IsSeatFree(key))
                     {
-                        dbPlayer.Player.SetIntoVehicleSave(sxVehicle.entity, key);
+                        dbPlayer.Player.SetIntoVehicleSave(sxVehicle.Entity, key);
                         return true;
                     }
                     key++;
@@ -448,7 +448,7 @@ namespace VMP_CNR.Handler
                 {
                     if (sxVehicle.Occupants.IsSeatFree(key))
                     {
-                        dbPlayer.Player.SetIntoVehicleSave(sxVehicle.entity, key);
+                        dbPlayer.Player.SetIntoVehicleSave(sxVehicle.Entity, key);
                         return true;
                     }
                     key++;
@@ -501,18 +501,18 @@ namespace VMP_CNR.Handler
                 if (data.Hash < 0)
                 {
                     int.TryParse(data.Hash.ToString(), out int l_IntHash);
-                    xVeh.entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
                 }
                 else
                 {
                     uint.TryParse(data.Hash.ToString(), out uint l_IntHash);
-                    xVeh.entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
                 }
             }
             else
             {
                 var l_Hash = NAPI.Util.GetHashKey(data.Model);
-                xVeh.entity = NAPI.Vehicle.CreateVehicle(l_Hash, pos, rotation, color1, color2);
+                xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_Hash, pos, rotation, color1, color2);
             }
 
 
@@ -537,7 +537,7 @@ namespace VMP_CNR.Handler
             xVeh.GpsTracker = gpsTracker;
             xVeh.Undercover = false;
             xVeh.Registered = registered;
-            xVeh.entity.NumberPlateStyle = 1;
+            xVeh.Entity.NumberPlateStyle = 1;
             xVeh.SirensActive = false;
 
             xVeh.SpawnTime = DateTime.Now;
@@ -630,7 +630,7 @@ namespace VMP_CNR.Handler
 
             Task.Run(async () =>
             {
-                while (xVeh.entity == null)
+                while (xVeh.Entity == null)
                 {
                     await Task.Delay(50);
                 }
@@ -641,11 +641,11 @@ namespace VMP_CNR.Handler
                 try
                 {
                     // Do entity Stuff here...
-                    xVeh.entity.SetData("vehicle", xVeh);
+                    xVeh.Entity.SetData("vehicle", xVeh);
 
-                    xVeh.entity.Dimension = dimension;
+                    xVeh.Entity.Dimension = dimension;
 
-                    xVeh.SyncExtension = new VehicleEntitySyncExtension(xVeh.entity, spawnClosed, !engineOff);
+                    xVeh.SyncExtension = new VehicleEntitySyncExtension(xVeh.Entity, spawnClosed, !engineOff);
 
 
                     if (engineOff)
@@ -680,14 +680,14 @@ namespace VMP_CNR.Handler
 
                             var secondLetter = crumbs[1][0].ToString();
 
-                            xVeh.entity.NumberPlate = firstLetter + secondLetter + " " + PlayerNameModule.Instance.Get(ownerId).ForumId;
+                            xVeh.Entity.NumberPlate = firstLetter + secondLetter + " " + PlayerNameModule.Instance.Get(ownerId).ForumId;
 
                             xVeh.plate = plate;
                         }
                     }
                     else
                     {
-                        xVeh.entity.NumberPlate = plate;
+                        xVeh.Entity.NumberPlate = plate;
                         xVeh.plate = plate;
                     }
 
@@ -695,15 +695,15 @@ namespace VMP_CNR.Handler
                     {
                         for (var i = 0; i < 7; i++)
                         {
-                            xVeh.entity.SetExtra(i, false);
+                            xVeh.Entity.SetExtra(i, false);
                         }
 
-                        xVeh.entity.SetExtra(1, true);
+                        xVeh.Entity.SetExtra(1, true);
                     }
 
                     // Set Anticheat Data
-                    xVeh.entity.SetData<string>("serverhash", "1312asdbncawssd1ccbSh1");
-                    xVeh.entity.SetData<Vector3>("lastSavedPos", xVeh.entity.Position);
+                    xVeh.Entity.SetData<string>("serverhash", "1312asdbncawssd1ccbSh1");
+                    xVeh.Entity.SetData<Vector3>("lastSavedPos", xVeh.Entity.Position);
 
                     if (xVeh.Undercover)
                     {
@@ -713,17 +713,17 @@ namespace VMP_CNR.Handler
                             var color = l_Rand.Next(0, 150);
                             xVeh.color1 = color;
                             xVeh.color2 = color;
-                            xVeh.entity.PrimaryColor = color;
-                            xVeh.entity.SecondaryColor = color;
+                            xVeh.Entity.PrimaryColor = color;
+                            xVeh.Entity.SecondaryColor = color;
                         }
 
                         xVeh.Distance = l_Rand.Next(2000, 3000);
 
                         var l_ID = l_Rand.Next(630000, 650000);
-                        xVeh.entity.SetData<int>("nsa_veh_id", l_ID);
+                        xVeh.Entity.SetData<int>("nsa_veh_id", l_ID);
 
                         l_ID = l_Rand.Next(60000, 90000);
-                        xVeh.entity.NumberPlate = RegistrationOfficeFunctions.GetRandomPlate(true);
+                        xVeh.Entity.NumberPlate = RegistrationOfficeFunctions.GetRandomPlate(true);
                     }
 
                     //xVeh.entity.SetSharedData("silentMode", false);
@@ -738,8 +738,8 @@ namespace VMP_CNR.Handler
             {
                 NAPI.Task.Run(() =>
                 {
-                    NAPI.Entity.SetEntityPosition(xVeh.entity, pos);
-                    NAPI.Entity.SetEntityRotation(xVeh.entity, new Vector3(0, 0, rotation));
+                    NAPI.Entity.SetEntityPosition(xVeh.Entity, pos);
+                    NAPI.Entity.SetEntityRotation(xVeh.Entity, new Vector3(0, 0, rotation));
                     xVeh.Repair();
                 }, 500);
             }
@@ -822,7 +822,7 @@ namespace VMP_CNR.Handler
             // last we delete the entity ( do it safely )
             try
             {
-                if (vehicle != null && vehicle.entity != null) vehicle.entity.DeleteVehicle();
+                if (vehicle != null && vehicle.Entity != null) vehicle.Entity.DeleteVehicle();
                 vehicle = null;
                 sxVehicle = null;
             }
@@ -868,7 +868,7 @@ namespace VMP_CNR.Handler
     public class SxVehicle
     {
         public uint uniqueServerId { get; set; }
-        public Vehicle entity { get; set; }
+        public Vehicle Entity { get; set; }
         public Vector3 spawnPos { get; set; }
         public float spawnRot { get; set; }
         public double fuel { get; set; }
@@ -949,7 +949,7 @@ namespace VMP_CNR.Handler
 
         public bool IsTrunkOpen()
         {
-            if (entity == null) return false;
+            if (Entity == null) return false;
             return TrunkStateOpen;
         }
 

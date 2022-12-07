@@ -36,7 +36,7 @@ namespace VMP_CNR.Module
             }
             catch (Exception e)
             {
-                Logger.Crash(e);
+                Logger.Print("SqlBaseModule: " + e.StackTrace + " " + e.Message);
             }
 
             return true;
@@ -52,7 +52,7 @@ namespace VMP_CNR.Module
 
         protected virtual void OnLoaded()
         {
-            Logging.Logger.Debug("Loaded Module " + this.ToString());
+            Logging.Logger.Debug("Loaded SqlModule " + this.ToString());
         }
 
         internal void Execute(string tableName, params object[] data)

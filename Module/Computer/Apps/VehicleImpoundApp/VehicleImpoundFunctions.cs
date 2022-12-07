@@ -101,7 +101,7 @@ namespace VMP_CNR.Module.Computer.Apps.VehicleImpoundApp
             {
                 sxVehicle.SetTeamCarGarage(true);
             }
-            VehicleHandler.Instance.DeleteVehicleByEntity(sxVehicle.entity);
+            VehicleHandler.Instance.DeleteVehicleByEntity(sxVehicle.Entity);
             dbPlayer.SendNewNotification(
                 "Fahrzeug wurde verwahrt! (Provision 1000$)");
             dbPlayer.GiveMoney(1000);

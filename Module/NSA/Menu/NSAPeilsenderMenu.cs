@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.NSA.Menu
                             dbPlayer.SetData("nsaPeilsenderOrtung", (uint)nSAPeilsender.VehicleId);
 
                             // Orten
-                            dbPlayer.Player.TriggerNewClient("setPlayerGpsMarker", sxVeh.entity.Position.X, sxVeh.entity.Position.Y);
+                            dbPlayer.Player.TriggerNewClient("setPlayerGpsMarker", sxVeh.Entity.Position.X, sxVeh.Entity.Position.Y);
                             dbPlayer.SendNewNotification("Peilsender geortet!");
                             return true;
                         }

@@ -54,12 +54,12 @@ namespace VMP_CNR
                                     MowerModule.MowerSpawnPoint, MowerModule.MowerSpawnRotation, Main.rndColor(),
                                     Main.rndColor(), 0, true, true, false, 0, dbPlayer.GetName(), 0, MowerModule.MowerJobVehMarkId, dbPlayer.Id);
 
-                                while (xVeh.entity == null)
+                                while (xVeh.Entity == null)
                                 {
                                     await NAPI.Task.WaitForMainThread(100);
                                 }
 
-                                xVeh.entity.SetData<int>("loadage", 0);
+                                xVeh.Entity.SetData<int>("loadage", 0);
                                 MowerModule.PlayersInJob.Add(dbPlayer);
                                 dbPlayer.SendNewNotification("Ihr Fahrzeug steht bereit, maehen sie den Rasen!");
 
@@ -71,7 +71,7 @@ namespace VMP_CNR
                         SxVehicle sxVehicle = dbPlayer.GetJobVehicle(MowerModule.MowerJobVehMarkId);
                         if(sxVehicle != null)
                         {
-                            if(!sxVehicle.entity.HasData("loadage"))
+                            if(!sxVehicle.Entity.HasData("loadage"))
                             {
                                 dbPlayer.SendNewNotification($"Du hast keinen Rasenschnitt in deinem Mäher, daher gibts auch kein Geld!");
                                 MowerModule.PlayersInJob.Remove(dbPlayer);
@@ -79,7 +79,7 @@ namespace VMP_CNR
                                 return true;
                             }
 
-                            int loadage = sxVehicle.entity.GetData<int>("loadage");
+                            int loadage = sxVehicle.Entity.GetData<int>("loadage");
                             int verdienst = loadage * 10;
 
                             VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);

@@ -75,7 +75,7 @@ namespace VMP_CNR.Module.Sync
 
                 foreach (SxVehicle sxVeh in VehicleHandler.Instance.GetAllVehicles())
                 {
-                    if (sxVeh == null || sxVeh.entity == null) continue;
+                    if (sxVeh == null || sxVeh.Entity == null) continue;
 
                     var occupants = sxVeh.GetOccupants();
 
@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Sync
                      * Wenn der InteractionState 180 Minuten (je nachdem, siehe Code) auf false ist, das Fahrzeug leer und nicht aufgeladen ist, wird das Fahrzeug eingeparkt
                      * Richtig so? I hope.
                      */
-                    if (!sxVeh.respawnInteractionState && occupants.IsEmpty() && !sxVeh.entity.HasData("isLoaded"))
+                    if (!sxVeh.respawnInteractionState && occupants.IsEmpty() && !sxVeh.Entity.HasData("isLoaded"))
                     {
                         sxVeh.respawnInterval++;
                         if ((sxVeh.respawnInterval >= 180 && sxVeh.IsPlayerVehicle()) /*|| (sxVeh.respawnInterval >= 300 && sxVeh.IsTeamVehicle())*/ || (sxVeh.respawnInterval >= 10 && sxVeh.jobid > 0))
@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Sync
                             CheckDeletion(sxVeh);
                         }
                     }
-                    else if (sxVeh.respawnInteractionState && occupants.IsEmpty() && !sxVeh.entity.HasData("isLoaded"))
+                    else if (sxVeh.respawnInteractionState && occupants.IsEmpty() && !sxVeh.Entity.HasData("isLoaded"))
                     {
                         sxVeh.respawnInterval = 0;
                         sxVeh.respawnInteractionState = false;
@@ -140,7 +140,7 @@ namespace VMP_CNR.Module.Sync
                     {
                         if (!vehicle.IsInAntiFlight()) continue;
 
-                        vehicle.entity.Locked = true;
+                        vehicle.Entity.Locked = true;
                         
                         if(vehicle.TrunkStateOpen)
                         {
@@ -148,9 +148,9 @@ namespace VMP_CNR.Module.Sync
                         }
 
                         vehicle.SyncExtension.SetEngineStatus(false);
-                        vehicle.entity.Locked = true;
-                        vehicle.entity.SetData("EMPWarning", 0);
-                        vehicle.entity.ResetData("EMPWarning");
+                        vehicle.Entity.Locked = true;
+                        vehicle.Entity.SetData("EMPWarning", 0);
+                        vehicle.Entity.ResetData("EMPWarning");
 
                         foreach (var dbPlayer in vehicle.GetOccupants().GetLegacyDictionary().Values)
                         {

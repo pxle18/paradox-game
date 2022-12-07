@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.Vehicles
                 if (sxVeh == null) return;
                 
                 // Remove all Veh Mods
-                sxVeh.entity.Neons = false;
+                sxVeh.Entity.Neons = false;
 
                 if (rgba == "") return;
 
@@ -25,8 +25,8 @@ namespace VMP_CNR.Module.Vehicles
                 if (mods[1] == "") mods[1] = "0";
                 if (mods[2] == "") mods[2] = "0";
 
-                sxVeh.entity.Neons = true;
-                sxVeh.entity.NeonColor = new Color(Main.CToInt(mods[0]), Main.CToInt(mods[1]),
+                sxVeh.Entity.Neons = true;
+                sxVeh.Entity.NeonColor = new Color(Main.CToInt(mods[0]), Main.CToInt(mods[1]),
                     Main.CToInt(mods[2]));
             }
             catch (Exception e)

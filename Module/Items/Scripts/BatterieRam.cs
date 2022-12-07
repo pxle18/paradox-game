@@ -147,7 +147,7 @@ namespace VMP_CNR.Module.Items.Scripts
             if (l_Vehicle == null)
                 return false;
 
-            if (l_Vehicle.entity.Model != (uint)VehicleHash.Journey && l_Vehicle.entity.Model != (uint)VehicleHash.Camper)
+            if (l_Vehicle.Entity.Model != (uint)VehicleHash.Journey && l_Vehicle.Entity.Model != (uint)VehicleHash.Camper)
                 return false;
 
             if (l_Vehicle.SyncExtension.Locked)

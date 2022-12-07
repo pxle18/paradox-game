@@ -141,7 +141,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
                 }
 
 
-                dbPlayer.Player.TriggerNewClient("componentServerEvent", "Tuning", "responseTuningModlist", NAPI.Util.ToJson(tuninglist),veh.entity.Id);
+                dbPlayer.Player.TriggerNewClient("componentServerEvent", "Tuning", "responseTuningModlist", NAPI.Util.ToJson(tuninglist),veh.Entity.Id);
 
             }
             catch (Exception e)

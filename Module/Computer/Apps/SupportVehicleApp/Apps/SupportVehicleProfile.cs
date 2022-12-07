@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Computer.Apps.SupportVehicleApp.Apps
 
                 await NAPI.Task.WaitForMainThread(0);
 
-                Vector3 pos = Vehicle.entity.Position;
+                Vector3 pos = Vehicle.Entity.Position;
 
                 if (dbPlayer.RageExtension.IsInVehicle)
                 {

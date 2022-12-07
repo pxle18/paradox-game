@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.AirFlightControl
                         colorCode = 40;
                     }
 
-                    Planes.Add(new CustomMarkerClientObject() { Name = sxVeh.GetName() + " (" + sxVeh.databaseId + ")", Position = sxVeh.entity.Position, Color = colorCode, MarkerId = 90 });
+                    Planes.Add(new CustomMarkerClientObject() { Name = sxVeh.GetName() + " (" + sxVeh.databaseId + ")", Position = sxVeh.Entity.Position, Color = colorCode, MarkerId = 90 });
                 }
 
                 foreach (DbPlayer dbPlayer in TowerPlayers.ToList())
@@ -407,7 +407,7 @@ namespace VMP_CNR.Module.AirFlightControl
                 if (VehicleHandler.Instance.GetAllVehicles().Where(
                     v => v.IsValid() && v.databaseId > 0 && v.GetOccupants().GetUsedSeats() > 0 
                     && (v.Data.ClassificationId == 9)
-                    && v.entity != null && v.databaseId == FlightNumber).Count() > 0) {
+                    && v.Entity != null && v.databaseId == FlightNumber).Count() > 0) {
 
                     AirFlightControlModule.Instance.RegistredPlanes.Add(FlightNumber);
 

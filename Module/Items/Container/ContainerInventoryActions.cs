@@ -238,7 +238,7 @@ namespace VMP_CNR.Module.Items
                                 detectrangeCorrection = 3.0f;
                             }
 
-                            if (dbPlayer.Player.Position.Z + detectrangeCorrection < sxVehicle.entity.Position.Z)
+                            if (dbPlayer.Player.Position.Z + detectrangeCorrection < sxVehicle.Entity.Position.Z)
                             {
                                 if (!dbPlayer.CanControl(sxVehicle))
                                 {

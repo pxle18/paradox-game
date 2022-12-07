@@ -197,7 +197,7 @@ namespace VMP_CNR.Module.Anticheat
 
         public static void UpdatePosition(SxVehicle sxVehicle, DbPlayer xPlayer)
         {
-            sxVehicle.SetData("position", sxVehicle.entity.Position);
+            sxVehicle.SetData("position", sxVehicle.Entity.Position);
             sxVehicle.SetData("lastExitPlayer", xPlayer.Id);
         }
 
@@ -225,7 +225,7 @@ namespace VMP_CNR.Module.Anticheat
                 {
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Anticheat-Verdacht: Fahrzeug Teleport (wurde von {dbPlayer.GetName()} über eine Distance von {distance} teleportiert).");
                     Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.VehicleTeleport, $"{sxVehicle.databaseId} {distance}m");
-                    sxVehicle.SetData("position", sxVehicle.entity.Position);
+                    sxVehicle.SetData("position", sxVehicle.Entity.Position);
                 }
             }
         }
@@ -260,7 +260,7 @@ namespace VMP_CNR.Module.Anticheat
                     {
                         if (!dbPlayer.CanControl(sxVeh) && sxVeh.SyncExtension != null && sxVeh.GetSpeed() > 20 && sxVeh.Data != null && sxVeh.Data.ClassificationId != 2 && sxVeh.fuel > 0)
                         {
-                            if (!sxVeh.SyncExtension.EngineOn || (!sxVeh.entity.EngineStatus && !sxVeh.SyncExtension.EngineOn))
+                            if (!sxVeh.SyncExtension.EngineOn || (!sxVeh.Entity.EngineStatus && !sxVeh.SyncExtension.EngineOn))
                             {
                                 Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"DRINGENDER-Anticheat-Verdacht: {dbPlayer.GetName()} (Vehicle Control without Key (Motoraus wird bewegt))");
                                 Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.VehicleControlAbuse, $"{sxVeh.databaseId}");
@@ -303,7 +303,7 @@ namespace VMP_CNR.Module.Anticheat
 
                                 if (sxVeh != null && sxVeh.IsValid() && sxVeh.Data != null && sxVeh.Data.MaxSpeed > 0)
                                 {
-                                    dbPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.entity, sxVeh.Data.MaxSpeed);
+                                    dbPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.Entity, sxVeh.Data.MaxSpeed);
                                 }
                                 return;
                             }

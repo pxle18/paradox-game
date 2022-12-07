@@ -101,7 +101,14 @@ namespace VMP_CNR.Module.Laboratories
             }
             if (weaponlaboratory != null && dbPlayer.Player.Position.DistanceTo(Coordinates.WeaponlaboratoryWeaponBuildMenuPosition) < 1.0f)
             {
+                if (dbPlayer.Container.GetItemAmount(976) <= 0)
+                {
+                    dbPlayer.SendNewNotification("Sie benötigen ein Waffenset!");
+                    return true;
+                }
+
                 MenuManager.Instance.Build(PlayerMenu.LaboratoryWeaponMenu, dbPlayer).Show(dbPlayer);
+
                 return true;
             }
             return false;

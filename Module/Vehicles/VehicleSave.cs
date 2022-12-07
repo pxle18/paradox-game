@@ -39,9 +39,9 @@ namespace VMP_CNR.Module.Vehicles
 
                 // Main Thread, um entity Details abzufragen
                 await NAPI.Task.WaitForMainThread(0);
-                var vehPos = sxVeh.entity.Position;
-                var vehHeading = sxVeh.entity.Rotation.Z;
-                var vehDimension = sxVeh.entity.Dimension;
+                var vehPos = sxVeh.Entity.Position;
+                var vehHeading = sxVeh.Entity.Rotation.Z;
+                var vehDimension = sxVeh.Entity.Dimension;
 
                 // Wieder in einen Background Thread wechseln
                 await Task.Delay(1);
@@ -73,7 +73,7 @@ namespace VMP_CNR.Module.Vehicles
             
             // Main Thread, da Entity Property
             await NAPI.Task.WaitForMainThread();
-            var zustand = Convert.ToInt32(sxVeh.entity.Health);
+            var zustand = Convert.ToInt32(sxVeh.Entity.Health);
 
             // Zurück in einen Worker Thread
             await Task.Delay(1);
@@ -102,7 +102,7 @@ namespace VMP_CNR.Module.Vehicles
 
         public static void Save(this SxVehicle sxVeh, bool statsonly = false, uint? garage = null, uint? garageId = null)
         {
-            if (sxVeh == null || sxVeh.entity == null) return;
+            if (sxVeh == null || sxVeh.Entity == null) return;
             if (!sxVeh.IsPlayerVehicle() || sxVeh.databaseId == 0) return;
 
             Task.Run(async () =>

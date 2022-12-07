@@ -57,7 +57,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
             if(LimitedBuyed >= LimitedAmount)
             {
                 if(Entity != null)
-                    Entity.entity.DeleteVehicle();
+                    Entity.Entity.DeleteVehicle();
                 if(ColShape != null)
                     ColShape.Delete();
             }

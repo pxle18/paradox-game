@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.NSA
                         }
 
                         // Orten
-                        member.Player.TriggerNewClient("setPlayerGpsMarker", sxVeh.entity.Position.X, sxVeh.entity.Position.Y);
+                        member.Player.TriggerNewClient("setPlayerGpsMarker", sxVeh.Entity.Position.X, sxVeh.Entity.Position.Y);
                     }
                 }
             }
@@ -321,7 +321,7 @@ namespace VMP_CNR.Module.NSA
                     var vehicle =
                         VehicleHandler.Instance.GetByVehicleDatabaseId(playerFromPool.Player.Dimension);
                     if (vehicle == null) return;
-                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.entity.Position.X, vehicle.entity.Position.Y);
+                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
                 case DimensionType.Business:
                     dbPlayer.SendNewNotification("Gesuchte Person " + playerFromPool.GetName() + " befindet sich im BusinessTower!");
@@ -375,7 +375,7 @@ namespace VMP_CNR.Module.NSA
                 case DimensionType.Camper:
                     SxVehicle vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(playerFromPool.Player.Dimension);
                     if (vehicle == null) return;
-                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.entity.Position.X, vehicle.entity.Position.Y);
+                    player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
 
                 case DimensionType.Business:

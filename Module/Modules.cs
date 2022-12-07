@@ -347,7 +347,6 @@ namespace VMP_CNR.Module
 
         public void OnPlayerConnect(DbPlayer dbPlayer)
         {
-            /**
             foreach (var module in _modules.Values)
             {
                 try
@@ -358,48 +357,22 @@ namespace VMP_CNR.Module
                 {
                     Logger.Print(e.ToString());
                 }
-            }*/
-
-            Parallel.ForEach(_modules.Values, module =>
-            {
-                try
-                {
-                    module.OnPlayerConnected(dbPlayer);
-                }
-                catch (Exception e)
-                {
-                    Logger.Print(e.ToString());
-                }
-            });
+            }
         }
 
         public void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
-            /**
             foreach (var module in _modules.Values)
             {
                 try
                 {
-                    //Logger.Debug($"Module Event {MethodBase.GetCurrentMethod().ReflectedType.ToString()} in {module.ToString()}");
                     module.OnPlayerLoadData(dbPlayer, reader);
                 }
                 catch (Exception e)
                 {
                     Logger.Print(e.Message);
                 }
-            }*/
-
-            Parallel.ForEach(_modules.Values, module =>
-            {
-                try
-                {
-                    module.OnPlayerLoadData(dbPlayer, reader);
-                }
-                catch (Exception e)
-                {
-                    Logger.Print(e.ToString());
-                }
-            });
+            }
         }
 
         public void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint weapon)

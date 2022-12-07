@@ -108,7 +108,7 @@ namespace VMP_CNR.Module.Computer.Apps.StreifenApp
                                 marker = 410;
                             }
 
-                            clientSendData.Add(new CustomMarkerClientObject() { Color = color, MarkerId = marker, Name = streife.Name, Position = sxVehicle.entity.Position });
+                            clientSendData.Add(new CustomMarkerClientObject() { Color = color, MarkerId = marker, Name = streife.Name, Position = sxVehicle.Entity.Position });
                         }
                     }
 

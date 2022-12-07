@@ -53,7 +53,7 @@ namespace VMP_CNR.Module
         public void Log(string log) => _currentLog?.AppendLine(log);
 
         public virtual bool OnClientConnected(Player client) => true;
-        
+
         public virtual void OnPlayerFirstSpawn(DbPlayer dbPlayer) { }
 
         public virtual void OnVehicleSpawn(SxVehicle sxvehicle) { }
@@ -102,7 +102,7 @@ namespace VMP_CNR.Module
 
         protected bool UpdateSetting(string key, string value)
         {
-            Settings.Setting  setting = Settings.SettingsModule.Instance.GetAll().ToList().Where(s => s.Value.Key.ToLower() == key.ToLower()).FirstOrDefault().Value;
+            Settings.Setting setting = Settings.SettingsModule.Instance.GetAll().ToList().Where(s => s.Value.Key.ToLower() == key.ToLower()).FirstOrDefault().Value;
             if (setting == null) return false;
 
             setting.Value = value;
@@ -135,6 +135,7 @@ namespace VMP_CNR.Module
                 _currentLog = new StringBuilder();
                 _loaded = OnLoad();
 
+
                 stopwatch.Stop();
 
             }
@@ -147,7 +148,7 @@ namespace VMP_CNR.Module
             {
                 Logger.Print($"Loaded Module {GetType().Name} in {stopwatch?.ElapsedMilliseconds}ms succesfully");
             }
-            
+
             return _loaded;
         }
 

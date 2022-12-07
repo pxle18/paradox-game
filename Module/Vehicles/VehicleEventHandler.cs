@@ -74,21 +74,21 @@ namespace VMP_CNR.Module.Vehicles
                 doors.Add(trunkDoorDefault);
                 doors.Add(l_Vehicle.Data.VehDoorTrunk2);
 
-                foreach (DbPlayer targetPlayer in Players.Players.Instance.GetPlayersInRange(l_Vehicle.entity.Position, 80.0f))
+                foreach (DbPlayer targetPlayer in Players.Players.Instance.GetPlayersInRange(l_Vehicle.Entity.Position, 80.0f))
                 {
                     if (targetPlayer != null && targetPlayer.IsValid())
                     {
-                        targetPlayer.Player.TriggerNewClient("syncVehicleDoors", l_Vehicle.entity, doors, state);
+                        targetPlayer.Player.TriggerNewClient("syncVehicleDoors", l_Vehicle.Entity, doors, state);
                     }
                 }
             }
             else
             {
-                foreach (DbPlayer targetPlayer in Players.Players.Instance.GetPlayersInRange(l_Vehicle.entity.Position, 80.0f))
+                foreach (DbPlayer targetPlayer in Players.Players.Instance.GetPlayersInRange(l_Vehicle.Entity.Position, 80.0f))
                 {
                     if (targetPlayer != null && targetPlayer.IsValid())
                     {
-                        targetPlayer.Player.TriggerNewClient("syncVehicleDoor", l_Vehicle.entity, trunkDoorDefault, state);
+                        targetPlayer.Player.TriggerNewClient("syncVehicleDoor", l_Vehicle.Entity, trunkDoorDefault, state);
                     }
                 }
             }
@@ -150,7 +150,7 @@ namespace VMP_CNR.Module.Vehicles
 
                 foreach (DbPlayer xPlayer in Players.Players.Instance.GetPlayersInRange(playerPos, 350))
                 {
-                    xPlayer.Player.TriggerNewClient("refreshSireneState", sxVeh.entity, sxVeh.SirensActive, sxVeh.SilentSiren);
+                    xPlayer.Player.TriggerNewClient("refreshSireneState", sxVeh.Entity, sxVeh.SirensActive, sxVeh.SilentSiren);
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace VMP_CNR.Module.Vehicles
             //vehicle information
 
             // number plate
-            msg += "Nummernschild: " + dbVehicle.entity.NumberPlate;
+            msg += "Nummernschild: " + dbVehicle.Entity.NumberPlate;
             
             // vehicle model name
             if (dbVehicle.Data.IsModdedCar == 1)
@@ -241,7 +241,7 @@ namespace VMP_CNR.Module.Vehicles
             // vehicle serial number
             if (dbVehicle.Undercover)
             {
-                msg += " Seriennummer: " + dbVehicle.entity.GetData<int>("nsa_veh_id");
+                msg += " Seriennummer: " + dbVehicle.Entity.GetData<int>("nsa_veh_id");
 
                 if (dbVehicle.teamid == (uint)TeamTypes.TEAM_FIB && dbPlayer.TeamId == (uint)TeamTypes.TEAM_FIB && dbPlayer.TeamRank >= 11)
                 {
@@ -367,7 +367,7 @@ namespace VMP_CNR.Module.Vehicles
             var delVeh = vehicle.GetVehicle();
             if (delVeh == null || !delVeh.IsValid()) return;
 
-            if (dbPlayer.Player.Position.DistanceTo(delVeh.entity.Position) > 10f) return;
+            if (dbPlayer.Player.Position.DistanceTo(delVeh.Entity.Position) > 10f) return;
 
             if (!dbPlayer.HasData("lastfriskveh") || dbPlayer.GetData("lastfriskveh") != delVeh.databaseId)
             {
@@ -383,7 +383,7 @@ namespace VMP_CNR.Module.Vehicles
 
             dbPlayer.SetData("lastfriskveh", delVeh.databaseId);
 
-            if (dbPlayer.Player.Position.DistanceTo(delVeh.entity.Position) > 10f) return;
+            if (dbPlayer.Player.Position.DistanceTo(delVeh.Entity.Position) > 10f) return;
 
             delVeh.Container.ShowVehFriskInventory(dbPlayer, delVeh.Data.Model);
 
@@ -431,7 +431,7 @@ namespace VMP_CNR.Module.Vehicles
 
             if (dbVehicle.Data != null && dbVehicle.Data.MaxSpeed > 0)
             {
-                dbVehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", dbVehicle.entity, dbVehicle.Data.MaxSpeed);
+                dbVehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", dbVehicle.Entity, dbVehicle.Data.MaxSpeed);
             }
 
             if (dbVehicle.SyncExtension.EngineOn == false)
@@ -447,25 +447,25 @@ namespace VMP_CNR.Module.Vehicles
                 {
                     foreach (DbPlayer xPlayer in Players.Players.Instance.GetPlayersInRange(dbPlayer.Player.Position, 350))
                     {
-                        xPlayer.Player.TriggerNewClient("refreshSireneState", dbVehicle.entity, dbVehicle.SirensActive, dbVehicle.SilentSiren);
+                        xPlayer.Player.TriggerNewClient("refreshSireneState", dbVehicle.Entity, dbVehicle.SirensActive, dbVehicle.SilentSiren);
                     }
                 }
 
-                if (dbVehicle.entity.HasData("paintCar"))
+                if (dbVehicle.Entity.HasData("paintCar"))
                 {
-                    if (dbVehicle.entity.HasData("origin_color1") && dbVehicle.entity.HasData("origin_color2"))
+                    if (dbVehicle.Entity.HasData("origin_color1") && dbVehicle.Entity.HasData("origin_color2"))
                     {
-                        int color1 = dbVehicle.entity.GetData<int>("origin_color1");
-                        int color2 = dbVehicle.entity.GetData<int>("origin_color2");
-                        dbVehicle.entity.PrimaryColor = color1;
-                        dbVehicle.entity.SecondaryColor = color2;
-                        dbVehicle.entity.ResetData("color1");
-                        dbVehicle.entity.ResetData("color2");
-                        dbVehicle.entity.ResetData("p_color1");
-                        dbVehicle.entity.ResetData("p_color2");
+                        int color1 = dbVehicle.Entity.GetData<int>("origin_color1");
+                        int color2 = dbVehicle.Entity.GetData<int>("origin_color2");
+                        dbVehicle.Entity.PrimaryColor = color1;
+                        dbVehicle.Entity.SecondaryColor = color2;
+                        dbVehicle.Entity.ResetData("color1");
+                        dbVehicle.Entity.ResetData("color2");
+                        dbVehicle.Entity.ResetData("p_color1");
+                        dbVehicle.Entity.ResetData("p_color2");
                     }
 
-                    dbVehicle.entity.ResetData("paintCar");
+                    dbVehicle.Entity.ResetData("paintCar");
                 }
             }
             else
@@ -744,7 +744,7 @@ namespace VMP_CNR.Module.Vehicles
             var dbVehicle = vehicle.GetVehicle();
             if (!dbVehicle.IsValid()) return;
 
-            if (dbVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) > 10.0f) return;
+            if (dbVehicle.Entity.Position.DistanceTo(dbPlayer.Player.Position) > 10.0f) return;
 
             uint repairKitItem = RepairkitId;
 

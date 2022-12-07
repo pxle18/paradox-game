@@ -146,7 +146,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
                 }
                 ScooterModule.Instance.Scooters[kvp.Key].sxVehicle = VehicleHandler.Instance.CreateServerVehicle(866, false, ScooterModule.Instance.Scooters[kvp.Key].SpawnPos, ScooterModule.Instance.Scooters[kvp.Key].SpawnRot, -1, -1, 0, false, false, true);
 
-                while (ScooterModule.Instance.Scooters[kvp.Key].sxVehicle.entity == null)
+                while (ScooterModule.Instance.Scooters[kvp.Key].sxVehicle.Entity == null)
                 {
                     await NAPI.Task.WaitForMainThread(100);
                 }
@@ -227,7 +227,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
                 var sxVehicle = VehicleHandler.Instance.CreateServerVehicle(JetSkiVehicleDataId, false,
                         JetskiSpawnPos, JetskiSpawnRot, Main.rndColor(),
                         Main.rndColor(), 0, true, true, false, 0, dbPlayer.GetName(), 0, 999, dbPlayer.Id);
-                while (sxVehicle.entity == null)
+                while (sxVehicle.Entity == null)
                 {
                     await NAPI.Task.WaitForMainThread(100);
                 }
@@ -400,7 +400,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
 
             foreach (SxVehicle sxVehicle in Jetskies.ToList())
             {
-                if (sxVehicle != null && sxVehicle.entity != null)
+                if (sxVehicle != null && sxVehicle.Entity != null)
                 {
                     foreach (DbPlayer dbPlayer in sxVehicle.GetOccupants().GetLegacyDictionary().Values)
                     {
@@ -420,22 +420,22 @@ namespace VMP_CNR.Module.Events.Jahrmarkt
 
             foreach (SxVehicle sxVehicle in Jetskies.ToList())
             {
-                if (sxVehicle != null && sxVehicle.entity != null)
+                if (sxVehicle != null && sxVehicle.Entity != null)
                 {
-                    if(sxVehicle.entity.IsSeatFree(0))
+                    if(sxVehicle.Entity.IsSeatFree(0))
                     {
-                        if (sxVehicle.entity.HasData("racingLeaveCheck"))
+                        if (sxVehicle.Entity.HasData("racingLeaveCheck"))
                         {
                             Jetskies.Remove(sxVehicle);
                             VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
                         }
-                        else sxVehicle.entity.SetData("racingLeaveCheck", 1);
+                        else sxVehicle.Entity.SetData("racingLeaveCheck", 1);
                     }
                     else
                     {
-                        if (sxVehicle.entity.HasData("racingLeaveCheck"))
+                        if (sxVehicle.Entity.HasData("racingLeaveCheck"))
                         {
-                            sxVehicle.entity.ResetData("racingLeaveCheck");
+                            sxVehicle.Entity.ResetData("racingLeaveCheck");
                         }
                     }
                 }

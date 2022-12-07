@@ -189,7 +189,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
 
                         if (vehicle == null || vehicle.teamid != currTeam) return;
                         if (vehicle.Visitors.Count != 0) return;
-                        if (vehicle.entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
+                        if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
                         if (vehicle.GetOccupants().IsEmpty() == false) {
                             dbPlayer.SendNewNotification("Da ist noch ein*e Mitfahrer*in im Kofferraum");
                             return; 
@@ -229,7 +229,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
                             return;
                         }
 
-                        if (vehicle.entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
+                        if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
                         vehicle.SetPrivateCarGarage(1, garageId);
                     }
                     break;

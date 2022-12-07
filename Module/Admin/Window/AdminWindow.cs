@@ -74,19 +74,21 @@ namespace VMP_CNR.Module.Admin.Window
              * Confirm = Befehl bestätigen
              */
 
-            List<AdminMenuCommands> amc = new List<AdminMenuCommands>();
-            amc.Add(new AdminMenuCommands() { Title="Players",Cmd="showplayers",ShowPlayers=true,Server=false,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="Names",Cmd="names",ShowPlayers=false,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="aDuty",Cmd="aduty",ShowPlayers=false,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="NoClip",Cmd="noclip",ShowPlayers=false,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="aRev",Cmd="arev",ShowPlayers=true,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="aSpawn",Cmd="spawn",ShowPlayers=true,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="aFrisk", Cmd="afrisk", ShowPlayers=true,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="KickPlayer", Cmd="kickplayer", ShowPlayers=true,Server=true,Input="Grund des Kicks",Confirm=true});
-            amc.Add(new AdminMenuCommands() { Title="freezePlayer", Cmd="freezeplayer", ShowPlayers=true,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="unfreezePlayer", Cmd="unfreezeplayer", ShowPlayers=true,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="RemoveVeh", Cmd="removeveh", ShowPlayers=false,Server=true,Input="",Confirm=false});
-            amc.Add(new AdminMenuCommands() { Title="aFly", Cmd="afly", ShowPlayers=false,Server=true,Input="",Confirm=false});
+            List<AdminMenuCommands> amc = new List<AdminMenuCommands>
+            {
+                new AdminMenuCommands() { Title = "Players", Cmd = "showplayers", ShowPlayers = true, Server = false, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Names", Cmd = "names", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "aDuty", Cmd = "aduty", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "NoClip", Cmd = "noclip", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "aRev", Cmd = "arev", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "aSpawn", Cmd = "spawn", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "aFrisk", Cmd = "afrisk", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "KickPlayer", Cmd = "kickplayer", ShowPlayers = true, Server = true, Input = "Grund des Kicks", Confirm = true },
+                new AdminMenuCommands() { Title = "freezePlayer", Cmd = "freezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "unfreezePlayer", Cmd = "unfreezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "RemoveVeh", Cmd = "removeveh", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "aFly", Cmd = "afly", ShowPlayers = false, Server = true, Input = "", Confirm = false }
+            };
 
             //Filter WhiteList 4 Admin
             foreach (var item in amc.ToList())
