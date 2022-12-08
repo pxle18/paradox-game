@@ -46,6 +46,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp
         public static List<HouseVehicle> GetVehiclesForHouseByPlayer(DbPlayer dbPlayer, House house)
         {
             List<HouseVehicle> vehicles = new List<HouseVehicle>();
+
             using (MySqlConnection conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
             using (MySqlCommand cmd = conn.CreateCommand())
             {
@@ -62,7 +63,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp
                         while (reader.Read())
                         {
                             string name = "";
-                            // Get PlayerName
+
                             if (PlayerNameModule.Instance.Contains(reader.GetUInt32("owner"))) name = PlayerNameModule.Instance.Get(reader.GetUInt32("owner")).Name;
 
                             HouseVehicle houseVehicle = new HouseVehicle()
@@ -77,6 +78,7 @@ namespace VMP_CNR.Module.Computer.Apps.HouseApp
                 }
                 conn.Close();
             }
+
             return vehicles;
         }
     }
