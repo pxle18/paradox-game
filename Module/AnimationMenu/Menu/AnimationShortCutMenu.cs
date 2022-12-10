@@ -9,9 +9,7 @@ namespace VMP_CNR.Module.AnimationMenu
 {
     public class AnimationShortCutMenuBuilder : MenuBuilder
     {
-        public AnimationShortCutMenuBuilder() : base(PlayerMenu.AnimationShortCutMenu)
-        {
-        }
+        public AnimationShortCutMenuBuilder() : base(PlayerMenu.AnimationShortCutMenu) { }
 
         public override Menu.Menu Build(DbPlayer dbPlayer)
         {
@@ -32,10 +30,7 @@ namespace VMP_CNR.Module.AnimationMenu
             return menu;
         }
 
-        public override IMenuEventHandler GetEventHandler()
-        {
-            return new EventHandler();
-        }
+        public override IMenuEventHandler GetEventHandler() => new EventHandler();
 
         private class EventHandler : IMenuEventHandler
         {

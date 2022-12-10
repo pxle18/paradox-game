@@ -22,6 +22,9 @@ namespace VMP_CNR.Module.Business
         public Dictionary<uint, ExtendedMember> AllMembers;
         
         public bool Locked { get; set; }
+        public bool IsCriminal { get; set; }
+        public bool GovRegisterState { get; set; }
+
         public Dictionary<uint, string> VehicleKeys { get; }
         public List<uint> StorageKeys { get; }
         public HashSet<DbPlayer> Visitors { get; }
@@ -31,8 +34,6 @@ namespace VMP_CNR.Module.Business
         
         public string MessageOfTheDay { get; set; }
 
-        public bool GovRegisterState { get; set; }
-
         public Business(MySqlDataReader reader) : base(reader)
         {
             Id = reader.GetUInt32("id");
@@ -40,6 +41,7 @@ namespace VMP_CNR.Module.Business
             Money = reader.GetInt32("money");
             MessageOfTheDay = reader.GetString("motd");
             Locked = true;
+            IsCriminal = reader.GetInt32("gov_register") == 1;
             Visitors = new HashSet<DbPlayer>();
             Members = new Dictionary<uint, Member>();
             VehicleKeys = new Dictionary<uint, string>();
