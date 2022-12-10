@@ -109,7 +109,7 @@ namespace VMP_CNR.Module.Einreiseamt
         {
             Logging.Logger.Debug("command giveea " + destplayer);
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.IsEinreiseAmt() || dbPlayer.Team.Id != (int)teams.TEAM_GOV || dbPlayer.TeamRank < 8) return;
+            if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.IsEinreiseAmt() || dbPlayer.Team.Id != (int)TeamTypes.TEAM_GOV || dbPlayer.TeamRank < 8) return;
 
             DbPlayer foundPlayer = Players.Players.Instance.FindPlayer(destplayer);
             if (foundPlayer == null || !foundPlayer.IsValid()) return;

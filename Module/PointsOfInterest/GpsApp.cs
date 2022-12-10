@@ -59,8 +59,8 @@ namespace VMP_CNR.Module.PointsOfInterest
                         var l_Location = new LocationObject()
                         {
                             name = l_Name,
-                            X = vehicle.entity.Position.X,
-                            Y = vehicle.entity.Position.Y
+                            X = vehicle.Entity.Position.X,
+                            Y = vehicle.Entity.Position.Y
                         };
 
                         // Sort by Teamid...
@@ -79,8 +79,8 @@ namespace VMP_CNR.Module.PointsOfInterest
                         var l_Location = new LocationObject()
                         {
                             name = l_Name,
-                            X = vehicle.entity.Position.X,
-                            Y = vehicle.entity.Position.Y
+                            X = vehicle.Entity.Position.X,
+                            Y = vehicle.Entity.Position.Y
                         };
 
                         l_BusinessVehicles.Add(l_Location);
@@ -90,8 +90,8 @@ namespace VMP_CNR.Module.PointsOfInterest
                         var l_Location = new LocationObject()
                         {
                             name = l_Name,
-                            X = vehicle.entity.Position.X,
-                            Y = vehicle.entity.Position.Y
+                            X = vehicle.Entity.Position.X,
+                            Y = vehicle.Entity.Position.Y
                         };
 
                         l_RentVehicles.Add(l_Location);
@@ -101,8 +101,8 @@ namespace VMP_CNR.Module.PointsOfInterest
                         var l_Location = new LocationObject()
                         {
                             name = l_Name,
-                            X = vehicle.entity.Position.X,
-                            Y = vehicle.entity.Position.Y
+                            X = vehicle.Entity.Position.X,
+                            Y = vehicle.Entity.Position.Y
                         };
 
                         l_PrivateVehicles.Add(l_Location);

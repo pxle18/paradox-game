@@ -58,7 +58,7 @@ namespace VMP_CNR.Module.NSA
 
             if (!MySQLHandler.IsValidNoSQLi(dbPlayer, returnstring)) return;
 
-            if (!dbPlayer.IsValid() || (dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.GovLevel.ToLower() != "a" && dbPlayer.IsNSAState != (int)NSARangs.LEAD)) return;
+            if (!dbPlayer.IsValid() || (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.GovLevel.ToLower() != "a" && dbPlayer.IsNSAState != (int)NSARangs.LEAD)) return;
 
             DbPlayer target = Players.Players.Instance.FindPlayer(returnstring);
             if (target != null && target.IsValid())
@@ -74,7 +74,7 @@ namespace VMP_CNR.Module.NSA
                     return;
                 }
 
-                if(target.IsACop() || target.TeamId == (int)teams.TEAM_MEDIC || target.TeamId == (int)teams.TEAM_DPOS || target.TeamId == (int)teams.TEAM_DRIVINGSCHOOL)
+                if(target.IsACop() || target.TeamId == (int)TeamTypes.TEAM_MEDIC || target.TeamId == (int)TeamTypes.TEAM_DPOS || target.TeamId == (int)TeamTypes.TEAM_DRIVINGSCHOOL)
                 {
                     target.RemoveWeapons();
                     target.ResetAllWeaponComponents();
@@ -359,7 +359,7 @@ namespace VMP_CNR.Module.NSA
         {
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || (!dbPlayer.IsNSADuty && dbPlayer.TeamId != (uint)teams.TEAM_FIB)) return;
+            if (dbPlayer == null || !dbPlayer.IsValid() || (!dbPlayer.IsNSADuty && dbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB)) return;
 
             if (!MySQLHandler.IsValidNoSQLi(dbPlayer, returnstring)) return;
             if (!dbPlayer.HasData("nsa_work_vehicle")) return;
@@ -378,8 +378,8 @@ namespace VMP_CNR.Module.NSA
             sxVehicle.color1 = color1;
             sxVehicle.color2 = color2;
 
-            sxVehicle.entity.PrimaryColor = color1;
-            sxVehicle.entity.SecondaryColor = color2;
+            sxVehicle.Entity.PrimaryColor = color1;
+            sxVehicle.Entity.SecondaryColor = color2;
 
             dbPlayer.SendNewNotification($"Fahrzeugfarbe auf {color1} {color2} geändert!");
             return;
@@ -390,7 +390,7 @@ namespace VMP_CNR.Module.NSA
         {
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
-            if (dbPlayer == null || !dbPlayer.IsValid() || (!dbPlayer.IsNSADuty && dbPlayer.TeamId != (uint)teams.TEAM_FIB)) return;
+            if (dbPlayer == null || !dbPlayer.IsValid() || (!dbPlayer.IsNSADuty && dbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB)) return;
 
             if (!MySQLHandler.IsValidNoSQLi(dbPlayer, returnstring)) return;
             if (!dbPlayer.HasData("nsa_work_vehicle")) return;
@@ -402,7 +402,7 @@ namespace VMP_CNR.Module.NSA
             
             sxVehicle.plate = returnstring;
 
-            sxVehicle.entity.NumberPlate = returnstring;
+            sxVehicle.Entity.NumberPlate = returnstring;
 
             dbPlayer.SendNewNotification($"Kennzeichen auf {returnstring} geändert!");
             return;

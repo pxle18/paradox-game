@@ -42,12 +42,12 @@ namespace VMP_CNR.Module.Players
 
         public List<DbPlayer> GetValidPlayers()
         {
-            return players.Values.ToList().Where(p => p != null && p.IsValid()).ToList();
+            return players.Values.Where(p => p != null && p.IsValid()).ToList();
         }
 
         public List<DbPlayer> GetJailedPlayers()
         {
-            return players.Values.ToList().Where(p => p != null && p.IsValid() && p.JailTime[0] > 0).ToList();
+            return players.Values.Where(p => p != null && p.IsValid() && p.JailTime[0] > 0).ToList();
         }
         
         public void SendNotificationToAllUsers(string command, int duration = 5000)
@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.Players
 
         public DbPlayer GetPlayerByPhoneNumber(uint HandyNummer)
         {
-            return players.Values.ToList().Where(p => p != null && p.IsValid() && p.handy[0] == HandyNummer).FirstOrDefault();
+            return players.Values.Where(p => p != null && p.IsValid() && p.handy[0] == HandyNummer).FirstOrDefault();
         }
 
 
@@ -681,7 +681,7 @@ namespace VMP_CNR.Module.Players
         private int GetFreeId()
         {
             var freeId = 0;
-            while (players.Values.ToList().FirstOrDefault(player => player != null && player.IsValid() && player.TemporaryPlayerId == freeId) != null)
+            while (players.Values.FirstOrDefault(player => player != null && player.IsValid() && player.TemporaryPlayerId == freeId) != null)
             {
                 freeId++;
             }

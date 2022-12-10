@@ -200,10 +200,10 @@ namespace VMP_CNR.Module.Injury
                             if ((medic.Container.GetItemAmount(412) > 0 && medic.Container.GetItemAmount(dbPlayer.Injury.ItemToStabilizeId) > 0) ||
                                 (medic.IsAGangster() && medic.Container.GetItemAmount(FirstAidKitGangsterId) > 0) ||
                                 (!medic.IsAGangster() && medic.Container.GetItemAmount(FirstAidKitCops) > 0) || 
-                                (medic.Team.Id == (int)teams.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG)))
+                                (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG)))
                             {
                                 // Meidc Koffer
-                                if (medic.Team.Id == (int)teams.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG))
+                                if (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG))
                                 {
                                     // Remove Attachment
                                     AttachmentModule.Instance.RemoveAttachment(medic, (int)Attachment.MEDICBAG);
@@ -221,14 +221,14 @@ namespace VMP_CNR.Module.Injury
                                     medic.Container.RemoveItem(FirstAidKitGangsterId, 1);
                                 }
                                 // Beamten Notfallmedics
-                                else if (medic.Team.Id != (int)teams.TEAM_MEDIC && medic.Team.IsStaatsfraktion() && medic.Container.GetItemAmount(FirstAidKitCops) > 0)
+                                else if (medic.Team.Id != (int)TeamTypes.TEAM_MEDIC && medic.Team.IsStaatsfraktion() && medic.Container.GetItemAmount(FirstAidKitCops) > 0)
                                 {
                                     // Remove Item
                                     medic.Container.RemoveItem(FirstAidKitCops, 1);
                                 }
                                 // Meldung zum behandeln
                                 else {
-                                    if (medic.Team.Id == (int)teams.TEAM_MEDIC || medic.ParamedicLicense)
+                                    if (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC || medic.ParamedicLicense)
                                     {
                                         medic.SendNewNotification(
                                             $"Fuer die Behandlung von {dbPlayer.Injury.Name} benötigen Sie {ItemModelModule.Instance.Get(412).Name} und {ItemModelModule.Instance.Get(dbPlayer.Injury.ItemToStabilizeId).Name}.");
@@ -296,7 +296,7 @@ namespace VMP_CNR.Module.Injury
                             }
                             else
                             {
-                                if (medic.Team.Id == (int)teams.TEAM_MEDIC || medic.ParamedicLicense)
+                                if (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC || medic.ParamedicLicense)
                                 {
                                     medic.SendNewNotification(
                                         $"Fuer die Behandlung von {dbPlayer.Injury.Name} benötigen Sie {ItemModelModule.Instance.Get(412).Name} und {ItemModelModule.Instance.Get(dbPlayer.Injury.ItemToStabilizeId).Name}.");
@@ -311,7 +311,7 @@ namespace VMP_CNR.Module.Injury
                         else
                         {
                             // Meidc Koffer
-                            if (medic.Team.Id == (int)teams.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG))
+                            if (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC && medic.IsInDuty() && medic.Attachments.ContainsKey((int)Attachment.MEDICBAG))
                             {
                                 // Remove medic
                                 AttachmentModule.Instance.RemoveAttachment(medic, (int)Attachment.MEDICBAG);
@@ -333,7 +333,7 @@ namespace VMP_CNR.Module.Injury
                             }
                             else
                             {
-                                if (medic.Team.Id == (int)teams.TEAM_MEDIC || medic.ParamedicLicense)
+                                if (medic.Team.Id == (int)TeamTypes.TEAM_MEDIC || medic.ParamedicLicense)
                                 {
                                     medic.SendNewNotification(
                                         $"Fuer die Behandlung von {dbPlayer.Injury.Name} benötigen Sie {ItemModelModule.Instance.Get(412).Name} und {ItemModelModule.Instance.Get(dbPlayer.Injury.ItemToStabilizeId).Name}.");
@@ -376,7 +376,7 @@ namespace VMP_CNR.Module.Injury
                             VoiceListHandler.RemoveFromDeath(dbPlayer);
 
                             // keine Behandlungskosten für Badmedics
-                            if(medic.IsAMedic() || medic.TeamId == (uint)teams.TEAM_ARMY)
+                            if(medic.IsAMedic() || medic.TeamId == (uint)TeamTypes.TEAM_ARMY)
                             {
                                 int khcosts = 0;
 
@@ -510,7 +510,7 @@ namespace VMP_CNR.Module.Injury
                 if (dbPlayer.IsInjured())
                 {
                     // Set Voice To Normal
-                    dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.normal);
+                    dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Normal);
                     dbPlayer.SetData("voiceType", 1);
                     dbPlayer.Player.TriggerNewClient("setVoiceType", 1);
 

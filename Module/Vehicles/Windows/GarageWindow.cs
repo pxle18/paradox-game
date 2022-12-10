@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
             uint currTeam = dbPlayer.TeamId;
 
             // Wenn NSA Duty und IAA Garage ist...
-            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = (uint)teams.TEAM_IAA;
+            if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = (uint)TeamTypes.TEAM_IAA;
 
             switch (state)
             {
@@ -189,7 +189,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
 
                         if (vehicle == null || vehicle.teamid != currTeam) return;
                         if (vehicle.Visitors.Count != 0) return;
-                        if (vehicle.entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
+                        if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
                         if (vehicle.GetOccupants().IsEmpty() == false) {
                             dbPlayer.SendNewNotification("Da ist noch ein*e Mitfahrer*in im Kofferraum");
                             return; 
@@ -229,7 +229,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
                             return;
                         }
 
-                        if (vehicle.entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
+                        if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
                         vehicle.SetPrivateCarGarage(1, garageId);
                     }
                     break;

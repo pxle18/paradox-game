@@ -33,7 +33,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
                 foreach (var shopVehicle in shopVehicles.Values)
                 {
                     shopVehicle.ColShape.Delete();
-                    shopVehicle.Entity?.entity.Delete();
+                    shopVehicle.Entity?.Entity.Delete();
                 }
 
                 shopVehicles.Clear();
@@ -107,7 +107,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
                                                 shopVehicle.Heading,
                                                 shopVehicle.PrimaryColor, shopVehicle.SecondaryColor, Convert.ToUInt32(shopVehicle.Dimension), true,
                                                 true);
-                                        while (shopVehicle.Entity == null || shopVehicle.Entity.SyncExtension == null || shopVehicle.Entity.entity == null)
+                                        while (shopVehicle.Entity == null || shopVehicle.Entity.SyncExtension == null || shopVehicle.Entity.Entity == null)
                                         {
                                             await NAPI.Task.WaitForMainThread(100);
                                         }
@@ -175,7 +175,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
                                     shopVehicle.Entity = VehicleHandler.Instance.CreateServerVehicle(shopVehicle.Data.Id, false, shopVehicle.Position,
                                                 shopVehicle.Heading, shopVehicle.PrimaryColor, shopVehicle.SecondaryColor, Convert.ToUInt32(shopVehicle.Dimension), true, true);
 
-                                    while (shopVehicle.Entity == null || shopVehicle.Entity.SyncExtension == null || shopVehicle.Entity.entity == null)
+                                    while (shopVehicle.Entity == null || shopVehicle.Entity.SyncExtension == null || shopVehicle.Entity.Entity == null)
                                     {
                                         await NAPI.Task.WaitForMainThread(100);
                                     }

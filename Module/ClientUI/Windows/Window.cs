@@ -40,11 +40,6 @@ namespace VMP_CNR.Module.ClientUI.Windows
 
             if (string.IsNullOrEmpty(json)) return false;
 
-            if (Configuration.Instance.DevMode)
-            {
-                Logger.Print($"Open Window ${Name} with args ${json}");
-            }
-
             Open(@event.DbPlayer.Player, json);
             return true;
         }

@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.VehicleDeath
                 foreach (SxVehicle sxVehicle in VehicleHandler.Instance.GetAllVehicles())
                 {
                     // Destroyed...
-                    if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity != null && sxVehicle.entity.Health <= -300)
+                    if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.Entity != null && sxVehicle.Entity.Health <= -300)
                     {
                         if (!sxVehicle.HasData("deathTrigger"))
                         {
@@ -109,9 +109,9 @@ namespace VMP_CNR.Module.VehicleDeath
                             try
                             {
                                 if (xVeh.Visitors.Contains(dbPlayer)) xVeh.Visitors.Remove(dbPlayer);
-                                dbPlayer.Player.SetPosition(new Vector3(xVeh.entity.Position.X + 3.0f,
-                                    xVeh.entity.Position.Y,
-                                    xVeh.entity.Position.Z));
+                                dbPlayer.Player.SetPosition(new Vector3(xVeh.Entity.Position.X + 3.0f,
+                                    xVeh.Entity.Position.Y,
+                                    xVeh.Entity.Position.Z));
                             }
                             catch (Exception e)
                             {

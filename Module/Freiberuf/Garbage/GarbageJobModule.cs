@@ -114,7 +114,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
 
                     await NAPI.Task.WaitForMainThread();
                     DbPlayer owner = Players.Players.Instance.GetByDbId(sxVehicle.ownerId);
-                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.entity.Position) > 100.0f)
+                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.Entity.Position) > 100.0f)
                     {
                         if (!sxVehicle.HasData("gbremovecheck"))
                         {
@@ -158,7 +158,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
 
                     await NAPI.Task.WaitForMainThread(0);
                     DbPlayer owner = Players.Players.Instance.GetByDbId(sxVehicle.ownerId);
-                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.entity.Position) > 100.0f)
+                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.Entity.Position) > 100.0f)
                     {
                         if (!sxVehicle.HasData("gbremovecheck"))
                         {
@@ -202,7 +202,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
 
                     await NAPI.Task.WaitForMainThread(0);
                     DbPlayer owner = Players.Players.Instance.GetByDbId(sxVehicle.ownerId);
-                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.entity.Position) > 100.0f)
+                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.Entity.Position) > 100.0f)
                     {
                         if (!sxVehicle.HasData("gbremovecheck"))
                         {
@@ -371,12 +371,12 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
                     // Spawn Vehicle and set vehicle data
                     SxVehicle xVeh = VehicleHandler.Instance.CreateServerVehicle(VehicleDataModule.Instance.GetData((uint)VehicleHash.Trash).Id, false, VehicleSpawnPositionDefault, VehicleSpawnRotationDefault, 58, 58, 0, true, true, false, 0, dbPlayer.GetName(), 0, GarbageJobVehMarkId, dbPlayer.Id, plate: "Trash INC");
 
-                    while (xVeh.entity == null)
+                    while (xVeh.Entity == null)
                     {
                         await NAPI.Task.WaitForMainThread(100);
                     }
 
-                    xVeh.entity.SetData<int>("loadage", 0);
+                    xVeh.Entity.SetData<int>("loadage", 0);
 
                     if (garbageId == 1) GarbageJobVehicles.Add(xVeh);
                     else if (garbageId == 2) GarbageJobVehiclesSandy.Add(xVeh);
@@ -396,7 +396,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
             // Get job vehicle
             SxVehicle JobVehicle = vehicle.GetVehicle();
 
-            if(JobVehicle.entity.Model != (uint)VehicleHash.Trash && JobVehicle.entity.Model != (uint)VehicleHash.Trash2)
+            if(JobVehicle.Entity.Model != (uint)VehicleHash.Trash && JobVehicle.Entity.Model != (uint)VehicleHash.Trash2)
             {
                 return;
             }
@@ -407,28 +407,28 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
                 return;
             }
 
-            if (JobVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) > 13) return;
+            if (JobVehicle.Entity.Position.DistanceTo(dbPlayer.Player.Position) > 13) return;
 
             if(JobVehicle != null && JobVehicle.IsValid())
             {
-                if(JobVehicle.entity.IsSeatFree(0))
+                if(JobVehicle.Entity.IsSeatFree(0))
                 {
                     dbPlayer.SendNewNotification("Es muss ein Fahrer im Müllwagen sein!");
                     return;
                 }
 
                 // Check if vehicle got loadage data
-                if (!JobVehicle.entity.HasData("loadage")) return;
+                if (!JobVehicle.Entity.HasData("loadage")) return;
 
                 // Get new amount and reset user data
-                int newLoadage = JobVehicle.entity.GetData<int>("loadage") + dbPlayer.GetData("trash_amount");
+                int newLoadage = JobVehicle.Entity.GetData<int>("loadage") + dbPlayer.GetData("trash_amount");
                 dbPlayer.ResetData("trash_amount");
 
                 // Add amount to vehicle
-                JobVehicle.entity.SetData<int>("loadage", newLoadage);
+                JobVehicle.Entity.SetData<int>("loadage", newLoadage);
 
                 var l_Handler = new VehicleEventHandler();
-                l_Handler.ToggleDoorState(dbPlayer.Player, JobVehicle.entity, 5);
+                l_Handler.ToggleDoorState(dbPlayer.Player, JobVehicle.Entity, 5);
 
                 dbPlayer.Player.TriggerNewClient("freezePlayer", true);
                 dbPlayer.SetCannotInteract(true);
@@ -438,13 +438,13 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
                 // Remove attachments
                 AttachmentModule.Instance.RemoveAttachment(dbPlayer, (int)Attachment.TRASH);
 
-                l_Handler.ToggleDoorState(dbPlayer.Player, JobVehicle.entity, 5);
+                l_Handler.ToggleDoorState(dbPlayer.Player, JobVehicle.Entity, 5);
                 dbPlayer.StopAnimation();
                 dbPlayer.SetCannotInteract(false);
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
 
 
-                int Müllbestand = JobVehicle.entity.GetData<int>("loadage");
+                int Müllbestand = JobVehicle.Entity.GetData<int>("loadage");
 
                 // Inform user
                 dbPlayer.SendNewNotification($"Neuer Müllbestand im Fahrzeug: {Müllbestand}");
@@ -473,7 +473,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
             }
 
             // Check current vehicle loadage
-            float currentVehicleLoadage = jobVeh.entity.GetData<int>("loadage");
+            float currentVehicleLoadage = jobVeh.Entity.GetData<int>("loadage");
 
             // Check if vehicle can store trash
             if (currentVehicleLoadage >= VehicleLoadageLimit)
@@ -568,7 +568,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
             if (garbageVehicle == null)
                 return;
 
-            Vehicle vehicleEntity = garbageVehicle.entity;
+            Vehicle vehicleEntity = garbageVehicle.Entity;
             if (vehicleEntity == null)
                 return;
 
@@ -612,7 +612,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
             dbPlayer.SetCannotInteract(false);
 
             // Reset vehicle trash amount
-            FreiberufFunctions.GetJobVehicle(dbPlayer, GarbageJobVehMarkId).entity.SetData<int>("loadage", 0);
+            FreiberufFunctions.GetJobVehicle(dbPlayer, GarbageJobVehMarkId).Entity.SetData<int>("loadage", 0);
 
             // Get reward
             int money = (int)Math.Round(currentVehicleLoadage, 0) * Reward;
@@ -635,7 +635,7 @@ namespace VMP_CNR.Module.Freiberuf.Garbage
             if(jobVehicle != null && jobVehicle.IsValid())
             {
                 // Check if vehicle still got trash inside
-                float currentVehicleLoadage = FreiberufFunctions.GetJobVehicle(dbPlayer, GarbageJobVehMarkId).entity.GetData<int>("loadage");
+                float currentVehicleLoadage = FreiberufFunctions.GetJobVehicle(dbPlayer, GarbageJobVehMarkId).Entity.GetData<int>("loadage");
 
                 if (currentVehicleLoadage > 0.0f)
                 {

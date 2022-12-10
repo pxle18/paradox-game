@@ -45,8 +45,8 @@ namespace VMP_CNR.Module.JobFactions.Carsell
             sxVehicle.color1 = color1;
             sxVehicle.color2 = color2;
 
-            sxVehicle.entity.PrimaryColor = color1;
-            sxVehicle.entity.SecondaryColor = color2;
+            sxVehicle.Entity.PrimaryColor = color1;
+            sxVehicle.Entity.SecondaryColor = color2;
 
             dbPlayer.SetData("carsellTuneColor1", color1);
             dbPlayer.SetData("carsellTuneColor2", color2);

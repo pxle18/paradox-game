@@ -87,7 +87,7 @@ namespace VMP_CNR.Module.Items.Scripts
                         RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVehicle, driver, dbPlayer, sxVehicle.plate, false);
                         sxVehicle.plate = "";
 
-                        NAPI.Task.Run(() => { sxVehicle.entity.NumberPlate = ""; });
+                        NAPI.Task.Run(() => { sxVehicle.Entity.NumberPlate = ""; });
                         return true;
                     }
                     else

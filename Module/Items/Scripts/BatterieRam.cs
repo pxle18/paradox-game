@@ -22,7 +22,7 @@ namespace VMP_CNR.Module.Items.Scripts
         public static async Task<bool> BatterieRam(DbPlayer dbPlayer, ItemModel ItemData)
         {
             // Only Cops
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.TeamId != (int)teams.TEAM_SWAT && dbPlayer.TeamId != (int)teams.TEAM_FIB) return false;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int)TeamTypes.TEAM_SWAT && dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return false;
 
             // Check Door
             if (dbPlayer.TryData("doorId", out uint doorId))
@@ -147,7 +147,7 @@ namespace VMP_CNR.Module.Items.Scripts
             if (l_Vehicle == null)
                 return false;
 
-            if (l_Vehicle.entity.Model != (uint)VehicleHash.Journey && l_Vehicle.entity.Model != (uint)VehicleHash.Camper)
+            if (l_Vehicle.Entity.Model != (uint)VehicleHash.Journey && l_Vehicle.Entity.Model != (uint)VehicleHash.Camper)
                 return false;
 
             if (l_Vehicle.SyncExtension.Locked)

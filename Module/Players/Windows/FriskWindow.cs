@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.Players.Windows
 
             dbPlayer.SendNewNotification($"Person trägt folgende Kleidung mit sich: {clothString}");
 
-            if (editDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (editDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
             {
                 // Ab Rang 8 100%, Ab Rang 2 mit Chance 80%
                 bool Chance = (new Random().Next(1, 100) > 20);

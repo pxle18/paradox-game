@@ -31,24 +31,24 @@ namespace VMP_CNR.Module.Players
 
             try
             {
-                if (sxVehicle.InTuningProcess == true && dbPlayer.TeamId == (int)teams.TEAM_LSC)
+                if (sxVehicle.InTuningProcess == true && dbPlayer.TeamId == (int)TeamTypes.TEAM_LSC)
                 {
                     return true;
                 }
-                if (sxVehicle.InTuningProcess == true && dbPlayer.TeamId != (int)teams.TEAM_LSC)
+                if (sxVehicle.InTuningProcess == true && dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
                 {
                     return false;
                 }
 
                 if (sxVehicle.IsTeamVehicle())
                 {
-                    if (sxVehicle.teamid == (int)teams.TEAM_GOV && dbPlayer.TeamId == (int)teams.TEAM_FIB)
+                    if (sxVehicle.teamid == (int)TeamTypes.TEAM_GOV && dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
                     {
                         return true;
                     }
 
 
-                    if (sxVehicle.teamid == (uint)teams.TEAM_IAA && dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.LIGHT)
+                    if (sxVehicle.teamid == (uint)TeamTypes.TEAM_IAA && dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.LIGHT)
                     {
                         return true;
                     }
@@ -58,17 +58,17 @@ namespace VMP_CNR.Module.Players
                         return true;
                     }
 
-                    if (sxVehicle.Team.Id == (int)teams.TEAM_MEDIC && dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL)
+                    if (sxVehicle.Team.Id == (int)TeamTypes.TEAM_MEDIC && dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL)
                     {
                         return true;
                     }
 
-                    if (sxVehicle.Team.IsCops() && dbPlayer.TeamId == (int)teams.TEAM_SWAT)
+                    if (sxVehicle.Team.IsCops() && dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT)
                     {
                         return true;
                     }
 
-                    if (sxVehicle.teamid == (int)teams.TEAM_ARMY)
+                    if (sxVehicle.teamid == (int)TeamTypes.TEAM_ARMY)
                     {
                         return dbPlayer.TeamId == sxVehicle.teamid && (dbPlayer.TeamRank >= 1 || sxVehicle.Data.Id == 185); // Rang 0 only freecrawler
                     }

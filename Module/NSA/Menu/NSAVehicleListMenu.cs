@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.NSA.Menu
             var l_Menu = new Module.Menu.Menu(Menu, "NSA Fahrzeugverwaltung");
             l_Menu.Add($"Schließen");
             
-            foreach(SxVehicle sxVehicle in VehicleHandler.Instance.GetClosestVehiclesFromTeam(p_DbPlayer.Player.Position, (int)teams.TEAM_FIB, 10.0f))
+            foreach(SxVehicle sxVehicle in VehicleHandler.Instance.GetClosestVehiclesFromTeam(p_DbPlayer.Player.Position, (int)TeamTypes.TEAM_FIB, 10.0f))
             {
                 l_Menu.Add($"{sxVehicle.GetName()} ({sxVehicle.databaseId})");
             }
@@ -43,7 +43,7 @@ namespace VMP_CNR.Module.NSA.Menu
                 if(index >= 1)
                 {
                     int idx = 1;
-                    foreach (SxVehicle sxVehicle in VehicleHandler.Instance.GetClosestVehiclesFromTeam(dbPlayer.Player.Position, (int)teams.TEAM_FIB, 10.0f))
+                    foreach (SxVehicle sxVehicle in VehicleHandler.Instance.GetClosestVehiclesFromTeam(dbPlayer.Player.Position, (int)TeamTypes.TEAM_FIB, 10.0f))
                     {
                         if(index == idx)
                         {

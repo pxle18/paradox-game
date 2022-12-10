@@ -18,10 +18,10 @@ namespace VMP_CNR.Module.Vehicles
             {
                 await NAPI.Task.WaitForMainThread();
                 vehicle.RepairState = true;
-                vehicle.entity.Repair();
+                vehicle.Entity.Repair();
 
                 //set Health to max
-                vehicle.entity.Health = VehicleHandler.MaxVehicleHealth;
+                vehicle.Entity.Health = VehicleHandler.MaxVehicleHealth;
 
                 // Resync max speed cap
                 try
@@ -30,14 +30,14 @@ namespace VMP_CNR.Module.Vehicles
 
                     if (vehicle != null && vehicle.Data != null && vehicle.Data.MaxSpeed > 0)
                     {
-                        vehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", vehicle.entity, vehicle.Data.MaxSpeed);
+                        vehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", vehicle.Entity, vehicle.Data.MaxSpeed);
                     }
 
                     await Task.Delay(1500);
 
                     if (vehicle != null && vehicle.Data != null && vehicle.Data.MaxSpeed > 0)
                     {
-                        vehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", vehicle.entity, vehicle.Data.MaxSpeed);
+                        vehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", vehicle.Entity, vehicle.Data.MaxSpeed);
                     }
                 }
                 catch(Exception e)
@@ -52,7 +52,7 @@ namespace VMP_CNR.Module.Vehicles
             NAPI.Task.Run(() =>
             {
                 vehicle.RepairState = true;
-                vehicle.entity.Health = health;
+                vehicle.Entity.Health = health;
             });
         }
     }

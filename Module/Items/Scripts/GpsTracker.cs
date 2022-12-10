@@ -12,7 +12,7 @@ namespace VMP_CNR.Module.Items.Scripts
         {
             if (!dbPlayer.RageExtension.IsInVehicle) return false;
             {
-                if (dbPlayer.job[0] != (int) jobs.JOB_MECH)
+                if (dbPlayer.job[0] != (int) JobTypes.JOB_MECH)
                 {
                     dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                     return false;

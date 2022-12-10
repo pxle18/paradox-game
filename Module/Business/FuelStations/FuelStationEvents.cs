@@ -169,7 +169,7 @@ namespace VMP_CNR.Module.Business.FuelStations
             bool dutyFuel = false;
 
             // not enough money
-            if (!dbVehicle.Team.IsCops() && !dbVehicle.Team.IsMedics() && dbVehicle.teamid != (int)teams.TEAM_DPOS && dbVehicle.teamid != (int)teams.TEAM_FIB && dbVehicle.teamid != (int)teams.TEAM_NEWS && dbVehicle.teamid != (int)teams.TEAM_GOV && dbVehicle.teamid != (int)teams.TEAM_DRIVINGSCHOOL && dbVehicle.teamid != (int)teams.TEAM_MINE1 && dbVehicle.teamid != (int)teams.TEAM_MINE2)
+            if (!dbVehicle.Team.IsCops() && !dbVehicle.Team.IsMedics() && dbVehicle.teamid != (int)TeamTypes.TEAM_DPOS && dbVehicle.teamid != (int)TeamTypes.TEAM_FIB && dbVehicle.teamid != (int)TeamTypes.TEAM_NEWS && dbVehicle.teamid != (int)TeamTypes.TEAM_GOV && dbVehicle.teamid != (int)TeamTypes.TEAM_DRIVINGSCHOOL && dbVehicle.teamid != (int)TeamTypes.TEAM_MINE1 && dbVehicle.teamid != (int)TeamTypes.TEAM_MINE2)
             {
                 Payment.PaymentStatus pStatus = await Payment.PaymentModule.Instance.AskForPayment(dbPlayer, price);
 
@@ -194,7 +194,7 @@ namespace VMP_CNR.Module.Business.FuelStations
             else
             {
                 //Minen Fahrzeuge vom Minen Konto
-                if (dbVehicle.Team.Id == dbPlayer.Team.Id && (dbVehicle.teamid == (int)teams.TEAM_MINE1 || dbVehicle.teamid == (int)teams.TEAM_MINE2))
+                if (dbVehicle.Team.Id == dbPlayer.Team.Id && (dbVehicle.teamid == (int)TeamTypes.TEAM_MINE1 || dbVehicle.teamid == (int)TeamTypes.TEAM_MINE2))
                 {
                     dbPlayer.SendNewNotification("Rechnung wird vom Arbeitgeber getragen!");
                     //TODO Tankkarte???
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Business.FuelStations
                 }
                 //Staatsfraktions auto
                 // IAA Special wegen Secret Service
-                else if ((dbVehicle.Team.Id == dbPlayer.Team.Id) || (dbVehicle.Team.Id == (int)teams.TEAM_GOV && dbPlayer.Team.Id == (int)teams.TEAM_FIB))
+                else if ((dbVehicle.Team.Id == dbPlayer.Team.Id) || (dbVehicle.Team.Id == (int)TeamTypes.TEAM_GOV && dbPlayer.Team.Id == (int)TeamTypes.TEAM_FIB))
                 {
                     dbPlayer.SendNewNotification("Rechnung wird vom Arbeitgeber getragen!");
                     //TODO Tankkarte
@@ -247,7 +247,7 @@ namespace VMP_CNR.Module.Business.FuelStations
 
             if (dbPlayer.HasMoneyTransferWantedStatus() && !dbPlayer.IsMasked())
             {
-                TeamModule.Instance.SendMessageToTeam($"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} einen Tankvorgang getätigt! (Standort: {fuel.Name})", teams.TEAM_FIB, 10000, 3);
+                TeamModule.Instance.SendMessageToTeam($"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} einen Tankvorgang getätigt! (Standort: {fuel.Name})", TeamTypes.TEAM_FIB, 10000, 3);
                 NSAPlayerExtension.AddTransferHistory($"{dbPlayer.GetName()} Tankvorgang {fuel.Name}", fuel.Position);
             }
         }

@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.Computer.Apps.ServiceApp
             if (!client.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = client.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            if (!dbPlayer.IsACop() && dbPlayer.TeamId != (int)teams.TEAM_MEDIC && dbPlayer.TeamId != (int)teams.TEAM_DRIVINGSCHOOL && dbPlayer.TeamId != (int)teams.TEAM_DPOS && dbPlayer.TeamId != (int)teams.TEAM_NEWS && dbPlayer.TeamId != (int)teams.TEAM_LSC && dbPlayer.TeamId != (int) teams.TEAM_GOV && dbPlayer.TeamId != (int)teams.TEAM_AUCTION) return;
+            if (!dbPlayer.IsACop() && dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC && dbPlayer.TeamId != (int)TeamTypes.TEAM_DRIVINGSCHOOL && dbPlayer.TeamId != (int)TeamTypes.TEAM_DPOS && dbPlayer.TeamId != (int)TeamTypes.TEAM_NEWS && dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC && dbPlayer.TeamId != (int) TeamTypes.TEAM_GOV && dbPlayer.TeamId != (int)TeamTypes.TEAM_AUCTION) return;
 
             var teamRankPermission = dbPlayer.TeamRankPermission;
             if (teamRankPermission.Manage < 1) return;

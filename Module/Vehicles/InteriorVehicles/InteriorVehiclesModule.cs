@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                                 sxVeh.GetOccupants().RemovePlayer(currentPilot);
 
                             // Setze copilot in pilotensitz
-                            coPilot.Player.SetIntoVehicleSave(sxVeh.entity, 0);
+                            coPilot.Player.SetIntoVehicleSave(sxVeh.Entity, 0);
                         }
 
                         await NAPI.Task.WaitForMainThread(1500);
@@ -81,7 +81,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                     {
                         if (dbPlayer.Player.Position.DistanceTo(AirforceInteriorPos) < 1.0f)
                         {
-                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
 
                             if (sxVeh == null) return false;
                             if (sxVeh.SyncExtension.Locked) return false;
@@ -92,15 +92,15 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                             dbPlayer.Dimension[0] = 0;
                             dbPlayer.SetDimension(0);
 
-                            dbPlayer.Player.SetPosition(new Vector3(sxVeh.entity.Position.X + 3.0f, sxVeh.entity.Position.Y,
-                                sxVeh.entity.Position.Z - 4.0f));
+                            dbPlayer.Player.SetPosition(new Vector3(sxVeh.Entity.Position.X + 3.0f, sxVeh.Entity.Position.Y,
+                                sxVeh.Entity.Position.Z - 4.0f));
                             dbPlayer.ResetData("AirforceEnterPos");
                             return true;
                         }
                         // Ins Cockpit
                         else if (dbPlayer.Player.Position.DistanceTo(AirforceCockpitPos) < 1.0f)
                         {
-                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                            sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
 
                             if (sxVeh == null) return false;
                             if (sxVeh.SyncExtension.Locked) return false;
@@ -116,14 +116,14 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                                     dbPlayer.Dimension[0] = 0;
                                     dbPlayer.SetDimension(0);
 
-                                    dbPlayer.Player.SetPosition(new Vector3(sxVeh.entity.Position.X, sxVeh.entity.Position.Y,
-                                        sxVeh.entity.Position.Z));
+                                    dbPlayer.Player.SetPosition(new Vector3(sxVeh.Entity.Position.X, sxVeh.Entity.Position.Y,
+                                        sxVeh.Entity.Position.Z));
                                     dbPlayer.ResetData("AirforceEnterPos");
                                     dbPlayer.Player.TriggerNewClient("freezePlayer", true);
 
                                     await NAPI.Task.WaitForMainThread(1200);
 
-                                    dbPlayer.Player.SetIntoVehicleSave(sxVeh.entity, 0);
+                                    dbPlayer.Player.SetIntoVehicleSave(sxVeh.Entity, 0);
                                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                                 });
                                 return true;
@@ -136,14 +136,14 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                                     dbPlayer.Dimension[0] = 0;
                                     dbPlayer.SetDimension(0);
 
-                                    dbPlayer.Player.SetPosition(new Vector3(sxVeh.entity.Position.X, sxVeh.entity.Position.Y,
-                                        sxVeh.entity.Position.Z));
+                                    dbPlayer.Player.SetPosition(new Vector3(sxVeh.Entity.Position.X, sxVeh.Entity.Position.Y,
+                                        sxVeh.Entity.Position.Z));
                                     dbPlayer.ResetData("AirforceEnterPos");
                                     dbPlayer.Player.TriggerNewClient("freezePlayer", true);
 
                                     await NAPI.Task.WaitForMainThread(1200);
 
-                                    dbPlayer.Player.SetIntoVehicleSave(sxVeh.entity, 1);
+                                    dbPlayer.Player.SetIntoVehicleSave(sxVeh.Entity, 1);
                                     dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                                 });
                                 return true;
@@ -157,7 +157,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                         return false;
                     }
 
-                    sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)teams.TEAM_GOV, 17.0f);
+                    sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)TeamTypes.TEAM_GOV, 17.0f);
                     
 
                     if (sxVeh != null && sxVeh.IsValid() && sxVeh.databaseId != 0 && !sxVeh.SyncExtension.Locked && sxVeh.Data.Id == AirforceDataId)
@@ -188,7 +188,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                     {
                         if (dbPlayer.Player.Position.DistanceTo(AirforceInteriorPos) > 2.5f) return false;
 
-                        sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)teams.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
+                        sxVeh = VehicleHandler.Instance.GetTeamVehicles((uint)TeamTypes.TEAM_GOV).Where(v => v.Data.Id == AirforceDataId).FirstOrDefault();
                         if (sxVeh == null) return false;
 
                         // player has no right to operate vehicle

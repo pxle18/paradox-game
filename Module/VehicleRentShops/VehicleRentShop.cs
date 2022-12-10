@@ -128,7 +128,7 @@ namespace VMP_CNR.Module.VehicleRentShops
                 var found = false;
                 foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
                 {
-                    if (vehicle?.entity.Position.DistanceTo(spawnPoint.Position) <= 2.0f)
+                    if (vehicle?.Entity.Position.DistanceTo(spawnPoint.Position) <= 2.0f)
                     {
                         found = true;
                     }

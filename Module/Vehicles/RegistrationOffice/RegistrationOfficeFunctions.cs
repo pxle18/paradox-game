@@ -57,7 +57,7 @@ namespace VMP_CNR.Module.Vehicles.RegistrationOffice
                 sxVehicle.Registered = true;
                 UpdateVehicleRegistrationToDb(sxVehicle, owner, worker, plate, true);
                 sxVehicle.plate = plate;
-                sxVehicle.entity.NumberPlate = plate;
+                sxVehicle.Entity.NumberPlate = plate;
 
                 worker.GiveMoney(500);
                 worker.SendNewNotification("Sie haben das Fahrzeug erfolgreich angemeldet.");

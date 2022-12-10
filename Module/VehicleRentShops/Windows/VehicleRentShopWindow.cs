@@ -96,7 +96,7 @@ namespace VMP_CNR.Module.VehicleRentShops.Windows
                         // Spawn Vehicle and set vehicle data
                         SxVehicle rentVeh = VehicleHandler.Instance.CreateServerVehicle(vehicleRentShopItem.VehicleModelId, false, vehicleRentShopSpawn.Position, vehicleRentShopSpawn.Heading, -1, -1, 0, true, true, false, 0, dbPlayer.GetName(), 0, ((int)VehicleRentShopModule.FakeJobVehicleRentShopId + (int)vehicleRentShop.Id), dbPlayer.Id, plate: "Miet KFZ");
                         
-                        while (rentVeh.entity == null)
+                        while (rentVeh.Entity == null)
                         {
                             await NAPI.Task.WaitForMainThread(100);
                         }

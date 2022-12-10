@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.SpeedLimit
 
                     dbPlayer.SendNewNotification($"Fahrzeug {sxVehicle.GetName()} wurde mit {dbPlayer.GetData("max_speed")} km/h eingetragen!");
 
-                    VehicleHandler.Instance.DeleteVehicleByEntity(sxVehicle.entity);
+                    VehicleHandler.Instance.DeleteVehicleByEntity(sxVehicle.Entity);
                     dbPlayer.ResetData("messMode");
                 }
 
@@ -126,14 +126,14 @@ namespace VMP_CNR.Module.SpeedLimit
 
                     await Task.Delay(2000);
 
-                    if (myveh != null) player.SetIntoVehicle(myveh.entity, -1);
+                    if (myveh != null) player.SetIntoVehicle(myveh.Entity, -1);
 
                     await Task.Delay(500);
 
                     if (myveh != null) player.WarpOutOfVehicle();
 
                     await Task.Delay(1000);
-                    if (myveh != null) player.SetIntoVehicle(myveh.entity, -1);
+                    if (myveh != null) player.SetIntoVehicle(myveh.Entity, -1);
 
 
                 });

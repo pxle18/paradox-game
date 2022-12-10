@@ -436,7 +436,7 @@ namespace VMP_CNR.Module.Clothes
             {
                 foreach (var cloth in GetAll().Values)
                 {
-                    if ((cloth.Teams.Contains((int) teams.TEAM_CIVILIAN) || cloth.Teams.Contains(dbPlayer.TeamId)) &&
+                    if ((cloth.Teams.Contains((int) TeamTypes.TEAM_CIVILIAN) || cloth.Teams.Contains(dbPlayer.TeamId)) &&
                         cloth.Slot == 3 &&
                         cloth.Gender == dbPlayer.Customization.Gender)
                     {
@@ -461,7 +461,7 @@ namespace VMP_CNR.Module.Clothes
                 {
                     var cloth = this[clothId];
                     if (cloth?.Slot != slot ||
-                        !cloth.Teams.Contains((int) teams.TEAM_CIVILIAN) && !cloth.Teams.Contains(dbPlayer.TeamId) ||
+                        !cloth.Teams.Contains((int) TeamTypes.TEAM_CIVILIAN) && !cloth.Teams.Contains(dbPlayer.TeamId) ||
                         cloth.Gender != 3 && cloth.Gender != dbPlayer.Customization.Gender) continue;
                     if (!wardrobeClothes.Contains(cloth))
                     {
@@ -483,7 +483,7 @@ namespace VMP_CNR.Module.Clothes
             {
                 foreach (var cloth in GetAll().Values)
                 {
-                    if ((cloth.Teams.Contains((int) teams.TEAM_CIVILIAN) || cloth.Teams.Contains(dbPlayer.TeamId)) &&
+                    if ((cloth.Teams.Contains((int) TeamTypes.TEAM_CIVILIAN) || cloth.Teams.Contains(dbPlayer.TeamId)) &&
                         cloth.Slot == 3 &&
                         cloth.Gender == dbPlayer.Customization.Gender)
                     {
@@ -507,7 +507,7 @@ namespace VMP_CNR.Module.Clothes
             {
                 var cloth = this[clothId];
                 if (cloth?.Slot != slot ||
-                    !cloth.Teams.Contains((int) teams.TEAM_CIVILIAN) && !cloth.Teams.Contains(dbPlayer.TeamId) ||
+                    !cloth.Teams.Contains((int) TeamTypes.TEAM_CIVILIAN) && !cloth.Teams.Contains(dbPlayer.TeamId) ||
                     cloth.Gender != 3 && cloth.Gender != dbPlayer.Customization.Gender) continue;
                 if (!wardrobeClothes.Contains(cloth))
                 {

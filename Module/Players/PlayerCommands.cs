@@ -83,7 +83,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -107,7 +107,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -155,7 +155,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -179,7 +179,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -260,7 +260,7 @@ namespace VMP_CNR.Module.Players
             l_DbPlayer.ResetData("lsc_vehkey_request");
             l_Vehicle.SetTuningState(true);
             l_DbPlayer.SendNewNotification("Du hast das Fahrzeug an die Tuningwerkstatt übergeben!");
-            Teams.TeamModule.Instance.Get((uint)teams.TEAM_LSC).SendNotification($"{l_DbPlayer.GetName()} hat sein Fahrzeug {l_Vehicle.Data.Model} an LSC übergeben!");
+            Teams.TeamModule.Instance.Get((uint)TeamTypes.TEAM_LSC).SendNotification($"{l_DbPlayer.GetName()} hat sein Fahrzeug {l_Vehicle.Data.Model} an LSC übergeben!");
         }
 
         [Command(GreedyArg = true)]
@@ -270,7 +270,7 @@ namespace VMP_CNR.Module.Players
             if (l_DbPlayer == null || !l_DbPlayer.IsValid())
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -292,7 +292,7 @@ namespace VMP_CNR.Module.Players
             if (!uint.TryParse(l_Args[3], out uint l_Amount))
                 return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -322,7 +322,7 @@ namespace VMP_CNR.Module.Players
             l_Payer.SetData("lsc_bill_tuner", l_DbPlayer.Id);
             l_Payer.SetData("lsc_bill_vehicle", l_VehicleID);
             l_Payer.SetData("lsc_bill_id", l_BillID);
-            Teams.TeamModule.Instance.Get((uint)teams.TEAM_LSC).SendNotification($"{l_Payer.GetName()} wurde eine Rechnung für das Fahrzeug {l_Vehicle.Data.Model} in Höhe von {l_Amount.ToString()} ausgestellt!");
+            Teams.TeamModule.Instance.Get((uint)TeamTypes.TEAM_LSC).SendNotification($"{l_Payer.GetName()} wurde eine Rechnung für das Fahrzeug {l_Vehicle.Data.Model} in Höhe von {l_Amount.ToString()} ausgestellt!");
         }
 
         [Command]
@@ -363,9 +363,9 @@ namespace VMP_CNR.Module.Players
             l_Rechnung.Save();
 
             l_DbPlayer.SendNewNotification($"Du hast die LSC-Rechnung (ID: {l_BillID.ToString()}) bezahlt!");
-            Teams.TeamModule.Instance.Get((uint)teams.TEAM_LSC).SendNotification($"{l_DbPlayer.GetName()} hat die Rechnung {l_BillID.ToString()} bezahlt!");
+            Teams.TeamModule.Instance.Get((uint)TeamTypes.TEAM_LSC).SendNotification($"{l_DbPlayer.GetName()} hat die Rechnung {l_BillID.ToString()} bezahlt!");
 
-            var l_Shelter = TeamShelterModule.Instance.GetAll().FirstOrDefault(s => s.Value.Team.Id == (uint)teams.TEAM_LSC).Value;
+            var l_Shelter = TeamShelterModule.Instance.GetAll().FirstOrDefault(s => s.Value.Team.Id == (uint)TeamTypes.TEAM_LSC).Value;
             if (l_Shelter == null || l_Shelter.Team == null) return;
 
             // 50% vom Tuning verschwinden, 10% Staatskasse, 40% in Fbank
@@ -465,7 +465,7 @@ namespace VMP_CNR.Module.Players
                 if (l_DbPlayer == null)
                     return;
 
-                if (l_DbPlayer.TeamId != (uint)teams.TEAM_FIB && l_DbPlayer.TeamId != (uint)teams.TEAM_POLICE && l_DbPlayer.TeamId != (uint)teams.TEAM_ARMY && l_DbPlayer.TeamId != (uint)teams.TEAM_MEDIC && l_DbPlayer.TeamId != (uint) teams.TEAM_GOV)
+                if (l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_POLICE && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_MEDIC && l_DbPlayer.TeamId != (uint) TeamTypes.TEAM_GOV)
                     return;
 
                 DbPlayer l_FindPlayer = Players.Instance.FindPlayer(p_Name);
@@ -551,7 +551,7 @@ namespace VMP_CNR.Module.Players
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_MEDIC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC) return;
                 if (dbPlayer.TeamRank < 3) return;
 
                 var findPlayer = Players.Instance.FindPlayer(name);
@@ -659,7 +659,7 @@ namespace VMP_CNR.Module.Players
                 if (!int.TryParse(commandSplitted[1], out var noteId)) return;
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_ARMY || dbPlayer.TeamRank < 4) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY || dbPlayer.TeamRank < 4) return;
 
                 var findPlayer = Players.Instance.FindPlayer(commandSplitted[0]);
                 if (findPlayer == null) return;
@@ -699,7 +699,7 @@ namespace VMP_CNR.Module.Players
                 if (!int.TryParse(commandSplitted[1], out var noteId)) return;
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_MEDIC || dbPlayer.TeamRank < 9) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC || dbPlayer.TeamRank < 9) return;
 
                 var findPlayer = Players.Instance.FindPlayer(commandSplitted[0]);
                 if (findPlayer == null) return;
@@ -853,7 +853,7 @@ namespace VMP_CNR.Module.Players
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod()) return;
-                if (dbPlayer.job[0] != (int)jobs.JOB_ANWALT) return;
+                if (dbPlayer.job[0] != (int)JobTypes.JOB_ANWALT) return;
 
                 var findPlayer = Players.Instance.FindPlayer(mandant);
                 if (findPlayer == null) return;
@@ -1150,8 +1150,8 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) teams.TEAM_POLICE && dbPlayer.TeamId != (int) teams.TEAM_FIB &&
-                dbPlayer.TeamId != (int) teams.TEAM_ARMY && dbPlayer.TeamId != (int)teams.TEAM_GOV) return;
+            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int) TeamTypes.TEAM_FIB &&
+                dbPlayer.TeamId != (int) TeamTypes.TEAM_ARMY && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) return;
 
             DialogMigrator.CreateMenu(player, Dialogs.menu_show_wanteds, "Gesuchte Personen", "");
             DialogMigrator.AddMenuItem(player, Dialogs.menu_show_wanteds, GlobalMessages.General.Close(), "");
@@ -1453,7 +1453,7 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.RageExtension.IsInVehicle)
                 {
-                    DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.kick, "Shoprob aus dem Fahrzeug", 0,
+                    DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.kick, "Shoprob aus dem Fahrzeug", 0,
                         Configuration.Instance.DevMode);
                     Module.Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         $"{dbPlayer.GetName()} wurde gekickt. Grund: Shoprob aus dem Fahrzeug!");
@@ -1509,7 +1509,7 @@ namespace VMP_CNR.Module.Players
 
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm,
                             "Community-Ausschluss Juwelier Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1526,7 +1526,7 @@ namespace VMP_CNR.Module.Players
                         // Get Players For Respect
                         int playersAtRob = dbPlayer.Team.GetTeamMembers().Where(m => m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 300f).Count();
                         dbPlayer.Team.TeamMetaData.AddRespect(playersAtRob * 80);
-                        TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 80 + "P)", (teams)dbPlayer.Team.Id);
+                        TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 80 + "P)", (TeamTypes)dbPlayer.Team.Id);
                     }
                     // Juewlierrob
                     RobberyModule.Instance.Add(RobberyModule.Juwelier, dbPlayer, 20, RobType.Juwelier);
@@ -1544,7 +1544,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm,
                             "Community-Ausschluss Staatsbank Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1567,7 +1567,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm,
                             "Community-Ausschluss VespucciBank Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1588,7 +1588,7 @@ namespace VMP_CNR.Module.Players
                 {
                     if (dbPlayer.Player.Dimension != 0)
                     {
-                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), adminLogTypes.perm,
+                        DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm,
                             "Community-Ausschluss Juwelier Auto Cheat", 0,
                             Configurations.Configuration.Instance.DevMode);
                         Players.Instance.SendMessageToAuthorizedUsers("anticheat",
@@ -1633,7 +1633,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty())
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || !dbPlayer.IsInDuty())
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -1729,7 +1729,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.CanAccessMethod()) return;
 
-            if ((dbPlayer.IsACop() || dbPlayer.TeamId == (uint)teams.TEAM_MEDIC || dbPlayer.TeamId == (uint)teams.TEAM_DPOS) && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 8)
+            if ((dbPlayer.IsACop() || dbPlayer.TeamId == (uint)TeamTypes.TEAM_MEDIC || dbPlayer.TeamId == (uint)TeamTypes.TEAM_DPOS) && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 8)
             {
                 if (string.IsNullOrWhiteSpace(govMessage) || govMessage.Length < 2)
                 {
@@ -1738,7 +1738,7 @@ namespace VMP_CNR.Module.Players
                 }
                 await AsyncCommands.Instance.SendGovMessage(dbPlayer, govMessage);
             }
-            if(dbPlayer.TeamId == (uint)teams.TEAM_CAYO && dbPlayer.TeamRank >= 10)
+            if(dbPlayer.TeamId == (uint)TeamTypes.TEAM_CAYO && dbPlayer.TeamRank >= 10)
             {
                 if (string.IsNullOrWhiteSpace(govMessage) || govMessage.Length < 2)
                 {
@@ -1780,7 +1780,7 @@ namespace VMP_CNR.Module.Players
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.CanAccessMethod()) return;
-                if ((!dbPlayer.IsACop() || !dbPlayer.IsInDuty()) && dbPlayer.TeamId != (uint)teams.TEAM_FIB) return;
+                if ((!dbPlayer.IsACop() || !dbPlayer.IsInDuty()) && dbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB) return;
 
                 MenuManager.Instance.Build(PlayerMenu.CrimeJailMenu, dbPlayer).Show(dbPlayer);
             }
@@ -2209,7 +2209,7 @@ namespace VMP_CNR.Module.Players
                     dbPlayer.SendNewNotification("Gesuchte Person " + playerFromPool.GetName() + " wurde geortet!");
                     NSAModule.Instance.SendMessageToNSALead($"{dbPlayer.GetName()} hat die Person {playerFromPool.GetName()} geortet!");
 
-                    if(dbPlayer.IsNSADuty || (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.FindFlags.HasFlag(FindFlags.Continuous)))
+                    if(dbPlayer.IsNSADuty || (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.FindFlags.HasFlag(FindFlags.Continuous)))
                     {
                         dbPlayer.SetData("nsaOrtung", playerFromPool.Id);
                     }
@@ -2237,10 +2237,10 @@ namespace VMP_CNR.Module.Players
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-                if ((dbPlayer.TeamId != (int)teams.TEAM_FIB && dbPlayer.TeamId != (int)teams.TEAM_GOV) ||
+                if ((dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) ||
                 !dbPlayer.IsInDuty() ||
-                (dbPlayer.TeamRank < 5 && dbPlayer.TeamId == (int)teams.TEAM_FIB) ||
-                (dbPlayer.TeamRank <= 7 && dbPlayer.TeamId == (int)teams.TEAM_GOV))
+                (dbPlayer.TeamRank < 5 && dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB) ||
+                (dbPlayer.TeamRank <= 7 && dbPlayer.TeamId == (int)TeamTypes.TEAM_GOV))
                 {
                     dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                     return;
@@ -2289,13 +2289,13 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) teams.TEAM_FIB && dbPlayer.TeamId != (int) teams.TEAM_POLICE && dbPlayer.TeamId != (int)teams.TEAM_FIB)
+            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
 
-            if ((dbPlayer.TeamId == (int)teams.TEAM_FIB && !dbPlayer.IsNSADuty) && (dbPlayer.TeamId == (int)teams.TEAM_FIB && !dbPlayer.FindFlags.HasFlag(FindFlags.Phonehistory)))
+            if ((dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && !dbPlayer.IsNSADuty) && (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && !dbPlayer.FindFlags.HasFlag(FindFlags.Phonehistory)))
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -2315,10 +2315,10 @@ namespace VMP_CNR.Module.Players
             }
 
             // Für LSPD
-            if (dbPlayer.TeamId == (int)teams.TEAM_POLICE)
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE)
             {
                 if (dbPlayer.TeamRank < 10) return;
-                if (playerFromPool.TeamId != (int)teams.TEAM_POLICE)
+                if (playerFromPool.TeamId != (int)TeamTypes.TEAM_POLICE)
                 {
                     dbPlayer.SendNewNotification("Sie können nur LSPD Mitglieder prüfen!");
                     return;
@@ -2434,7 +2434,7 @@ namespace VMP_CNR.Module.Players
                 uint teamId = dbPlayer.TeamId;
                 if(dbPlayer.IsNSADuty)
                 {
-                    teamId = (uint)teams.TEAM_IAA;
+                    teamId = (uint)TeamTypes.TEAM_IAA;
                 }
 
                 if (!LeitstellenPhoneModule.Instance.hasLeitstelleFunction(teamId)) return;
@@ -2477,7 +2477,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (uint) teams.TEAM_NEWS) return;
+            if (dbPlayer.TeamId != (uint) TeamTypes.TEAM_NEWS) return;
 
             if (uint.TryParse(p_NewsID, out uint l_ID)) new NewsListApp().deleteNews(l_ID);
         }
@@ -2489,7 +2489,7 @@ namespace VMP_CNR.Module.Players
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod()) return;
 
-            if (l_DbPlayer.TeamId != (int) teams.TEAM_GOV) return;
+            if (l_DbPlayer.TeamId != (int) TeamTypes.TEAM_GOV) return;
             if (l_DbPlayer.TeamRank < 11)
             {
                 l_DbPlayer.SendNewNotification("Nur der Gouverneur oder der Premierminister kann auf die Staatskasse zugreifen.", notificationType:PlayerNotification.NotificationType.ERROR);
@@ -2542,7 +2542,7 @@ namespace VMP_CNR.Module.Players
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod()) return;
 
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_FIB) return;
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return;
             if (l_DbPlayer.TeamRank != 11)
             {
                 return;
@@ -2595,7 +2595,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-            var newsShelter = TeamShelterModule.Instance.GetByTeam((uint)teams.TEAM_NEWS);
+            var newsShelter = TeamShelterModule.Instance.GetByTeam((uint)TeamTypes.TEAM_NEWS);
             if (newsShelter == null)
                 return;
 
@@ -2603,7 +2603,7 @@ namespace VMP_CNR.Module.Players
             {
                 dbPlayer.SendNewNotification(
                     GlobalMessages.General.Usage("/eventkasse", "[giveplayer/deposit]", "Betrag"));
-                if (dbPlayer.TeamId == (int) teams.TEAM_NEWS)
+                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_NEWS)
                 {
                     dbPlayer.SendNewNotification(
                         "Es befinden sich $" + newsShelter.Money +
@@ -2634,7 +2634,7 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    if (dbPlayer.TeamId != (int) teams.TEAM_NEWS || dbPlayer.TeamRank < 8) return;
+                    if (dbPlayer.TeamId != (int) TeamTypes.TEAM_NEWS || dbPlayer.TeamRank < 8) return;
                     if (betrag > 0 && betrag <= newsShelter.Money)
                     {
                         var findPlayer = Players.Instance.FindPlayer(arg2[2]);
@@ -2717,7 +2717,7 @@ namespace VMP_CNR.Module.Players
         {
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null) return;
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_FIB) return;
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return;
 
             l_DbPlayer.fakePerso = false;
             l_DbPlayer.fakeName = "";
@@ -2732,7 +2732,7 @@ namespace VMP_CNR.Module.Players
         {
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null) return;
-            if (l_DbPlayer.TeamId != (int)teams.TEAM_FIB) return;
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return;
             if (l_DbPlayer.TeamRank == 0) return;
 
             if (p_Name == "")
@@ -2777,7 +2777,7 @@ namespace VMP_CNR.Module.Players
         {
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
             if (!dbPlayer.RageExtension.IsInVehicle) return;
             var sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
@@ -2818,7 +2818,7 @@ namespace VMP_CNR.Module.Players
         {
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
             if (!dbPlayer.RageExtension.IsInVehicle) return;
             var sxVeh = player.Vehicle.GetVehicle();
@@ -2839,7 +2839,7 @@ namespace VMP_CNR.Module.Players
 
                 if (color1 >= 0 && color2 >= 0 && color3 >= 0)
                 {
-                    var l_Shelter = TeamShelterModule.Instance.GetAll().FirstOrDefault(s => s.Value.Team.Id == (uint)teams.TEAM_LSC).Value;
+                    var l_Shelter = TeamShelterModule.Instance.GetAll().FirstOrDefault(s => s.Value.Team.Id == (uint)TeamTypes.TEAM_LSC).Value;
                     if (l_Shelter == null || l_Shelter.Team == null) return;
                     
                     if (l_Shelter.Money < 10000)
@@ -2964,7 +2964,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.job[0] != (int)jobs.JOB_MECH)
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_MECH)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -2987,7 +2987,7 @@ namespace VMP_CNR.Module.Players
                     DbPlayer vehOwner = Players.Instance.GetByDbId(sxVeh.ownerId);
                     if (vehOwner == null || !vehOwner.IsValid()) return;
 
-                    if(vehOwner.Player.Position.DistanceTo(sxVeh.entity.Position) > 10.0f)
+                    if(vehOwner.Player.Position.DistanceTo(sxVeh.Entity.Position) > 10.0f)
                     {
                         dbPlayer.SendNewNotification(
                             "Besitzer muss in der Nähe des Fahrzeuges sein!");
@@ -3147,7 +3147,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -3205,7 +3205,7 @@ namespace VMP_CNR.Module.Players
             if (!dbPlayer.CanAccessMethod()) return;
 
             if (!dbPlayer.RageExtension.IsInVehicle) return;
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC)
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -3246,7 +3246,7 @@ namespace VMP_CNR.Module.Players
             dbPlayer.SetData("hornCar", 1);
             dbPlayer.SetData("n_horn", horn);
 
-            sxVeh.entity.SetMod(14, horn);
+            sxVeh.Entity.SetMod(14, horn);
 
             dbPlayer.SendNewNotification(
                 "Sie haben die Hupe (ID " + horn + ") eingebaut!");
@@ -3323,7 +3323,7 @@ namespace VMP_CNR.Module.Players
                 if (!dbPlayer.CanAccessMethod()) return;
                 if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-                if (dbPlayer.job[0] != (int)jobs.JOB_Makler) return;
+                if (dbPlayer.job[0] != (int)JobTypes.JOB_Makler) return;
                 if (!ServerFeatures.IsActive("makler-fahrzeuge"))
                 {
                     dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.", title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
@@ -3379,7 +3379,7 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    if (!Owner.IsOwner(vehicle) || Owner.Player.Vehicle != vehicle.entity
+                    if (!Owner.IsOwner(vehicle) || Owner.Player.Vehicle != vehicle.Entity
                                                 || vehicle.teamid >= 1
                                                 || Owner.CurrentSeat != 0) return;
 
@@ -3554,7 +3554,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.job[0] != (int) jobs.JOB_Makler) return;
+            if (dbPlayer.job[0] != (int) JobTypes.JOB_Makler) return;
             if (!ServerFeatures.IsActive("makler-lager"))
             {
                 dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
@@ -3869,7 +3869,7 @@ namespace VMP_CNR.Module.Players
                     foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
                     {
                         if (vehicle == null) continue;
-                        if (!(dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= 10.0f)) continue;
+                        if (!(dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= 10.0f)) continue;
                         if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
 
                         if (vehicle.Registered)
@@ -3933,7 +3933,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.RageExtension.IsInVehicle || dbPlayer.Player.VehicleSeat == 0) return;
             var vehicle = dbPlayer.Player.Vehicle.GetVehicle();
-            if (vehicle.entity.GetModel() != VehicleHash.Taxi) return;
+            if (vehicle.Entity.GetModel() != VehicleHash.Taxi) return;
             if (vehicle.ownerId != dbPlayer.Id) return;
 
             if (!int.TryParse(price, out var priceInt))
@@ -3962,7 +3962,7 @@ namespace VMP_CNR.Module.Players
 
             if (!dbPlayer.RageExtension.IsInVehicle || dbPlayer.Player.VehicleSeat == 0) return;
             var vehicle = dbPlayer.Player.Vehicle.GetVehicle();
-            if (vehicle.entity.GetModel() != VehicleHash.Taxi) return;
+            if (vehicle.Entity.GetModel() != VehicleHash.Taxi) return;
             if (vehicle.ownerId != dbPlayer.Id) return;
             dbPlayer.SendNewNotification("Taxometer gestoppt.");
             dbPlayer.Player.TriggerNewClient("stopTaxometer");
@@ -3992,7 +3992,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) teams.TEAM_NEWS)
+            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_NEWS)
             {
                 return;
             }
@@ -4066,13 +4066,13 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) teams.TEAM_MEDIC && dbPlayer.TeamId != (int) teams.TEAM_POLICE) return;
+            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_MEDIC && dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE) return;
             if (string.IsNullOrWhiteSpace(spawnCommand))
             {
-                if (dbPlayer.TeamId == (int) teams.TEAM_POLICE)
+                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_POLICE)
                     dbPlayer.SendNewNotification(
                         GlobalMessages.General.Usage("/fspawnchange", "[LS/County/LS2]"));
-                if (dbPlayer.TeamId == (int) teams.TEAM_MEDIC)
+                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_MEDIC)
                     dbPlayer.SendNewNotification(
                         GlobalMessages.General.Usage("/fspawnchange", "[LS/LS2/County/Fire]"));
                 return;
@@ -4100,7 +4100,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            if (string.Equals(spawnCommand.ToLower(), "fire") && dbPlayer.TeamId == (int) teams.TEAM_MEDIC)
+            if (string.Equals(spawnCommand.ToLower(), "fire") && dbPlayer.TeamId == (int) TeamTypes.TEAM_MEDIC)
             {
                 dbPlayer.fspawn[0] = 3;
                 dbPlayer.SendNewNotification(
@@ -4122,7 +4122,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB || !dbPlayer.IsInDuty()) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || !dbPlayer.IsInDuty()) return;
 
             if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
             {
@@ -4147,7 +4147,7 @@ namespace VMP_CNR.Module.Players
 
             Job xjob;
             xjob = JobsModule.Instance.GetJob(dbPlayer.job[0]);
-            if (dbPlayer.job[0] != (int) jobs.JOB_PLAGIAT)
+            if (dbPlayer.job[0] != (int) JobTypes.JOB_PLAGIAT)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -4257,7 +4257,7 @@ namespace VMP_CNR.Module.Players
 
             var command = commandParameter.Split(new[] {' '}, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
-            if (dbPlayer.job[0] != (int) jobs.JOB_WEAPONDEALER || !dbPlayer.IsAGangster()) return;
+            if (dbPlayer.job[0] != (int) JobTypes.JOB_WEAPONDEALER || !dbPlayer.IsAGangster()) return;
             if (dbPlayer.DimensionType[0] != DimensionType.WeaponFactory)
             {
                 dbPlayer.SendNewNotification(
@@ -4288,7 +4288,7 @@ namespace VMP_CNR.Module.Players
 
             var command = commandParameter.Split(new[] {' '}, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
-            if (dbPlayer.job[0] == (int) jobs.JOB_PLAGIAT)
+            if (dbPlayer.job[0] == (int) JobTypes.JOB_PLAGIAT)
             {
                 if (string.Equals(command[0], "get"))
                 {
@@ -4321,7 +4321,7 @@ namespace VMP_CNR.Module.Players
                 else if (string.Equals(command[0], "deliver"))
                 {
                     Job xjob;
-                    if ((xjob = JobsModule.Instance.GetJob((int) jobs.JOB_PLAGIAT)) != null)
+                    if ((xjob = JobsModule.Instance.GetJob((int) JobTypes.JOB_PLAGIAT)) != null)
                     {
                         if (dbPlayer.Player.Position.DistanceTo(new Vector3(xjob.Position.X, xjob.Position.Y, xjob.Position.Z)) <= 2.0f)
                         {
@@ -4407,12 +4407,12 @@ namespace VMP_CNR.Module.Players
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod() || !dbPlayer.RageExtension.IsInVehicle) return;
 
-                if (dbPlayer.TeamId == (int)teams.TEAM_ARMY)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                 {
                     if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Manager) return;
                     var count = 0;
 
-                    foreach (var currPlayer in TeamModule.Instance.Get((int)teams.TEAM_ARMY).GetTeamMembers())
+                    foreach (var currPlayer in TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers())
                     {
                         if (currPlayer.TeamRank < 1) continue;
                         if (!currPlayer.IsInDuty()) continue;
@@ -4459,7 +4459,7 @@ namespace VMP_CNR.Module.Players
                     dbPlayer.SendNewNotification($"Sie haben " + amount + " " + item.Name + " geladen!");
 
                     //TeamModule.Instance[(int) teams.TEAM_ARMY].Members
-                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers())
+                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers())
                     {
                         if (iPlayer == null || !iPlayer.IsValid())
                             continue;
@@ -4479,7 +4479,7 @@ namespace VMP_CNR.Module.Players
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod()) return;
 
-                if (!dbPlayer.RageExtension.IsInVehicle || (dbPlayer.TeamId != (int)teams.TEAM_ARMY)) return;
+                if (!dbPlayer.RageExtension.IsInVehicle || (dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY)) return;
 
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(3621.52, 3734.86, 28.6901)) > 10.0f)
                 {
@@ -4497,9 +4497,9 @@ namespace VMP_CNR.Module.Players
 
                 dbPlayer.SendNewNotification($"Sie haben " + amount + " Militärkisten entladen!");
 
-                if (dbPlayer.TeamId == (int)teams.TEAM_ARMY)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                 {
-                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers())
+                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers())
                     {
                         if (iPlayer == null || !iPlayer.IsValid())
                             continue;
@@ -4519,7 +4519,7 @@ namespace VMP_CNR.Module.Players
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod()) return;
 
-                if (!dbPlayer.RageExtension.IsInVehicle || (dbPlayer.TeamId != (int)teams.TEAM_ARMY)) return;
+                if (!dbPlayer.RageExtension.IsInVehicle || (dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY)) return;
 
                 var Armory = ArmoryModule.Instance.GetByLoadPosition(dbPlayer.Player.Position);
                 if (Armory == null || Armory.UnlimitedPackets) return;
@@ -4536,9 +4536,9 @@ namespace VMP_CNR.Module.Players
                                           item.Name + " in die Waffenkammer entladen!");
                 Armory.AddPackets(amount * ArmoryModule.Instance.WeaponChestMultiplier);
 
-                if (dbPlayer.TeamId == (int)teams.TEAM_ARMY)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                 {
-                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers())
+                    foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers())
                     {
                         if (iPlayer == null || !iPlayer.IsValid())
                             continue;

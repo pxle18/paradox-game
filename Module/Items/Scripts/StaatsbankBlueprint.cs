@@ -80,7 +80,7 @@ namespace VMP_CNR.Module.Items.Scripts
             staatsbankTunnel.IsInsideOpen = true;
             dbPlayer.SendNewNotification("Du hast einen Tunnel zur Kanalisation gebohrt! Achtung, der Tunnel wird mit der Zeit verschüttet (15 min)");
             
-            TeamModule.Instance.SendMessageToTeam("[INFO] Die Seismografen haben unterhalb der Staatsbank erschütterungen wahrgenommen!", teams.TEAM_FIB);
+            TeamModule.Instance.SendMessageToTeam("[INFO] Die Seismografen haben unterhalb der Staatsbank erschütterungen wahrgenommen!", TeamTypes.TEAM_FIB);
 
             // jump Points...
 

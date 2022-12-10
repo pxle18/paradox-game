@@ -25,12 +25,12 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
                 RCRacingModule.StartFinishPosition, 319.275f, Main.rndColor(),
                 Main.rndColor(), dbPlayer.Id, true, true, false, 0, dbPlayer.GetName(), 0, 999, dbPlayer.Id);
 
-            while (sxVehicle.entity == null)
+            while (sxVehicle.Entity == null)
             {
                 await NAPI.Task.WaitForMainThread(100);
             }
 
-            if (sxVehicle != null && sxVehicle.entity != null) dbPlayer.Player.SetIntoVehicleSave(sxVehicle.entity, -1);
+            if (sxVehicle != null && sxVehicle.Entity != null) dbPlayer.Player.SetIntoVehicleSave(sxVehicle.Entity, -1);
 
             RCRacingModule.Instance.RCRacingVehicles.Add(sxVehicle);
 

@@ -123,9 +123,6 @@ namespace VMP_CNR.Module.Customization
             //Fix not visible Bug?
             NAPI.Task.Run(() => { dbPlayer.Player.Transparency = 255; });
 
-            // Warum doppelt aufrufen? @Jeff
-            //AttachmentModule.Instance.RemoveAllAttachments(dbPlayer);
-
             AttachmentModule.Instance.RemoveAllAttachments(dbPlayer);
             dbPlayer.SyncAttachmentOnlyItems();
         }

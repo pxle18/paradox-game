@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static bool VoltageTest(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)teams.TEAM_FIB) return false;
+            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return false;
 
             HousesVoltage housesVoltage = HousesVoltageModule.Instance.GetAll().Values.ToList().Where(hv => hv.Position.DistanceTo(dbPlayer.Player.Position) < 5.0f).FirstOrDefault();
 

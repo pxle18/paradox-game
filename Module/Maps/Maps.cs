@@ -19,12 +19,10 @@ namespace VMP_CNR.Module.Maps
             FrakInv.Load(0);
             Triaden.Load(0);
             Dealerhole.Load(110);
-            //Basement.Load(0);
-            //Aod.Load(111);
-            //Bratwa.Load(113);
-            //Grove.Load(114);
+            Aod.Load(111);
+            Grove.Load(114);
             LCN.Load(115);
-            //Lost.Load(116);
+            Lost.Load(116);
             TriadenKeller.Load(117);
             UR.Load(118);
             Yakuza.Load(119);

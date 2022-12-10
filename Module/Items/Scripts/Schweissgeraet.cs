@@ -65,7 +65,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     if (!door.LessSecurity || door.LessSecurityChanged.AddMinutes(5) < DateTime.Now)
                     {
                         // Mind 8 soldaten ID && SG
-                        if(door.Group == 1 && TeamModule.Instance.Get((int)teams.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() > 5)
+                        if(door.Group == 1 && TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() > 5)
                         {
                             TeamModule.Instance.SendChatMessageToDepartments($"Es wird gerade versucht eine Sicherheitstuer aufzubrechen! Cunningham-Cooperation Secure System - Object {door.Name}!");
                         }
@@ -253,7 +253,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                 if (dbPlayer.Player.Dimension != 0)
                 {
-                    DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), adminLogTypes.perm,
+                    DatabaseLogging.Instance.LogAdminAction(dbPlayer.Player, dbPlayer.GetName(), AdminLogTypes.perm,
                         "Community-Ausschluss Shop Auto Cheat", 0, Configurations.Configuration.Instance.DevMode);
                     Players.Players.Instance.SendMessageToAuthorizedUsers("anticheat",
                         "Haus Bug Use " + dbPlayer.GetName());
@@ -514,7 +514,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                     if (maz == null || maz.Position.DistanceTo(dbPlayer.Player.Position) > 20.0f) return false;
 
-                    if (!dbPlayer.IsAGangster() && !dbPlayer.IsBadOrga() && dbPlayer.TeamId != (uint)teams.TEAM_ARMY) return false;
+                    if (!dbPlayer.IsAGangster() && !dbPlayer.IsBadOrga() && dbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY) return false;
 
                     if(!staticContainer.Locked)
                     {
@@ -529,7 +529,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     }
                     MAZModule.Instance.MAZIsSomeoneOpening = true;
                     int time = 900000; // normal 15 min
-                    if (dbPlayer.TeamId == (int)teams.TEAM_ARMY) time = 600000; // Army 10 min
+                    if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY) time = 600000; // Army 10 min
                     if (Configuration.Instance.DevMode) time = 60000;
 
                     // Aufschließen lul

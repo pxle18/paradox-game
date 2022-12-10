@@ -50,7 +50,7 @@ namespace VMP_CNR.Module.Space.Menu
                             break;
                         }
 
-                        foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].Members.Values.ToList())
+                        foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].Members.Values.ToList())
                         {
                             if (iPlayer == null || !iPlayer.IsValid())
                                 continue;
@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.Space.Menu
                             break;
                         }
 
-                        foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].Members.Values.ToList())
+                        foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].Members.Values.ToList())
                         {
                             if (iPlayer == null || !iPlayer.IsValid())
                                 continue;
@@ -121,7 +121,7 @@ namespace VMP_CNR.Module.Space.Menu
                         Main.m_AsyncThread.AddToAsyncThread(new System.Threading.Tasks.Task(async () =>
                         {
                             await NAPI.Task.WaitForMainThread(10000);
-                            foreach (DbPlayer iPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].Members.Values.ToList())
+                            foreach (DbPlayer iPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].Members.Values.ToList())
                             {
                                 if (iPlayer == null || !iPlayer.IsValid())
                                     continue;
@@ -141,7 +141,7 @@ namespace VMP_CNR.Module.Space.Menu
 
                                 Voice.VoiceModule.Instance.turnOffFunk(iPlayer);
 
-                                iPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.whisper);
+                                iPlayer.Player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Whisper);
                                 iPlayer.SetData("voiceType", 3);
                                 iPlayer.Player.TriggerNewClient("setVoiceType", 3);
                             }

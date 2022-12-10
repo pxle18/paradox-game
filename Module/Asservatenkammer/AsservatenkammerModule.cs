@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Asservatenkammer
             SxVehicle sxVehicle = dbPlayer.Player.Vehicle.GetVehicle();
             if (sxVehicle == null || !sxVehicle.IsValid() || sxVehicle.teamid != dbPlayer.TeamId) return false;
 
-            if(sxVehicle.entity.Position.DistanceTo(new Vector3(447.292, -996.242, 25.7748)) < 4.0f)
+            if(sxVehicle.Entity.Position.DistanceTo(new Vector3(447.292, -996.242, 25.7748)) < 4.0f)
             {
                 // Get Aserkammer
                 StaticContainer staticContainer = StaticContainerModule.Instance.Get((uint)StaticContainerTypes.ASERLSPD);

@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Vehicles.Impound
             if (key != Key.E) return false;
 
             if (!dbPlayer.CanAccessMethod()) return false;
-            if (dbPlayer.TeamId != (int) teams.TEAM_DPOS || !dbPlayer.IsInDuty()) return false;
+            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_DPOS || !dbPlayer.IsInDuty()) return false;
 
             if (
                 dbPlayer.Player.Position.DistanceTo(new Vector3(-434.009,6136,31.478)) < 10.0f ||
@@ -35,8 +35,8 @@ namespace VMP_CNR.Module.Vehicles.Impound
             {
                 foreach (var Vehicle in VehicleHandler.Instance.GetAllVehicles())
                 {
-                    if (Vehicle == null || Vehicle.teamid == (int) teams.TEAM_DPOS) continue;
-                    if (dbPlayer.Player.Position.DistanceTo(Vehicle.entity.Position) < 5.0f)
+                    if (Vehicle == null || Vehicle.teamid == (int) TeamTypes.TEAM_DPOS) continue;
+                    if (dbPlayer.Player.Position.DistanceTo(Vehicle.Entity.Position) < 5.0f)
                     {
                         dbPlayer.Player.SetData("impound_vehicle", Vehicle);
                         ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Beschlagnahmungszeit", Callback = "SetVehicleImpoundTime", Message = "Gib die Zeit der Beschlagnahmung in Minuten ein." });

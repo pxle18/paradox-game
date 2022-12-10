@@ -46,7 +46,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 Chats.sendProgressBar(dbPlayer, 60000);
                 await GTANetworkAPI.NAPI.Task.WaitForMainThread(60000);
                 dbPlayer.SendNewNotification("Sitzt, wackelt und kriegt Luft... " + plate);
-                sxVehicle.entity.NumberPlate = plate;
+                sxVehicle.Entity.NumberPlate = plate;
                 dbPlayer.SetCannotInteract(false);
                 sxVehicle.CanInteract = true;
                 Logging.Logger.AddVehiclePlateLog(dbPlayer.Id, sxVehicle.databaseId, plate);

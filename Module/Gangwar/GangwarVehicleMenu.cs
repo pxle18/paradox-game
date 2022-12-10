@@ -75,7 +75,7 @@ namespace VMP_CNR.Module.Gangwar
                             SxVehicle vehicle = VehicleHandler.Instance.CreateServerVehicle(model, true, spawn.Position, spawn.Heading, dbPlayer.Team.ColorId, dbPlayer.Team.ColorId,
                                 GangwarModule.Instance.DefaultDimension, true, teamid: dbPlayer.TeamId, plate: dbPlayer.Team.ShortName);
 
-                            while (vehicle == null || vehicle.entity == null)
+                            while (vehicle == null || vehicle.Entity == null)
                             {
                                 await NAPI.Task.WaitForMainThread(100);
                             }

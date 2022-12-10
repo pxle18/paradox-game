@@ -68,14 +68,14 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
 
             foreach (SxVehicle sxVehicle in RCRacingVehicles.ToList())
             {
-                if (sxVehicle != null && sxVehicle.entity != null && sxVehicle.entity.IsSeatFree(0))
+                if (sxVehicle != null && sxVehicle.Entity != null && sxVehicle.Entity.IsSeatFree(0))
                 {
-                    if (sxVehicle.entity.HasData("racingRCLeaveCheck"))
+                    if (sxVehicle.Entity.HasData("racingRCLeaveCheck"))
                     {
                         RCRacingVehicles.Remove(sxVehicle);
                         VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
                     }
-                    else sxVehicle.entity.SetData("racingRCLeaveCheck", 1);
+                    else sxVehicle.Entity.SetData("racingRCLeaveCheck", 1);
                 }
             }
 

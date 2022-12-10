@@ -58,8 +58,8 @@ namespace VMP_CNR.Module.AnimationMenu
                             AnimationItem animationItem = AnimationItemModule.Instance.Get((uint)dbPlayer.AnimationShortcuts[(uint)slot]);
                             if (animationItem == null) return;
 
-                            if (animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) return;
-                            else if (!animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) return;
+                            if (animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) return;
+                            else if (!animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) return;
 
                             dbPlayer.StopAnimation();
 

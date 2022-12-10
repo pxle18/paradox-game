@@ -167,7 +167,7 @@ namespace VMP_CNR.Module.Players.Sync
             }
             
             //Gebe FGehalt für alle NICHT Duty Fraktionen (Gangs)
-            if (dbPlayer.Team.Id != (int)teams.TEAM_CIVILIAN && dbPlayer.fgehalt[0] > 0 && !dbPlayer.Team.HasDuty)
+            if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_CIVILIAN && dbPlayer.fgehalt[0] > 0 && !dbPlayer.Team.HasDuty)
             {
                 var teamShelter = TeamShelterModule.Instance.GetByTeam(dbPlayer.TeamId);
                 if (teamShelter != null)
@@ -203,7 +203,7 @@ namespace VMP_CNR.Module.Players.Sync
             {
                 bankHistories.Add(new Banks.BankHistory.BankHistory
                 {
-                    Name = "PARADOX Bonus",
+                    Name = "GVMP Bonus",
                     Value = dbPlayer.Rank.Salary
                 });
                 total += dbPlayer.Rank.Salary;
@@ -300,7 +300,7 @@ namespace VMP_CNR.Module.Players.Sync
                 }
             }
 
-            var newsShelter = TeamShelterModule.Instance.GetByTeam((uint)teams.TEAM_NEWS);
+            var newsShelter = TeamShelterModule.Instance.GetByTeam((uint)TeamTypes.TEAM_NEWS);
             if (newsShelter != null)
             {
                 newsShelter.GiveMoney(50);

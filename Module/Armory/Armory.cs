@@ -424,7 +424,7 @@ namespace VMP_CNR.Module.Armory
             // Wenn kein Cop return
 
             Teams.Team team = dbPlayer.Team;
-            if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)teams.TEAM_IAA)) && dbPlayer.IsNSADuty) team = TeamModule.Instance.Get((uint)teams.TEAM_IAA);
+            if (Armory.AccessableTeams.Contains(TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA)) && dbPlayer.IsNSADuty) team = TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA);
 
             if(Armory.SwatDuty)
             {

@@ -26,8 +26,8 @@ namespace VMP_CNR
             menu.Add("Schließen", "");
             foreach (KeyValuePair<uint, AnimationItem> kvp in AnimationItemModule.Instance.GetAll().Where(i => i.Value.CategoryId == catId))
             {
-                if (kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
-                else if (!kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
+                if (kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
+                else if (!kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
                 menu.Add(kvp.Value.Name);
             }
             return menu;
@@ -55,16 +55,16 @@ namespace VMP_CNR
                 int idx = 1;
                 foreach (KeyValuePair<uint, AnimationItem> kvp in AnimationItemModule.Instance.GetAll().Where(i => i.Value.CategoryId == catId))
                 {
-                    if (kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
-                    else if (!kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
+                    if (kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
+                    else if (!kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
 
                     if (index == idx)
                     {
                         Task.Run(async () =>
                         {
 
-                            if (kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) return;
-                            else if (!kvp.Value.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) return;
+                            if (kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) return;
+                            else if (!kvp.Value.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && kvp.Value.RestrictedToTeams.Count > 0 && !kvp.Value.RestrictedToTeams.Contains(dbPlayer.TeamId)) return;
 
                             dbPlayer.StopAnimation();
 

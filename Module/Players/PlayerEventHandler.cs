@@ -960,7 +960,7 @@ namespace VMP_CNR.Module.Players
             dbPlayer.SetData("friskInvUserID", destinationDbPlayer.Id);
             destinationDbPlayer.Container.ShowFriskInventory(dbPlayer, destinationDbPlayer, "Spieler", (destinationDbPlayer.Money[0] + destinationDbPlayer.BlackMoney[0]));
 
-            if (destinationDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (destinationDbPlayer.BlackMoney[0] > 0 && dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
             {
                 dbPlayer.SendNewNotification($"Sie konnten von ${(destinationDbPlayer.Money[0] + destinationDbPlayer.BlackMoney[0])} insgesamt ${destinationDbPlayer.BlackMoney[0]} Schwarzgeld feststellen! (/takebm zum entfernen)");
             }
@@ -1123,7 +1123,7 @@ namespace VMP_CNR.Module.Players
                             dbPlayer.SendNewNotification($"Du hast den Patienten behandelt!");
 
                             // keine Behandlungskosten für Badmedics
-                            if (dbPlayer.IsAMedic() || dbPlayer.TeamId == (uint)teams.TEAM_ARMY)
+                            if (dbPlayer.IsAMedic() || dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY)
                             {
                                 int khcosts = 0;
 
@@ -1233,7 +1233,7 @@ namespace VMP_CNR.Module.Players
                         {
                             dbPlayer.SendNewNotification($"Person ist bereits stabilisiert!");
 
-                            if (dbPlayer.Team.Id == (int)teams.TEAM_MEDIC || dbPlayer.ParamedicLicense) dbPlayer.SendNewNotification($"Veletzung: {destinationDbPlayer.Injury.Name}!");
+                            if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_MEDIC || dbPlayer.ParamedicLicense) dbPlayer.SendNewNotification($"Veletzung: {destinationDbPlayer.Injury.Name}!");
                             return;
                         }
                         Main.m_AsyncThread.AddToAsyncThread(new Task(async () =>
@@ -1252,7 +1252,7 @@ namespace VMP_CNR.Module.Players
                                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                                 dbPlayer.StopAnimation();
                             }
-                            if(dbPlayer.Team.Id == (int)teams.TEAM_MEDIC || dbPlayer.ParamedicLicense) dbPlayer.SendNewNotification($"Du hast {destinationDbPlayer.Injury.Name} stabilisiert!");
+                            if(dbPlayer.Team.Id == (int)TeamTypes.TEAM_MEDIC || dbPlayer.ParamedicLicense) dbPlayer.SendNewNotification($"Du hast {destinationDbPlayer.Injury.Name} stabilisiert!");
                             else dbPlayer.SendNewNotification($"Du hast die Verletzung stabilisiert!");
                             dbPlayer.Container.RemoveItem(Verbandskasten);
 
@@ -1500,7 +1500,7 @@ namespace VMP_CNR.Module.Players
                 if(dbPlayer.RageExtension.IsInVehicle)
                 {
                     SxVehicle sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
-                    if(sxVeh != null && sxVeh.IsValid() && sxVeh.Data != null && (sxVeh.Data.ClassificationId == 9 || (sxVeh.Data.ClassificationId == 8 && sxVeh.teamid == (uint)teams.TEAM_ARMY)) && sxVeh.GpsTracker)
+                    if(sxVeh != null && sxVeh.IsValid() && sxVeh.Data != null && (sxVeh.Data.ClassificationId == 9 || (sxVeh.Data.ClassificationId == 8 && sxVeh.teamid == (uint)TeamTypes.TEAM_ARMY)) && sxVeh.GpsTracker)
                     {
                         AirFlightControl.AirFlightControlModule.Instance.TurnOnOffFunkState(dbPlayer);
                         return;
@@ -1806,13 +1806,13 @@ namespace VMP_CNR.Module.Players
 
             if (voicetype == 1)
             {
-                player.SetSharedData("voiceRange", (int)VoiceRange.shout);
+                player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Shout);
                 dbPlayer.SetData("voiceType", 2);
                 player.TriggerNewClient("setVoiceType", 2);
             }
             else if (voicetype == 2)
             {
-                player.SetSharedData("voiceRange", (int)VoiceRange.whisper);
+                player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Whisper);
                 dbPlayer.SetData("voiceType", 3);
                 player.TriggerNewClient("setVoiceType", 3);
             }
@@ -1820,20 +1820,20 @@ namespace VMP_CNR.Module.Players
             {
                 if (dbPlayer.CanUseMegaphone())
                 {
-                    player.SetSharedData("voiceRange", (int)VoiceRange.megaphone);
+                    player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Megaphone);
                     dbPlayer.SetData("voiceType", 4);
                     player.TriggerNewClient("setVoiceType", 4);
                 }
                 else
                 {
-                    player.SetSharedData("voiceRange", (int)VoiceRange.normal);
+                    player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Normal);
                     dbPlayer.SetData("voiceType", 1);
                     player.TriggerNewClient("setVoiceType", 1);
                 }
             }
             else if (voicetype == 4)
             {
-                player.SetSharedData("voiceRange", (int)VoiceRange.normal);
+                player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Normal);
                 dbPlayer.SetData("voiceType", 1);
                 player.TriggerNewClient("setVoiceType", 1);
             }

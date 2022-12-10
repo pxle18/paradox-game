@@ -122,7 +122,7 @@ namespace VMP_CNR.Module.Teams.Apps
             }
 
             // FIB Permissions Reset
-            if (editDbPlayer.TeamId == (int)teams.TEAM_FIB)
+            if (editDbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
             {
                 editDbPlayer.FindFlags = FindFlags.None;
                 editDbPlayer.ResetUndercover();
@@ -222,7 +222,7 @@ namespace VMP_CNR.Module.Teams.Apps
                             return;
                         }
 
-                        editDbPlayer.SetTeam((int)teams.TEAM_SWAT);
+                        editDbPlayer.SetTeam((int)TeamTypes.TEAM_SWAT);
                         editDbPlayer.SetTeamRankPermission(true, 0, true, "");
                         editDbPlayer.Player.TriggerNewClient("updateDuty", true);
                     }

@@ -232,7 +232,7 @@ namespace VMP_CNR.Module.Crime
             dbPlayer.AddToCrimeHistory(JailStringHistroy);
 
             // Set Voice To Normal
-            dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRange.whisper);
+            dbPlayer.Player.SetSharedData("voiceRange", (int)VoiceRangeTypes.Whisper);
             dbPlayer.SetData("voiceType", 3);
             dbPlayer.Player.TriggerNewClient("setVoiceType", 3);
 

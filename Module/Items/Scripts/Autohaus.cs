@@ -20,17 +20,17 @@ namespace VMP_CNR.Module.Items.Scripts
                 return false;
             }
 
-            uint teamId = (uint)teams.TEAM_CARSELL1;
+            uint teamId = (uint)TeamTypes.TEAM_CARSELL1;
             switch(AutohausId)
             {
                 case 1:
-                    teamId = (uint)teams.TEAM_CARSELL1;
+                    teamId = (uint)TeamTypes.TEAM_CARSELL1;
                     break;
                 case 2:
-                    teamId = (uint)teams.TEAM_CARSELL2;
+                    teamId = (uint)TeamTypes.TEAM_CARSELL2;
                     break;
                 case 3:
-                    teamId = (uint)teams.TEAM_CARSELL3;
+                    teamId = (uint)TeamTypes.TEAM_CARSELL3;
                     break;
                 default:
                     break;

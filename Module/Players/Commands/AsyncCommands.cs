@@ -164,7 +164,7 @@ namespace VMP_CNR.Module.Players.Commands
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_DRIVINGSCHOOL || !dbPlayer.IsInDuty() || dbPlayer.TeamRank < 1)
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_DRIVINGSCHOOL || !dbPlayer.IsInDuty() || dbPlayer.TeamRank < 1)
             {
                 dbPlayer.SendNewNotification( GlobalMessages.Error.NoPermissions());
                 return;
@@ -225,7 +225,7 @@ namespace VMP_CNR.Module.Players.Commands
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_GOV || !dbPlayer.IsInDuty())
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV || !dbPlayer.IsInDuty())
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -268,7 +268,7 @@ namespace VMP_CNR.Module.Players.Commands
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (int)teams.TEAM_GOV || !dbPlayer.IsInDuty())
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV || !dbPlayer.IsInDuty())
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -314,17 +314,17 @@ namespace VMP_CNR.Module.Players.Commands
             var id = player.Team.Id;
             var from = "LSPD Nachricht";
 
-            if (id == (uint)teams.TEAM_GOV)
+            if (id == (uint)TeamTypes.TEAM_GOV)
                 from = "Regierungsnachricht";
-            else if (id == (uint)teams.TEAM_FIB)
+            else if (id == (uint)TeamTypes.TEAM_FIB)
                 from = "FIB Nachricht";
-            else if (id == (uint)teams.TEAM_ARMY)
+            else if (id == (uint)TeamTypes.TEAM_ARMY)
                 from = "Army Nachricht";
-            else if (id == (uint)teams.TEAM_DPOS)
+            else if (id == (uint)TeamTypes.TEAM_DPOS)
                 from = "DPOS Nachricht";
-            else if (id == (uint)teams.TEAM_NEWS)
+            else if (id == (uint)TeamTypes.TEAM_NEWS)
                 from = "WEAZLE NEWS";
-            else if (id == (uint)teams.TEAM_MEDIC)
+            else if (id == (uint)TeamTypes.TEAM_MEDIC)
                 from = "LSMC";
 
             await Chats.SendGlobalMessage($"{from}: {mesage}", COLOR.LIGHTBLUE, ICON.GOV);
@@ -369,7 +369,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat das Geld von " + name + " um $" + amount + " veraendert.");
 
-                DatabaseLogging.Instance.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GivemoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, name, AdminLogTypes.log, $"{amount}$ GivemoneyHand");
 
 
                 if (amount > 0)
@@ -387,7 +387,7 @@ namespace VMP_CNR.Module.Players.Commands
                         Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " auf die Hand gegeben!");
 
-                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GivemoneyHand");
+                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), AdminLogTypes.log, $"{amount}$ GivemoneyHand");
                     return;
                 }
 
@@ -418,7 +418,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " aus der Geldbörse entfernt!");
 
-                DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"-{amount}$ GivemoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), AdminLogTypes.log, $"-{amount}$ GivemoneyHand");
             });
         }
 
@@ -445,7 +445,7 @@ namespace VMP_CNR.Module.Players.Commands
                 Players.Instance.SendMessageToAuthorizedUsers("log",
                     "Admin " + dbPlayer.GetName() + " hat das Schwarzgeld von " + name + " um $" + amount + " veraendert.");
 
-                DatabaseLogging.Instance.LogAdminAction(player, name, adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
+                DatabaseLogging.Instance.LogAdminAction(player, name, AdminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
 
                 if (findPlayer == null) return;
 
@@ -461,7 +461,7 @@ namespace VMP_CNR.Module.Players.Commands
                     if (dbPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
                         Players.Instance.SendMessageToAuthorizedUsers("log", "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben!");
 
-                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), adminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
+                    DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), AdminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");
                     return;
                 }
                 

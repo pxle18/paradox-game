@@ -37,15 +37,15 @@ namespace VMP_CNR.Module.Laboratories
         }
         public bool IsImpoundVehicle(SxVehicle vehicle)
         {
-            return vehicle.entity.Model == (uint)VehicleHash.Brickade ||
-                    vehicle.entity.Model == (uint)VehicleHash.Burrito ||
-                    vehicle.entity.Model == (uint)VehicleHash.Burrito2 ||
-                    vehicle.entity.Model == (uint)VehicleHash.Burrito3 ||
-                    vehicle.entity.Model == (uint)VehicleHash.Burrito4 ||
-                    vehicle.entity.Model == (uint)VehicleHash.Burrito5 ||
-                    vehicle.entity.Model == (uint)VehicleHash.Gburrito ||
-                    vehicle.entity.Model == (uint)VehicleHash.Gburrito2 || vehicle.Data.Id == 1273 || // Fib Sprinter 
-                    vehicle.entity.Model == (int)VehicleHash.Benson;
+            return vehicle.Entity.Model == (uint)VehicleHash.Brickade ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Burrito ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Burrito2 ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Burrito3 ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Burrito4 ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Burrito5 ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Gburrito ||
+                    vehicle.Entity.Model == (uint)VehicleHash.Gburrito2 || vehicle.Data.Id == 1273 || // Fib Sprinter 
+                    vehicle.Entity.Model == (int)VehicleHash.Benson;
         }
     }
 

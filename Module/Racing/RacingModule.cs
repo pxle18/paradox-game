@@ -121,14 +121,14 @@ namespace VMP_CNR.Module.Racing
             {
                 foreach(SxVehicle sxVehicle in racingLobby.RacingVehicles.ToList())
                 {
-                    if(sxVehicle != null && sxVehicle.entity != null && sxVehicle.entity.IsSeatFree(0))
+                    if(sxVehicle != null && sxVehicle.Entity != null && sxVehicle.Entity.IsSeatFree(0))
                     {
-                        if (sxVehicle.entity.HasData("racingLeaveCheck"))
+                        if (sxVehicle.Entity.HasData("racingLeaveCheck"))
                         {
                             racingLobby.RacingVehicles.Remove(sxVehicle);
                             VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
                         }
-                        else sxVehicle.entity.SetData("racingLeaveCheck", 1);
+                        else sxVehicle.Entity.SetData("racingLeaveCheck", 1);
                     }
                 }
 

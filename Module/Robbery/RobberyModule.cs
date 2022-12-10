@@ -307,9 +307,9 @@ namespace VMP_CNR.Module.Robbery
                             dbPlayer.SendNewNotification(
 
                                 "Der Raubueberfall auf den Juwelier wurde abgebrochen!");
-                            TeamModule.Instance.Get((int)teams.TEAM_POLICE).SendNotification(
+                            TeamModule.Instance.Get((int)TeamTypes.TEAM_POLICE).SendNotification(
                                 "An Alle Einheiten, der Juwelier Raubueberfall wurde erfolgreich verhindert!");
-                            TeamModule.Instance.Get((int)teams.TEAM_FIB).SendNotification(
+                            TeamModule.Instance.Get((int)TeamTypes.TEAM_FIB).SendNotification(
                                 "An Alle Einheiten, der Juwelier Raubueberfall wurde erfolgreich verhindert!");
                             rob.Disabled = true;
                             dbPlayer.IsInRob = false;
@@ -326,7 +326,7 @@ namespace VMP_CNR.Module.Robbery
                                 if(rob.Interval == rob.CopInterval)
                                 {
                                     Zone.Zone zone = ZoneModule.Instance.GetZone(dbPlayer.Player.Position);
-                                    TeamModule.Instance.Get((int)teams.TEAM_POLICE).SendNotification($"An Alle Einheiten, ein Einbruch in einen Store in {zone.Name} wurde gemeldet!");
+                                    TeamModule.Instance.Get((int)TeamTypes.TEAM_POLICE).SendNotification($"An Alle Einheiten, ein Einbruch in einen Store in {zone.Name} wurde gemeldet!");
                                 }
                                 else if (rob.Interval >= rob.EndInterval)
                                 {
@@ -347,7 +347,7 @@ namespace VMP_CNR.Module.Robbery
                         else
                         {
                             dbPlayer.SendNewNotification("Der Raubueberfall auf den Store wurde abgebrochen!");
-                            TeamModule.Instance.Get((int)teams.TEAM_POLICE).SendNotification("An Alle Einheiten, der Raubueberfall wurde erfolgreich verhindert!");
+                            TeamModule.Instance.Get((int)TeamTypes.TEAM_POLICE).SendNotification("An Alle Einheiten, der Raubueberfall wurde erfolgreich verhindert!");
 
                             if (rob.Interval < rob.CopInterval + 2)
                                 dbPlayer.AddCrime("Leitstelle", CrimeReasonModule.Instance.Get(159), "Wurde vom Sicherheitssystem eines Shops erfasst.");

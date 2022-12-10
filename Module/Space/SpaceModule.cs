@@ -156,7 +156,7 @@ namespace VMP_CNR.Module.Space
                             break;
                         }
 
-                        if (dbPlayer.TeamId != (uint)teams.TEAM_ARMY)
+                        if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY)
                             break;
 
                         if (dbPlayer.TeamRank < 10)
@@ -186,7 +186,7 @@ namespace VMP_CNR.Module.Space
                             break;
                         }
 
-                        if (dbPlayer.TeamId != (uint)teams.TEAM_ARMY)
+                        if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY)
                             break;
 
                         if (dbPlayer.TeamRank < 10)
@@ -354,7 +354,7 @@ namespace VMP_CNR.Module.Space
                         break;
                     }
 
-                    if (dbPlayer.TeamId != (uint)teams.TEAM_ARMY && dbPlayer.TeamRank < 10)
+                    if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank < 10)
                         break;
 
                     if (dbPlayer.TeamRank < 10)
@@ -477,7 +477,7 @@ namespace VMP_CNR.Module.Space
                     }
                 }
 
-                foreach (DbPlayer dbPlayer in TeamModule.Instance[(int)teams.TEAM_ARMY].Members.Values.ToList())
+                foreach (DbPlayer dbPlayer in TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].Members.Values.ToList())
                 {
                     if (dbPlayer == null || !dbPlayer.IsValid())
                         continue;

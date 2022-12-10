@@ -50,7 +50,7 @@ namespace VMP_CNR.Module.Vehicles
                     Teams.Team currTeam = dbPlayer.Team;
 
                     // Wenn NSA Duty und IAA Garage ist...
-                    if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = TeamModule.Instance.Get((uint)teams.TEAM_IAA);
+                    if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA);
 
                     var query = $"SELECT * FROM `fvehicles` WHERE `team` = '{currTeam.Id}' AND `id` = {vehicleid} AND lastGarage = '{garage.Id}';";
 
@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Vehicles
                                         if (xVeh == null)
                                             continue;
 
-                                        while (xVeh.entity == null)
+                                        while (xVeh.Entity == null)
                                         {
                                             await NAPI.Task.WaitForMainThread(100);
                                         }
@@ -186,7 +186,7 @@ namespace VMP_CNR.Module.Vehicles
                                     var wheelClamp = reader.GetInt32("WheelClamp");
                                     var alarmSystem = reader.GetInt32("alarm_system") == 1;
 
-                                    if (ownerId != dbPlayer.Id && !dbPlayer.VehicleKeys.ContainsKey(vehicleId) && (dbPlayer.TeamId != (int)teams.TEAM_LSC && !InTuning))
+                                    if (ownerId != dbPlayer.Id && !dbPlayer.VehicleKeys.ContainsKey(vehicleId) && (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC && !InTuning))
                                         return;
 
                                     var sxVeh = VehicleHandler.Instance.CreateServerVehicle(data.Id, registered,
@@ -201,7 +201,7 @@ namespace VMP_CNR.Module.Vehicles
 
                                     await NAPI.Task.WaitForMainThread(3000);
                                     
-                                    if (sxVeh != null && sxVeh.entity != null)
+                                    if (sxVeh != null && sxVeh.Entity != null)
                                     {
                                         await Task.Delay(5);
                                         sxVeh.Save(false, 0, garage.Id);
@@ -269,17 +269,17 @@ namespace VMP_CNR.Module.Vehicles
 
             if (sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 9)
             {
-                if (sxVehicle.teamid != 13 && sxVehicle.entity.Position.DistanceTo(AntiFlightZonePrison) < 200) return true; // Heli, Planes in Flightzoneprison
+                if (sxVehicle.teamid != 13 && sxVehicle.Entity.Position.DistanceTo(AntiFlightZonePrison) < 200) return true; // Heli, Planes in Flightzoneprison
             }
 
-            if ((sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 9) && sxVehicle.teamid != (uint)teams.TEAM_CAYO)
+            if ((sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 9) && sxVehicle.teamid != (uint)TeamTypes.TEAM_CAYO)
             {
-                if (sxVehicle.teamid != 13 && sxVehicle.entity.Position.DistanceTo(AntiFlightZoneCayoPerico) < 800) return true; // Heli, Planes in Flightzoneprison
+                if (sxVehicle.teamid != 13 && sxVehicle.Entity.Position.DistanceTo(AntiFlightZoneCayoPerico) < 800) return true; // Heli, Planes in Flightzoneprison
             }
 
             if (sxVehicle.Data.ClassificationId == 8 || sxVehicle.Data.ClassificationId == 3)
             {
-                if (sxVehicle.entity.Position.DistanceTo(AntiFlightZoneIsland) < 400) return true; // Heli, Boote in FlightIsland
+                if (sxVehicle.Entity.Position.DistanceTo(AntiFlightZoneIsland) < 400) return true; // Heli, Boote in FlightIsland
             }
 
             return false;

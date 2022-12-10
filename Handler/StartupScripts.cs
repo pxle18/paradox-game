@@ -4,12 +4,13 @@ using System.Text;
 using VMP_CNR.Module.Events.Jahrmarkt;
 using VMP_CNR.Module.JobFactions.Carsell;
 using VMP_CNR.Module.Logging;
+using VMP_CNR.Utilities;
 
 namespace VMP_CNR.Handler
 {
-    public sealed class StartupScripts
+    public sealed class StartupScripts : Singleton<StartupScripts>
     {
-        public static void OnStartup()
+        public void OnStartup()
         {
             // Update Users Count on Server
             MySQLHandler.Execute($"UPDATE configuration SET `value` = '0' WHERE `key` = 'Users_1';");
@@ -55,27 +56,27 @@ namespace VMP_CNR.Handler
             JobCarsellFactionModule.Instance.InsertOrderedVehicles();
         }
 
-        public static void CleanFrakmedics()
+        public void CleanFrakmedics()
         {
             MySQLHandler.Execute("UPDATE `player` SET `mediclic` = 0 WHERE `team` = 0;");
         }
         
-        public static void DeleteUnusedVehiclePlates()
+        public void DeleteUnusedVehiclePlates()
         {
             MySQLHandler.Execute("DELETE FROM vehicle_registrations WHERE vehicle_id NOT IN (SELECT id FROM fvehicles) AND vehicle_id NOT IN (SELECT id FROM vehicles);");
         }
 
-        public static void DeleteCarKeysBorrowed()
+        public void DeleteCarKeysBorrowed()
         {
             MySQLHandler.Execute("DELETE FROM player_to_vehicle WHERE player_to_vehicle.vehicleID IN (SELECT v.id FROM vehicles v,player p WHERE p.id = v.owner AND DATEDIFF(NOW(),FROM_UNIXTIME(p.LastLogin))>14 AND v.id=player_to_vehicle.vehicleID);");
         }
 
-        public static void CorrectHouseRents()
+        public void CorrectHouseRents()
         {
             MySQLHandler.Execute("DELETE house_rents FROM house_rents LEFT JOIN houses h ON h.id = house_rents.house_id WHERE house_rents.slot_id > h.maxrents;");
         }
 
-        public static void ClearLogs()
+        public void ClearLogs()
         {
             MySQLHandler.Execute("DELETE FROM log_crashes WHERE time < NOW() - INTERVAL 1 WEEK");
             MySQLHandler.Execute("DELETE FROM log_used_items WHERE timestamp < NOW() - INTERVAL 4 WEEK");
@@ -84,35 +85,35 @@ namespace VMP_CNR.Handler
             MySQLHandler.Execute("DELETE FROM log_farmprocess WHERE date < NOW() - INTERVAL 4 WEEK");
         }
 
-        public static void BusinessMembers()
+        public void BusinessMembers()
         {
             // Correct Biz Datas
             MySQLHandler.Execute("DELETE FROM business_members WHERE business_id NOT IN (SELECT id FROM business)");
         }
 
-        public static void CorrectVehicleModels()
+        public void CorrectVehicleModels()
         {
             // Correct
             MySQLHandler.Execute("DELETE FROM vehicles WHERE model NOT IN (SELECT id FROM vehicledata)");
             MySQLHandler.Execute("DELETE FROM fvehicles WHERE model NOT IN (SELECT id FROM vehicledata)");
         }
 
-        public static void RemoveOldSms()
+        public void RemoveOldSms()
         {
             MySQLHandler.Execute("DELETE FROM sms_konversations WHERE `last_updated` < (NOW() - INTERVAL 7 DAY);");
             MySQLHandler.Execute("DELETE FROM sms_konversations_messages WHERE `timestamp` < (NOW() - INTERVAL 7 DAY);");
         }
         
-        public static void BlacklistRemove()
+        public void BlacklistRemove()
         {
             MySQLHandler.Execute("DELETE FROM team_blacklist WHERE `entry_date` < (NOW() - INTERVAL 30 DAY);");
         }
-        public static void NSARemove()
+        public void NSARemove()
         {
             MySQLHandler.Execute("DELETE FROM nsa_observation_players WHERE `added` < (NOW() - INTERVAL 7 DAY);");
         }
 
-        public static void VehicleGarage()
+        public void VehicleGarage()
         {
             MySQLHandler.Execute($"UPDATE vehicles SET `inGarage` = '1' WHERE `pos_x` = '0' OR `pos_y` = '0';");
             MySQLHandler.Execute($"UPDATE fvehicles SET `inGarage` = '1' WHERE `pos_x` = '0' OR `pos_y` = '0';");
@@ -132,13 +133,13 @@ namespace VMP_CNR.Handler
             MySQLHandler.Execute($"UPDATE vehicles SET garage_id = 1 WHERE garage_id NOT IN(SELECT id FROM garages)");
         }
 
-        public static void RemoveUnusedDatabaseEntrys()
+        public void RemoveUnusedDatabaseEntrys()
         {
             MySQLHandler.Execute("DELETE FROM garages_spawns WHERE garage_id NOT IN (SELECT id FROM garages)");
             MySQLHandler.Execute("DELETE FROM farm_positions WHERE farm_id NOT IN (SELECT id FROM farms)");
         }
 
-        public static void RemoveOldDB()
+        public void RemoveOldDB()
         {
             // Clear Bankhistory
             MySQLHandler.Execute("DELETE FROM player_bankhistory WHERE DATE_SUB(CURDATE(),INTERVAL 14 DAY) >= date");
@@ -149,22 +150,22 @@ namespace VMP_CNR.Handler
             MySQLHandler.Execute("DELETE FROM container_heap");
         }
 
-        public static void RemoveOldMarketplaceOffers()
+        public void RemoveOldMarketplaceOffers()
         {
             MySQLHandler.Execute("DELETE FROM marketplace_offers WHERE DATE_SUB(CURDATE(),INTERVAL 1 DAY) >= date");
 
         }
-        public static void RemoveOldTeamScenarios()
+        public void RemoveOldTeamScenarios()
         {
             MySQLHandler.Execute("DELETE FROM team_scenario WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) >= lastrob");
         }
-        public static void UpdateJahrmarktEnten()
+        public void UpdateJahrmarktEnten()
         {
                 MySQLHandler.Execute("UPDATE `player_data` SET pvalue='0' WHERE pkey='enten' AND CURRENT_TIME between '00:00:00' AND '01:00:00'");
         }
 
 
-        public static void MigrateContainers()
+        public void MigrateContainers()
         {
             Logger.Print("MIGRATING CONTAINERS...");
 

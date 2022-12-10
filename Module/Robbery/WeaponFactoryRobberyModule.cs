@@ -48,7 +48,7 @@ namespace VMP_CNR.Module.Robbery
             StaticContainer.Container.AddItem(303, 96);
             StaticContainer.Locked = false;
             
-            TeamModule.Instance.SendMessageToTeam("Die Waffenfabrik ist nun offen!", (teams)RobberTeam.Id);
+            TeamModule.Instance.SendMessageToTeam("Die Waffenfabrik ist nun offen!", (TeamTypes)RobberTeam.Id);
 
             IsActive = false;
             TimeLeft = RobberyTime;
@@ -104,7 +104,7 @@ namespace VMP_CNR.Module.Robbery
                 }
             }
 
-            if ((TeamModule.Instance.Get((int)teams.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() < 30) && !Configurations.Configuration.Instance.DevMode)
+            if ((TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(ip => ip != null && ip.IsValid() && ip.Duty).Count() < 30) && !Configurations.Configuration.Instance.DevMode)
             {
                 dbPlayer.SendNewNotification("Es muessen mindestens 30 Soldaten im Dienst sein!");
                 return;
@@ -140,14 +140,14 @@ namespace VMP_CNR.Module.Robbery
 
             // Messages
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, ein Einbruch in der Waffenfabrik wurde gemeldet!");
-            TeamModule.Instance.SendMessageToTeam("Sie beginnen einen Ueberfall auf die Waffenfabrik!", (teams)RobberTeam.Id);
-            TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 80 + "P)", (teams)RobberTeam.Id);
+            TeamModule.Instance.SendMessageToTeam("Sie beginnen einen Ueberfall auf die Waffenfabrik!", (TeamTypes)RobberTeam.Id);
+            TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 80 + "P)", (TeamTypes)RobberTeam.Id);
         }
 
         public void CancelRob()
         {
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, der Einbruch auf die Waffenfabrik wurde erfolgreich verhindert!");
-            TeamModule.Instance.SendMessageToTeam("Der Ueberfall ist gescheitert!", (teams)RobberTeam.Id);
+            TeamModule.Instance.SendMessageToTeam("Der Ueberfall ist gescheitert!", (TeamTypes)RobberTeam.Id);
 
             IsActive = false;
             RobberTeam = null;

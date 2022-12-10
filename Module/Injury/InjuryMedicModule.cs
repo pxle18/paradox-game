@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Injury
         {
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.IsAMedic() || !dbPlayer.IsInDuty()) return false;
 
-            SxVehicle sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)teams.TEAM_MEDIC, 3);
+            SxVehicle sxVeh = VehicleHandler.Instance.GetClosestVehicleFromTeam(dbPlayer.Player.Position, (int)TeamTypes.TEAM_MEDIC, 3);
 
             if(sxVeh != null && sxVeh.IsValid())
             {

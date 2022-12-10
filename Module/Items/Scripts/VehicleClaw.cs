@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.Items.Scripts
             bool isStaatClaw = ItemData.Id == 731;
 
 
-            if ((dbPlayer.TeamId == (int)teams.TEAM_POLICE && isStaatClaw && dbPlayer.IsInDuty()) || (dbPlayer.Team.IsGangsters() && !isStaatClaw))
+            if ((dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE && isStaatClaw && dbPlayer.IsInDuty()) || (dbPlayer.Team.IsGangsters() && !isStaatClaw))
             {
                 //LSPD hat eine Staatskralle oder Badfraktion hat eine Badkralle
 
@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             if (sxVehicle == null || !sxVehicle.IsValid()) return false;
 
-            if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
+            if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.Entity.Position.DistanceTo(dbPlayer.Player.Position) < 10.0)
             {
                 if (dbPlayer.IsInjured() || dbPlayer.IsCuffed || dbPlayer.IsTied) return false;
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
@@ -136,7 +136,7 @@ namespace VMP_CNR.Module.Items.Scripts
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
             dbPlayer.StopAnimation();
 
-            if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.entity.Position.DistanceTo(dbPlayer.Player.Position) < 5.0)
+            if (sxVehicle != null && sxVehicle.IsValid() && sxVehicle.Entity.Position.DistanceTo(dbPlayer.Player.Position) < 5.0)
             {
                 sxVehicle.WheelClamp = isStaatsClaw ? 1 : 2;
                 String updateString = $"UPDATE {(sxVehicle.IsTeamVehicle() ? "fvehicles" : "vehicles")} SET WheelClamp = '{sxVehicle.WheelClamp}' WHERE id = '{sxVehicle.databaseId}'";

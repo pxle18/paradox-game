@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.LSCustoms
             SxVehicle sxVeh = VehicleHandler.Instance.GetClosestVehicle(dbPlayer.Player.Position);
             if (sxVeh == null || !sxVeh.IsValid()) return;
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_LSC && dbPlayer.IsInDuty())
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_LSC && dbPlayer.IsInDuty())
             {
                 if (dbPlayer.TeamRank >= 10)
                 {

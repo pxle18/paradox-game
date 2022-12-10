@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Items.Scripts
             if (closestVehicle != null)
             {
              
-                if(closestVehicle.SyncExtension.EngineOn || closestVehicle.entity.EngineStatus)
+                if(closestVehicle.SyncExtension.EngineOn || closestVehicle.Entity.EngineStatus)
                 {
                     dbPlayer.SendNewNotification("Der Motor muss zum reparieren ausgeschaltet sein!");
                     return false;
@@ -42,7 +42,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 
-                if (closestVehicle.SyncExtension.EngineOn || closestVehicle.entity.EngineStatus)
+                if (closestVehicle.SyncExtension.EngineOn || closestVehicle.Entity.EngineStatus)
                 {
                     dbPlayer.SendNewNotification("Der Motor muss zum reparieren ausgeschaltet sein!");
                     return false;
@@ -50,7 +50,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
                 await NAPI.Task.WaitForMainThread();
                 var playerPosition = dbPlayer.Player.Position;
-                var vehiclePosition = closestVehicle.entity.Position;
+                var vehiclePosition = closestVehicle.Entity.Position;
 
                 await Task.Delay(5);
                 if (vehiclePosition.DistanceTo(playerPosition) > 10) 

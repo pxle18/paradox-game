@@ -293,7 +293,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                 editDbPlayer.Player.TriggerNewClient("updateDuty", false);
                 editDbPlayer.UpdateApps();
 
-                if (dbPlayer.TeamId == (int)teams.TEAM_FIB)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
                 {
                     editDbPlayer.ResetUndercover();
                     editDbPlayer.FindFlags = FindFlags.None;
@@ -361,7 +361,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                             MySQLHandler.ExecuteAsync($"UPDATE player_rights SET title = '', r_bank = 0, r_inventory = 0, r_manage = 0 WHERE accountid = '{playerId}'");
                             dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat {overview.Name} aus der Fraktion entlassen.");
 
-                            if (dbPlayer.TeamId == (int)teams.TEAM_FIB)
+                            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB)
                             {
                                 MySQLHandler.ExecuteAsync($"UPDATE player SET `ucname` = '', `fib_find_flags` = 0 WHERE id = '{playerId}'");
                             }

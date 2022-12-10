@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static async Task<bool> DrugtestAir(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)teams.TEAM_FIB) return false;
+            if (dbPlayer.RageExtension.IsInVehicle || dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB) return false;
         
             if (dbPlayer.HasData("lastDrugAirUsed"))
             {
@@ -41,7 +41,7 @@ namespace VMP_CNR.Module.Items.Scripts
             foreach (SxVehicle sxvehicle in HeroinModule.CookingVehicles.ToList())
             {
                 if (sxvehicle == null || !sxvehicle.IsValid()) continue;
-                float Distance = dbPlayer.Player.Position.DistanceTo(sxvehicle.entity.Position);
+                float Distance = dbPlayer.Player.Position.DistanceTo(sxvehicle.Entity.Position);
                 if (Distance < HeroinModule.CamperDrugAirRange)
                 {
                     // get percent

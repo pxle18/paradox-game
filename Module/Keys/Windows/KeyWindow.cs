@@ -218,8 +218,8 @@ namespace VMP_CNR.Module.Keys.Windows
                         if ((dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 6.0f
                             && dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 6.0f)
                             ||
-                            (vehicle.entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 8.0f
-                            && vehicle.entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 8.0f))
+                            (vehicle.Entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 8.0f
+                            && vehicle.Entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 8.0f))
                         {
                             dbPlayer.SendNewNotification("Sie müssen mit ihrem Fahrzeug in der Business-Tower-Tiefgarage sein!");
                             return;

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.Items;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Teams;
@@ -34,6 +35,7 @@ namespace VMP_CNR.Module.MAZ
         protected override void OnItemLoad(MAZ u)
         {
             NAPI.World.RemoveIpl(u.DlcName);
+            
             base.OnItemLoad(u);
         }
 
@@ -156,7 +158,7 @@ namespace VMP_CNR.Module.MAZ
             if (loadedAmount > 0 && LastActive.AddHours(3) > DateTime.Now) return; // wenn schonma, dann mind 3h pause
 
             // Unter 20 Soldaten im Dienst
-            if (TeamModule.Instance.Get((uint)teams.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
+            if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
 
             bool ChanceRequireSuccess = false;
             Random random = new Random();

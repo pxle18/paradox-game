@@ -58,8 +58,8 @@ namespace VMP_CNR.Module.LSCustoms
 
                     NAPI.Task.Run(() =>
                     {
-                        l_SxVehicle.entity.PrimaryColor = color1;
-                        l_SxVehicle.entity.SecondaryColor = color2;
+                        l_SxVehicle.Entity.PrimaryColor = color1;
+                        l_SxVehicle.Entity.SecondaryColor = color2;
                     });
 
                     var l_Query = $"UPDATE `vehicles` SET `color1`={color1.ToString()}, `color2`={color2.ToString()} WHERE `id`={l_SxVehicle.databaseId.ToString()};";

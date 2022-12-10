@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.FIB
             if (key != Key.E)
                 return false;
                 
-            if (dbPlayer.TeamId != (int)teams.TEAM_FIB || dbPlayer.RageExtension.IsInVehicle) return false;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || dbPlayer.RageExtension.IsInVehicle) return false;
             if (dbPlayer.TeamRank == 0) return false; // @Jeff: Durch den Zivildienst brauchen wir es für unsere normalen Personalausweise - war schon abgesegnet als Loxa es angefragt hat aber nie umgesetzt worden
 
             if(dbPlayer.Player.Position.DistanceTo(UCPoint) < 2.0f)

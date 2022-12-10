@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Blitzer
 
                                 // Z Koordinate < -3Blitzer (wegen Tunnel etc) oder > +10 (flugzeug bla)
                                 if (sxVeh == null || !sxVeh.IsValid() ||
-                                    sxVeh.entity.Position.Z < (xBlitzer.Position.Z - 5.0f) || sxVeh.entity.Position.Z > (xBlitzer.Position.Z + 5.0f))
+                                    sxVeh.Entity.Position.Z < (xBlitzer.Position.Z - 5.0f) || sxVeh.Entity.Position.Z > (xBlitzer.Position.Z + 5.0f))
                                 {
 
                                     dbPlayer.ResetData("inBlitzerRange");
@@ -141,7 +141,7 @@ namespace VMP_CNR.Module.Blitzer
                                 }
 
                                 // wenn FIB Karre & ID
-                                if (dbPlayer.TeamId == (uint)teams.TEAM_FIB && dbPlayer.IsInDuty() && sxVeh.teamid == (uint)teams.TEAM_FIB)
+                                if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_FIB && dbPlayer.IsInDuty() && sxVeh.teamid == (uint)TeamTypes.TEAM_FIB)
                                 {
                                     dbPlayer.ResetData("inBlitzerRange");
                                     return;
@@ -155,7 +155,7 @@ namespace VMP_CNR.Module.Blitzer
                                 }
 
                                 // SWAT generell
-                                if (dbPlayer.TeamId == (uint)teams.TEAM_SWAT && dbPlayer.IsInDuty())
+                                if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_SWAT && dbPlayer.IsInDuty())
                                 {
                                     dbPlayer.ResetData("inBlitzerRange");
                                     return;

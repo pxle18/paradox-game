@@ -77,12 +77,12 @@ namespace VMP_CNR
         LoggedIn = 1
     }
 
-    internal enum VoiceRange
+    internal enum VoiceRangeTypes
     {
-        normal = 8,
-        whisper = 3,
-        shout = 20,
-        megaphone = 50,
+        Normal = 8,
+        Whisper = 3,
+        Shout = 20,
+        Megaphone = 50,
     }
 
     internal enum AdminLevelTypes
@@ -101,7 +101,7 @@ namespace VMP_CNR
         SeniorGamedesigner = 23
     }
 
-    public enum adminLogTypes
+    public enum AdminLogTypes
     {
         perm = 1,
         timeban = 2,
@@ -118,7 +118,7 @@ namespace VMP_CNR
         setgarage = 13,
     }
 
-    public enum teams
+    public enum TeamTypes
     {
         TEAM_CIVILIAN = 0,
         TEAM_POLICE = 1,
@@ -173,7 +173,7 @@ namespace VMP_CNR
         TEAM_DEADLOCK = 50
     }
 
-    internal enum jobs
+    internal enum JobTypes
     {
         JOB_WEAPONDEALER = 1,
         JOB_PLAGIAT = 2,
@@ -197,9 +197,9 @@ namespace VMP_CNR
 
     public class Main : Script
     {
-        public static bool devmode;
-        public static bool ptr;
-        public static bool devlog;
+        public static bool DevMode;
+        public static bool Ptr;
+        public static bool DevLog;
 
         public static bool restart;
 
@@ -224,10 +224,7 @@ namespace VMP_CNR
         public static uint m_RestartMinuten;
         public static bool m_RestartScheduled = false;
 
-        public Main()
-        {
-            // Constructer empty
-        }
+        public Main() { }
 
         static int HourTimer                                    = 1;
         public static DateTime adLastSend                       = DateTime.Now;
@@ -337,12 +334,12 @@ namespace VMP_CNR
         {
             Modules.Instance.LoadAll();
 
-            StartupScripts.OnStartup();
+            StartupScripts.Instance.OnStartup();
 
             //Workaround static main attributes, will be reworked soon
-            devmode = Configuration.Instance.DevMode;
-            ptr = Configuration.Instance.Ptr;
-            devlog = Configuration.Instance.DevLog;
+            DevMode = Configuration.Instance.DevMode;
+            Ptr = Configuration.Instance.Ptr;
+            DevLog = Configuration.Instance.DevLog;
 
             VoiceChannelName = Configuration.Instance.VoiceChannel;
             VoicePassword = Configuration.Instance.VoiceChannelPassword;
@@ -871,7 +868,7 @@ namespace VMP_CNR
                     }
                 }
 
-                if (iPlayer.TeamId == (int) teams.TEAM_LSC)
+                if (iPlayer.TeamId == (int) TeamTypes.TEAM_LSC)
                 {
                     cmd.CommandText = $"SELECT * FROM `vehicles` WHERE `TuningState` = 1 AND `inGarage` = 1 AND `garage_id` = '{garage.Id}'ORDER BY id;";
                     using (var reader = cmd.ExecuteReader())
@@ -1094,13 +1091,13 @@ namespace VMP_CNR
                                             VehicleHandler.MaxVehicleHealth, reader.GetString("tuning"), "", 0, ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE), 
                                             WheelClamp:reader.GetInt32("WheelClamp"), AlarmSystem:reader.GetInt32("alarm_system") == 1, lastgarageId:garage.Id, container2: ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE2));
 
-                                        while (xVeh.entity == null)
+                                        while (xVeh.Entity == null)
                                         {
                                             await NAPI.Task.WaitForMainThread(100);
                                         }
 
                                         xVeh.SetTeamCarGarage(false);
-                                        return xVeh.entity;
+                                        return xVeh.Entity;
                                     }
 
                                     idx++;
@@ -1211,7 +1208,7 @@ namespace VMP_CNR
             player.TriggerNewClient("updateMoney", iPlayer.Money[0]);
             player.TriggerNewClient("updateBlackMoney", iPlayer.BlackMoney[0]);
 
-            if (ptr)
+            if (Ptr)
             {
                 iPlayer.SendNewNotification(
                     "ACHTUNG: Sie befinden sich auf dem Public-Test-Server (PTS)");
@@ -1315,7 +1312,7 @@ namespace VMP_CNR
             {
                 int hour = DateTime.Now.Hour;
                 int min = DateTime.Now.Minute;
-                if (devmode != true)
+                if (DevMode != true)
                 {
                     if (hour == 7 || hour == 15 || hour == 23)
                     {
@@ -1603,7 +1600,7 @@ namespace VMP_CNR
 
         public static bool canPlayerFreed(DbPlayer iPlayer, DbPlayer iTarget)
         {
-            if (iPlayer.job[0] == (int) jobs.JOB_ANWALT)
+            if (iPlayer.job[0] == (int) JobTypes.JOB_ANWALT)
             {
                 if (iTarget.JailTime[0] > 5)
                 {
@@ -1644,7 +1641,7 @@ namespace VMP_CNR
                 return;
             }
 
-            if (iPlayer.job[0] == (int) jobs.JOB_ANWALT)
+            if (iPlayer.job[0] == (int) JobTypes.JOB_ANWALT)
             {
                 if (canPlayerFreed(iPlayer, iTarget))
                 {
@@ -1806,8 +1803,8 @@ namespace VMP_CNR
                     if (garage != null && garage.HouseId <= 0)
                     {
                         uint teamId = iPlayer.TeamId;
-                        if(garage.Teams.Contains((uint)teams.TEAM_IAA) && iPlayer.IsNSADuty) {
-                            teamId = (uint)teams.TEAM_IAA;
+                        if(garage.Teams.Contains((uint)TeamTypes.TEAM_IAA) && iPlayer.IsNSADuty) {
+                            teamId = (uint)TeamTypes.TEAM_IAA;
                         }
 
                         if (garage.IsTeamGarage() && !garage.Teams.Contains(teamId)) return;
@@ -2128,7 +2125,7 @@ namespace VMP_CNR
                 else if (IsPlayerInRangeOfPoint(player, 2.5f,
                     new Vector3(483.179, -1309.349, 29.216)))
                 {
-                    if (iPlayer.job[0] != (int) jobs.JOB_MECH) return;
+                    if (iPlayer.job[0] != (int) JobTypes.JOB_MECH) return;
                     DialogMigrator.CreateMenu(player, Dialogs.menu_shop_mechanic, "Mechaniker Store", "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, GlobalMessages.General.Close(), "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, "Spraydose (300$)", "");

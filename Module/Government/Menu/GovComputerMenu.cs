@@ -48,7 +48,7 @@ namespace VMP_CNR.Module.Government.Menu
                 }
                 else if (index == 1)
                 {
-                    if(dbPlayer.TeamId != (uint)teams.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
+                    if(dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
                     {
                         return true;
                     }
@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Government.Menu
                 }
                 else if (index == 2)
                 { 
-                    if (dbPlayer.TeamId != (uint)teams.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
+                    if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
                     {
                         return true;
                     }
@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Government.Menu
                 }
                 else if (index == 3)
                 {
-                    if (dbPlayer.TeamId != (uint)teams.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
+                    if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || (dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero1Pos) > 5.0 && dbPlayer.Player.Position.DistanceTo(GovernmentModule.ComputerBuero2Pos) > 5.0))
                     {
                         return true;
                     }
@@ -96,7 +96,7 @@ namespace VMP_CNR.Module.Government.Menu
                 return;
             }
 
-            if (dbPlayer.TeamId != (uint)teams.TEAM_GOV || dbPlayer.TeamRank < 6) return;
+            if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || dbPlayer.TeamRank < 6) return;
 
             Business.Business biz = BusinessModule.Instance.GetAll().Values.ToList().Where(b => b.Name.ToLower().Trim() == bizInsertName.ToLower().Trim()).FirstOrDefault();
 
@@ -142,7 +142,7 @@ namespace VMP_CNR.Module.Government.Menu
                 return;
             }
 
-            if (dbPlayer.TeamId != (uint)teams.TEAM_GOV || dbPlayer.TeamRank < 2) return;
+            if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || dbPlayer.TeamRank < 2) return;
 
             DbPlayer playerToNameChange = Players.Players.Instance.FindPlayer(nameChangePlayer);
             if (playerToNameChange == null || !playerToNameChange.IsValid()) return;
@@ -172,7 +172,7 @@ namespace VMP_CNR.Module.Government.Menu
             }
             if (!dbPlayer.HasData("playerToChangeNameGov")) return;
 
-            if (dbPlayer.TeamId != (uint)teams.TEAM_GOV || dbPlayer.TeamRank < 2) return;
+            if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV || dbPlayer.TeamRank < 2) return;
 
             DbPlayer playerToNameChange = Players.Players.Instance.FindPlayerById(dbPlayer.GetData("playerToChangeNameGov"));
             if (playerToNameChange == null || !playerToNameChange.IsValid()) return;
@@ -240,7 +240,7 @@ namespace VMP_CNR.Module.Government.Menu
             Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                 playerToNameChange.GetName() + $"({playerToNameChange.Id}) hat den Namen zu {newName} geändert | Beamter: {dbPlayer.GetName()}");
             MySQLHandler.ExecuteAsync($"UPDATE player SET name = '{newName}' WHERE id = '{playerToNameChange.Id}'");
-            playerToNameChange.SendNewNotification($"Du hast deinen Namen erfolgreich zu {newName} geändert! Bitte beende nun das Spiel und trag deinen neuen Namen in den RAGE-Launcher ein!", PlayerNotification.NotificationType.ADMIN, duration: 30000);
+            playerToNameChange.SendNewNotification($"Du hast deinen Namen erfolgreich zu {newName} geändert! Bitte beende nun das Spiel und trag deinen neuen Namen in den GVMP-Launcher ein!", PlayerNotification.NotificationType.ADMIN, duration: 30000);
             playerToNameChange.Kick("Namensaenderung");
 
             dbPlayer.ResetData("playerToChangeNameGov");
@@ -258,7 +258,7 @@ namespace VMP_CNR.Module.Government.Menu
                 return;
             }
 
-            if (dbPlayer.TeamId != (uint)teams.TEAM_GOV) return;
+            if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV) return;
 
             DbPlayer playerToDivorce = Players.Players.Instance.FindPlayer(divorcePersonName);
             if (playerToDivorce == null || !playerToDivorce.IsValid()) return;

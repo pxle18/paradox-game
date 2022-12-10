@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Items
             if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
             {
                 House xHouse = HouseModule.Instance.Get((uint)playerDimension);
-                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id || (dbPlayer.TeamId == (int)teams.TEAM_FIB && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 5)))
+                if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id || (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 5)))
                 {
                     if (playerPosition.DistanceTo(SchwarzgeldModule.BlackMoneyInvPosition) < 1.5f)
                     {
@@ -113,7 +113,7 @@ namespace VMP_CNR.Module.Items
             TeamShelter teamShelter = TeamShelterModule.Instance.GetByInventoryPosition(playerPosition, playerDimension);
             if (teamShelter != null)
             {
-                if(teamShelter.Team.Id == (int)teams.TEAM_FIB)
+                if(teamShelter.Team.Id == (int)TeamTypes.TEAM_FIB)
                 { 
                     if(dbPlayer.IsUndercover() || dbPlayer.IsNSADuty)
                     {
@@ -218,7 +218,7 @@ namespace VMP_CNR.Module.Items
             if (!dbPlayer.RageExtension.IsInVehicle)
             {
                 SxVehicle delVeh = VehicleHandler.Instance.GetClosestVehicle(playerPosition);
-                if (delVeh != null && delVeh.entity != null && delVeh.IsValid() && !delVeh.SyncExtension.Locked && playerPosition.DistanceTo(delVeh.entity.Position) < 15.0f && playerDimension == delVeh.entity.Dimension)
+                if (delVeh != null && delVeh.Entity != null && delVeh.IsValid() && !delVeh.SyncExtension.Locked && playerPosition.DistanceTo(delVeh.Entity.Position) < 15.0f && playerDimension == delVeh.Entity.Dimension)
                 {
                     if (delVeh.TrunkStateOpen)
                     {
@@ -356,7 +356,7 @@ namespace VMP_CNR.Module.Items
                 }
             }
 
-            if (dbPlayer.TeamId == (int)teams.TEAM_MINE1 || dbPlayer.TeamId == (int)teams.TEAM_MINE2)
+            if (dbPlayer.TeamId == (int)TeamTypes.TEAM_MINE1 || dbPlayer.TeamId == (int)TeamTypes.TEAM_MINE2)
             {
                 // Alu
                 if (playerPosition.DistanceTo(JobMineFactionModule.Instance.ContainerAluPosition) < JobMineFactionModule.Instance.ContainerAliRange

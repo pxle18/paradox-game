@@ -56,13 +56,13 @@ namespace VMP_CNR.Module.Vehicles
             {
                 if (sxVeh == null) return;
                 if (!sxVeh.IsPlayerVehicle() || sxVeh.databaseId <= 0) return;
-                sxVeh.entity.Position = new GTANetworkAPI.Vector3(0, 0, 0);
+                sxVeh.Entity.Position = new GTANetworkAPI.Vector3(0, 0, 0);
                 sxVeh.Container.SaveAll();
                 sxVeh.Save(false, inGarage, garageId);
 
                 await NAPI.Task.WaitForMainThread(500);
 
-                if (sxVeh.entity != null && inGarage >= 1)
+                if (sxVeh.Entity != null && inGarage >= 1)
                 {
                     VehicleHandler.Instance.DeleteVehicle(sxVeh, false);
                 }
@@ -98,7 +98,7 @@ namespace VMP_CNR.Module.Vehicles
 
                 await NAPI.Task.WaitForMainThread(500);
 
-                if (sxVeh.entity != null && inGarage)
+                if (sxVeh.Entity != null && inGarage)
                 {
                     VehicleHandler.Instance.DeleteVehicle(sxVeh);
                 }

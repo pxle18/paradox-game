@@ -79,7 +79,7 @@ namespace VMP_CNR.Module.VehicleRentShops
                     }
 
                     DbPlayer owner = Players.Players.Instance.GetByDbId(sxVehicle.ownerId);
-                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.entity.Position) > 100.0f)
+                    if (owner == null || !owner.IsValid() || owner.Player.Position.DistanceTo(sxVehicle.Entity.Position) > 100.0f)
                     {
                         if (!sxVehicle.HasData("rentremovecheck"))
                         {
@@ -89,7 +89,7 @@ namespace VMP_CNR.Module.VehicleRentShops
                         int gbRemInt = sxVehicle.GetData("rentremovecheck");
 
                         VehicleRentShop shop = VehicleRentShopModule.Instance.Get(key);
-                        if(gbRemInt >= 5 && shop != null && sxVehicle.entity.Position.DistanceTo(shop.Position) < 40.0f) 
+                        if(gbRemInt >= 5 && shop != null && sxVehicle.Entity.Position.DistanceTo(shop.Position) < 40.0f) 
                         {
                             VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
                             continue;

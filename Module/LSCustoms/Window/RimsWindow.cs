@@ -45,7 +45,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
         {
             var dbPlayer = client.GetPlayer();
             if (!dbPlayer.IsValid()) return;
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
             List<RimsItems> rimsList = new List<RimsItems>();
             foreach (var rim in LSCustomsRimsCategoryModule.Instance.GetAll())
@@ -60,7 +60,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
         {
             var dbPlayer = client.GetPlayer();
             if (!dbPlayer.IsValid()) return;
-            if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
             List<RimsItems> rimsList = new List<RimsItems>();
             foreach (var rim in LSCustomsRimsModule.Instance.GetAll().Where(x => x.Value.category_id==catid))
@@ -77,7 +77,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
                 SxVehicle sxVeh = VehicleHandler.Instance.GetClosestVehicle(dbPlayer.Player.Position);
                 if (sxVeh == null || !sxVeh.IsValid()) return;
@@ -100,7 +100,7 @@ namespace VMP_CNR.Module.LSCustoms.Window
             {
                 var dbPlayer = client.GetPlayer();
                 if (!dbPlayer.IsValid()) return;
-                if (dbPlayer.TeamId != (int)teams.TEAM_LSC) return;
+                if (dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC) return;
 
                 var wheeltype = LSCustomsRimsCategoryModule.Instance.GetAll().Where(x => x.Value.category_id == catid).FirstOrDefault();
                 var rim = LSCustomsRimsModule.Instance.GetAll().Where(x => x.Value.tuning_id == tuning_id && x.Value.category_id == wheeltype.Value.category_id).FirstOrDefault();

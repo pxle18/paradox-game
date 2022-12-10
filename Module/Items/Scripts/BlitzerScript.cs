@@ -13,7 +13,7 @@ namespace VMP_CNR.Module.Items.Scripts
         public static async Task<bool> Blitzer70(DbPlayer dbPlayer, ItemModel ItemData)
         {
             if (dbPlayer.IsCuffed || dbPlayer.IsTied ||
-                dbPlayer.Team.Id != (uint)teams.TEAM_POLICE ||
+                dbPlayer.Team.Id != (uint)TeamTypes.TEAM_POLICE ||
                 dbPlayer.RageExtension.IsInVehicle)
             {
                 return false;
@@ -53,7 +53,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
         public static async Task<bool> Blitzer120(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.Team.Id != (uint)teams.TEAM_POLICE || dbPlayer.RageExtension.IsInVehicle)
+            if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.Team.Id != (uint)TeamTypes.TEAM_POLICE || dbPlayer.RageExtension.IsInVehicle)
                 return false;
 
             return true;

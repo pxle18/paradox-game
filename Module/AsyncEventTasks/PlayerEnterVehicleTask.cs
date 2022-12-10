@@ -88,7 +88,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
 
                 if (sxVeh != null && sxVeh.IsValid() && sxVeh.Data != null && sxVeh.Data.MaxSpeed > 0)
                 {
-                    iPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.entity, sxVeh.Data.MaxSpeed);
+                    iPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.Entity, sxVeh.Data.MaxSpeed);
                 }
 
                 // Respawnstate
@@ -111,7 +111,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
 
                 await Task.Delay(1000);// Workaround for locked vehs
 
-                if (iPlayer == null || !iPlayer.IsValid() || sxVeh == null || !sxVeh.IsValid() || sxVeh.entity == null)
+                if (iPlayer == null || !iPlayer.IsValid() || sxVeh == null || !sxVeh.IsValid() || sxVeh.Entity == null)
                     return;
 
                 // Resync Entity Lock & Engine Status
@@ -119,8 +119,8 @@ namespace VMP_CNR.Module.AsyncEventTasks
                 {
                     NAPI.Task.Run(() =>
                     {
-                        NAPI.Vehicle.SetVehicleEngineStatus(sxVeh.entity, sxVeh.SyncExtension.EngineOn);
-                        NAPI.Vehicle.SetVehicleLocked(sxVeh.entity, sxVeh.SyncExtension.Locked);
+                        NAPI.Vehicle.SetVehicleEngineStatus(sxVeh.Entity, sxVeh.SyncExtension.EngineOn);
+                        NAPI.Vehicle.SetVehicleLocked(sxVeh.Entity, sxVeh.SyncExtension.Locked);
                         vehicleLocked = sxVeh.SyncExtension.Locked;
                     });
 
@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
 
                     if (sxVeh != null && sxVeh.IsValid() && sxVeh.Data != null && sxVeh.Data.MaxSpeed > 0)
                     {
-                        iPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.entity, sxVeh.Data.MaxSpeed);
+                        iPlayer.Player.TriggerNewClient("setNormalSpeed", sxVeh.Entity, sxVeh.Data.MaxSpeed);
                     }
 
                     await Task.Delay(1000);

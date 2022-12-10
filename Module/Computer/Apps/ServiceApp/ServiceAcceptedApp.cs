@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Computer.Apps.ServiceApp
             if (!client.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = client.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            if (!dbPlayer.IsACop() && dbPlayer.TeamId != (int)teams.TEAM_MEDIC && dbPlayer.TeamId != (int)teams.TEAM_DRIVINGSCHOOL && dbPlayer.TeamId != (int)teams.TEAM_DPOS && dbPlayer.TeamId != (int)teams.TEAM_NEWS && dbPlayer.TeamId != (int)teams.TEAM_LSC && dbPlayer.TeamId != (int) teams.TEAM_GOV && dbPlayer.TeamId != (int)teams.TEAM_AUCTION) return;
+            if (!dbPlayer.IsACop() && dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC && dbPlayer.TeamId != (int)TeamTypes.TEAM_DRIVINGSCHOOL && dbPlayer.TeamId != (int)TeamTypes.TEAM_DPOS && dbPlayer.TeamId != (int)TeamTypes.TEAM_NEWS && dbPlayer.TeamId != (int)TeamTypes.TEAM_LSC && dbPlayer.TeamId != (int) TeamTypes.TEAM_GOV && dbPlayer.TeamId != (int)TeamTypes.TEAM_AUCTION) return;
 
             List<serviceObject> serviceList = new List<serviceObject>();
             var teamServices = ServiceModule.Instance.GetAcceptedTeamServices(dbPlayer);
@@ -31,13 +31,13 @@ namespace VMP_CNR.Module.Computer.Apps.ServiceApp
 
                 string varname = service.Player.GetName();
 
-                if (dbPlayer.TeamId == (int)teams.TEAM_MEDIC)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC)
                 {
                     if (service.Player.GovLevel.ToLower() == "a" || service.Player.GovLevel.ToLower() == "b" || service.Player.GovLevel.ToLower() == "c")
                     {
                         varname = "[PRIORISIERT]";
                     }
-                    else if (service.Player.TeamId == (int)teams.TEAM_MEDIC)
+                    else if (service.Player.TeamId == (int)TeamTypes.TEAM_MEDIC)
                     {
                         varname = "[LSMC]";
                     }

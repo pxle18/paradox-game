@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Teams
 
             TeamMetaData = new TeamMetaData(Id);
 
-            if (IsBusinessTeam && Id == (uint)teams.TEAM_MINE1 || Id == (uint)teams.TEAM_MINE2)
+            if (IsBusinessTeam && Id == (uint)TeamTypes.TEAM_MINE1 || Id == (uint)TeamTypes.TEAM_MINE2)
             {
                 MineAluContainer = ContainerManager.LoadContainer(Id, ContainerTypes.MINECONTAINERALU);
                 MineBronceContainer = ContainerManager.LoadContainer(Id, ContainerTypes.MINECONTAINERBRONCE);
@@ -126,7 +126,7 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsBadOrga()
         {
-            return Id == (int)teams.TEAM_PANTHERS || Id == (int)teams.TEAM_FALCONE || Id == (int)teams.TEAM_DEADLOCK|| Id == (int)teams.TEAM_OUTLAWS_MC || Id == (int)teams.TEAM_VOLKY;
+            return Id == (int)TeamTypes.TEAM_PANTHERS || Id == (int)TeamTypes.TEAM_FALCONE || Id == (int)TeamTypes.TEAM_DEADLOCK|| Id == (int)TeamTypes.TEAM_OUTLAWS_MC || Id == (int)TeamTypes.TEAM_VOLKY;
         }
 
         public bool IsWeaponTeam()
@@ -183,37 +183,37 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsCops()
         {
-            return Id == (int) teams.TEAM_POLICE || Id == (int)teams.TEAM_IAA || Id == (int) teams.TEAM_FIB ||
-                   Id == (int)teams.TEAM_GOV || Id == (int) teams.TEAM_ARMY || Id == (int) teams.TEAM_SWAT;
+            return Id == (int) TeamTypes.TEAM_POLICE || Id == (int)TeamTypes.TEAM_IAA || Id == (int) TeamTypes.TEAM_FIB ||
+                   Id == (int)TeamTypes.TEAM_GOV || Id == (int) TeamTypes.TEAM_ARMY || Id == (int) TeamTypes.TEAM_SWAT;
         }
 
         public bool GetsExtraNightPayday()
         {
-            return Id == (int)teams.TEAM_POLICE || Id == (int)teams.TEAM_IAA || Id == (int)teams.TEAM_FIB ||
-                   Id == (int)teams.TEAM_ARMY || Id == (int)teams.TEAM_MEDIC || Id == (int)teams.TEAM_SWAT;
+            return Id == (int)TeamTypes.TEAM_POLICE || Id == (int)TeamTypes.TEAM_IAA || Id == (int)TeamTypes.TEAM_FIB ||
+                   Id == (int)TeamTypes.TEAM_ARMY || Id == (int)TeamTypes.TEAM_MEDIC || Id == (int)TeamTypes.TEAM_SWAT;
         }
 
         public bool IsStaatsfraktion()
         {
-            return Id == (int)teams.TEAM_POLICE || Id == (int)teams.TEAM_IAA || Id == (int)teams.TEAM_FIB ||
-                   Id == (int)teams.TEAM_ARMY || Id == (int)teams.TEAM_SWAT || 
-                   Id == (int)teams.TEAM_MEDIC || Id == (int)teams.TEAM_GOV || 
-                   Id == (int)teams.TEAM_DPOS;
+            return Id == (int)TeamTypes.TEAM_POLICE || Id == (int)TeamTypes.TEAM_IAA || Id == (int)TeamTypes.TEAM_FIB ||
+                   Id == (int)TeamTypes.TEAM_ARMY || Id == (int)TeamTypes.TEAM_SWAT || 
+                   Id == (int)TeamTypes.TEAM_MEDIC || Id == (int)TeamTypes.TEAM_GOV || 
+                   Id == (int)TeamTypes.TEAM_DPOS;
         }
 
         public bool IsDpos()
         {
-            return Id == (int)teams.TEAM_DPOS;
+            return Id == (int)TeamTypes.TEAM_DPOS;
         }
 
         public bool CanRegisterVehicles()
         {
-            return Id == (int) teams.TEAM_DPOS || Id == (int) teams.TEAM_DRIVINGSCHOOL;
+            return Id == (int) TeamTypes.TEAM_DPOS || Id == (int) TeamTypes.TEAM_DRIVINGSCHOOL;
         }
         
         public bool IsMedics()
         {
-            return Id == (int) teams.TEAM_MEDIC;
+            return Id == (int) TeamTypes.TEAM_MEDIC;
         }
 
         public override string ToString()

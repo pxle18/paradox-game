@@ -27,7 +27,7 @@ namespace VMP_CNR.Module.Telefon.App.Settings
         {
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
-            dbPlayer.wallpaper = WallpaperModule.Instance.Get((uint)wallpaperId);
+            dbPlayer.Wallpaper = WallpaperModule.Instance.Get((uint)wallpaperId);
             dbPlayer.SaveWallpaper();
         }
         

@@ -395,7 +395,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public PhoneSetting phoneSetting { get; set; }
 
-        public Wallpaper wallpaper { get; set; }
+        public Wallpaper Wallpaper { get; set; }
         public Ringtone ringtone { get; set; }
         public List<DbPlayer> playerWhoHearRingtone { get; set; }
 
@@ -844,7 +844,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsCopPackGun()
         {
-            return Team != null && (Duty && (Team.IsCops() || Team.IsDpos() || Team.IsMedics() || Team.Id == (int)teams.TEAM_DRIVINGSCHOOL || Team.Id == (int)teams.TEAM_NEWS) || IsNSADuty);
+            return Team != null && (Duty && (Team.IsCops() || Team.IsDpos() || Team.IsMedics() || Team.Id == (int)TeamTypes.TEAM_DRIVINGSCHOOL || Team.Id == (int)TeamTypes.TEAM_NEWS) || IsNSADuty);
         }
 
         public bool IsACop()

@@ -289,7 +289,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
 
             if (Group == 99 && dbPlayer.IsNSADuty) return true;
 
-            if (Teams.Contains(TeamModule.Instance.Get((uint)teams.TEAM_IAA)) && dbPlayer.IsNSADuty) return true;
+            if (Teams.Contains(TeamModule.Instance.Get((uint)TeamTypes.TEAM_IAA)) && dbPlayer.IsNSADuty) return true;
 
             if ((Teams.Contains(dbPlayer.Team) && dbPlayer.TeamRank >= RangRestriction) ||
                 dbPlayer.Rank.CanAccessFeature("enter_all") ||

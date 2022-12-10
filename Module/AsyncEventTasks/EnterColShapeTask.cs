@@ -48,9 +48,9 @@ namespace VMP_CNR.Module.AsyncEventTasks
             {
                 HashSet<int> teamsHashset = shape.GetData<HashSet<int>>("teamWardrobe");
                 uint teamId = dbPlayer.TeamId;
-                if (teamsHashset.Contains((int)teams.TEAM_IAA) && dbPlayer.IsNSADuty)
+                if (teamsHashset.Contains((int)TeamTypes.TEAM_IAA) && dbPlayer.IsNSADuty)
                 {
-                    teamId = (uint)teams.TEAM_IAA;
+                    teamId = (uint)TeamTypes.TEAM_IAA;
                 }
 
                 if (!teamsHashset.Contains((int)teamId)) return;

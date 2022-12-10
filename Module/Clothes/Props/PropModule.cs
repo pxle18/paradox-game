@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Clothes.Props
             {
                 var cloth = this[propId];
                 if (cloth?.Slot != slot ||
-                    cloth.TeamId != (int) teams.TEAM_CIVILIAN && cloth.TeamId != dbPlayer.TeamId ||
+                    cloth.TeamId != (int) TeamTypes.TEAM_CIVILIAN && cloth.TeamId != dbPlayer.TeamId ||
                     cloth.Gender != 3 && cloth.Gender != dbPlayer.Customization.Gender) continue;
                 if (!wardrobeClothes.Contains(cloth))
                 {
@@ -87,7 +87,7 @@ namespace VMP_CNR.Module.Clothes.Props
                 {
                     var cloth = this[propId];
                     if (cloth?.Slot != slot ||
-                        cloth.TeamId != (int) teams.TEAM_CIVILIAN && cloth.TeamId != dbPlayer.TeamId ||
+                        cloth.TeamId != (int) TeamTypes.TEAM_CIVILIAN && cloth.TeamId != dbPlayer.TeamId ||
                         cloth.Gender != 3 && cloth.Gender != dbPlayer.Customization.Gender) continue;
                     if (!wardrobeClothes.Contains(cloth))
                     {

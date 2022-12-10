@@ -158,7 +158,7 @@ namespace VMP_CNR.Module.Items.Scripts
             if (l_Vehicle == null)
                 return false;
 
-            if(l_Vehicle.teamid == (uint)teams.TEAM_ARMY && (dbPlayer.IsAGangster() || dbPlayer.IsBadOrga()))
+            if(l_Vehicle.teamid == (uint)TeamTypes.TEAM_ARMY && (dbPlayer.IsAGangster() || dbPlayer.IsBadOrga()))
             {
                 if(l_Vehicle.Container != null && (l_Vehicle.Container.GetItemAmount(MAZModule.MilitaryChestId) > 0 || l_Vehicle.Container.GetItemAmount(MAZModule.WeaponChestId) > 0))
                 {
@@ -184,7 +184,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 }
             } 
 
-            if (l_Vehicle.entity.Model != (uint)VehicleHash.Journey && l_Vehicle.entity.Model != (uint)VehicleHash.Camper)
+            if (l_Vehicle.Entity.Model != (uint)VehicleHash.Journey && l_Vehicle.Entity.Model != (uint)VehicleHash.Camper)
                 return false;
 
             if (l_Vehicle.SyncExtension.Locked)

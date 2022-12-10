@@ -42,12 +42,12 @@ namespace VMP_CNR.Module.Swat
     {
         public static bool HasSwatRights(this DbPlayer dbPlayer)
         {
-            return dbPlayer.Swat > 0 || dbPlayer.TeamId == (int)teams.TEAM_SWAT;
+            return dbPlayer.Swat > 0 || dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT;
         }
 
         public static bool HasSwatLeaderRights(this DbPlayer dbPlayer)
         {
-            return dbPlayer.TeamId == (int)teams.TEAM_SWAT && dbPlayer.TeamRank >= 11;
+            return dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT && dbPlayer.TeamRank >= 11;
         }
 
         public static void SetSwatRights(this DbPlayer dbPlayer, bool leaderrights)
@@ -60,9 +60,9 @@ namespace VMP_CNR.Module.Swat
         public static void RemoveSwatRights(this DbPlayer dbPlayer)
         {
             dbPlayer.Swat = 0;
-            if(dbPlayer.TeamId == (int)teams.TEAM_SWAT)
+            if(dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT)
             {
-                dbPlayer.SetTeam((int)teams.TEAM_CIVILIAN);
+                dbPlayer.SetTeam((int)TeamTypes.TEAM_CIVILIAN);
                 dbPlayer.SetTeamRankPermission(false, 0, false, "");
             }
             dbPlayer.Save();
@@ -80,7 +80,7 @@ namespace VMP_CNR.Module.Swat
                 dbPlayer.SetData("swatOld_rights_inv", dbPlayer.TeamRankPermission.Inventory);
                 dbPlayer.SetData("swatOld_rights_title", dbPlayer.TeamRankPermission.Title);
 
-                dbPlayer.SetTeam((int)teams.TEAM_SWAT, false);
+                dbPlayer.SetTeam((int)TeamTypes.TEAM_SWAT, false);
                 dbPlayer.SetTeamRankPermission(true, dbPlayer.HasSwatLeaderRights() ? 2 : 0, true, "");
                 dbPlayer.SendNewNotification("Swatdienst angetreten!");
                 dbPlayer.SetDuty(true);
@@ -137,7 +137,7 @@ namespace VMP_CNR.Module.Swat
 
         public static bool IsSwatDuty(this DbPlayer dbPlayer)
         {
-            if (dbPlayer.SwatDuty == 1 && dbPlayer.TeamId == (int)teams.TEAM_SWAT) return true;
+            if (dbPlayer.SwatDuty == 1 && dbPlayer.TeamId == (int)TeamTypes.TEAM_SWAT) return true;
             else return false;
         }
     }

@@ -30,13 +30,13 @@ namespace VMP_CNR.Module.Freiberuf
             foreach (SxVehicle Vehicle in VehicleHandler.Instance.GetJobVehicles())
             {
                 if (Vehicle == null) continue;
-                if (Vehicle.jobid != MowerModule.MowerJobVehMarkId && Utils.IsPointNearPoint(7.0f, Vehicle.entity.Position, pos))
+                if (Vehicle.jobid != MowerModule.MowerJobVehMarkId && Utils.IsPointNearPoint(7.0f, Vehicle.Entity.Position, pos))
                 {
                     dbPlayer.SendNewNotification("Ein Fahrzeug blockiert derzeit den Ausparkpunkt!", PlayerNotification.NotificationType.FREIBERUF, "Freiberuf");
                     return true;
                 }
 
-                if (Utils.IsPointNearPoint(5.0f, Vehicle.entity.Position, pos))
+                if (Utils.IsPointNearPoint(5.0f, Vehicle.Entity.Position, pos))
                 {
                     dbPlayer.SendNewNotification("Jemand anderes hat gerade den Job begonnen, bitte warte kurz!", PlayerNotification.NotificationType.FREIBERUF, "Freiberuf");
                     return true;

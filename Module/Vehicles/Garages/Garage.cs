@@ -184,7 +184,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                         if (!dbPlayer.CanControl(vehicle)) continue;
                         if (!Classifications.Contains(vehicle.Data.ClassificationId)) continue;
 
-                        if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
+                        if (dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= radius)
                         {
                             if (vehicle.Data.IsModdedCar == 1)
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
@@ -198,7 +198,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                     uint currTeam = dbPlayer.TeamId;
 
                     // Wenn NSA Duty und IAA Garage ist...
-                    if (dbPlayer.IsNSADuty && Teams.Contains((uint)teams.TEAM_IAA)) currTeam = (uint)teams.TEAM_IAA;
+                    if (dbPlayer.IsNSADuty && Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = (uint)TeamTypes.TEAM_IAA;
 
                     if (!Teams.Contains(currTeam)) return vehicles;
 
@@ -209,7 +209,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                         if (!dbPlayer.CanControl(vehicle)) continue;
                         if (!Classifications.Contains(vehicle.Data.ClassificationId)) continue;
 
-                        if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
+                        if (dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= radius)
                         {
                             if (vehicle.Data.IsModdedCar == 1)
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
@@ -228,7 +228,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                     if (!dbPlayer.CanControl(vehicle)) continue;
                     if (!Classifications.Contains(vehicle.Data.ClassificationId)) continue;
 
-                    if (dbPlayer.Player.Position.DistanceTo(vehicle.entity.Position) <= radius)
+                    if (dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= radius)
                     {
                         if (vehicle.Data.IsModdedCar == 1)
                             vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
@@ -250,7 +250,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
                 var found = false;
                 foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
                 {
-                    if (vehicle?.entity.Position.DistanceTo(spawnPoint.Position) <= 2.0f)
+                    if (vehicle?.Entity.Position.DistanceTo(spawnPoint.Position) <= 2.0f)
                     {
                         found = true;
                     }

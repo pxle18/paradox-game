@@ -140,7 +140,7 @@ namespace VMP_CNR.Module.Dealer.Menu
                     if (rnd <= DealerModule.Instance.MaulwurfAlarmChance || Configuration.Instance.DevMode)
                     {
                         if (!l_Dealer.Alert)
-                            TeamModule.Instance.SendMessageToTeam("Ein neuer Tipp von einem Maulwurf ist eingegangen... (/finddealer)", teams.TEAM_FIB, 10000);
+                            TeamModule.Instance.SendMessageToTeam("Ein neuer Tipp von einem Maulwurf ist eingegangen... (/finddealer)", TeamTypes.TEAM_FIB, 10000);
                         string messageToDB = $"FindDealer: Neuer Tipp - Id - {l_Dealer.Id}, Heroinpreis - {l_Dealer.HeroinampullenResource.Price}";
                         MySQLHandler.ExecuteAsync($"INSERT INTO `log_bucket` (`player_id`, `message`) VALUES ('{dbPlayer.Id}', '{messageToDB}');");
                         l_Dealer.Alert = true;

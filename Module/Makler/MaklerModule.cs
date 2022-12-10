@@ -159,7 +159,7 @@ namespace VMP_CNR.Module.Makler
 
                 dbPlayer.ResetData("mSellObject");
 
-                DbPlayer govBeamter = Players.Players.Instance.GetValidPlayers().Where(p => p.TeamId == (uint)teams.TEAM_GOV && p.TeamRank >= 5 && p.Player.Position.DistanceTo(dbPlayer.Player.Position) < 3.0f).FirstOrDefault();
+                DbPlayer govBeamter = Players.Players.Instance.GetValidPlayers().Where(p => p.TeamId == (uint)TeamTypes.TEAM_GOV && p.TeamRank >= 5 && p.Player.Position.DistanceTo(dbPlayer.Player.Position) < 3.0f).FirstOrDefault();
 
                 if (govBeamter == null || !govBeamter.IsValid() || (govBeamter.Player.Position.DistanceTo(Government.GovernmentModule.ComputerBuero1Pos) > 4.0f && govBeamter.Player.Position.DistanceTo(Government.GovernmentModule.ComputerBuero2Pos) > 4.0f) || !govBeamter.IsInDuty())
                 {

@@ -20,7 +20,7 @@ namespace VMP_CNR
      */
     public class DatabaseLogging : Singleton<DatabaseLogging>
     {
-        public void LogAdminAction(Player admin, string user, adminLogTypes type, string reason, int optime = 0, bool devMode = false)
+        public void LogAdminAction(Player admin, string user, AdminLogTypes type, string reason, int optime = 0, bool devMode = false)
         {
             DbPlayer dbPlayer = admin.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid())
@@ -31,40 +31,40 @@ namespace VMP_CNR
             // Getting Type
             switch (type)
             {
-                case adminLogTypes.perm:
+                case AdminLogTypes.perm:
                     xtype = "permanent Ban";
                     break;
-                case adminLogTypes.timeban:
+                case AdminLogTypes.timeban:
                     xtype = "terminated Ban (" + optime + ")";
                     break;
-                case adminLogTypes.kick:
+                case AdminLogTypes.kick:
                     xtype = "kick";
                     break;
-                case adminLogTypes.warn:
+                case AdminLogTypes.warn:
                     xtype = "Verwarnung";
                     break;
-                case adminLogTypes.log:
+                case AdminLogTypes.log:
                     xtype = "Logging";
                     break;
-                case adminLogTypes.whisper:
+                case AdminLogTypes.whisper:
                     xtype = "Whisper";
                     break;
-                case adminLogTypes.setitem:
+                case AdminLogTypes.setitem:
                     xtype = "Setitem";
                     break;
-                case adminLogTypes.coord:
+                case AdminLogTypes.coord:
                     xtype = "Coord";
                     break;
-                case adminLogTypes.veh:
+                case AdminLogTypes.veh:
                     xtype = "Veh";
                     break;
-                case adminLogTypes.arev:
+                case AdminLogTypes.arev:
                     xtype = "Arev";
                     break;
-                case adminLogTypes.setdpos:
+                case AdminLogTypes.setdpos:
                     xtype = "Setdpos";
                     break;
-                case adminLogTypes.setgarage:
+                case AdminLogTypes.setgarage:
                     xtype = "setgarage";
                     break;
             }
@@ -72,7 +72,7 @@ namespace VMP_CNR
             string query = "";
 
             // Special Whisperlog
-            if (type == adminLogTypes.whisper)
+            if (type == AdminLogTypes.whisper)
             {
                 query = string.Format(
                     "INSERT INTO `log_whisper` (`sender`, `player`, `message`) VALUES ('{0}', '{1}', '{2}')",
@@ -87,20 +87,20 @@ namespace VMP_CNR
             MySQLHandler.ExecuteAsync(query);
         }
 
-        public void LogAcpAdminAction(PlayerName admin, string user, adminLogTypes type, string reason)
+        public void LogAcpAdminAction(PlayerName admin, string user, AdminLogTypes type, string reason)
         {
             string xtype = "undefined";
 
             // Getting Type
             switch (type)
             {
-                case adminLogTypes.kick:
+                case AdminLogTypes.kick:
                     xtype = "acp-kick";
                     break;
-                case adminLogTypes.whisper:
+                case AdminLogTypes.whisper:
                     xtype = "acp-whisper";
                     break;
-                case adminLogTypes.setmoney:
+                case AdminLogTypes.setmoney:
                     xtype = "acp-setmoney";
                     break;
             }
@@ -114,20 +114,20 @@ namespace VMP_CNR
             MySQLHandler.ExecuteAsync(query);
         }
 
-        public void LogAcpAdminAction(string admin, string user, adminLogTypes type, string reason)
+        public void LogAcpAdminAction(string admin, string user, AdminLogTypes type, string reason)
         {
             string xtype = "undefined";
 
             // Getting Type
             switch (type)
             {
-                case adminLogTypes.kick:
+                case AdminLogTypes.kick:
                     xtype = "acp-kick";
                     break;
-                case adminLogTypes.whisper:
+                case AdminLogTypes.whisper:
                     xtype = "acp-whisper";
                     break;
-                case adminLogTypes.setmoney:
+                case AdminLogTypes.setmoney:
                     xtype = "acp-setmoney";
                     break;
             }

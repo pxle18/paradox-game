@@ -76,7 +76,7 @@ namespace VMP_CNR
                     {
                         if (Armory.Id == 3 || Armory.Id == 17 || Armory.Id == 19)
                         {
-                            if(dbPlayer.TeamId == (uint)teams.TEAM_ARMY && dbPlayer.TeamRank < 10)
+                            if(dbPlayer.TeamId == (uint)TeamTypes.TEAM_ARMY && dbPlayer.TeamRank < 10)
                             {
                                 return false;
                             }
@@ -147,7 +147,7 @@ namespace VMP_CNR
                             var weapon = ItemModelModule.Instance.GetByScript($"bw_{ArmoryWeapon.Weapon.ToString()}");
                             if (weapon == null) return false;
 
-                            if (dbPlayer.TeamId == (uint)teams.TEAM_SWAT)
+                            if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_SWAT)
                             {
                                 if (!dbPlayer.CanWeaponAdded(ArmoryWeapon.Weapon))
                                 {

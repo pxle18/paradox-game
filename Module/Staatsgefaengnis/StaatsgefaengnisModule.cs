@@ -93,18 +93,18 @@ namespace VMP_CNR.Module.Staatsgefaengnis
 
                         string message = $"SG-Notrufsystem: Notfall im Staatsgefängnis von {dbPlayer.GetName()}";
                         
-                        if (TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers().Where(c => c.Duty).Count()
-                            - TeamModule.Instance[(int)teams.TEAM_ARMY].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
+                        if (TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers().Where(c => c.Duty).Count()
+                            - TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].GetTeamMembers().Where(c => c.IsInAdminDuty() || c.IsInGuideDuty() || c.IsInGameDesignDuty()).Count()
                             > 0)
                         {
-                            TeamModule.Instance[(int)teams.TEAM_ARMY].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].SendNotification($"Ein Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) mit dem Grund: { message } ist eingegangen!");
                             requestSuccess = true;
                         }
 
                         if (requestSuccess)
                         {
-                            VMP_CNR.Module.Service.Service service = new VMP_CNR.Module.Service.Service(dbPlayer.Player.Position, message, (uint)teams.TEAM_ARMY, dbPlayer, "", telnr);
-                            bool status = VMP_CNR.Module.Service.ServiceModule.Instance.Add(dbPlayer, (uint)teams.TEAM_ARMY, service);
+                            VMP_CNR.Module.Service.Service service = new VMP_CNR.Module.Service.Service(dbPlayer.Player.Position, message, (uint)TeamTypes.TEAM_ARMY, dbPlayer, "", telnr);
+                            bool status = VMP_CNR.Module.Service.ServiceModule.Instance.Add(dbPlayer, (uint)TeamTypes.TEAM_ARMY, service);
 
                             dbPlayer.SetData("service", 13);
 
@@ -135,7 +135,7 @@ namespace VMP_CNR.Module.Staatsgefaengnis
 
                         dbPlayer.SendNewNotification("Sie haben die Klingel betätigt, bitte warten Sie hier!");
 
-                        foreach (DbPlayer dbPlayer1 in TeamModule.Instance.Get((uint)teams.TEAM_ARMY).Members.Values.Where(a => a != null && a.IsValid() && a.IsInDuty()).ToList())
+                        foreach (DbPlayer dbPlayer1 in TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).Members.Values.Where(a => a != null && a.IsValid() && a.IsInDuty()).ToList())
                         {
                             if(dbPlayer1.Player.Position.DistanceTo(sgBellPosition) < 200.0f)
                             {

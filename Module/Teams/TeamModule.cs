@@ -55,31 +55,31 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsWeaponTeamId(uint Id)
         {
-            return Id == (int)teams.TEAM_HUSTLER || Id == (int)teams.TEAM_ICA;
+            return Id == (int)TeamTypes.TEAM_HUSTLER || Id == (int)TeamTypes.TEAM_ICA;
         }
         public bool IsMethTeamId(uint Id)
         {
-            return Id == (int)teams.TEAM_TRIADEN ||
-                Id == (int)teams.TEAM_YAKUZA ||
-                Id == (int)teams.TEAM_LCN ||
-                Id == (int)teams.TEAM_ORGANISAZIJA ||
-                Id == (int)teams.TEAM_BRATWA||
-                Id == (int)teams.TEAM_MADRAZO;
+            return Id == (int)TeamTypes.TEAM_TRIADEN ||
+                Id == (int)TeamTypes.TEAM_YAKUZA ||
+                Id == (int)TeamTypes.TEAM_LCN ||
+                Id == (int)TeamTypes.TEAM_ORGANISAZIJA ||
+                Id == (int)TeamTypes.TEAM_BRATWA||
+                Id == (int)TeamTypes.TEAM_MADRAZO;
         }
         public bool IsWeedTeamId(uint Id)
         {
-            return Id == (int)teams.TEAM_BALLAS || Id == (int)teams.TEAM_LOST || Id == (int)teams.TEAM_IRISHMOB ||
-                   Id == (int)teams.TEAM_GROVE || Id == (int)teams.TEAM_VAGOS || Id == (int)teams.TEAM_MARABUNTA ||
-                   Id == (int)teams.TEAM_REDNECKS || Id == (int)teams.TEAM_HOH || Id == (int)teams.TEAM_BOSOZOKUKAI;
+            return Id == (int)TeamTypes.TEAM_BALLAS || Id == (int)TeamTypes.TEAM_LOST || Id == (int)TeamTypes.TEAM_IRISHMOB ||
+                   Id == (int)TeamTypes.TEAM_GROVE || Id == (int)TeamTypes.TEAM_VAGOS || Id == (int)TeamTypes.TEAM_MARABUNTA ||
+                   Id == (int)TeamTypes.TEAM_REDNECKS || Id == (int)TeamTypes.TEAM_HOH || Id == (int)TeamTypes.TEAM_BOSOZOKUKAI;
         }
 
         public bool IsHeroinTeamId(uint Id)
         {
-            return Id == (int)teams.TEAM_BALLAS || Id == (int)teams.TEAM_LOST || Id == (int)teams.TEAM_IRISHMOB ||
-                   Id == (int)teams.TEAM_GROVE || Id == (int)teams.TEAM_VAGOS || Id == (int)teams.TEAM_MARABUNTA ||
-                   Id == (int)teams.TEAM_REDNECKS || Id == (int)teams.TEAM_HOH || Id == (int)teams.TEAM_BOSOZOKUKAI ||
-                   Id == (int)teams.TEAM_TRIADEN || Id == (int)teams.TEAM_YAKUZA || Id == (int)teams.TEAM_LCN ||
-                   Id == (int)teams.TEAM_ORGANISAZIJA || Id == (int)teams.TEAM_BRATWA || Id == (int)teams.TEAM_MADRAZO;
+            return Id == (int)TeamTypes.TEAM_BALLAS || Id == (int)TeamTypes.TEAM_LOST || Id == (int)TeamTypes.TEAM_IRISHMOB ||
+                   Id == (int)TeamTypes.TEAM_GROVE || Id == (int)TeamTypes.TEAM_VAGOS || Id == (int)TeamTypes.TEAM_MARABUNTA ||
+                   Id == (int)TeamTypes.TEAM_REDNECKS || Id == (int)TeamTypes.TEAM_HOH || Id == (int)TeamTypes.TEAM_BOSOZOKUKAI ||
+                   Id == (int)TeamTypes.TEAM_TRIADEN || Id == (int)TeamTypes.TEAM_YAKUZA || Id == (int)TeamTypes.TEAM_LCN ||
+                   Id == (int)TeamTypes.TEAM_ORGANISAZIJA || Id == (int)TeamTypes.TEAM_BRATWA || Id == (int)TeamTypes.TEAM_MADRAZO;
         }
 
         public bool IsGangsterTeamId(uint Id)
@@ -130,7 +130,7 @@ namespace VMP_CNR.Module.Teams
             }
         }
 
-        public void SendMessageToTeam(string message, teams teamId, int time = 5000, int requiredRang = 0)
+        public void SendMessageToTeam(string message, TeamTypes teamId, int time = 5000, int requiredRang = 0)
         {
             Team team = Get((uint)teamId);
 

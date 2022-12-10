@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Vehicles
 
         public static bool IsValid(this SxVehicle sxVehicle)
         {
-            return sxVehicle != null && sxVehicle.entity != null && sxVehicle.Data != null && sxVehicle.entity.Handle != null && VehicleHandler.SxVehicles.ContainsKey(sxVehicle.uniqueServerId);
+            return sxVehicle != null && sxVehicle.Entity != null && sxVehicle.Data != null && sxVehicle.Entity.Handle != null && VehicleHandler.SxVehicles.ContainsKey(sxVehicle.uniqueServerId);
         }
     }
 }

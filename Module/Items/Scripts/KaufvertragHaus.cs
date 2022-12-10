@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.Items.Scripts
         {
             if (dbPlayer.RageExtension.IsInVehicle) return false;
 
-            if (dbPlayer.job[0] != (int)jobs.JOB_Makler) return false;
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_Makler) return false;
             if (!ServerFeatures.IsActive("makler-haus"))
             {
                 dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");

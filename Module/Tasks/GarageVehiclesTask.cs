@@ -39,7 +39,7 @@ namespace VMP_CNR.Module.Tasks
                 uint currTeam = dbPlayer.TeamId;
 
                 // Wenn NSA Duty und IAA Garage ist...
-                if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = (uint)teams.TEAM_IAA;
+                if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = (uint)TeamTypes.TEAM_IAA;
 
                 return garage.Teams.Contains(currTeam) && dbPlayer.TeamRank >= garage.Rang;
             }
@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Tasks
                 uint currTeam = dbPlayer.TeamId;
 
                 // Wenn NSA Duty und IAA Garage ist...
-                if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)teams.TEAM_IAA)) currTeam = (uint)teams.TEAM_IAA;
+                if (dbPlayer.IsNSADuty && garage.Teams.Contains((uint)TeamTypes.TEAM_IAA)) currTeam = (uint)TeamTypes.TEAM_IAA;
 
 
                 return $"SELECT * FROM `fvehicles` WHERE `team` = '{currTeam}' AND `inGarage` = 1 AND lastGarage = '{garage.Id}' AND `impound_release` <= NOW() AND lastUpdate < NOW() - interval 5 MINUTE ORDER BY vehiclehash ASC;";
@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Tasks
             }
             else
             {
-                return (dbPlayer.TeamId == (int)teams.TEAM_LSC)
+                return (dbPlayer.TeamId == (int)TeamTypes.TEAM_LSC)
                     ? $"SELECT * FROM `vehicles` WHERE (`owner` = '{dbPlayer.Id}' OR `TuningState` = 1) AND `inGarage` = 1 AND `garage_id` = '{garage.Id}' AND `impound_release` <= NOW() AND lastUpdate < NOW() - interval 5 MINUTE ORDER BY vehiclehash ASC;"
                     : $"SELECT * FROM `vehicles` WHERE `owner` = '{dbPlayer.Id}' AND `inGarage` = 1 AND `garage_id` = '{garage.Id}' AND `impound_release` <= NOW() AND lastUpdate < NOW() - interval 5 MINUTE ORDER BY vehiclehash ASC;";
             }

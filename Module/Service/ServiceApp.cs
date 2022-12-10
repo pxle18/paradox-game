@@ -27,52 +27,52 @@ namespace VMP_CNR.Module.Service
                     {
                         case 1:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_POLICE].SendNotification($"Der Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_POLICE].SendNotification($"Der Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben den Notruf abgebrochen!");
 
                             break;
                         case 7:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_MEDIC].SendNotification($"Der Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_MEDIC].SendNotification($"Der Notruf von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben den Notruf abgebrochen!");
 
                             break;
                         case 3:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_DRIVINGSCHOOL].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_DRIVINGSCHOOL].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
 
                             break;
                         case 16:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_DPOS].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_DPOS].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
 
                             break;
                         case 4:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_NEWS].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_NEWS].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
 
                             break;
                         case 26:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_LSC].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_LSC].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
                             break;
                         case 13:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_ARMY].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_ARMY].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
                             break;
                         case 14:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int) teams.TEAM_GOV].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int) TeamTypes.TEAM_GOV].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
                             break;
                         case 40:
                             dbPlayer.ResetData("service");
-                            TeamModule.Instance[(int)teams.TEAM_GOV].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
+                            TeamModule.Instance[(int)TeamTypes.TEAM_GOV].SendNotification($"Die Anfrage von { dbPlayer.GetName() } ({ dbPlayer.ForumId }) wurde abgebrochen!");
                             dbPlayer.SendNewNotification("Sie haben die Anfrage abgebrochen!");
                             break;
                     }

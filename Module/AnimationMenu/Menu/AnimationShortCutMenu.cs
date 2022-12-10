@@ -24,8 +24,8 @@ namespace VMP_CNR.Module.AnimationMenu
             foreach (AnimationItem animationItem in AnimationItemModule.Instance.GetAll().Values)
             {
 
-                if (animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
-                else if (!animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
+                if (animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) continue;
+                else if (!animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) continue;
 
                 menu.Add($"{animationItem.Name}");
             }
@@ -56,8 +56,8 @@ namespace VMP_CNR.Module.AnimationMenu
                         // Open Secound Menu
                         if (!dbPlayer.AnimationShortcuts.ContainsKey(dbPlayer.GetData("animSlot"))) return false;
 
-                        if (animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && !dbPlayer.IsNSADuty) return false;
-                        else if (!animationItem.RestrictedToTeams.Contains((uint)teams.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) return false;
+                        if (animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && !dbPlayer.IsNSADuty) return false;
+                        else if (!animationItem.RestrictedToTeams.Contains((uint)TeamTypes.TEAM_IAA) && animationItem.RestrictedToTeams.Count > 0 && !animationItem.RestrictedToTeams.Contains(dbPlayer.TeamId)) return false;
 
                         dbPlayer.AnimationShortcuts[dbPlayer.GetData("animSlot")] = animationItem.Id;
                         dbPlayer.SendNewNotification($"Animationsslot {dbPlayer.GetData("animSlot")} mit {animationItem.Name} belegt!");

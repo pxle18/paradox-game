@@ -611,7 +611,7 @@ namespace VMP_CNR.Module.Players
 
         public static void SaveWallpaper(this DbPlayer dbPlayer)
         {
-            MySQLHandler.ExecuteAsync("UPDATE player SET `wallpaperId` = '" + dbPlayer.wallpaper.Id + "' WHERE id = '" + dbPlayer.Id + "';");
+            MySQLHandler.ExecuteAsync("UPDATE player SET `wallpaperId` = '" + dbPlayer.Wallpaper.Id + "' WHERE id = '" + dbPlayer.Id + "';");
         }
 
         public static void SaveRingtone(this DbPlayer dbPlayer)

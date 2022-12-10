@@ -88,7 +88,7 @@ namespace VMP_CNR.Module.Heist.Prequest.Keycard
             dbPlayer.StopAnimation();
 
                 if (dbPlayer.IsCuffed || dbPlayer.IsTied || dbPlayer.IsInjured() || dbPlayer.Player.Position.DistanceTo(PedPosition) > 5.0f) return;
-                if (vehicle.entity.Position.DistanceTo(PedPosition) > 20.0f) return;
+                if (vehicle.Entity.Position.DistanceTo(PedPosition) > 20.0f) return;
 
                 Dictionary<string, dynamic> ItemData = new Dictionary<string, dynamic>();
                 ItemData.Add("created", (DateTime)DateTime.Now);

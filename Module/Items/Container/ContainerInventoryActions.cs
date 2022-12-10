@@ -238,7 +238,7 @@ namespace VMP_CNR.Module.Items
                                 detectrangeCorrection = 3.0f;
                             }
 
-                            if (dbPlayer.Player.Position.Z + detectrangeCorrection < sxVehicle.entity.Position.Z)
+                            if (dbPlayer.Player.Position.Z + detectrangeCorrection < sxVehicle.Entity.Position.Z)
                             {
                                 if (!dbPlayer.CanControl(sxVehicle))
                                 {
@@ -254,13 +254,13 @@ namespace VMP_CNR.Module.Items
                 if(eXternContainer.Type == ContainerTypes.FVEHICLE)
                 {
                     SxVehicle sxvehicle = null;
-                    if (VehicleHandler.TeamVehicles.ContainsKey((uint)teams.TEAM_MINE1))
-                        sxvehicle = VehicleHandler.TeamVehicles[(uint)teams.TEAM_MINE1].ToList().Where(v => v.databaseId == eXternContainer.Id).FirstOrDefault();
+                    if (VehicleHandler.TeamVehicles.ContainsKey((uint)TeamTypes.TEAM_MINE1))
+                        sxvehicle = VehicleHandler.TeamVehicles[(uint)TeamTypes.TEAM_MINE1].ToList().Where(v => v.databaseId == eXternContainer.Id).FirstOrDefault();
 
                     if (sxvehicle == null || !sxvehicle.IsValid())
                     {
-                        if (VehicleHandler.TeamVehicles.ContainsKey((uint)teams.TEAM_MINE2))
-                            sxvehicle = VehicleHandler.TeamVehicles[(uint)teams.TEAM_MINE2].ToList().Where(v => v.databaseId == eXternContainer.Id).FirstOrDefault();
+                        if (VehicleHandler.TeamVehicles.ContainsKey((uint)TeamTypes.TEAM_MINE2))
+                            sxvehicle = VehicleHandler.TeamVehicles[(uint)TeamTypes.TEAM_MINE2].ToList().Where(v => v.databaseId == eXternContainer.Id).FirstOrDefault();
                     }
 
                     // Found? Player NOT mine1 or mine2
