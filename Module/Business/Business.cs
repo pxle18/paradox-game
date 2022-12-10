@@ -57,6 +57,7 @@ namespace VMP_CNR.Module.Business
             Money = reader.GetInt32("money");
             MessageOfTheDay = reader.GetString("motd");
             Locked = true;
+            IsCriminal = reader.GetInt32("gov_register") == 1;
             Visitors = new HashSet<DbPlayer>();
             Members = new Dictionary<uint, Member>();
             VehicleKeys = new Dictionary<uint, string>();
