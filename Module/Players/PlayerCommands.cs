@@ -89,7 +89,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 0).FirstOrDefault().Value;
+            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 1).FirstOrDefault().Value;
             if (l_LSC == null)
             {
                 l_DbPlayer.SendNewNotification("Du bist nicht in einer Lackierkabine!");
@@ -137,7 +137,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 0).FirstOrDefault().Value;
+            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 1).FirstOrDefault().Value;
             if (l_LSC == null)
             {
                 l_DbPlayer.SendNewNotification("Du bist nicht in einer Lackierkabine!");
@@ -161,7 +161,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 0).FirstOrDefault().Value;
+            LSCustoms.LSCustoms l_LSC = LSCustomsModule.Instance.GetAll().Where(x => l_DbPlayer.Player.Position.DistanceTo(x.Value.position) <= 5.0f && x.Value.type == 1).FirstOrDefault().Value;
             if (l_LSC == null)
             {
                 l_DbPlayer.SendNewNotification("Du bist nicht in einer Lackierkabine!");
