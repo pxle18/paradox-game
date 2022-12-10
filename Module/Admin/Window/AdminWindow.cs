@@ -17,20 +17,16 @@ namespace VMP_CNR.Module.Admin.Window
     {
         private class ShowEvent : Event
         {
-            public ShowEvent(DbPlayer dbPlayer) : base(dbPlayer)
-            {
-
-            }
+            public ShowEvent(DbPlayer dbPlayer) : base(dbPlayer) { }
         }
 
-        public AdminWindow() : base("AdminMenu")
-        {
-        }
+        public AdminWindow() : base("AdminMenu") { }
 
         public override Func<DbPlayer, bool> Show()
         {
             return (player) => OnShow(new ShowEvent(player));
         }
+
         [RemoteEvent]
         public void requestAdminMenuCmd(Player player, string cmd, uint foundPlayer, string args, string key)
         {
@@ -78,16 +74,21 @@ namespace VMP_CNR.Module.Admin.Window
             {
                 new AdminMenuCommands() { Title = "Players", Cmd = "showplayers", ShowPlayers = true, Server = false, Input = "", Confirm = false },
                 new AdminMenuCommands() { Title = "Names", Cmd = "names", ShowPlayers = false, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "aDuty", Cmd = "aduty", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Aduty", Cmd = "aduty", ShowPlayers = false, Server = true, Input = "", Confirm = false },
                 new AdminMenuCommands() { Title = "NoClip", Cmd = "noclip", ShowPlayers = false, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "aRev", Cmd = "arev", ShowPlayers = true, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "aSpawn", Cmd = "spawn", ShowPlayers = true, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "aFrisk", Cmd = "afrisk", ShowPlayers = true, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "KickPlayer", Cmd = "kickplayer", ShowPlayers = true, Server = true, Input = "Grund des Kicks", Confirm = true },
-                new AdminMenuCommands() { Title = "freezePlayer", Cmd = "freezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "unfreezePlayer", Cmd = "unfreezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "RemoveVeh", Cmd = "removeveh", ShowPlayers = false, Server = true, Input = "", Confirm = false },
-                new AdminMenuCommands() { Title = "aFly", Cmd = "afly", ShowPlayers = false, Server = true, Input = "", Confirm = false }
+                new AdminMenuCommands() { Title = "Go To", Cmd = "go", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Get Here", Cmd = "gethere", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Revive", Cmd = "arev", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Respawn", Cmd = "spawn", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Frisk", Cmd = "afrisk", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Kick", Cmd = "kickplayer", ShowPlayers = true, Server = true, Input = "Grund des Kicks", Confirm = true },
+                new AdminMenuCommands() { Title = "Freeze", Cmd = "freezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Unfreeze", Cmd = "unfreezeplayer", ShowPlayers = true, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Delete Vehicle", Cmd = "removeveh", ShowPlayers = false, Server = true, Input = "", Confirm = false },
+                new AdminMenuCommands() { Title = "Create Vehicle", Cmd = "veh", ShowPlayers = false, Server = true, Input = "Fahrzeug-Name", Confirm = false },
+                new AdminMenuCommands() { Title = "Set Faction", Cmd = "setfaction", ShowPlayers = true, Server = true, Input = "Fraktion ID", Confirm = false },
+                new AdminMenuCommands() { Title = "Set Hand-Money", Cmd = "sethandmoney", ShowPlayers = true, Server = true, Input = "Betrag", Confirm = true },
+                new AdminMenuCommands() { Title = "Set Money", Cmd = "setmoney", ShowPlayers = true, Server = true, Input = "Betrag", Confirm = true },
             };
 
             //Filter WhiteList 4 Admin

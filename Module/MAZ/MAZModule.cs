@@ -35,8 +35,7 @@ namespace VMP_CNR.Module.MAZ
         protected override void OnItemLoad(MAZ u)
         {
             NAPI.World.RemoveIpl(u.DlcName);
-            Logger.Print(u.DlcName);
-
+            
             base.OnItemLoad(u);
         }
 

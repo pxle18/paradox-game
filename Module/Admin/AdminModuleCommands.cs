@@ -3521,11 +3521,58 @@ namespace VMP_CNR.Module.Admin
 
                 findPlayer.SetTeam(teamId);
                 findPlayer.SetTeamRankPermission(true, 2, true, "");
+
                 findPlayer.SendNewNotification("Administrator " + iPlayer.GetName() +
                                            " hat Sie zum Leader der Fraktion " + TeamModule.Instance.Get(teamId).Name +
                                            " ernannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 iPlayer.SendNewNotification("Sie haben " + findPlayer.GetName() +
                                         " zum Leader der Fraktion " + TeamModule.Instance.Get(teamId).Name + " ernannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                findPlayer.UpdateApps();
+                findPlayer.Player.TriggerNewClient("updateDuty", false);
+            }));
+        }
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void setfaction(Player player, string commandParams)
+        {
+            Main.m_AsyncThread.AddToAsyncThread(new Task(() =>
+            {
+                var iPlayer = player.GetPlayer();
+
+                if (!iPlayer.CanAccessMethod())
+                {
+                    iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                    return;
+                }
+
+                var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+                if (command.Length <= 1) return;
+
+                bool result = UInt32.TryParse(command[1], out uint teamId);
+                if (!result || TeamModule.Instance[teamId] == null)
+                {
+                    iPlayer.SendNewNotification("Falsche Team ID!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    return;
+                }
+
+                var findPlayer = Players.Players.Instance.FindPlayer(command[0], true);
+                if (findPlayer == null) return;
+
+                findPlayer.RemoveParamedicLicense();
+
+                findPlayer.SetTeamRankPermission(false, 0, false, "");
+                findPlayer.SetTeam(teamId);
+                findPlayer.TeamRank = 0;
+
+                if(findPlayer.GetName() != iPlayer.GetName())
+                    findPlayer.SendNewNotification("Administrator " + iPlayer.GetName() +
+                                               " hat Sie zum Mitglied der Fraktion " + TeamModule.Instance.Get(teamId).Name +
+                                               " ernannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+
+                iPlayer.SendNewNotification(findPlayer.GetName() +
+                                        " in Fraktion " + TeamModule.Instance.Get(teamId).Name + " gesetzt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+
                 findPlayer.UpdateApps();
                 findPlayer.Player.TriggerNewClient("updateDuty", false);
             }));
