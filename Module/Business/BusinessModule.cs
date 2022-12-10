@@ -354,10 +354,13 @@ namespace VMP_CNR.Module.Business
                 return;
             }
 
-            MySQLHandler.ExecuteAsync($"UPDATE business SET name = '{MySqlHelper.EscapeString(returnString)}' WHERE id = '{dbPlayer.ActiveBusinessId}';");
-
-            dbPlayer.SendNewNotification($"Der Name des Businesses wurde auf {returnString} gesetzt! (Änderung ab nächster Wende)");
+            dbPlayer.SendNewNotification($"Der Name des Businesses wurde auf {returnString} gesetzt!");
             
+            var business = BusinessModule.Instance.Get(dbPlayer.ActiveBusinessId);
+            if (business == null) return;
+
+            BusinessModule.Instance.Update(business.Id, business, "business", $"id={business.Id}", "name", MySqlHelper.EscapeString(returnString));
+
             // Eintragen beim Business Besitzer im Banking Verlauf.
             dbPlayer.AddPlayerBankHistory(-nameChangeBizPrice, "Business umbenannt");
             return;
