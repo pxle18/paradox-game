@@ -54,7 +54,7 @@ namespace VMP_CNR.Module.Christmas
                     if ((actualDate.Month == 12 && actualDate.Day >= 1 && actualDate.Day <= 24) || Configurations.Configuration.Instance.DevMode)
                     {
                         //Wenn letzte Abholung nicht am selben Tag sondern davor war
-                        if (dbPlayer.xmasLast.Day < actualDate.Day || dbPlayer.xmasLast.Day == 30 && dbPlayer.xmasLast.Month == 11)
+                        if (dbPlayer.xmasLast.Day < actualDate.Day || (dbPlayer.xmasLast.Day == 30 && dbPlayer.xmasLast.Month == 11))
                         {
                             //Gucken ob genug Platz im Inventar ist... #ICH HAB KEIN PAKET BEKOMMEN WEIL ICH KEIN PLATZ HATTE UND EIN KEK BIN
                             if (!dbPlayer.Container.CanInventoryItemAdded((uint)Geschenke.GrünesGeschenk))

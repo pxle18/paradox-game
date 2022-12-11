@@ -159,9 +159,10 @@ namespace VMP_CNR.Handler
         {
             MySQLHandler.Execute("DELETE FROM team_scenario WHERE DATE_SUB(CURDATE(),INTERVAL 7 DAY) >= lastrob");
         }
+
         public void UpdateJahrmarktEnten()
         {
-                MySQLHandler.Execute("UPDATE `player_data` SET pvalue='0' WHERE pkey='enten' AND CURRENT_TIME between '00:00:00' AND '01:00:00'");
+            MySQLHandler.Execute("UPDATE `player_data` SET pvalue='0' WHERE pkey='enten' AND CURRENT_TIME between '00:00:00' AND '01:00:00'");
         }
 
 
