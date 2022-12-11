@@ -1,7 +1,9 @@
-﻿using System;
+﻿using GTANetworkAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VMP_CNR.Module.Logging;
 
 namespace VMP_CNR.Module.Items.Scripts.Presents
 {
@@ -31,6 +33,8 @@ namespace VMP_CNR.Module.Items.Scripts.Presents
             {
                 PresentModule.PresentExport.Add(loadable);
             }
+
+            Logger.Print(NAPI.Util.ToJson(PresentModule.PresentExport));
         }
 
         public List<Present> GetByItemId(uint id)
