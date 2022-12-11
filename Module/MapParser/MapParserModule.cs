@@ -31,25 +31,25 @@ namespace VMP_CNR.Module.MapParser
             Dictionary<string, List<GTANetworkAPI.Object>> objectList = new Dictionary<string, List<GTANetworkAPI.Object>>();
             
             // Load Maps :)
-            string mainPath = Configurations.Configuration.Instance.MapsPath; 
+            //string mainPath = Configurations.Configuration.Instance.MapsPath; 
 
-            foreach (string file in Directory.EnumerateFiles(mainPath, "*.xml"))
-            {
-                if (EventMapModule.Instance.IsEventMap(file))
-                    continue;
+            //foreach (string file in Directory.EnumerateFiles(mainPath, "*.xml"))
+            //{
+            //    if (EventMapModule.Instance.IsEventMap(file))
+            //        continue;
 
-                ReadMap(file);
-                loaded++;
-            }
+            //    ReadMap(file);
+            //    loaded++;
+            //}
 
-            foreach (string file in Directory.EnumerateFiles(mainPath, "*.xmml"))
-            {
-                if (EventMapModule.Instance.IsEventMap(file))
-                    continue;
+            //foreach (string file in Directory.EnumerateFiles(mainPath, "*.xmml"))
+            //{
+            //    if (EventMapModule.Instance.IsEventMap(file))
+            //        continue;
 
-                ReadMenyooMap(file);
-                loaded++;
-            }
+            //    ReadMenyooMap(file);
+            //   loaded++;
+            //}
             Logging.Logger.Debug($"Loaded {loaded} Maps from XML-Map Parser!");
             return true;
         }

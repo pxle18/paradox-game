@@ -26,11 +26,11 @@ namespace VMP_CNR.Module.Events.EventMaps
         {
             if (EventModule.Instance.IsEventActive(u.EventId))
             {
-                string mapFile = Configurations.Configuration.Instance.Ptr ? $"C:\\MapsTest\\{u.Name}" : $"C:\\MapsLive\\{u.Name}";
-                if (!File.Exists(mapFile))
-                    return;
+                //string mapFile = Configurations.Configuration.Instance.Ptr ? $"C:\\MapsTest\\{u.Name}" : $"C:\\MapsLive\\{u.Name}";
+                //if (!File.Exists(mapFile))
+                //    return;
 
-                MapParserModule.Instance.ReadMap(mapFile);
+                //MapParserModule.Instance.ReadMap(mapFile);
             }
         }
 
