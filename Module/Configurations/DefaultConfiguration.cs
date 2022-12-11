@@ -67,10 +67,10 @@ namespace VMP_CNR.Module.Configurations
             MeertraeubelEnabled = true; //set to true later
             JailescapeEnabled = false;
             JumpPointsEnabled = true;
-            mysql_pw = "root";
-            mysql_user = "root";
-            mysql_user_forum = "root";
-            mysql_pw_forum = "root";
+            mysql_pw = "ingame_live";
+            mysql_user = "AVNS_jKBQhHfTpVcr1AJ27JW";
+            mysql_user_forum = "forum_live";
+            mysql_pw_forum = "AVNS_jKBQhHfTpVcr1AJ27JW";
 
             DisableLauncher = false;
             if(data.ContainsKey("disable_launcher"))
@@ -119,20 +119,20 @@ namespace VMP_CNR.Module.Configurations
         {
             return Ptr
                 ? "server='45.135.201.56'; uid='gvmp'; pwd='YLuOibDV75DglViZ'; database='dev_gvmp_ptr_1.1';max pool size=999;SslMode=none;convert zero datetime=True;"
-                : "server='localhost'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; port=4407; database='dev_gvmp';max pool size=999;SslMode=none;convert zero datetime=True;";
+                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; port=4407; database='dev_gvmp';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
         
         public string GetMySqlConnectionBoerse()
         {
             return Ptr
                 ? "server='45.135.201.56'; uid='gvmp'; pwd='YLuOibDV75DglViZ'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;"
-                : "server='localhost'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
+                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
 
         public string GetMySqlConnectionForum()
         {
             return
-                "server='localhost'; uid='" + mysql_user_forum + "'; pwd='" + mysql_pw_forum + "'; database='wbb_gvmp';max pool size=999;SslMode=none;";
+                "server='db.prdx.to'; uid='" + mysql_user_forum + "'; pwd='" + mysql_pw_forum + "'; database='wbb_gvmp';max pool size=999;SslMode=none;";
         }
 
         public override string ToString()
