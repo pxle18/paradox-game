@@ -496,8 +496,7 @@ namespace VMP_CNR.Module.Players
         [Command]
         public void gamescom(Player player)
         {
-            return; // deactivated actually
-            /*DbPlayer dbPlayer = player.GetPlayer();
+            DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
             if (dbPlayer.Container.GetInventoryFreeSpace() > 1000 && dbPlayer.Container.MaxSlots-dbPlayer.Container.GetUsedSlots() >= 1)
             {
@@ -508,8 +507,7 @@ namespace VMP_CNR.Module.Players
             {
                 dbPlayer.SendNewNotification("Du hast nicht genug Platz in deinem Rucksack!");
                 return;
-            }*/
-
+            }
         }
 
 

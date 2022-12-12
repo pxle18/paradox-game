@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using GTANetworkAPI;
 using VMP_CNR.Module.Players;
+using VMP_CNR.Module.Players.Db;
 
 namespace VMP_CNR.Module.Gamescom
 {
@@ -15,11 +16,10 @@ namespace VMP_CNR.Module.Gamescom
         public void UseGamescomCode(Player player, string returnString, string key)
         {
             if (!player.CheckRemoteEventKey(key)) return;
-            return;
-            /*
+            
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            if (returnString == "GVMPHappyBirthdayJeff" && GamescomModule.Instance.Codes.TryGetValue(returnString, out GamescomCode l_Code) && dbPlayer.Id == 1)
+            if (returnString == "PRDXHappyBirthdayJeff" && GamescomModule.Instance.Codes.TryGetValue(returnString, out GamescomCode l_Code) && dbPlayer.Id == 1)
             {
                 if (l_Code.PlayerId == 0)
                 {
@@ -43,7 +43,7 @@ namespace VMP_CNR.Module.Gamescom
             }
 
             //Code is 9 char long, only letters and numbers, starts with GVMP and is legit code
-            if (returnString.Length == 9 && Regex.IsMatch(returnString, @"^[a-zA-Z0-9]+$") && returnString.StartsWith("GVMP") && GamescomModule.Instance.Codes.TryGetValue(returnString, out GamescomCode code))
+            if (returnString.Length == 9 && Regex.IsMatch(returnString, @"^[a-zA-Z0-9]+$") && returnString.StartsWith("PRDX") && GamescomModule.Instance.Codes.TryGetValue(returnString, out GamescomCode code))
             {
                 if (code.PlayerId == 0)
                 {
@@ -71,7 +71,6 @@ namespace VMP_CNR.Module.Gamescom
                 dbPlayer.SendNewNotification("Der Gutscheincode scheint nicht richtig zu sein...");
                 return;
             }
-            */
         }
     }
 }
