@@ -432,7 +432,7 @@ namespace VMP_CNR.Module.Players.Db
         public Container WorkstationEndContainer { get; set; }
 
         public uint WorkstationId { get; set; }
-        
+
         public Dictionary<uint, int> DeliveryJobSkillPoints { get; set; }
 
         public bool ParamedicLicense { get; set; }
@@ -445,7 +445,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public EconomyIndex EconomyIndex { get; set; }
         public Dictionary<uint, DbEmail> Emails { get; set; }
-
+        public Dictionary<string, int> ChristmasPresents = new Dictionary<string, int>();
         public Dictionary<string, DbPlayerDataCustom> PlayerDataCustom { get; set; }
         //public Dictionary<DbPlayer, HashSet<VoicePlayerExtension.VoiceEnabledState>> EnabledToVoicePlayers { get; set; }
         public bool Mars { get; set; }
@@ -453,7 +453,7 @@ namespace VMP_CNR.Module.Players.Db
         public PlayerDepot Depot { get; set; }
         public DateTime TimeSinceTreatment { get; set; }
         public bool RecentlyInjured { get; set; }
-        
+
         // Anim Sync
         public bool PlayingAnimation { get; set; }
         public int CurrentAnimFlags { get; set; }
@@ -463,7 +463,7 @@ namespace VMP_CNR.Module.Players.Db
         public bool IsInWater { get; set; }
         public DateTime LastDeath { get; set; }
         public DateTime LastSpawnEvent { get; set; }
-        
+
         public Dictionary<uint, PlayerCWS> CWS { get; set; }
 
         public int InsuranceType { get; set; }
@@ -542,7 +542,7 @@ namespace VMP_CNR.Module.Players.Db
             RacingBestTimeSeconds = reader.GetInt32("racing_besttime");
 
             int[] temp = new int[] { 0, 0 };
-            
+
             temp[0] = reader.GetInt32("armor");
             VisibleArmorType = reader.GetInt32("visibleArmorType");
             IsSwimmingOrDivingDoNotUse = false;
@@ -673,7 +673,7 @@ namespace VMP_CNR.Module.Players.Db
                 this.Save();
             });
 
-           
+
         }
 
         public void SetDimension(uint dimension)
@@ -719,8 +719,8 @@ namespace VMP_CNR.Module.Players.Db
                 {
                     uint prevDimension = Dimension[0];
 
-                    Player.Dimension    = dimension;
-                    Dimension[0]        = dimension;
+                    Player.Dimension = dimension;
+                    Dimension[0] = dimension;
 
                     await Task.Delay(resetDelay);
                     SetDimensionAsync(prevDimension); // Rekursiv
@@ -745,12 +745,12 @@ namespace VMP_CNR.Module.Players.Db
             }
             if (checkAC)
             {
-                NAPI.Task.Run(() => 
+                NAPI.Task.Run(() =>
                 {
-                    if (RageExtension.IsInVehicle) 
-                    { 
-                        Player.Kick(); 
-                    } 
+                    if (RageExtension.IsInVehicle)
+                    {
+                        Player.Kick();
+                    }
                 }, 5000);
             }
         }
@@ -776,12 +776,12 @@ namespace VMP_CNR.Module.Players.Db
                 }
             }
 
-            TeamId = teamid; 
+            TeamId = teamid;
             Team = TeamModule.Instance[teamid];
 
             // add to new team
-            if (teamid != 0) 
-            { 
+            if (teamid != 0)
+            {
                 Team?.AddMember(this);
             }
 
@@ -852,7 +852,8 @@ namespace VMP_CNR.Module.Players.Db
             return Team != null && Team.IsCops();
         }
 
-        public bool IsStaatsfraktion() {
+        public bool IsStaatsfraktion()
+        {
             return Team != null && Team.IsStaatsfraktion();
         }
 
@@ -935,7 +936,7 @@ namespace VMP_CNR.Module.Players.Db
         public string GetName(bool ReturnFakeNameIfAssigned = false)
         {
             // Fallback für z.B. Loginwindow
-            if(RageExtension == null)
+            if (RageExtension == null)
             {
                 return Player.Name;
             }
@@ -1120,7 +1121,7 @@ namespace VMP_CNR.Module.Players.Db
         public void SetSkin(uint SkinUint)
         {
             string s = "" + SkinUint;
-            
+
             if (Enum.TryParse<PedHash>(s, true, out PedHash skin))
             {
                 SetSkin(skin);
@@ -1130,15 +1131,15 @@ namespace VMP_CNR.Module.Players.Db
         public bool IsOrtable(DbPlayer fromPlayer, bool ignoreTimer = false)
         {
             // Fib ortung vor allem
-            if(fromPlayer.IsNSADuty)
+            if (fromPlayer.IsNSADuty)
             {
                 if (GovLevel.ToLower() == "a" || GovLevel.ToLower() == "b" || GovLevel.ToLower() == "c") return true;
 
                 if (IsNSAState >= (int)NSA.NSARangs.LIGHT) return true;
 
                 NSAObservation nSAObservation = NSAObservationModule.ObservationList.ToList().FirstOrDefault(o => o.Value.PlayerId == Id).Value;
-                if (nSAObservation != null && nSAObservation.Agreed && 
-                    (this.Container.GetItemAmount(174) >= 1 || 
+                if (nSAObservation != null && nSAObservation.Agreed &&
+                    (this.Container.GetItemAmount(174) >= 1 ||
                     this.Container.GetItemAmount(173) >= 1 ||
                     this.Container.GetItemAmount(183) >= 1)) return true;
             }

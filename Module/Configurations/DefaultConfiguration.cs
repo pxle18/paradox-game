@@ -67,10 +67,10 @@ namespace VMP_CNR.Module.Configurations
             MeertraeubelEnabled = true; //set to true later
             JailescapeEnabled = false;
             JumpPointsEnabled = true;
-            mysql_user = "vultradmin";
-            mysql_pw = "AVNS_jKBQhHfTpVcr1AJ27JW";
-            mysql_user_forum = "forum_live";
-            mysql_pw_forum = "AVNS_jKBQhHfTpVcr1AJ27JW";
+            mysql_user = "root";
+            mysql_pw = "Nm2zefvTEOIgLfTR6EM8";
+            mysql_user_forum = "root";
+            mysql_pw_forum = "Nm2zefvTEOIgLfTR6EM8";
 
             DisableLauncher = false;
             if(data.ContainsKey("disable_launcher"))
@@ -119,7 +119,7 @@ namespace VMP_CNR.Module.Configurations
         {
             return Ptr
                 ? "server='45.135.201.56'; uid='gvmp'; pwd='YLuOibDV75DglViZ'; database='dev_gvmp_ptr_1.1';max pool size=999;SslMode=none;convert zero datetime=True;"
-                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; port=16751; database='ingame_live';max pool size=999;SslMode=none;convert zero datetime=True;";
+                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; port=3306; database='ingame_live';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
         
         public string GetMySqlConnectionBoerse()
