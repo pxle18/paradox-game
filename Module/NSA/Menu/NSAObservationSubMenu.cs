@@ -168,7 +168,7 @@ namespace VMP_CNR.Module.NSA.Menu
 
                         if (targetOne == null || !targetOne.IsValid() || targetOne.Id == dbPlayer.Id) return false;
 
-                        if (targetOne.phoneSetting.flugmodus)
+                        if (targetOne.PhoneSettings.flugmodus)
                         {
                             dbPlayer.SendNewNotification("Smartphone konnte nicht gecloned werden!");
                             return false;

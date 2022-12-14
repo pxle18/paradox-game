@@ -28,7 +28,7 @@ namespace VMP_CNR.Module.Telefon.App.Settings
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null) return;
 
-            RingtoneResponseObject ringtoneResponseObject = new RingtoneResponseObject() { ringtones = RingtoneModule.Instance.getRingtonesForPlayer(dbPlayer) };
+            RingtoneResponseObject ringtoneResponseObject = new RingtoneResponseObject() { ringtones = RingtoneModule.Instance.GetRingtonesForPlayer(dbPlayer) };
 
             TriggerNewClient(player, "responseRingtoneList", NAPI.Util.ToJson(ringtoneResponseObject));
 
@@ -42,7 +42,7 @@ namespace VMP_CNR.Module.Telefon.App.Settings
             if (dbPlayer == null) return;
 
 
-            dbPlayer.ringtone = RingtoneModule.Instance.Get((uint)ringtoneId);
+            dbPlayer.Ringtone = RingtoneModule.Instance.Get((uint)ringtoneId);
 
             dbPlayer.SaveRingtone();
 

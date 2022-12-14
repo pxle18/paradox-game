@@ -37,15 +37,15 @@ namespace VMP_CNR.Handler
 
         protected override bool OnLoad()
         {
-            SxVehicles              = new ConcurrentDictionary<uint, SxVehicle>();
-            TeamVehicles            = new ConcurrentDictionary<uint, List<SxVehicle>>();
-            PlayerVehicles          = new ConcurrentDictionary<uint, List<SxVehicle>>();
-            ClassificationVehicles  = new ConcurrentDictionary<uint, List<SxVehicle>>();
-            SpawnedVehicles         = new ConcurrentDictionary<uint, List<SxVehicle>>();
+            SxVehicles = new ConcurrentDictionary<uint, SxVehicle>();
+            TeamVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
+            PlayerVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
+            ClassificationVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
+            SpawnedVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
 
             return base.OnLoad();
         }
-        
+
         public void AddContextTeamVehicle(uint teamid, SxVehicle sxVehicle)
         {
             if (!TeamVehicles.ContainsKey(teamid)) TeamVehicles.TryAdd(teamid, new List<SxVehicle>());
@@ -147,7 +147,7 @@ namespace VMP_CNR.Handler
 
         public override void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
         {
-            if(dbPlayer != null && dbPlayer.IsValid() && dbPlayer.RageExtension.IsInVehicle)
+            if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.RageExtension.IsInVehicle)
             {
                 SxVehicle sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
                 if (sxVeh != null && dbPlayer.IsValid())
@@ -160,7 +160,7 @@ namespace VMP_CNR.Handler
         public override void OnPlayerExitVehicle(DbPlayer dbPlayer, Vehicle vehicle)
         {
             SxVehicle sxVeh = vehicle.GetVehicle();
-            if(sxVeh != null && dbPlayer.IsValid())
+            if (sxVeh != null && dbPlayer.IsValid())
             {
                 RemovePlayerFromOccupants(sxVeh, dbPlayer);
             }
@@ -230,7 +230,7 @@ namespace VMP_CNR.Handler
                 return null;
             }
         }
-        
+
         public bool isAJobVeh(SxVehicle sxVeh)
         {
             if (sxVeh.jobid > 0 && sxVeh.databaseId == 0 && sxVeh.teamid == 0)
@@ -297,7 +297,7 @@ namespace VMP_CNR.Handler
 
             return (dictionary.Count() > 0 && dictionary.ContainsKey(list[0])) ? dictionary[list[0]] : null;
         }
-        
+
         public List<SxVehicle> GetClosestVehicles(Vector3 position, float range = 4.0f)
         {
             try
@@ -348,7 +348,7 @@ namespace VMP_CNR.Handler
                 IEnumerable<SxVehicle> sxVehicleList = GetTeamVehicles((uint)teamid).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range);
                 return sxVehicleList.Count() > 0 ? sxVehicleList.FirstOrDefault() : null;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Crash(e);
                 return null;
@@ -384,11 +384,11 @@ namespace VMP_CNR.Handler
                 if (sxVehicleList.Count() == 0) return null;
                 SxVehicle sxVehicle = sxVehicleList.FirstOrDefault();
                 var pos = sxVehicle.Entity.Position.DistanceTo(position);
-                foreach(var sx in sxVehicleList)
+                foreach (var sx in sxVehicleList)
                 {
                     if (sx.Entity.GetNextFreeSeat() == -2) continue;
                     if (sx.Data.Slots < seats) continue;
-                    if(pos > sx.Entity.Position.DistanceTo(position))
+                    if (pos > sx.Entity.Position.DistanceTo(position))
                     {
                         pos = sx.Entity.Position.DistanceTo(position);
                         sxVehicle = sx;
@@ -466,285 +466,293 @@ namespace VMP_CNR.Handler
             string tuning = "", string neon = "", float km = 0f, Container container = null, string plate = "", bool disableTuning = false, bool InTuningProcess = false,
             int WheelClamp = 0, bool AlarmSystem = false, uint lastgarageId = 0, bool planningvehicle = false, int carSellPrice = 0, Container container2 = null)
         {
-            // Cannot spawn duplicatings
-            if (VehicleHandler.SxVehicles != null && databaseId != 0 && GetAllVehicles().Where(veh => veh.databaseId == databaseId && veh.teamid == teamid).Count() > 0) return null;
-
-            var xVeh = new SxVehicle();
-            var data = VehicleDataModule.Instance.GetDataById(model);
-            if (data == null)
+            try
             {
-                data = VehicleDataModule.Instance.GetDataById(219);
-            }
+                // Cannot spawn duplicatings
+                if (VehicleHandler.SxVehicles != null && databaseId != 0 && GetAllVehicles().Where(veh => veh.databaseId == databaseId && veh.teamid == teamid).Count() > 0) return null;
 
-            xVeh.VehicleData = new Dictionary<string, dynamic>();
-            xVeh.CreatedDate = DateTime.Now;
-
-            xVeh.TrunkStateOpen = false;
-
-            xVeh.Occupants = new VehicleOccupants(xVeh);
-            xVeh.LastInteracted = DateTime.Now;
-
-            float motorMultiplier = data.Multiplier;
-            xVeh.Data = data;
-
-            xVeh.EngineDisabled = false;
-
-            xVeh.uniqueServerId = GetFreeID();
-            if (xVeh.uniqueServerId == 0)
-            {
-                Players.Instance.SendMessageToAuthorizedUsers("adminchat", $"!! ACHTUNG !! KEINE FREIE UNIQUEID FÜR FAHRZEUGE VERFÜGBAR! BITTE IM DISCORD MELDEN!!", 10000);
-                return null;
-            }
-
-            if (data.IsModdedCar == 0)
-            {
-                if (data.Hash < 0)
+                var xVeh = new SxVehicle();
+                var data = VehicleDataModule.Instance.GetDataById(model);
+                if (data == null)
                 {
-                    int.TryParse(data.Hash.ToString(), out int l_IntHash);
-                    xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    data = VehicleDataModule.Instance.GetDataById(219);
+                }
+
+                xVeh.VehicleData = new Dictionary<string, dynamic>();
+                xVeh.CreatedDate = DateTime.Now;
+
+                xVeh.TrunkStateOpen = false;
+
+                xVeh.Occupants = new VehicleOccupants(xVeh);
+                xVeh.LastInteracted = DateTime.Now;
+
+                float motorMultiplier = data.Multiplier;
+                xVeh.Data = data;
+
+                xVeh.EngineDisabled = false;
+
+                xVeh.uniqueServerId = GetFreeID();
+                if (xVeh.uniqueServerId == 0)
+                {
+                    Players.Instance.SendMessageToAuthorizedUsers("adminchat", $"!! ACHTUNG !! KEINE FREIE UNIQUEID FÜR FAHRZEUGE VERFÜGBAR! BITTE IM DISCORD MELDEN!!", 10000);
+                    return null;
+                }
+
+                if (data.IsModdedCar == 0)
+                {
+                    if (data.Hash < 0)
+                    {
+                        int.TryParse(data.Hash.ToString(), out int l_IntHash);
+                        xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    }
+                    else
+                    {
+                        uint.TryParse(data.Hash.ToString(), out uint l_IntHash);
+                        xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    }
                 }
                 else
                 {
-                    uint.TryParse(data.Hash.ToString(), out uint l_IntHash);
-                    xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_IntHash, pos, rotation, color1, color2);
+                    var l_Hash = NAPI.Util.GetHashKey(data.Model);
+                    xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_Hash, pos, rotation, color1, color2);
                 }
-            }
-            else
-            {
-                var l_Hash = NAPI.Util.GetHashKey(data.Model);
-                xVeh.Entity = NAPI.Vehicle.CreateVehicle(l_Hash, pos, rotation, color1, color2);
-            }
 
 
-            xVeh.PlanningVehicle = planningvehicle;
-            xVeh.LastGarage = lastgarageId;
-            xVeh.spawnRot = rotation;
-            xVeh.spawnPos = pos;
-            xVeh.teamid = teamid;
-            xVeh.jobid = jobId;
-            xVeh.zustand = zustand;
-            xVeh.databaseId = databaseId;
-            xVeh.ownerId = ownerId;
-            xVeh.saveQuery = "";
-            xVeh.respawnInteractionState = true;
-            xVeh.Mods = TuningVehicleExtension.ConvertModsToDictonary(tuning);
-            xVeh.neon = neon;
-            xVeh.Container = container;
-            xVeh.Container2 = container2;
-            xVeh.Distance = km;
-            xVeh.respawnInterval = 0;
-            xVeh.spawnPosInterval = 0;
-            xVeh.GpsTracker = gpsTracker;
-            xVeh.Undercover = false;
-            xVeh.Registered = registered;
-            xVeh.Entity.NumberPlateStyle = 1;
-            xVeh.SirensActive = false;
+                xVeh.PlanningVehicle = planningvehicle;
+                xVeh.LastGarage = lastgarageId;
+                xVeh.spawnRot = rotation;
+                xVeh.spawnPos = pos;
+                xVeh.teamid = teamid;
+                xVeh.jobid = jobId;
+                xVeh.zustand = zustand;
+                xVeh.databaseId = databaseId;
+                xVeh.ownerId = ownerId;
+                xVeh.saveQuery = "";
+                xVeh.respawnInteractionState = true;
+                xVeh.Mods = TuningVehicleExtension.ConvertModsToDictonary(tuning);
+                xVeh.neon = neon;
+                xVeh.Container = container;
+                xVeh.Container2 = container2;
+                xVeh.Distance = km;
+                xVeh.respawnInterval = 0;
+                xVeh.spawnPosInterval = 0;
+                xVeh.GpsTracker = gpsTracker;
+                xVeh.Undercover = false;
+                xVeh.Registered = registered;
+                xVeh.Entity.NumberPlateStyle = 1;
+                xVeh.SirensActive = false;
 
-            xVeh.SpawnTime = DateTime.Now;
-            xVeh.RepairState = false;
-            xVeh.GarageStatus = VirtualGarageStatus.IN_WORLD;
-            xVeh.Visitors = new List<DbPlayer>();
+                xVeh.SpawnTime = DateTime.Now;
+                xVeh.RepairState = false;
+                xVeh.GarageStatus = VirtualGarageStatus.IN_WORLD;
+                xVeh.Visitors = new List<DbPlayer>();
 
-            xVeh.Team = TeamModule.Instance.Get(teamid);
+                xVeh.Team = TeamModule.Instance.Get(teamid);
 
-            xVeh.color1 = color1;
-            xVeh.color2 = color2;
+                xVeh.color1 = color1;
+                xVeh.color2 = color2;
 
-            xVeh.CanInteract = true;
+                xVeh.CanInteract = true;
 
-            xVeh.SilentSiren = false;
-            xVeh.InTuningProcess = InTuningProcess;
-            xVeh.WheelClamp = WheelClamp;
-            xVeh.AlarmSystem = AlarmSystem;
+                xVeh.SilentSiren = false;
+                xVeh.InTuningProcess = InTuningProcess;
+                xVeh.WheelClamp = WheelClamp;
+                xVeh.AlarmSystem = AlarmSystem;
 
-            xVeh.DynamicMotorMultiplier = Convert.ToInt32(data.Multiplier);
+                xVeh.DynamicMotorMultiplier = Convert.ToInt32(data.Multiplier);
 
-            xVeh.CarsellPrice = carSellPrice;
+                xVeh.CarsellPrice = carSellPrice;
 
-            xVeh.Attachments = new Dictionary<int, int>();
+                xVeh.Attachments = new Dictionary<int, int>();
 
-            if (teamid > 0)
-            {
-                if (teamid == (int)TeamTypes.TEAM_FIB && color1 == -1 && color2 == -1)
+                if (teamid > 0)
                 {
-                    xVeh.Undercover = true;
+                    if (teamid == (int)TeamTypes.TEAM_FIB && color1 == -1 && color2 == -1)
+                    {
+                        xVeh.Undercover = true;
+                    }
                 }
-            }
 
-            if (fuel > 0)
-            {
-                if (fuel > data.Fuel) fuel = data.Fuel;
-                xVeh.fuel = fuel;
-            }
-
-            if (jobId > 0)
-            {
-                xVeh.fuel = data.Fuel;
-            }
-
-            if (zustand > 0 && zustand < MaxVehicleHealth)
-            {
-                if (zustand < 50) zustand = 50;
-                xVeh.SetHealth(zustand);
-            }
-            else
-            {
-                xVeh.SetHealth(MaxVehicleHealth);
-            }
-
-            SxVehicles.TryAdd(xVeh.uniqueServerId, xVeh);
-
-            // Add to Contextlists
-            if (xVeh.IsTeamVehicle())
-            {
-                AddContextTeamVehicle(xVeh.teamid, xVeh);
-            }
-            else if (xVeh.IsPlayerVehicle())
-            {
-                AddContextPlayerVehicle(xVeh.ownerId, xVeh);
-            }
-
-            AddContextClassificationVehicle(xVeh.Data.ClassificationId, xVeh);
-
-            if (xVeh.databaseId == 0)
-                AddContextSpawnedVehicle(ownerId, xVeh);
-
-            Modules.Instance.OnVehicleSpawn(xVeh);
-            xVeh.SetNeon(neon);
-
-            //Set Wheeltype first
-            if (xVeh.Mods.ContainsKey(1337))
-            {
-                xVeh.SetMod(1337, xVeh.Mods[1337]);
-            }
-
-            foreach (var l_Pair in xVeh.Mods)
-            {
-                xVeh.SetMod(l_Pair.Key, l_Pair.Value);
-            }
-
-            if (xVeh.databaseId > 0)
-            {
-                xVeh.SetData("position", xVeh.spawnPos);
-            }
-
-            Task.Run(async () =>
-            {
-                while (xVeh.Entity == null)
+                if (fuel > 0)
                 {
-                    await Task.Delay(50);
+                    if (fuel > data.Fuel) fuel = data.Fuel;
+                    xVeh.fuel = fuel;
                 }
-            });
 
-            NAPI.Task.Run(() =>
-            {
-                try
+                if (jobId > 0)
                 {
+                    xVeh.fuel = data.Fuel;
+                }
+
+                if (zustand > 0 && zustand < MaxVehicleHealth)
+                {
+                    if (zustand < 50) zustand = 50;
+                    xVeh.SetHealth(zustand);
+                }
+                else
+                {
+                    xVeh.SetHealth(MaxVehicleHealth);
+                }
+
+                SxVehicles.TryAdd(xVeh.uniqueServerId, xVeh);
+
+                // Add to Contextlists
+                if (xVeh.IsTeamVehicle())
+                {
+                    AddContextTeamVehicle(xVeh.teamid, xVeh);
+                }
+                else if (xVeh.IsPlayerVehicle())
+                {
+                    AddContextPlayerVehicle(xVeh.ownerId, xVeh);
+                }
+
+                AddContextClassificationVehicle(xVeh.Data.ClassificationId, xVeh);
+
+                if (xVeh.databaseId == 0)
+                    AddContextSpawnedVehicle(ownerId, xVeh);
+
+                Modules.Instance.OnVehicleSpawn(xVeh);
+                xVeh.SetNeon(neon);
+
+                //Set Wheeltype first
+                if (xVeh.Mods.ContainsKey(1337))
+                {
+                    xVeh.SetMod(1337, xVeh.Mods[1337]);
+                }
+
+                foreach (var l_Pair in xVeh.Mods)
+                {
+                    xVeh.SetMod(l_Pair.Key, l_Pair.Value);
+                }
+
+                if (xVeh.databaseId > 0)
+                {
+                    xVeh.SetData("position", xVeh.spawnPos);
+                }
+
+                Task.Run(async () =>
+                {
+                    while (xVeh.Entity == null)
+                    {
+                        await Task.Delay(50);
+                    }
+                });
+
+                NAPI.Task.Run(() =>
+                {
+                    try
+                    {
                     // Do entity Stuff here...
                     xVeh.Entity.SetData("vehicle", xVeh);
 
-                    xVeh.Entity.Dimension = dimension;
+                        xVeh.Entity.Dimension = dimension;
 
-                    xVeh.SyncExtension = new VehicleEntitySyncExtension(xVeh.Entity, spawnClosed, !engineOff);
-
-
-                    if (engineOff)
-                    {
-                        xVeh.SyncExtension.SetEngineStatus(false);
-                    }
-
-                    if (spawnClosed && data.Id != InteriorVehiclesModule.AirforceDataId)
-                    {
-                        xVeh.SyncExtension.SetLocked(true);
-                        xVeh.SyncExtension.SetEngineStatus(false);
-                    }
-                    else
-                    {
-                        xVeh.SyncExtension.SetLocked(false);
-                    }
-
-                    if (fuel <= 0)
-                    {
-                        xVeh.SyncExtension.SetEngineStatus(false);
-                        xVeh.fuel = 0;
-                    }
+                        xVeh.SyncExtension = new VehicleEntitySyncExtension(xVeh.Entity, spawnClosed, !engineOff);
 
 
-                    if (plate == null)
-                    {
-                        if (owner != "" && owner.Contains("_"))
+                        if (engineOff)
                         {
-                            var crumbs = owner.Split('_');
+                            xVeh.SyncExtension.SetEngineStatus(false);
+                        }
 
-                            var firstLetter = crumbs[0][0].ToString();
+                        if (spawnClosed && data.Id != InteriorVehiclesModule.AirforceDataId)
+                        {
+                            xVeh.SyncExtension.SetLocked(true);
+                            xVeh.SyncExtension.SetEngineStatus(false);
+                        }
+                        else
+                        {
+                            xVeh.SyncExtension.SetLocked(false);
+                        }
 
-                            var secondLetter = crumbs[1][0].ToString();
+                        if (fuel <= 0)
+                        {
+                            xVeh.SyncExtension.SetEngineStatus(false);
+                            xVeh.fuel = 0;
+                        }
 
-                            xVeh.Entity.NumberPlate = firstLetter + secondLetter + " " + PlayerNameModule.Instance.Get(ownerId).ForumId;
 
+                        if (plate == null)
+                        {
+                            if (owner != "" && owner.Contains("_"))
+                            {
+                                var crumbs = owner.Split('_');
+
+                                var firstLetter = crumbs[0][0].ToString();
+
+                                var secondLetter = crumbs[1][0].ToString();
+
+                                xVeh.Entity.NumberPlate = firstLetter + secondLetter + " " + PlayerNameModule.Instance.Get(ownerId).ForumId;
+
+                                xVeh.plate = plate;
+                            }
+                        }
+                        else
+                        {
+                            xVeh.Entity.NumberPlate = plate;
                             xVeh.plate = plate;
                         }
-                    }
-                    else
-                    {
-                        xVeh.Entity.NumberPlate = plate;
-                        xVeh.plate = plate;
-                    }
 
-                    if (data.Hash == (uint)VehicleHash.Mule)
-                    {
-                        for (var i = 0; i < 7; i++)
+                        if (data.Hash == (uint)VehicleHash.Mule)
                         {
-                            xVeh.Entity.SetExtra(i, false);
-                        }
+                            for (var i = 0; i < 7; i++)
+                            {
+                                xVeh.Entity.SetExtra(i, false);
+                            }
 
-                        xVeh.Entity.SetExtra(1, true);
-                    }
+                            xVeh.Entity.SetExtra(1, true);
+                        }
 
                     // Set Anticheat Data
                     xVeh.Entity.SetData<string>("serverhash", "1312asdbncawssd1ccbSh1");
-                    xVeh.Entity.SetData<Vector3>("lastSavedPos", xVeh.Entity.Position);
+                        xVeh.Entity.SetData<Vector3>("lastSavedPos", xVeh.Entity.Position);
 
-                    if (xVeh.Undercover)
-                    {
-                        var l_Rand = new Random();
-                        if (xVeh.teamid == (int)TeamTypes.TEAM_FIB)
+                        if (xVeh.Undercover)
                         {
-                            var color = l_Rand.Next(0, 150);
-                            xVeh.color1 = color;
-                            xVeh.color2 = color;
-                            xVeh.Entity.PrimaryColor = color;
-                            xVeh.Entity.SecondaryColor = color;
+                            var l_Rand = new Random();
+                            if (xVeh.teamid == (int)TeamTypes.TEAM_FIB)
+                            {
+                                var color = l_Rand.Next(0, 150);
+                                xVeh.color1 = color;
+                                xVeh.color2 = color;
+                                xVeh.Entity.PrimaryColor = color;
+                                xVeh.Entity.SecondaryColor = color;
+                            }
+
+                            xVeh.Distance = l_Rand.Next(2000, 3000);
+
+                            var l_ID = l_Rand.Next(630000, 650000);
+                            xVeh.Entity.SetData<int>("nsa_veh_id", l_ID);
+
+                            l_ID = l_Rand.Next(60000, 90000);
+                            xVeh.Entity.NumberPlate = RegistrationOfficeFunctions.GetRandomPlate(true);
                         }
-
-                        xVeh.Distance = l_Rand.Next(2000, 3000);
-
-                        var l_ID = l_Rand.Next(630000, 650000);
-                        xVeh.Entity.SetData<int>("nsa_veh_id", l_ID);
-
-                        l_ID = l_Rand.Next(60000, 90000);
-                        xVeh.Entity.NumberPlate = RegistrationOfficeFunctions.GetRandomPlate(true);
-                    }
 
                     //xVeh.entity.SetSharedData("silentMode", false);
                 }
-                catch(Exception e)
+                    catch (Exception e)
+                    {
+                        Logger.Crash(e);
+                    }
+                });
+
+                if (xVeh != null)
                 {
-                    Logger.Crash(e);
+                    NAPI.Task.Run(() =>
+                    {
+                        NAPI.Entity.SetEntityPosition(xVeh.Entity, pos);
+                        NAPI.Entity.SetEntityRotation(xVeh.Entity, new Vector3(0, 0, rotation));
+                        xVeh.Repair();
+                    }, 500);
                 }
-            });
 
-            if(xVeh != null)
-            {
-                NAPI.Task.Run(() =>
-                {
-                    NAPI.Entity.SetEntityPosition(xVeh.Entity, pos);
-                    NAPI.Entity.SetEntityRotation(xVeh.Entity, new Vector3(0, 0, rotation));
-                    xVeh.Repair();
-                }, 500);
+                return xVeh;
             }
-
-            return xVeh;
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+            }
+            return null;
         }
 
         private uint GetFreeID()
@@ -785,7 +793,7 @@ namespace VMP_CNR.Handler
             if (sxVehicle == null) return;
 
             // First we need to check the save, try catching to avoid interrupt for this function
-            if(save)
+            if (save)
             {
                 try
                 {
@@ -794,7 +802,7 @@ namespace VMP_CNR.Handler
                         sxVehicle.Save();
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Logger.Crash(e);
                 }
@@ -826,7 +834,7 @@ namespace VMP_CNR.Handler
                 vehicle = null;
                 sxVehicle = null;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Crash(e);
             }
@@ -890,7 +898,7 @@ namespace VMP_CNR.Handler
         public double Distance { get; set; }
 
         public Team Team { get; set; }
-        
+
         public Dictionary<int, int> Attachments { get; set; }
         public string LastDriver { get; set; }
 
@@ -911,14 +919,14 @@ namespace VMP_CNR.Handler
         public VehicleEntitySyncExtension SyncExtension { get; set; }
 
         public bool CanInteract { get; set; }
-        
+
         public DateTime LastInteracted { get; set; }
         public VehicleOccupants Occupants { get; set; }
 
         public bool GpsTracker { get; set; }
-        
+
         public bool Undercover { get; set; }
-        
+
         public bool SilentSiren { get; set; }
 
         public bool SirensActive { get; set; }
@@ -991,7 +999,7 @@ namespace VMP_CNR.Handler
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Crash(e);
             }

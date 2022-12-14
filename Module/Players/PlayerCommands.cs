@@ -405,7 +405,7 @@ namespace VMP_CNR.Module.Players
                                                || !findPlayer.HasData("taxi_request")
                                                || dbPlayer.GetName() != findPlayer.GetData("taxi_request")
                                                || dbPlayer.Container.GetItemAmount(174)<1
-                                               || dbPlayer.phoneSetting.flugmodus)
+                                               || dbPlayer.PhoneSettings.flugmodus)
                         {
                             PlayerNotFoundOrNoService(dbPlayer);
                             return;

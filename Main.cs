@@ -684,8 +684,14 @@ namespace VMP_CNR
                 {
                     if (iPlayer.AccountStatus == AccountStatus.LoggedIn)
                     {
-                        iPlayer.MetaData.SaveBlocked = true;
-                        iPlayer.Save(true);
+                        try { 
+                            iPlayer.MetaData.SaveBlocked = true;
+                            iPlayer.Save(true);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Crash(e);
+                        }
                     }
                 }
             }
@@ -1701,7 +1707,7 @@ namespace VMP_CNR
             {
                 foreach (var player in Players.Instance.GetValidPlayers())
                 {
-                    if (player.Container.GetItemAmount(174) > 0 && !player.phoneSetting.flugmodus)
+                    if (player.Container.GetItemAmount(174) > 0 && !player.PhoneSettings.flugmodus)
                     {
                         player.SendNewNotification(message, title: title, notificationType: PlayerNotification.NotificationType.NEWS);
                     }

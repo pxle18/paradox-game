@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.Konversations
                 if (dbPlayer.HasData("nsa_smclone"))
                 {
                     DbPlayer targetPlayer = Players.Players.Instance.GetByDbId(dbPlayer.GetData("nsa_smclone"));
-                    if (targetPlayer == null || !targetPlayer.IsValid() || targetPlayer.phoneSetting.flugmodus)
+                    if (targetPlayer == null || !targetPlayer.IsValid() || targetPlayer.PhoneSettings.flugmodus)
                     {
                         dbPlayer.ResetData("nsa_smclone");
                         return;

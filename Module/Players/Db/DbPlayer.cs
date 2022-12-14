@@ -393,11 +393,11 @@ namespace VMP_CNR.Module.Players.Db
         public DateTime DrugCreateLast { get; set; }
         public DateTime LastPhoneNumberChange { get; set; }
 
-        public PhoneSetting phoneSetting { get; set; }
+        public PhoneSetting PhoneSettings { get; set; }
 
         public Wallpaper Wallpaper { get; set; }
-        public Ringtone ringtone { get; set; }
-        public List<DbPlayer> playerWhoHearRingtone { get; set; }
+        public Ringtone Ringtone { get; set; }
+        public List<DbPlayer> PlayerWhoHearRingtone { get; set; }
 
         public CustomData CustomData { get; set; }
         public int VehicleTaxSum { get; set; }
@@ -1180,7 +1180,7 @@ namespace VMP_CNR.Module.Players.Db
                 }
             }
 
-            if (this.Container.GetItemAmount(174) >= 1 && !this.phoneSetting.flugmodus)
+            if (this.Container.GetItemAmount(174) >= 1 && !this.PhoneSettings.flugmodus)
             {
                 return true;
             }

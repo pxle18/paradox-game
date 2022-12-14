@@ -425,7 +425,7 @@ namespace VMP_CNR.Module.Players.Events
                                 dbPlayer.IsTied, dbPlayer.IsCuffed, dbPlayer.VoiceHash, dbPlayer.funkStatus, dbPlayer.handy[0], dbPlayer.job[0],
                                 dbPlayer.JobSkill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)AdminLevelTypes.Supporter,
                                 Configuration.Instance.WeaponDamageMultipier, Configuration.Instance.PlayerSync,
-                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.ringtone.Id, insurance, dbPlayer.zwd[0],
+                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.Ringtone.Id, insurance, dbPlayer.zwd[0],
                                 Configuration.Instance.MeleeDamageMultipier,
                                 Configuration.Instance.DamageLog
                                 );

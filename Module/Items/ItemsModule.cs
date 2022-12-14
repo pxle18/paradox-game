@@ -79,16 +79,6 @@ namespace VMP_CNR.Module.Items
                 }
             }
 
-            // Planningroom wardrobe
-            if (dbPlayer.HasData("inPlanningRoom"))
-            {
-                PlanningRoom room = PlanningModule.Instance.GetPlanningRoomByTeamId(dbPlayer.Team.Id);
-                if (room != null && playerPosition.DistanceTo(PlanningModule.Instance.PlanningroomWadrobeLocation) < 2.0f)
-                {
-                    return room.PlanningroomWardrobeContainer;
-                }
-            }
-
             // Blackmoney (Geldwäsche)
             if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
             {

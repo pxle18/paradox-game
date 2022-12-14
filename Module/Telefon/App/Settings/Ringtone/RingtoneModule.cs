@@ -13,19 +13,17 @@ namespace VMP_CNR.Module.Telefon.App.Settings.Ringtone
             return "SELECT * FROM `phone_ringtones`;";
         }
 
-        protected override void OnItemLoaded(Ringtone ringtone)
-        {
-            return;
-        }
-
         public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
-            dbPlayer.ringtone = Instance.Get(reader.GetUInt32("klingeltonId"));
-            dbPlayer.phoneSetting = new PhoneSetting(false, false, false);
-            dbPlayer.playerWhoHearRingtone = new List<DbPlayer>();
+            dbPlayer.Ringtone = Instance.Get(
+                reader.GetUInt32("klingeltonId")
+            );
+
+            dbPlayer.PhoneSettings = new PhoneSetting(false, false, false);
+            dbPlayer.PlayerWhoHearRingtone = new List<DbPlayer>();
         }
 
-        public List<Ringtone> getRingtonesForPlayer(DbPlayer dbPlayer)
+        public List<Ringtone> GetRingtonesForPlayer(DbPlayer dbPlayer)
         {
             List<Ringtone> liste = new List<Ringtone>();
             foreach (var item in this.GetAll().Values)

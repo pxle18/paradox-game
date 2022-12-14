@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using GTANetworkAPI;
 using MySql.Data.MySqlClient;
@@ -562,9 +563,14 @@ namespace VMP_CNR.Module.Logging
             NAPI.Util.ConsoleOutput(message);
         }
 
+        public static void DebugLine(string reason = "Unknown", [CallerLineNumber] int currentLine = 0)
+        {
+            Console.WriteLine($"DEBUG: L-{currentLine} - {reason}");
+        }
+
         public static void Crash(Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex.Message + " " + ex.StackTrace);
             SaveToDbLog(MySqlHelper.EscapeString(ex.ToString()));
         }
     }

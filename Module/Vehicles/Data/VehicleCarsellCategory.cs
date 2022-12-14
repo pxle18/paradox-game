@@ -2,11 +2,6 @@
 
 namespace VMP_CNR.Module.Vehicles.Data
 {
-    public enum CarsellCategories
-    {
-        
-    }
-
     public class VehicleCarsellCategory : Loadable<uint>
     {
         public uint Id { get; }

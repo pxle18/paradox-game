@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Players.Phone
                                 dbCalledPlayer.StopAnimation();
                         });
                     }
-                    dbCalledPlayer.playerWhoHearRingtone = new List<DbPlayer>();
+                    dbCalledPlayer.PlayerWhoHearRingtone = new List<DbPlayer>();
 
                 }
             }

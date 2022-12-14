@@ -51,7 +51,6 @@ namespace VMP_CNR.Module.Configurations
         public uint DamageThreads { get; set; }
         public string LinuxPath { get; set; }
 
-
         public DefaultConfiguration(IReadOnlyDictionary<string, dynamic> data)
         {
             DevLog = false;
@@ -67,9 +66,9 @@ namespace VMP_CNR.Module.Configurations
             MeertraeubelEnabled = true; //set to true later
             JailescapeEnabled = false;
             JumpPointsEnabled = true;
-            mysql_user = "root";
+            mysql_user = "user";
             mysql_pw = "Nm2zefvTEOIgLfTR6EM8";
-            mysql_user_forum = "root";
+            mysql_user_forum = "user";
             mysql_pw_forum = "Nm2zefvTEOIgLfTR6EM8";
 
             DisableLauncher = false;

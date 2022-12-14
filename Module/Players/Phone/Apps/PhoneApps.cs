@@ -98,7 +98,7 @@ namespace VMP_CNR.Module.Players.Phone.Apps
         public string GetJson()
         {
             DbPlayer dbPlayer = Players.Instance.GetByDbId(PlayerId);
-            if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.phoneSetting.flugmodus)
+            if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.PhoneSettings.flugmodus)
             {
                 var temp = Apps.Values.ToList();
                 if (dbPlayer.ActiveBusinessId != 0)

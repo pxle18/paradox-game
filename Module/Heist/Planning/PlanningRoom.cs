@@ -61,7 +61,6 @@ namespace VMP_CNR.Module.Heist.Planning
         public int BasementHackerItemCount { get; set; }
         public int BasementWeaponsItemCount { get; set; }
         public int BasementKellerWardrobeItemCount { get; set; }
-        public Container PlanningroomWardrobeContainer { get; set; }
 
         public ColShape Interior { get; set; }
         public Vector3 InteriorPosition { get; set; }
@@ -144,7 +143,6 @@ namespace VMP_CNR.Module.Heist.Planning
             BasementHackerItemCount = reader.GetInt32("keller_hacker");
             BasementWeaponsItemCount = reader.GetInt32("keller_weapons");
             BasementKellerWardrobeItemCount = reader.GetInt32("keller_wardrobe");
-            PlanningroomWardrobeContainer = ContainerManager.LoadContainer(reader.GetUInt32("wardrobe_container_id"), ContainerTypes.PLANNINGROOMWARDROBE, 0);
             CasinoPlanLevel = reader.GetInt32("casino_plan");
             ContactPersonPosition = new Vector3(reader.GetFloat("plan_pos_x"), reader.GetFloat("plan_pos_y"), reader.GetFloat("plan_pos_z"));
             ContactPersonHeading = reader.GetFloat("plan_heading");
