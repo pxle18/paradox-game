@@ -32,7 +32,9 @@ namespace VMP_CNR.Module.Christmas
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            var christmasCodes = ChristmasPresentModule.Instance.GetAll().Values.Where(christmasPresent => christmasPresent.PlayerId == 1 && christmasPresent.Code == christmasCode);
+            var christmasCodes = ChristmasPresentModule.Instance.GetAll().Values.Where(christmasPresent => 
+                christmasPresent.PlayerId == 1 && christmasPresent.Code == christmasCode);
+
             if (christmasCodes.Count() <= 0)
             {
                 dbPlayer.SendNewNotification("Wir konnten leider keine Geschenke unter deinem Code. Bist du sicher, dass du bereits Geschenke im Adventskalender geöffnet hast?", PlayerNotification.NotificationType.ERROR, "XMAS.PRDX.TO", 8000);
@@ -70,7 +72,9 @@ namespace VMP_CNR.Module.Christmas
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
             if (dbPlayer.Player.Position.DistanceTo(_presentLocation) > 10) return false;
 
-            var christmasCodes = GetAll().Values.Where(christmasPresent => christmasPresent.PlayerId == dbPlayer.Id && christmasPresent.Code == string.Empty);
+            var christmasCodes = GetAll().Values.Where(christmasPresent => 
+                christmasPresent.PlayerId == dbPlayer.Id && christmasPresent.Code == string.Empty);
+
             if (christmasCodes.Count() <= 0)
             {
                 ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Aventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
