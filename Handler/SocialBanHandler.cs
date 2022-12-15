@@ -25,10 +25,7 @@ namespace VMP_CNR
         public async Task<bool> IsPlayerSocialBanned(Player player)
         {
             if (player == null) return false;
-            
-            /**
-             * TODO: Edit before release 
-             * 
+
             // Main Thread, durch PlayerWrapper
             string scname = await new PlayerWrapper(player).getProperty("SocialClubName");
 
@@ -47,8 +44,7 @@ namespace VMP_CNR
                     }
                 }
                 await conn.CloseAsync();
-            }*/
-
+            }
 
             return false;
         }

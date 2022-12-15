@@ -68,6 +68,7 @@ using VMP_CNR.Module.Clothes.Props;
 using VMP_CNR.Module.Clothes.Windows;
 using VMP_CNR.Module.Players.NAPIWrapper;
 using VMP_CNR.Module.Threading;
+using VMP_CNR.Module.Admin;
 
 namespace VMP_CNR
 {
@@ -88,15 +89,15 @@ namespace VMP_CNR
     internal enum AdminLevelTypes
     {
         Player = 0,
-        Supporter = 1,
-        Moderator = 2,
-        Administrator = 3,
-        SuperAdministrator = 4,
-        Manager = 5,
-        Projektleitung = 6,
-        Entwicklungsleitung = 8,
-        SeniorEntwickler = 11,
-        Gamedesigner = 13,
+        FirstLevelTeam = 1,
+        SecondLevelTeam = 2,
+        ThirdLevelTeam = 3,
+        AntiCheatTeam = 13,
+        Staff = 4,
+        Management = 5,
+        Founder = 6,
+        QualityAssurance = 8,
+        PublicRelation = 11,
         Gamedesignleitung = 14,
         SeniorGamedesigner = 23
     }
@@ -1686,6 +1687,7 @@ namespace VMP_CNR
         {
             if (!iPlayer.CanInteract()) return;
 
+            if (AdminModule.Instance.ToggleNoClip(iPlayer)) return;
             if (await Modules.Instance.OnKeyPressed(iPlayer, Key.K)) return;
 
             return;

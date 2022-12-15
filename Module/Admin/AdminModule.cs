@@ -8,8 +8,35 @@ using VMP_CNR.Module.Vehicles;
 
 namespace VMP_CNR.Module.Admin
 {
+
     public class AdminModule : Module<AdminModule>
     {
+        public bool ToggleNoClip(DbPlayer dbPlayer)
+        {
+            if (dbPlayer == null || !dbPlayer.IsValid()) return false;
+
+            if (dbPlayer.IsInAdminDuty() || dbPlayer.IsInGameDesignDuty()) { 
+                if (!dbPlayer.NoClip)
+                {
+                    dbPlayer.SendNewNotification("Starte NoClip");
+                    dbPlayer.Player.TriggerNewClient("toggleNoClip", true);
+                    NAPI.Task.Run(() => { dbPlayer.Player.Transparency = 0; });
+                    dbPlayer.NoClip = true;
+                }
+                else
+                {
+                    dbPlayer.SendNewNotification("Beende NoClip");
+                    dbPlayer.Player.TriggerNewClient("toggleNoClip", false);
+                    NAPI.Task.Run(() => { dbPlayer.Player.Transparency = 255; });
+                    dbPlayer.NoClip = false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         public override bool OnPlayerDeathBefore(DbPlayer dbPlayer, NetHandle killer, uint weapon)
         {
             if (killer.GetEntityType() != EntityType.Player || killer.ToPlayer() == dbPlayer.Player) return false;
@@ -19,14 +46,14 @@ namespace VMP_CNR.Module.Admin
             if (iKiller == null || !iKiller.IsValid()) return false;
             if (dbPlayer == null || !dbPlayer.IsValid()) return false;
 
-            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball==0)
+            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0)
             {
-                dbPlayer.SendNewNotification( StringsModule.Instance["KILL_WILL_NOTICE"]);
+                dbPlayer.SendNewNotification(StringsModule.Instance["KILL_WILL_NOTICE"]);
                 Players.Players.Instance.SendMessageToAuthorizedUsers("deathlog",
                     "Neulingskill: " + iKiller.GetName() + " hat " + dbPlayer.GetName() + " getoetet!");
             }
             string killerweapon = Convert.ToString((WeaponHash)weapon) != "" ? Convert.ToString((WeaponHash)weapon) : "unbekannt";
-            
+
             // Reset killer informations
             dbPlayer.ResetData("killername");
             dbPlayer.ResetData("killerweapon");
@@ -35,11 +62,12 @@ namespace VMP_CNR.Module.Admin
 
             string type = "";
 
-            if(iKiller.RageExtension.IsInVehicle)
+            if (iKiller.RageExtension.IsInVehicle)
             {
                 SxVehicle sxVehicle = iKiller.Player.Vehicle.GetVehicle();
 
-                if (sxVehicle != null & sxVehicle.IsValid()) {
+                if (sxVehicle != null & sxVehicle.IsValid())
+                {
                     type = "vehicle";
 
                     Logging.Logger.Debug("Vehicledeath " + killerweapon);
@@ -53,7 +81,7 @@ namespace VMP_CNR.Module.Admin
                 }
             }
 
-            if(iKiller.DimensionType[0] == DimensionType.Gangwar && dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+            if (iKiller.DimensionType[0] == DimensionType.Gangwar && dbPlayer.DimensionType[0] == DimensionType.Gangwar)
             {
                 type = "gangwar";
             }

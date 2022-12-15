@@ -4407,7 +4407,7 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                 {
-                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Manager) return;
+                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Management) return;
                     var count = 0;
 
                     foreach (var currPlayer in TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers())

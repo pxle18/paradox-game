@@ -80,23 +80,14 @@ namespace VMP_CNR.Module.Tasks
                     return;
                 }
 
-                // TODO: Edit before release Check Timeban
-                //if (reader.GetInt32("timeban") != 0 && reader.GetInt32("timeban") > DateTime.Now.GetTimestamp())
-                //{
-                //    player.SendNotification("Ban aktiv");
-                //    player.Kick("Ban aktiv");
-                //    return;
-                //}
+                if (reader.GetInt32("timeban") != 0 && reader.GetInt32("timeban") > DateTime.Now.GetTimestamp())
+                {
+                    _player.SendNotification("Ban aktiv");
+                    _player.Kick("Ban aktiv");
+                    return;
+                }
                 
                 DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
-
-                // TODO: Edit before release
-                //if (!SocialBanHandler.Instance.IsPlayerWhitelisted(dbPlayer))
-                //{
-                //    player.SendNotification("Bitte whitelisten Sie sich im Forum (GVMP-Shield)!");
-                //    player.Kick();
-                //    return;
-                //}
 
                 await NAPI.Task.WaitForMainThread(0);
                 dbPlayer.Player.TriggerEvent("sendAuthKey", dbPlayer.AuthKey);

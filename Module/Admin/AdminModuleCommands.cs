@@ -1547,7 +1547,7 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Manager)
+            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Founder && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Management)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -1571,7 +1571,7 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Manager)
+            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Founder && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Management)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -1811,19 +1811,19 @@ namespace VMP_CNR.Module.Admin
             }
 
 
-            if (!dbPlayer.noclip)
+            if (!dbPlayer.NoClip)
             {
                 dbPlayer.SendNewNotification("Starte NOCLIP");
                 dbPlayer.Player.TriggerNewClient("toggleNoClip", true);
                 NAPI.Task.Run(() => { player.Transparency = 0; });
-                dbPlayer.noclip = true;
+                dbPlayer.NoClip = true;
             }
             else
             {
                 dbPlayer.SendNewNotification("Beende NOCLIP");
                 dbPlayer.Player.TriggerNewClient("toggleNoClip", false);
                 NAPI.Task.Run(() => { player.Transparency = 255; });
-                dbPlayer.noclip = false;
+                dbPlayer.NoClip = false;
             }
 
         }
@@ -1885,17 +1885,17 @@ namespace VMP_CNR.Module.Admin
                     case 4:
                         color = 12;
                         break;
-                    case 5:
-                        color = 2;
-                        break;
-                    case 6:
+                    case (int)AdminLevelTypes.Management:
                         color = 1;
                         break;
-                    case 8:
-                        color = 2;
+                    case (int)AdminLevelTypes.Founder:
+                        color = 1;
                         break;
-                    case 11:
-                        color = 2;
+                    case (int)AdminLevelTypes.QualityAssurance:
+                        color = 1;
+                        break;
+                    case (int)AdminLevelTypes.PublicRelation:
+                        color = 1;
                         break;
                     case 21:
                         color = 11;
@@ -1925,8 +1925,6 @@ namespace VMP_CNR.Module.Admin
                     dbPlayer.SetClothes(2, 0, 0);
                     dbPlayer.SetClothes(9, 0, 0);
                 });
-
-
 
                 dbPlayer.SendNewNotification("Adminduty aktiviert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.SUCCESS);
             }
@@ -2177,7 +2175,7 @@ namespace VMP_CNR.Module.Admin
             var toFriskPlayer = Players.Players.Instance.FindPlayer(name, true);
             if (toFriskPlayer == null) return;
 
-            if (dbPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (dbPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     dbPlayer.GetName() + " durchsucht nun " + toFriskPlayer.GetName());
 
@@ -2374,7 +2372,7 @@ namespace VMP_CNR.Module.Admin
                     Item.Name +
                     " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-                if (dbPlayer.RankId < (int)AdminLevelTypes.Manager)
+                if (dbPlayer.RankId < (int)AdminLevelTypes.Management)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         dbPlayer.GetName() + " hat " + findPlayer.GetName() + " " + amount + " " +
                     Item.Name + " gegeben.");
@@ -2632,10 +2630,7 @@ namespace VMP_CNR.Module.Admin
             var findPlayer = Players.Players.Instance.FindPlayer(command[0], true);
             if (findPlayer == null || !findPlayer.IsValid()) return;
 
-            dbPlayer.SendNewNotification("Kick eingeleitet! Wird in 10 Sekunden durchgeführt...", NotificationType.ADMIN);
             findPlayer.SendNewNotification($"Du wirst in wenigen Sekunden vom Gameserver gekickt: Grund: {command[1]}", NotificationType.ADMIN, "Kick", 10000);
-            await Task.Delay(10000);
-
 
             await Chats.SendGlobalMessage(dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " vom Server gekickt! (Grund: " + command[1] + ")", COLOR.RED, ICON.GLOB);
             dbPlayer.SendNewNotification($"Sie haben {findPlayer.GetName()} vom Server gekickt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
@@ -2909,7 +2904,7 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
-        public void gdduty(Player player)
+        public void acduty(Player player)
         {
             var dbPlayer = player.GetPlayer();
 
@@ -2980,14 +2975,14 @@ namespace VMP_CNR.Module.Admin
                 dbPlayer.SetClothes(2, 0, 0);
                 dbPlayer.SetClothes(9, 0, 0);
 
-                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun im " + dbPlayer.Rank.Name + "dienst!");
-                dbPlayer.SendNewNotification("Sie befinden sich nun im " + dbPlayer.Rank.Name + "dienst!");
+                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun im " + dbPlayer.Rank.Name + " Dienst!");
+                dbPlayer.SendNewNotification("Sie befinden sich nun im " + dbPlayer.Rank.Name + " Dienst!");
             }
             else
             {
                 dbPlayer.SetGameDesignDuty(false);
-                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun nicht mehr im " + dbPlayer.Rank.Name + "dienst!");
-                dbPlayer.SendNewNotification("Sie befinden sich nun nicht mehr im " + dbPlayer.Rank.Name + "dienst!");
+                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun nicht mehr im " + dbPlayer.Rank.Name + " Dienst!");
+                dbPlayer.SendNewNotification("Sie befinden sich nun nicht mehr im " + dbPlayer.Rank.Name + " Dienst!");
             }
         }
 
@@ -3046,19 +3041,19 @@ namespace VMP_CNR.Module.Admin
                     var color = 64;
                     switch (dbPlayer.RankId)
                     {
-                        case (int)AdminLevelTypes.SuperAdministrator:
+                        case (int)AdminLevelTypes.Staff:
                             color = 145;
                             break;
-                        case (int)AdminLevelTypes.Administrator:
+                        case (int)AdminLevelTypes.ThirdLevelTeam:
                             color = 89;
                             break;
-                        case (int)AdminLevelTypes.Moderator:
+                        case (int)AdminLevelTypes.SecondLevelTeam:
                             color = 64;
                             break;
                         default:
-                            if (dbPlayer.RankId >= (int)AdminLevelTypes.Manager)
+                            if (dbPlayer.RankId >= (int)AdminLevelTypes.Management)
                                 color = 44;
-                            else if (dbPlayer.RankId == (int)AdminLevelTypes.Supporter)
+                            else if (dbPlayer.RankId == (int)AdminLevelTypes.FirstLevelTeam)
                                 color = 92;
                             break;
                     }
@@ -3419,7 +3414,7 @@ namespace VMP_CNR.Module.Admin
             dbPlayer.SendNewNotification("Sie haben sich zu " + destinationPlayer.GetName() +
                                      " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            if (dbPlayer.noclip)
+            if (dbPlayer.NoClip)
             {
                 dbPlayer.Player.TriggerNewClient("gotocam", NAPI.Util.ToJson(destinationPlayer.Player.Position));
             }
@@ -3747,7 +3742,7 @@ namespace VMP_CNR.Module.Admin
                                             " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator" + iPlayer.GetName() + " hat ihnen $" +
                                                amount + " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (iPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                    if (iPlayer.RankId < (int)AdminLevelTypes.Founder)
                         Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " gegeben!");
 
@@ -3761,7 +3756,7 @@ namespace VMP_CNR.Module.Admin
                                         " entfernt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 findPlayer.SendNewNotification("Administrator" + iPlayer.GetName() + " hat ihnen $" +
                                            amount + " entfernt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                if (iPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                if (iPlayer.RankId < (int)AdminLevelTypes.Founder)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " entfernt!");
 
@@ -3919,7 +3914,7 @@ namespace VMP_CNR.Module.Admin
 
             if (findPlayer == null) return;
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " hat " + findPlayer.GetName() + " aus dem Gefaengnis entlassen!");
             //Main.freePlayer(iPlayer, findPlayer, true);
@@ -4476,7 +4471,7 @@ namespace VMP_CNR.Module.Admin
                 //iPlayer.Player.TriggerNewClient("spectateAdmin", dbPlayer.Player, true,0);
 
 
-                if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+                if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         iPlayer.GetName() + " spectated nun " + dbPlayer.GetName());
 
@@ -4519,7 +4514,7 @@ namespace VMP_CNR.Module.Admin
             }
 
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " spectated nun " + dbPlayer.GetName());
 
@@ -5124,7 +5119,7 @@ namespace VMP_CNR.Module.Admin
                 $"Besitzer: {name} BesitzerID: {sxVeh.ownerId} Fahrer: {(sxVeh.GetOccupants().GetDriver() != null ? sxVeh.GetOccupants().GetDriver().GetName() : "Keiner")} " +
                 $"Letzter-Fahrer: {sxVeh.LastDriver} Fraktion: {sxVeh.Team.Name}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 15000);
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " sieht sich das Fahrzeug von " + name + " an");
 
@@ -5172,14 +5167,14 @@ namespace VMP_CNR.Module.Admin
                     iPlayer.SendNewNotification("Sie haben ein Administrator Fahrzeug gespawnt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.SUCCESS);
 
                     int color = 64;
-                    if (iPlayer.RankId == (int)AdminLevelTypes.SuperAdministrator) color = 145;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Administrator)
+                    if (iPlayer.RankId == (int)AdminLevelTypes.Staff) color = 145;
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.ThirdLevelTeam)
                         color = 89;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Moderator)
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.SecondLevelTeam)
                         color = 64;
-                    else if (iPlayer.RankId >= (int)AdminLevelTypes.Manager)
+                    else if (iPlayer.RankId >= (int)AdminLevelTypes.Management)
                         color = 44;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Supporter)
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.FirstLevelTeam)
                         color = 92;
 
                     if (!Enum.TryParse("2069146067", true, out VehicleHash hash)) return;
@@ -5528,7 +5523,7 @@ namespace VMP_CNR.Module.Admin
 
             await NAPI.Task.WaitForMainThread(0);
 
-            if (!iPlayer.CanAccessMethod() && !Devmode && iPlayer.RankId != (int)AdminLevelTypes.Projektleitung)
+            if (!iPlayer.CanAccessMethod() && !Devmode && iPlayer.RankId != (int)AdminLevelTypes.Founder)
             {
                 iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -6338,7 +6333,7 @@ namespace VMP_CNR.Module.Admin
             if (!Configuration.Instance.DevMode)
                 return;
 
-            if (dbPlayer.RankId != (uint)AdminLevelTypes.Projektleitung)
+            if (dbPlayer.RankId != (uint)AdminLevelTypes.Founder)
                 return;
 
             var modules = Modules.Instance.GetModules();

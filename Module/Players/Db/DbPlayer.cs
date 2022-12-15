@@ -404,7 +404,7 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsSpeaking = false;
 
-        public bool noclip = false;
+        public bool NoClip = false;
 
         public int TeamfightKillCounter = 0;
 
