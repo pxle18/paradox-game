@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GTANetworkAPI;
 using VMP_CNR.Module.Gangwar;
 using VMP_CNR.Module.GTAN;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
@@ -77,14 +78,6 @@ namespace VMP_CNR.Module.Teams.Shelter
         }
 
         public TeamShelter GetByInventoryPosition(Vector3 Position, uint dimension = 0)
-        {
-            foreach (var shelter in GetAll())
-            {
-                if (shelter.Value != null && shelter.Value.InventarPosition.DistanceTo(Position) < 3.0f && shelter.Value.Dimension == dimension)
-                    return shelter.Value;
-            }
-            return null;
-        }
-        
+            => GetAll().Values.FirstOrDefault(shelter => shelter.InventarPosition.DistanceTo2D(Position) <= 10 && shelter.Dimension == dimension);
     }
 }

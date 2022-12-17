@@ -50,6 +50,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
             if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.HasData("vehBizAdd"))
             {
+                dbPlayer.SendNewNotification("Fehler #1.");
                 return;
             }
 
@@ -65,7 +66,11 @@ namespace VMP_CNR.Module.Keys.Windows
 
             string carName = vehicle.Data.IsModdedCar == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
 
-            if (vehicle.Data != null) return;
+            if (vehicle.Data != null)
+            {
+                dbPlayer.SendNewNotification("Fehler #2.");
+                return;
+            }
 
             var biz = dbPlayer.GetActiveBusiness();
 

@@ -491,6 +491,25 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
+        public void gotointerior(Player p_Player, string myString)
+        {
+            //if (!Configuration.Instance.DevMode) return;
+
+            var l_DbPlayer = p_Player.GetPlayer();
+            if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
+            {
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            if (!uint.TryParse(myString, out uint id)) return;
+            var interior = InteriorModule.Instance.Get(id);
+
+            l_DbPlayer.Player.SetPosition(interior.Position);
+        }
+        
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
         public void gotofrak(Player p_Player, string myString)
         {
             //if (!Configuration.Instance.DevMode) return;
@@ -5473,6 +5492,34 @@ namespace VMP_CNR.Module.Admin
             iPlayer.SendNewNotification(string.Format($"Position (x: {x} | y: {y} | z: {z}) saved as: {comment}"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
         }
 
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void getpos(Player player, string comment = "")
+        {
+            var iPlayer = player.GetPlayer();
+
+            if (!iPlayer.CanAccessMethod())
+            {
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                return;
+            }
+
+            string x = player.Position.X.ToString().Replace(".", ",");
+            string y = player.Position.Y.ToString().Replace(".", ",");
+            string z = player.Position.Z.ToString().Replace(".", ",");
+            string heading = player.Rotation.Z.ToString().Replace(".", ",");
+
+            if (iPlayer.RageExtension.IsInVehicle)
+            {
+                x = player.Vehicle.Position.X.ToString().Replace(".", ",");
+                y = player.Vehicle.Position.Y.ToString().Replace(".", ",");
+                z = player.Vehicle.Position.Z.ToString().Replace(".", ",");
+                heading = player.Vehicle.Rotation.Z.ToString().Replace(".", ",");
+            }
+
+            Logger.Print($"{x} {y} {z} {heading} {comment}");
+            iPlayer.SendNewNotification($"Position gespeichert. {comment}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
+        }
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -5652,6 +5699,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             iPlayer.SetDimension(dimension_int);
+            iPlayer.SendNewNotification($"Dimension {iPlayer.Player.Dimension}");
         }
 
         [Command]

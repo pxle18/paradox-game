@@ -72,7 +72,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
 
         private static void OnJumpPointSpawn(JumpPoint jumpPoint)
         {
-            /*int objectModel;
+            int objectModel;
             var objectPosition = jumpPoint.Position.Copy();
             if (jumpPoint.Range >= 5)
             {
@@ -88,7 +88,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
             {
                 jumpPoint.Object =
                     ObjectSpawn.Create(objectModel, objectPosition, new Vector3(), jumpPoint.Dimension);
-            }*/
+            }
         }
 
         public JumpPoint Get(int id)

@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Government
             using (var keyCmd = keyConn.CreateCommand())
             {
                 keyConn.Open();
-                keyCmd.CommandText = $"SELECT SUM(vd.price) FROM vehicles v LEFT JOIN vehicledata vd ON v.model = vd.id WHERE v.owner = '{dbPlayer.Id}';";
+                keyCmd.CommandText = $"SELECT IFNULL(SUM(vd.price), 0) FROM vehicles v LEFT JOIN vehicledata vd ON v.model = vd.id WHERE v.owner = '{dbPlayer.Id}';";
                 using (var vehicleSumReader = keyCmd.ExecuteReader())
                 {
                     if (vehicleSumReader.HasRows)

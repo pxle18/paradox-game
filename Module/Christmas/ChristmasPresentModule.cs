@@ -72,17 +72,17 @@ namespace VMP_CNR.Module.Christmas
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
             if (dbPlayer.Player.Position.DistanceTo(_presentLocation) > 10) return false;
 
-            var christmasCodes = GetAll().Values.Where(christmasPresent => 
-                christmasPresent.PlayerId == dbPlayer.Id && christmasPresent.Code == string.Empty);
+            // var christmasCodes = GetAll().Values.Where(christmasPresent => 
+            //     christmasPresent.PlayerId == dbPlayer.Id && christmasPresent.Code == string.Empty);
 
-            if (christmasCodes.Count() <= 0)
-            {
-                ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Aventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
-                return true;
-            }
+            // if (christmasCodes.Count() <= 0)
+            // {
+            //    ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
+            //    return true;
+            //}
 
-            ProcessChristmasCodes(dbPlayer, christmasCodes);
-
+            //ProcessChristmasCodes(dbPlayer, christmasCodes);
+            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
             return true;
         }
 
