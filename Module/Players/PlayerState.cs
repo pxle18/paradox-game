@@ -179,6 +179,7 @@ namespace VMP_CNR.Module.Players
                     dbPlayer.ResetData("armorbefore");
                 }
             }
+            dbPlayer.Player.SetSharedData("IN_ADUTY", aduty);
             dbPlayer.RankDuty = aduty ? DbPlayer.RankDutyStatus.AdminDuty : DbPlayer.RankDutyStatus.OffDuty;
             dbPlayer.Player.TriggerNewClient("setPlayerAduty", aduty);
             dbPlayer.ApplyArmorVisibility();
