@@ -49,6 +49,37 @@ namespace VMP_CNR
             return false;
         }
 
+        public async Task<int> GetSocialClubCount(Player player, int PlayerId)
+        {
+            if (player == null) return 0;
+
+            // Main Thread, durch PlayerWrapper
+            string scname = await new PlayerWrapper(player).getProperty("SocialClubName");
+
+            // Wechsel in einen Background Thread
+            await Task.Delay(1);
+            using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
+            using (var cmd = conn.CreateCommand())
+            {
+                await conn.OpenAsync();
+                cmd.CommandText = $"SELECT Count(Id) As SocialCount FROM player WHERE Id = '{PlayerId}';";
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            return reader.GetInt32("SocialCount");
+                        }
+                    }
+                    else return 0;
+                }
+                await conn.CloseAsync();
+            }
+
+            return 0;
+        }
+
         public void DeleteEntry(Player player)
         {
             var query =

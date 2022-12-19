@@ -40,7 +40,7 @@ namespace VMP_CNR.Module.Items
             // Anti Spam / Anti Dupe
             if (!dbPlayer.CheckForSpam(DbPlayer.OperationType.ItemMove))
             {
-                dbPlayer.SendNewNotification($"Du kannst nur 1x pro Sekunde ein Item bewegen.", PlayerNotification.NotificationType.ERROR, "Fehler!");
+                dbPlayer.SendNewNotification($"Du kannst nur 1x pro halbe Sekunde ein Item bewegen.", PlayerNotification.NotificationType.ERROR, "Fehler!");
                 return false;
             }
             
@@ -68,10 +68,7 @@ namespace VMP_CNR.Module.Items
                 }
 
                 // Geschenk
-                if (model.Id == 1198)
-                {
-                    return false;
-                }
+                if (model.Id == 1198) return false;
 
 
                 // Ostereier

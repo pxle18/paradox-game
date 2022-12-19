@@ -86,6 +86,12 @@ namespace VMP_CNR.Module.Tasks
 
                     DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
 
+                    if (await SocialBanHandler.Instance.GetSocialClubCount(_player, reader.GetInt32("id")) > 1)
+                    {
+                        Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Multi-Account: {dbPlayer.GetName()} (Nicht direkt bannen - Gespräch: 1 Warn).");
+                        return;
+                    }
+
                     await NAPI.Task.WaitForMainThread(0);
                     dbPlayer.Player.TriggerEvent("sendAuthKey", dbPlayer.AuthKey);
 
@@ -133,8 +139,8 @@ namespace VMP_CNR.Module.Tasks
 
                     if (Configuration.Instance.IsUpdateModeOn)
                     {
-                        ComponentManager.Get<LoginWindow>().TriggerNewClient(dbPlayer.Player, "status", "Der Server befindet sich derzeit im Update Modus!");
-                        if (dbPlayer.Team.Id == 0) dbPlayer.Kick();
+                        ComponentManager.Get<LoginWindow>().TriggerNewClient(dbPlayer.Player, "status", "Der Server befindet sich derzeit in Wartungsarbeiten!");
+                        if (dbPlayer.Rank.Id > 1) dbPlayer.Kick();
                     }
                 }
                 catch (Exception e) { Logger.Print(e.ToString()); }
