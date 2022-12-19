@@ -1359,7 +1359,7 @@ namespace VMP_CNR.Module.Players
 
                 Players.Instance.SendMessageToAuthorizedUsers("log", $"REPORT: [{dbPlayer.GetName()}({dbPlayer.ForumId})]: {reason}", time: 10000);
 
-                Logger.AddReportLog(dbPlayer.Id, playerList, reason);
+                Logger.AddReportLog(dbPlayer.Id, playerList, MySqlHelper.EscapeString(reason));
                 dbPlayer.LastReport = DateTime.Now;
                 return;
             }
