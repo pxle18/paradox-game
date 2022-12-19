@@ -45,6 +45,7 @@ using VMP_CNR.Module.FIB;
 using VMP_CNR.Module.NSA.Observation;
 using VMP_CNR.Module.Animal;
 using VMP_CNR.Module.PlayerDataCustom;
+using VMP_CNR.Module.Procedures.Interfaces;
 
 namespace VMP_CNR.Module.Players.Db
 {
@@ -359,6 +360,10 @@ namespace VMP_CNR.Module.Players.Db
 
         public bool IsInTask { get; set; }
         public Rank Rank { get; set; }
+
+        public Procedure Procedure { get; set; }
+        public Dictionary<string, string> ProcedureData { get; set; } = new Dictionary<string, string>();
+        public string CurrentProcedureKey { get; set; }
 
         // Reworked Stuff
         public Team Team { get; private set; }

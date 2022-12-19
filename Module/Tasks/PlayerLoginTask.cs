@@ -44,8 +44,11 @@ namespace VMP_CNR.Module.Tasks
             if (!reader.HasRows)
             {
                 _player.SendNotification("Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
+                await Task.Delay(500);
+
                 _player.Kick(
                     "Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
+
                 Logger.Debug($"Player was kicked, no Account found for {_player.Name}");
 
                 return;
@@ -67,6 +70,7 @@ namespace VMP_CNR.Module.Tasks
                         PlayerLoginDataValidationModule.SyncUserBanToForum(reader.GetInt32("forumid"));
 
                         _player.SendNotification($"Dein PARADOX (IC-)Account wurde gesperrt. Melde dich im Teamspeak!");
+                        await Task.Delay(500);
                         _player.Kick();
                         return;
                     }
@@ -74,6 +78,8 @@ namespace VMP_CNR.Module.Tasks
                     if (reader.GetInt32("timeban") != 0 && reader.GetInt32("timeban") > DateTime.Now.GetTimestamp())
                     {
                         _player.SendNotification("Ban aktiv");
+                        await Task.Delay(500);
+
                         _player.Kick("Ban aktiv");
                         return;
                     }
@@ -128,7 +134,7 @@ namespace VMP_CNR.Module.Tasks
                     if (Configuration.Instance.IsUpdateModeOn)
                     {
                         ComponentManager.Get<LoginWindow>().TriggerNewClient(dbPlayer.Player, "status", "Der Server befindet sich derzeit im Update Modus!");
-                        if (dbPlayer.Rank.Id < 1) dbPlayer.Kick();
+                        if (dbPlayer.Team.Id == 0) dbPlayer.Kick();
                     }
                 }
                 catch (Exception e) { Logger.Print(e.ToString()); }

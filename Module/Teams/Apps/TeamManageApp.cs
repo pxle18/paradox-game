@@ -182,16 +182,18 @@ namespace VMP_CNR.Module.Teams.Apps
                 }
 
                 // 7 Days
-                if (editDbPlayer.LastUninvite.AddDays(7) > DateTime.Now)
-                {
-                    dbPlayer.SendNewNotification($"Spieler kann erst nach einer Woche erneut einer Fraktion beitreten.");
-                    return;
-                }
+                //if (editDbPlayer.LastUninvite.AddDays(7) > DateTime.Now)
+                //{
+                //    dbPlayer.SendNewNotification($"Spieler kann erst nach einer Woche erneut einer Fraktion beitreten.");
+                //    return;
+                //}
 
-                if (dbPlayer.Team.GetMemberCount() >= dbPlayer.Team.MaxMembers)
-                {
-                    dbPlayer.SendNewNotification($"Ihre Fraktion hat die maximale Anzahl an Mitglieder erreicht! ({dbPlayer.Team.MaxMembers} Mitglieder)");
-                    return;
+                if(dbPlayer.Team.MaxMembers != 0) { 
+                    if (dbPlayer.Team.GetMemberCount() >= dbPlayer.Team.MaxMembers)
+                    {
+                        dbPlayer.SendNewNotification($"Ihre Fraktion hat die maximale Anzahl an Mitglieder erreicht! ({dbPlayer.Team.MaxMembers} Mitglieder)");
+                        return;
+                    }
                 }
 
                 // Spezial SWAT

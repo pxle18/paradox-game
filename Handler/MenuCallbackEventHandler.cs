@@ -4256,12 +4256,6 @@ namespace VMP_CNR
                                     }
                                 }
 
-                                if (price > 50000 && dbPlayer.IsHomeless())
-                                {
-                                    dbPlayer.SendNewNotification("Ohne einen Wohnsitz können Sie dieses Fahrzeug nicht erwerben!");
-                                    return;
-                                }
-
                                 Task.Run(async () =>
                                 {
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_carshop);

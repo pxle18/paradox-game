@@ -55,9 +55,9 @@ namespace VMP_CNR.Module.Configurations
         {
             DevLog = false;
             Ptr = false;
-            DevMode = true;
-            VoiceChannel = "";
-            VoiceChannelPassword = "";
+            DevMode = false;
+            VoiceChannel = "INGAME_LIVE";
+            VoiceChannelPassword = "WALID";
             IsServerOpen = false;
             InventoryActivated = true;
             EKeyActivated = true;
@@ -66,6 +66,7 @@ namespace VMP_CNR.Module.Configurations
             MeertraeubelEnabled = true; //set to true later
             JailescapeEnabled = false;
             JumpPointsEnabled = true;
+
             mysql_user = "user";
             mysql_pw = "Nm2zefvTEOIgLfTR6EM8";
             mysql_user_forum = "user";

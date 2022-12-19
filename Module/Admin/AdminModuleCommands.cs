@@ -56,6 +56,8 @@ using VMP_CNR.Module.Jails;
 using VMP_CNR.Module.Space;
 using System.Diagnostics;
 using VMP_CNR.Module.Weather;
+using VMP_CNR.Module.Procedures;
+using VMP_CNR.Module.Admin.Procedures;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -507,7 +509,7 @@ namespace VMP_CNR.Module.Admin
 
             l_DbPlayer.Player.SetPosition(interior.Position);
         }
-        
+
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
         public void gotofrak(Player p_Player, string myString)
@@ -526,6 +528,20 @@ namespace VMP_CNR.Module.Admin
             l_DbPlayer.Player.SetPosition(team.TeamSpawns[0].Position);
         }
 
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void createjumppoint(Player p_Player)
+        {
+            //if (!Configuration.Instance.DevMode) return;
+            var l_DbPlayer = p_Player.GetPlayer();
+            if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
+            {
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            ProcedureModule.Instance.CreateProcedure(l_DbPlayer, new CreateJumppointCommandProcedure());
+        }
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -5943,6 +5959,91 @@ namespace VMP_CNR.Module.Admin
             iPlayer.SendNewNotification("Haus erstellt Price:" + command[1] + " Type:" + command[0] +
                                     " Rents:" + command[2] +
                                     " Pos:" + x + " " + y + " " + z + " " + heading, title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+        }
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command(GreedyArg = true)]
+        public void createfvehicles(Player player)
+        {
+            var iPlayer = player.GetPlayer();
+
+            if (!iPlayer.CanAccessMethod() && !Devmode)
+            {
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            var teams = TeamModule.Instance.GetAll().Values.Where(t => t.IsGangsters());
+            foreach(Team team in teams)
+            {
+                var garage = GarageModule.Instance.GetAll().Values.FirstOrDefault(g => g.Teams.Contains(team.Id) && g.Teams.Count() == 1 && g.Classifications.Contains(1) && g.Npc != PedHash.Autoshop02SMM);
+                if(garage == null)
+                {
+                    Logger.Print("Invalid garage " + team.Name);
+                    continue;
+                }
+
+                /*
+                for (int i = 0; i < 3; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(978);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(78);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(529);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }*/
+                for (int i = 0; i < 5; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(631);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(632);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+                iPlayer.SendNewNotification($"Fraktionsfahrzeuge für {team.Name} erstellt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            }
         }
 
         [CommandPermission(PlayerRankPermission = true)]

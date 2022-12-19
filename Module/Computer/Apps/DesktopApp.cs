@@ -46,7 +46,6 @@ namespace VMP_CNR.Module.Computer.Apps
                 if (dbPlayer.CanAccessComputerApp(kvp.Value) && kvp.Value.Type == ComputerTypes.Computer) computerAppClientObjects.Add(new ComputerAppClientObject(kvp.Value));
             }
 
-            Logger.Print(NAPI.Util.ToJson(computerAppClientObjects));
             TriggerNewClient(player, "responseComputerApps", NAPI.Util.ToJson(computerAppClientObjects));
         }
     }

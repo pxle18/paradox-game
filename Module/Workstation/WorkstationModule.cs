@@ -47,7 +47,6 @@ namespace VMP_CNR.Module.Workstation
                 if (workstation == null || workstation.Interval15) continue;
 
                 ProgressWorkstation(dbPlayer, workstation);
-
             }
         }
 

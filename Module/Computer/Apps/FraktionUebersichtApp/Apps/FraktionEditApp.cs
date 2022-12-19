@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
 
             if (!MySQLHandler.IsValidNoSQLi(dbPlayer, title)) return;
 
-            if (dbPlayer.TeamId == (uint) TeamList.Zivilist) return;
+            if (dbPlayer.TeamId == (uint)TeamList.Zivilist) return;
             var teamRankPermission = dbPlayer.TeamRankPermission;
             var editDbPlayer = Players.Players.Instance.GetByDbId(playerId);
             if (teamRankPermission.Manage < 1) return;
@@ -124,13 +124,13 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                     return;
                 }
 
-                if (!dbPlayer.Team.HasDuty && memberRank < 12 && payday > 0 && (payday+500) > GetLowestAmountFromHigherRang(dbPlayer.TeamId, memberRank))
+                if (!dbPlayer.Team.HasDuty && memberRank < 12 && payday > 0 && (payday + 500) > GetLowestAmountFromHigherRang(dbPlayer.TeamId, memberRank))
                 {
                     dbPlayer.SendNewNotification($"Das eingestellte Gehalt muss niedriger sein, als der nächst höhere Rang!");
                     return;
                 }
 
-                if(!dbPlayer.Team.HasDuty && (payday + GetAllOverPaydayAmount(dbPlayer.TeamId)) > MaxTeamGangstersPayday)
+                if (!dbPlayer.Team.HasDuty && (payday + GetAllOverPaydayAmount(dbPlayer.TeamId)) > MaxTeamGangstersPayday)
                 {
                     dbPlayer.SendNewNotification($"Die Summe aller Gehälter darf nicht ${MaxTeamGangstersPayday} überschreiten!");
                     return;
@@ -269,7 +269,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                 }
 
                 editDbPlayer.SynchronizeForum();
-                
+
                 dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat {editDbPlayer.GetName()} aus der Fraktion entlassen.");
 
                 if (editDbPlayer.Team.IsGangsters())
@@ -309,22 +309,21 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
             else
             {
                 PlayerName.PlayerName playerName = PlayerName.PlayerNameModule.Instance.Get(playerId);
-                // TODO: Edit before release
-                //if (!Configurations.Configuration.Instance.DevMode)
-                //{
-                //    if (playerName != null)
-                //    {
-                //        using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnectionForum()))
-                //        {
-                //            conn.Open();
-                //            using (var cmd = conn.CreateCommand())
-                //            {
-                //                cmd.CommandText = PlayerForumSync.GetRemoveQueryByForumId(playerName.ForumId);
-                //                cmd.ExecuteNonQueryAsync();
-                //            }
-                //        }
-                //    }
-                //}
+                if (!Configurations.Configuration.Instance.DevMode)
+                {
+                    if (playerName != null)
+                    {
+                        using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnectionForum()))
+                        {
+                            conn.Open();
+                            using (var cmd = conn.CreateCommand())
+                            {
+                                cmd.CommandText = PlayerForumSync.GetRemoveQueryByForumId(playerName.ForumId);
+                                cmd.ExecuteNonQueryAsync();
+                            }
+                        }
+                    }
+                }
 
                 using (MySqlConnection conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
                 using (MySqlCommand cmd = conn.CreateCommand())
@@ -356,7 +355,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                                 dbPlayer.SendNewNotification("Du kannst niemandem mit deinem oder einem höheren Rang veraendern!");
                                 return;
                             }
-                            
+
                             MySQLHandler.ExecuteAsync($"UPDATE player SET rang = '0', team = '0', mediclic = 0 WHERE id = '{playerId}'");
                             MySQLHandler.ExecuteAsync($"UPDATE player_rights SET title = '', r_bank = 0, r_inventory = 0, r_manage = 0 WHERE accountid = '{playerId}'");
                             dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat {overview.Name} aus der Fraktion entlassen.");

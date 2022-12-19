@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsWeaponTeamId(uint Id)
         {
-            return Id == (int)TeamTypes.TEAM_HUSTLER || Id == (int)TeamTypes.TEAM_ICA;
+            return Id == (int)TeamTypes.TEAM_HUSTLER;
         }
         public bool IsMethTeamId(uint Id)
         {

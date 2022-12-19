@@ -25,7 +25,7 @@ namespace VMP_CNR.Module.Customization
         public static readonly Vector3 creatorPos = new Vector3(402.8664, -997.5515, -98.5);
         public static readonly Vector3 cameraLookAtPos = new Vector3(402.8664, -996.4108, -98.5);
         public const float FacingAngle = -185.0f;
-        
+
         public static void ApplyCharacter(this DbPlayer dbPlayer, bool loadArmorHealthFromDBValue = false, bool ignoreOutfit = false)
         {
             if (!dbPlayer.IsFirstSpawn && !loadArmorHealthFromDBValue) dbPlayer.UpdatePlayerHealthAndArmor();
@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Customization
                 dbPlayer.Customization.Hair.Color, dbPlayer.Customization.Hair.HighlightColor,
                 dbPlayer.Customization.Features, headOverlays, decorations.ToArray());
 
-                for(var key = 0; key < dbPlayer.Customization.Features.Length; key++)
+                for (var key = 0; key < dbPlayer.Customization.Features.Length; key++)
                 {
                     NAPI.Player.SetPlayerFaceFeature(dbPlayer.Player, key, dbPlayer.Customization.Features[key]);
                 }
@@ -180,7 +180,7 @@ namespace VMP_CNR.Module.Customization
                     dbPlayer.Customization.Hair.Color, dbPlayer.Customization.Hair.HighlightColor,
                     dbPlayer.Customization.Features, headOverlays, decorations.ToArray());
 
-                for(var key = 0; key < dbPlayer.Customization.Features.Length; key++)
+                for (var key = 0; key < dbPlayer.Customization.Features.Length; key++)
                 {
                     NAPI.Player.SetPlayerFaceFeature(dbPlayer.Player, key, dbPlayer.Customization.Features[key]);
                 }
@@ -188,7 +188,7 @@ namespace VMP_CNR.Module.Customization
 
             // Set Hair
             dbPlayer.SetClothes(2, destinationPlayer.Customization.Hair.Hair, 0);
-            
+
             NAPI.Task.Run(() =>
             {
                 NAPI.Player.SetPlayerHairColor(dbPlayer.Player, destinationPlayer.Customization.Hair.Color, destinationPlayer.Customization.Hair.HighlightColor);
@@ -273,7 +273,7 @@ namespace VMP_CNR.Module.Customization
             dbPlayer.SaveCustomization();
             dbPlayer.ApplyDecorations();
         }
-        
+
         public static void RemoveTattoo(this DbPlayer dbPlayer, uint tattooId)
         {
             if (dbPlayer.Customization.Tattoos.Contains(tattooId)) dbPlayer.Customization.Tattoos.Remove(tattooId);
@@ -285,7 +285,7 @@ namespace VMP_CNR.Module.Customization
         {
             var player = dbPlayer.Player;
 
-            dbPlayer.SetData("lastPosition", player.Position);
+            dbPlayer.SetData("lastPositionSpectate", dbPlayer.Player.Position);
             dbPlayer.SetData("lastDimension", player.Dimension);
             dbPlayer.SetData("lastArmor", player.Armor);
 
@@ -340,73 +340,33 @@ namespace VMP_CNR.Module.Customization
         {
             var player = dbPlayer.Player;
 
-            if (dbPlayer.IsNewbie())
+            if (dbPlayer.HasData("lastPositionSpectate"))
             {
-                var pos = new GTANetworkAPI.Vector3(-1144.26, -2792.27, 27.708);
-                float heading = 237.428f;
-                uint dimension = 0;
-
-                dbPlayer.SetDimension(dimension);
-                dbPlayer.Freeze(true);
-
-                NAPI.Task.Run(() =>
+                Logger.Print("Try");
+                try
                 {
-                    player.SetPosition(pos);
-                    player.SetRotation(heading);
-                });
-            }
-            else
-            {
-                NAPI.Task.Run(() => { player.SetPosition(new Vector3(298.7902, -584.4927, 43.26085)); });
-                dbPlayer.SetDimension(0);
-            }
-
-            if (dbPlayer.HasData("lastPosition"))
-            {
-                NAPI.Task.Run(() =>
+                    player.SetPosition((Vector3)dbPlayer.GetData("lastPositionSpectate"));
+                }
+                catch (Exception e)
                 {
-                    try
-                    {
-                        player.SetPosition((Vector3)dbPlayer.GetData("lastPosition"));
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Crash(e);
-                    }
-                });
+                    Logger.Print(e.ToString() + " 374");
+                }
 
-                if(dbPlayer.HasData("lastDimension"))
+                if (dbPlayer.HasData("lastDimension"))
                 {
                     dbPlayer.SetDimension(dbPlayer.GetData("lastDimension"));
                 }
 
-                if (dbPlayer.Dimension[0] != 0)
-                {
-                    NAPI.Task.Run(() =>
-                    {
-                        player.TriggerNewClient("freezePlayer", true);
-
-                        try
-                        {
-                            player.SetPosition((Vector3)dbPlayer.GetData("lastPosition"));
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.Crash(e);
-                        }
-
-                        player.TriggerNewClient("freezePlayer", false);
-                    });
-                }
-
-                dbPlayer.ResetData("lastPosition");
+                dbPlayer.ResetData("lastPositionSpectate");
                 dbPlayer.ResetData("lastDimension");
                 dbPlayer.SetMedicCuffed(false);
                 dbPlayer.SetCuffed(false);
+                dbPlayer.Freeze(false);
             }
             else
             {
                 dbPlayer.Player.SetPosition(new Vector3(298.7902, -584.4927, 43.26085));
+                dbPlayer.SetDimension(0);
             }
 
             // revert back to last save data
@@ -419,12 +379,12 @@ namespace VMP_CNR.Module.Customization
             dbPlayer.ApplyCharacter();
             ClothModule.Instance.RefreshPlayerClothes(dbPlayer);
 
-            if (dbPlayer.HasData("lastArmor")) 
+            if (dbPlayer.HasData("lastArmor"))
             {
                 dbPlayer.SetArmorPlayer(dbPlayer.GetData("lastArmor"));
             }
 
-            if(dbPlayer.IsNewbie())
+            if (dbPlayer.IsNewbie())
             {
                 dbPlayer.SetDimension(dbPlayer.Id);
 

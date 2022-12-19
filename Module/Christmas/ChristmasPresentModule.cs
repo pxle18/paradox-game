@@ -9,6 +9,7 @@ using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Kasino.Windows;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Windows;
@@ -32,7 +33,7 @@ namespace VMP_CNR.Module.Christmas
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            var christmasCodes = ChristmasPresentModule.Instance.GetAll().Values.Where(christmasPresent => 
+            var christmasCodes = ChristmasPresentModule.Instance.GetAll().Values.ToList().FindAll(christmasPresent =>
                 christmasPresent.PlayerId == 1 && christmasPresent.Code == christmasCode);
 
             if (christmasCodes.Count() <= 0)
@@ -72,24 +73,37 @@ namespace VMP_CNR.Module.Christmas
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
             if (dbPlayer.Player.Position.DistanceTo(_presentLocation) > 10) return false;
 
-            // var christmasCodes = GetAll().Values.Where(christmasPresent => 
-            //     christmasPresent.PlayerId == dbPlayer.Id && christmasPresent.Code == string.Empty);
+            try
+            {
+                Logger.Print("Size: " + GetAll().Values.ToList().Count());
 
-            // if (christmasCodes.Count() <= 0)
-            // {
-            //    ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
-            //    return true;
-            //}
+                var christmasCodes = GetAll().Values.ToList().FindAll(christmasPresent => christmasPresent.Code == "" && christmasPresent.PlayerId == dbPlayer.Id);
 
-            //ProcessChristmasCodes(dbPlayer, christmasCodes);
-            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
+                Logger.Print("Size Filtered: " + christmasCodes.Count());
+
+                if (christmasCodes == null || christmasCodes.Count() <= 0)
+                {
+                    Logger.Print("Null lol");
+                    ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
+                    return true;
+                }
+
+                Logger.Print("Proccessing");
+                ProcessChristmasCodes(dbPlayer, christmasCodes);
+            }
+            catch (Exception e) { Logger.Print(e.ToString()); }
+
+
             return true;
         }
 
-        public void ProcessChristmasCodes(DbPlayer player, IEnumerable<ChristmasPresentModel> christmasPresents)
+        public void ProcessChristmasCodes(DbPlayer player, List<ChristmasPresentModel> christmasPresents)
         {
-            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden!", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
-            
+            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Überprüfe dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
+
+            player.xmasLast = DateTime.Now;
+            player.SaveChristmasState();
+
             christmasPresents.ForEach(code =>
             {
                 player.Container.AddItem(code.Item, code.Amount);

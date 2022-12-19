@@ -33,11 +33,6 @@ namespace VMP_CNR.Module.Players.Phone.Apps
                     AddDefault("TeamApp");
                 }
 
-                if (dbPlayer.TeamId == 27)
-                {
-                    AddDefault("HitmanApp");
-                }
-
                 if (dbPlayer.GetActiveBusiness() != null)
                 {
                     AddDefault("BusinessApp");

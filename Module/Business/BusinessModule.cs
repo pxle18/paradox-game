@@ -357,7 +357,11 @@ namespace VMP_CNR.Module.Business
             dbPlayer.SendNewNotification($"Der Name des Businesses wurde auf {returnString} gesetzt!");
             
             var business = BusinessModule.Instance.Get(dbPlayer.ActiveBusinessId);
-            if (business == null) return;
+            if (business == null)
+            {
+                dbPlayer.SendNewNotification($"Der Name des Businesses wurde konnte nicht geändert werden! #362");
+                return;
+            }
 
             BusinessModule.Instance.Update(business.Id, business, "business", $"id={business.Id}", "name", MySqlHelper.EscapeString(returnString));
 

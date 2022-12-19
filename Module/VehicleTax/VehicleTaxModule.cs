@@ -67,7 +67,6 @@ namespace VMP_CNR.Module.VehicleTax
                             TeamShelter teamShelter = TeamShelterModule.Instance.Get(team.Id);
                             if (teamShelter == null) continue;
                             var cost = await Main.GetTeamVehicleTaxes(team.Id) / 12;
-                            teamShelter.TakeMoney(cost);
                         }
                         catch (Exception e)
                         {

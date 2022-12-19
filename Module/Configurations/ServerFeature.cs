@@ -27,7 +27,6 @@ namespace VMP_CNR.Module.Configurations
             inactiveServerFeatures.Add("ac-armor");
             inactiveServerFeatures.Add("ac-randomizedNames");
 
-            inactiveServerFeatures.Add("forumsync");
             //inactiveServerFeatures.Add("fishing");
             //inactiveServerFeatures.Add("airflight");
             //inactiveServerFeatures.Add("anticheat-thread");

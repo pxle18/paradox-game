@@ -48,7 +48,6 @@ namespace VMP_CNR.Module.Government
         public static Vector3 ComputerBuero2Pos = new Vector3(-539.723, -177.858, 38.2224);
 
         //cleanup
-
         public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
             dbPlayer.EconomyIndex = EconomyIndex.Low;

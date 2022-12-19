@@ -3270,13 +3270,13 @@ namespace VMP_CNR.Module.Players
             if (price > 10000000) price = 0;
             if (sxVeh.ownerId == dbPlayer.Id && sxVeh.jobid == 0 && sxVeh.databaseId > 0)
             {
-                Logger.AddToVehicleDestroyLog(sxVeh.databaseId, dbPlayer.Id, price);
+                //Logger.AddToVehicleDestroyLog(sxVeh.databaseId, dbPlayer.Id, price);
 
-                Main.DeletePlayerVehicle(dbPlayer, sxVeh);
-                dbPlayer.GiveMoney(price);
-                dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
-                KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
-                RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVeh, dbPlayer, dbPlayer, sxVeh.plate, false);
+               // Main.DeletePlayerVehicle(dbPlayer, sxVeh);
+                //dbPlayer.GiveMoney(price);
+                // dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
+                // KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
+                // RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVeh, dbPlayer, dbPlayer, sxVeh.plate, false);
                 return;
             }
 

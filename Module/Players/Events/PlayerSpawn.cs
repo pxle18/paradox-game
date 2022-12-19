@@ -502,7 +502,7 @@ namespace VMP_CNR.Module.Players.Events
                         {
                             NAPI.Task.Run(async () =>
                             {
-                                if (dbPlayer.IsNewbie())
+                                if (dbPlayer.HasData("firstCharacter"))
                                 {
                                     if (dbPlayer.IsInjured()) dbPlayer.Revive();
 
