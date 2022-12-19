@@ -118,9 +118,9 @@ namespace VMP_CNR.Module.Items
                     }
                 }
 
-                if (eXternContainer.Type == ContainerTypes.REFUND)
+                if (eXternContainer.Type == ContainerTypes.CHRISTMAS)
                 {
-                    dbPlayer.SendNewNotification("In das Erstattungsinventar können keine Gegenstände eingelagert werden.");
+                    dbPlayer.SendNewNotification("In das Weihnachtsinventar können keine Gegenstände eingelagert werden.");
                     return false;
                 }
                 

@@ -31,6 +31,7 @@ using VMP_CNR.Module.JobFactions.Mine;
 using VMP_CNR.Module.FIB;
 using VMP_CNR.Module.Bunker;
 using System.Threading.Tasks;
+using VMP_CNR.Module.Christmas;
 
 namespace VMP_CNR.Module.Items
 {
@@ -311,10 +312,9 @@ namespace VMP_CNR.Module.Items
                 }
             }
 
-            if (dbPlayer.HasData("container_refund"))
+            if (playerPosition.DistanceTo(ChristmasPresentModule.Instance.PresentLocation) < 3.5f)
             {
-                return ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.REFUND, 0, 0);
-                
+                return ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.CHRISTMAS, 0, 0);
             }
 
             if (dbPlayer.HasData("dropItemHeap"))

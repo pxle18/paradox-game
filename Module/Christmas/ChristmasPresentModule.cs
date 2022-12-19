@@ -1,4 +1,5 @@
 ﻿using GTANetworkAPI;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,20 +49,20 @@ namespace VMP_CNR.Module.Christmas
 
     public sealed class ChristmasPresentModule : SqlModule<ChristmasPresentModule, ChristmasPresentModel, uint>
     {
-        private readonly Vector3 _presentLocation;
-
-        public ChristmasPresentModule()
-        {
-            _presentLocation = new Vector3(-416.655, 1160.048, 325.858);
-        }
+        public readonly Vector3 PresentLocation = new Vector3(-416.655, 1160.048, 325.858);
 
         protected override string GetQuery() => "SELECT * FROM log_present_reward;";
         public override Type[] RequiredModules() => new[] { typeof(ItemModelModule) };
 
+        public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
+        {
+            dbPlayer.ChristmasContainer = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.CHRISTMAS);
+        }
+
         protected override bool OnLoad()
         {
             PlayerNotifications.Instance.Add(
-                _presentLocation,
+                PresentLocation,
                 "PARADOX Roleplay", "Nehmt eure gesammelten Geschenke mit. I think it’s time, isn’t it?"
             );
 
@@ -70,13 +71,12 @@ namespace VMP_CNR.Module.Christmas
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
-            if (dbPlayer.Player.Position.DistanceTo(_presentLocation) > 10) return false;
+            if (key != Key.E || dbPlayer.RageExtension.IsInVehicle) return false;
+            if (dbPlayer.Player.Position.DistanceTo(PresentLocation) > 10) return false;
 
             try
             {
-                Logger.Print("Size: " + GetAll().Values.ToList().Count());
-
+                // TODO: LastXMAS
                 var christmasCodes = GetAll().Values.ToList().FindAll(christmasPresent => christmasPresent.Code == "" && christmasPresent.PlayerId == dbPlayer.Id);
 
                 Logger.Print("Size Filtered: " + christmasCodes.Count());
@@ -99,14 +99,14 @@ namespace VMP_CNR.Module.Christmas
 
         public void ProcessChristmasCodes(DbPlayer player, List<ChristmasPresentModel> christmasPresents)
         {
-            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Überprüfe dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
+            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Bitte öffne an diesem Punkt dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
 
             player.xmasLast = DateTime.Now;
             player.SaveChristmasState();
 
             christmasPresents.ForEach(code =>
             {
-                player.Container.AddItem(code.Item, code.Amount);
+                player.ChristmasContainer.AddItem(code.Item, code.Amount);
                 code.Delete();
 
                 Instance.Remove(code.Id);
