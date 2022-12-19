@@ -32,6 +32,7 @@ namespace VMP_CNR.Module.Weather
                 var now = DateTime.Now;
                 NAPI.World.SetTime(now.Hour, now.Minute, now.Second);
             }
+
             return base.OnLoad();
         }
 

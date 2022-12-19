@@ -36,7 +36,7 @@ namespace VMP_CNR.Module.RemoteEvents
                 return true;
             }
 
-            int antiSpamDuration = GetAntiSpamDuration(operationType);
+            float antiSpamDuration = GetAntiSpamDuration(operationType);
 
             if (dbPlayer.SpamProtection[operationType].AddSeconds(antiSpamDuration) > DateTime.Now)
                 return false;
@@ -45,16 +45,16 @@ namespace VMP_CNR.Module.RemoteEvents
             return true;
         }
 
-        private static int GetAntiSpamDuration(DbPlayer.OperationType operationType)
+        private static float GetAntiSpamDuration(DbPlayer.OperationType operationType)
         {
-            int duration = 2;
+            float duration = 2;
 
             switch (operationType)
             {
                 case DbPlayer.OperationType.PressedJ:
                 case DbPlayer.OperationType.PressedH:
                 case DbPlayer.OperationType.Smartphone:
-                    duration = 1;
+                    duration = 0.5f;
                     break;
                 case DbPlayer.OperationType.BusinessCreate:
                     duration = 30;

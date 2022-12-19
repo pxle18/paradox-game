@@ -203,51 +203,10 @@ namespace VMP_CNR.Module.Players.Sync
             {
                 bankHistories.Add(new Banks.BankHistory.BankHistory
                 {
-                    Name = "GVMP Bonus",
+                    Name = "Support Bonus",
                     Value = dbPlayer.Rank.Salary
                 });
                 total += dbPlayer.Rank.Salary;
-            }
-
-            if (dbPlayer.married[0] > 0 && dbPlayer.Team.IsStaatsfraktion())
-            {
-                var steuern = Convert.ToInt32(salary * 0.01);
-                total -= steuern;
-                bankHistories.Add(new Banks.BankHistory.BankHistory
-                {
-                    Name = "Steuern (Klasse 4 | 1%)",
-                    Value = -steuern
-                });
-            }
-            else if (dbPlayer.married[0] > 0)
-            {
-                var steuern = Convert.ToInt32(salary * 0.03);
-                total -= steuern;
-                bankHistories.Add(new Banks.BankHistory.BankHistory
-                {
-                    Name = "Steuern (Klasse 3 | 3%)",
-                    Value = -steuern
-                });
-            }
-            else if (dbPlayer.Team.IsStaatsfraktion())
-            {
-                var steuern = Convert.ToInt32(salary * 0.03);
-                total -= steuern;
-                bankHistories.Add(new Banks.BankHistory.BankHistory
-                {
-                    Name = "Steuern (Klasse 2 | 3%)",
-                    Value = -steuern
-                });
-            }
-            else
-            {
-                var steuern = Convert.ToInt32(salary * 0.15);
-                total -= steuern;
-                bankHistories.Add(new Banks.BankHistory.BankHistory
-                {
-                    Name = "Steuern (Klasse 1 | 15%)",
-                    Value = -steuern
-                });
             }
 
             int storageTax = 0;
@@ -265,19 +224,6 @@ namespace VMP_CNR.Module.Players.Sync
                 });
             }
 
-            //KFZ Steuer
-            var steuer = dbPlayer.VehicleTaxSum;
-            if (steuer > 0)
-            {
-                total -= steuer;
-                bankHistories.Add(new Banks.BankHistory.BankHistory
-                {
-                    Name = "KFZ Steuer",
-                    Value = -steuer
-                });
-            }
-            dbPlayer.VehicleTaxSum = 0;
-
             if(dbPlayer.InsuranceType > 0)
             {
                 if (dbPlayer.InsuranceType == 1)
@@ -291,7 +237,7 @@ namespace VMP_CNR.Module.Players.Sync
                 }
                 else if (dbPlayer.InsuranceType == 2)
                 {
-                    total -= steuer;
+                    total -= 5000;
                     bankHistories.Add(new Banks.BankHistory.BankHistory
                     {
                         Name = "private Krankenversicherung",
@@ -306,9 +252,9 @@ namespace VMP_CNR.Module.Players.Sync
                 newsShelter.GiveMoney(50);
             }
 
-            total -= 50;
+            total -= 25;
             bankHistories.Add(
-                new Banks.BankHistory.BankHistory { Name = "Rundfunkbeitrag", Value = -50 });
+                new Banks.BankHistory.BankHistory { Name = "Rundfunkbeitrag", Value = -25 });
 
             // HausSteuer
             if (dbPlayer.OwnHouse[0] > 0)
@@ -364,7 +310,7 @@ namespace VMP_CNR.Module.Players.Sync
                     Value = -(strom + wasser)
                 });
                 
-                KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, (strom + wasser + steuer + tax));
+                KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, (strom + wasser + tax));
             }
             else if (dbPlayer.IsTenant())
             {

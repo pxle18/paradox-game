@@ -231,8 +231,8 @@ namespace VMP_CNR
         public static DateTime adLastSend                       = DateTime.Now;
         public static List<LifeInvaderApp.AdsFound> adList      = new List<LifeInvaderApp.AdsFound>();
         public static List<NewsListApp.NewsFound> newsList      = new List<NewsListApp.NewsFound>();
-        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.CLEAR;
-        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.CLEAR;
+        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.XMAS;
+        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.XMAS;
         public static bool WeatherOverride = false;
 
         static int mysqlSaveInterval = 0;
