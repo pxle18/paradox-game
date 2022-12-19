@@ -50,13 +50,7 @@ namespace VMP_CNR.Module.Weather
                 else
                     Main.m_CurrentWeather = weather;
 
-                foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
-                {
-                    Task.Run(async () =>
-                    {
-                        await ChangeWeatherForPlayer(dbPlayer, weather, transitionTime);
-                    });
-                }
+                NAPI.World.SetWeather(weather);
             }
         }
 
