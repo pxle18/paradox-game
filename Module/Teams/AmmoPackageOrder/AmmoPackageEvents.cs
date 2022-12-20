@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.Teams.AmmoPackageOrder
 
                 DbTeam dbTeam = TeamModule.Instance.Get(dbPlayer.GetData("orderedTeam"));
                 if (dbTeam == null || !dbTeam.IsGangsters()) return;
-                if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER && dbPlayer.Team.Id != (int)TeamTypes.TEAM_ICA) return;
+                if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER) return;
 
                 if (int.TryParse(returnstring, out int amount))
                 {

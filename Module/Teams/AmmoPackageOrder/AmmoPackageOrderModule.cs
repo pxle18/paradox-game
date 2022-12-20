@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Teams.AmmoPackageOrder
         {
             if (dbPlayer.RageExtension.IsInVehicle) return false;
 
-            if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER && dbPlayer.Team.Id != (uint)TeamTypes.TEAM_ICA) return false;
+            if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER) return false;
             if (dbPlayer.TeamRank < 9) return false;
 
             if (dbPlayer.Player.Position.DistanceTo(LoadPosition) < 1.5f)

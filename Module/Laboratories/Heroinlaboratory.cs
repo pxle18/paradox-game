@@ -9,6 +9,7 @@ using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Items;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.JumpPoints;
@@ -51,75 +52,82 @@ namespace VMP_CNR.Module.Laboratories
         public uint toilettenreinigerItemId = 14;
         public uint heroinkisteItemId = 1443;
 
-        private int heroinPerTick = 50;
+        private int heroinPerTick = 25;
         private int toilettenreinigerPerTick = 10;
 
         public Heroinlaboratory(MySqlDataReader reader) : base(reader)
         {
-            Id = reader.GetUInt32("id");
-            TeamId = reader.GetUInt32("teamid");
-            DestinationId = reader.GetUInt32("destination_id");
-            ActingPlayers = new List<DbPlayer>();
-            FuelContainer = ContainerManager.LoadContainer(Id, ContainerTypes.HEROINLABORATORYFUEL);
-            HackInProgess = false;
-            Hacked = false;
-            FriskInProgess = false;
-            ImpoundInProgress = false;
-
-            HasDefended = false;
-
-            SkippedLast = false;
-
-            LoggedOutCombatAvoid = new List<uint>();
-
-            LastAttacked = reader.GetDateTime("last_attacked");
-
-            List<JumpPoint> JumpPoints = JumpPointModule.Instance.jumpPoints.Values.Where(jp => jp.DestinationId == DestinationId && jp.Id != DestinationId).ToList();
-
-
-            Random rnd = new Random();
-            int selectedJumpPoint = rnd.Next(JumpPoints.Count);
-            int i = 0;
-            JumpPoints.ForEach(jumpPoint =>
+            try
             {
+                Id = reader.GetUInt32("id");
 
-                if (selectedJumpPoint == i)
+                TeamId = reader.GetUInt32("teamid");
+
+                DestinationId = reader.GetUInt32("destination_id");
+
+                ActingPlayers = new List<DbPlayer>();
+
+                FuelContainer = ContainerManager.LoadContainer(Id, ContainerTypes.HEROINLABORATORYFUEL);
+                HackInProgess = false;
+                Hacked = false;
+                FriskInProgess = false;
+                ImpoundInProgress = false;
+
+                HasDefended = false;
+
+                SkippedLast = false;
+
+                LoggedOutCombatAvoid = new List<uint>();
+
+                LastAttacked = reader.GetDateTime("last_attacked");
+                List<JumpPoint> JumpPoints = JumpPointModule.Instance.jumpPoints.Values.Where(jp => jp.DestinationId == DestinationId && jp.Id != DestinationId).ToList();
+
+                Random rnd = new Random();
+                int selectedJumpPoint = rnd.Next(JumpPoints.Count);
+                int i = 0;
+                JumpPoints.ForEach(jumpPoint =>
                 {
-                    JumpPointEingang = jumpPoint;
-                    JumpPointAusgang = JumpPointModule.Instance.Get(jumpPoint.DestinationId);
-                    JumpPointAusgang.Destination = JumpPointEingang;
-                    JumpPointAusgang.DestinationId = JumpPointEingang.Id;
-                }
-                else
-                {
-                    NAPI.Task.Run(() =>
+
+                    if (selectedJumpPoint == i)
                     {
-                        if (jumpPoint != null)
+                        JumpPointEingang = jumpPoint;
+                        JumpPointAusgang = JumpPointModule.Instance.Get(jumpPoint.DestinationId);
+                        JumpPointAusgang.Destination = JumpPointEingang;
+                        JumpPointAusgang.DestinationId = JumpPointEingang.Id;
+                    }
+                    else
+                    {
+                        NAPI.Task.Run(() =>
                         {
-                            if (jumpPoint.ColShape != null)
+                            if (jumpPoint != null)
                             {
-                                jumpPoint.ColShape.ResetData("jumpPointId");
-                                NAPI.ColShape.DeleteColShape(jumpPoint.ColShape);
+                                if (jumpPoint.ColShape != null)
+                                {
+                                    jumpPoint.ColShape.ResetData("jumpPointId");
+                                    NAPI.ColShape.DeleteColShape(jumpPoint.ColShape);
+                                }
+                                JumpPoints.Remove(jumpPoint);
                             }
-                            JumpPoints.Remove(jumpPoint);
-                        }
-                    });
-                }
-                i++;
-            });
+                        });
+                    }
+                    i++;
+                });
 
-            ColShape ColShape = Spawners.ColShapes.Create(JumpPointAusgang.Position, 30.0f, this.TeamId);
-            ColShape.SetData("methInteriorColshape", this.TeamId);
+                ColShape ColShape = Spawners.ColShapes.Create(JumpPointAusgang.Position, 30.0f, this.TeamId);
+                ColShape.SetData("methInteriorColshape", this.TeamId);
 
-            // Inventory Markers
-            NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvFuelPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
-            NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvInputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
-            NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvOutputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
+                // Inventory Markers
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvFuelPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvInputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvOutputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
 
-            // E Markers
-            NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryLaptopPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
-            NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryStartPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
+                // E Markers
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryLaptopPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryStartPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
+            }
+            catch (Exception e) { Logger.Print($"HERO {Id} " + e.ToString()); }
         }
+
         public override uint GetIdentifier()
         {
             return Id;

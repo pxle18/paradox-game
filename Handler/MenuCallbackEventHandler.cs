@@ -4025,12 +4025,6 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)TeamTypes.TEAM_ICA:
-                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
-                                    if (dbPlayer.TeamRankPermission.Manage >= 1)
-                                        dbPlayer.SendNewNotification(
-                                             GlobalMessages.HelpLeader());
-                                    break;
                                 default:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.Error.NoTeam());

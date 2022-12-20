@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Configurations
         {
             DevLog = false;
             Ptr = false;
-            DevMode = true;
+            DevMode = false;
             VoiceChannel = "INGAME_LIVE";
             VoiceChannelPassword = "WALID";
             IsServerOpen = false;
@@ -104,7 +104,7 @@ namespace VMP_CNR.Module.Configurations
             disableAPILogin = false;
             LipsyncActive = data.ContainsKey("lipsync") ? bool.Parse(data["lipsync"]) : false;
             TuningActive = true;
-            IsUpdateModeOn = true;
+            IsUpdateModeOn = false;
             RESET_API_KEY = data.ContainsKey("reset_api_key") ? data["reset_api_key"] : "";
             CLEAR_API_KEY = data.ContainsKey("clear_api_key") ? data["clear_api_key"] : "";
             MAINTENACE_API_KEY = data.ContainsKey("maintenance_api_key") ? data["maintenance_api_key"] : "";

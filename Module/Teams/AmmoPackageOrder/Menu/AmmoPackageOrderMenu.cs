@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Teams.AmmoPackageOrder
 
         public override Menu.Menu Build(DbPlayer dbPlayer)
         {
-            if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER && dbPlayer.Team.Id != (int)TeamTypes.TEAM_ICA) return null;
+            if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER) return null;
             if (dbPlayer.TeamRank < 8) return null;
 
             var menu = new Menu.Menu(Menu, "Munitionsbestellung");

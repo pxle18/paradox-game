@@ -145,7 +145,6 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     case (int)TeamTypes.TEAM_HOH:
                                         dbPlayer.GiveWeapon(WeaponHash.Stone_hatchet, 0);
                                         break;
-                                    case (int)TeamTypes.TEAM_BOSOZOKUKAI:
                                     case (int)TeamTypes.TEAM_BRATWA:
                                         dbPlayer.GiveWeapon(WeaponHash.Wrench, 0);
                                         break;
@@ -165,6 +164,8 @@ namespace VMP_CNR.Module.Teams.Shelter
                                         dbPlayer.GiveWeapon(WeaponHash.Bat, 0);
                                         break;
                                     case (int)TeamTypes.TEAM_TRIADEN:
+                                        dbPlayer.GiveWeapon(WeaponHash.Poolcue, 0);
+                                        break;
                                     case (int)TeamTypes.TEAM_IRISHMOB:
                                         dbPlayer.GiveWeapon(WeaponHash.Poolcue, 0);
                                         break;
@@ -172,6 +173,8 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     //     dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
                                     //     break;
                                     case (int)TeamTypes.TEAM_MARABUNTA:
+                                        dbPlayer.GiveWeapon(WeaponHash.Machete, 0);
+                                        break;
                                     case (int)TeamTypes.TEAM_VAGOS:
                                         dbPlayer.GiveWeapon(WeaponHash.Machete, 0);
                                         break;
@@ -180,9 +183,6 @@ namespace VMP_CNR.Module.Teams.Shelter
                                         break;
                                     case (int)TeamTypes.TEAM_HUSTLER:
                                         dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
-                                        break;
-                                    case (int)TeamTypes.TEAM_ICA:
-                                        dbPlayer.GiveWeapon(WeaponHash.Dagger, 0);
                                         break;
                                     case (int)TeamTypes.TEAM_MADRAZO:
                                         dbPlayer.GiveWeapon(WeaponHash.Hatchet, 0);
@@ -289,9 +289,6 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     //Add Fraktion Item
                                     switch (dbPlayer.TeamId)
                                     {
-                                        case (int)TeamTypes.TEAM_BOSOZOKUKAI:
-                                            resultItemId = 1432;
-                                            break;
                                         case (int)TeamTypes.TEAM_IRISHMOB:
                                             resultItemId = 1312;
                                             break;
@@ -371,7 +368,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     // Add Fraktion item
                                     switch (dbPlayer.TeamId)
                                     {
-                                        case (int)TeamTypes.TEAM_BOSOZOKUKAI:
+                                        case (int)TeamTypes.TEAM_MADRAZO:
                                             resultItemId = 1432;
                                             break;
                                         case (int)TeamTypes.TEAM_IRISHMOB:
@@ -485,7 +482,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                         Workstation.Workstation workstation = WorkstationModule.Instance.GetAll().Where(w => w.Value.Dimension == dbPlayer.Team.Id && w.Value.SpecialType == WorkstationSpecialType.PlanningRoomStahlpatronen).FirstOrDefault().Value;
                         if (workstation != null)
                         {
-                            if (!workstation.LimitTeams.Contains(dbPlayer.TeamId))
+                            if (!workstation.LimitTeams.Contains(dbPlayer.TeamId) && !workstation.LimitTeams.Contains(99))
                             {
                                 dbPlayer.SendNewNotification($"Du scheinst mir zu unseriös zu sein... Arbeitest du schon etwas anderes?");
                                 return true;
