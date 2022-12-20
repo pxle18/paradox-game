@@ -36,7 +36,10 @@ namespace VMP_CNR.Module.Farming
                     farmProcess.Value.Ped?.Delete();
                 }
             }
+
+            MySQLHandler.Execute("UPDATE farm_processes SET use_from_vehicle = 1;");
             MenuManager.Instance.AddBuilder(new FarmProcessMenuBuilder());
+
             return base.OnLoad();
         }
 
