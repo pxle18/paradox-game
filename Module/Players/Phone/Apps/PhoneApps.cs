@@ -33,11 +33,6 @@ namespace VMP_CNR.Module.Players.Phone.Apps
                     AddDefault("TeamApp");
                 }
 
-                if (dbPlayer.TeamId == 27)
-                {
-                    AddDefault("HitmanApp");
-                }
-
                 if (dbPlayer.GetActiveBusiness() != null)
                 {
                     AddDefault("BusinessApp");
@@ -98,7 +93,7 @@ namespace VMP_CNR.Module.Players.Phone.Apps
         public string GetJson()
         {
             DbPlayer dbPlayer = Players.Instance.GetByDbId(PlayerId);
-            if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.phoneSetting.flugmodus)
+            if (dbPlayer != null && dbPlayer.IsValid() && dbPlayer.PhoneSettings.flugmodus)
             {
                 var temp = Apps.Values.ToList();
                 if (dbPlayer.ActiveBusinessId != 0)

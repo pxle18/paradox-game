@@ -1325,16 +1325,8 @@ namespace VMP_CNR.Module.Heist.Planning
                 }
                 else
                 {
-                    if (room.CasinoPropDoor == 1 && room.PlanningroomWardrobeContainer.GetItemAmount(CasinoRequiredOutfitId) < CasinoRequiredOutfitAmount)
-                    {
-                        dbPlayer.SendNewNotification($"Bevor wir weitermachen können, sollten wir die Uniformen besorgen!", PlayerNotification.NotificationType.ERROR);
-                        return;
-                    }
-                    else
-                    {
-                        dbPlayer.SendNewNotification($"Bevor wir weitermachen können, sollten wir mit unserem Kontakt sprechen!", PlayerNotification.NotificationType.ERROR);
-                        return;
-                    }
+                    dbPlayer.SendNewNotification($"Bevor wir weitermachen können, sollten wir mit unserem Kontakt sprechen!", PlayerNotification.NotificationType.ERROR);
+                    return;
                 }
             }
             else
@@ -1432,19 +1424,8 @@ namespace VMP_CNR.Module.Heist.Planning
                 }
                 else
                 {
-                    if (room.CasinoPropDoor == 1 && room.PlanningroomWardrobeContainer.GetItemAmount(CasinoRequiredOutfitId) < CasinoRequiredOutfitAmount)
-                    {
-                        dbPlayer.SendNewNotification($"Bevor wir weitermachen können, sollten wir {CasinoRequiredOutfitAmount} Polizei Uniformen besorgen.", PlayerNotification.NotificationType.INFO);
-                        dbPlayer.SendNewNotification($"Diese Uniformen können wir im Mission Row, Sandy PD oder im Bolingbroke Penitentiary besorgen!", PlayerNotification.NotificationType.INFO);
-                        dbPlayer.SendNewNotification($"Hierfür habt Ihr nun 1 Stunde Zeit!", PlayerNotification.NotificationType.INFO);
-
-                        return;
-                    }
-                    else
-                    {
-                        dbPlayer.SendNewNotification($"Nachdem wir nun die Uniformen besorgt haben, sollten wir mit den Fahrzeugen weitermachen!", PlayerNotification.NotificationType.INFO);
-                        return;
-                    }
+                    dbPlayer.SendNewNotification($"Nachdem wir nun die Uniformen besorgt haben, sollten wir mit den Fahrzeugen weitermachen!", PlayerNotification.NotificationType.INFO);
+                    return;
                 }
             }
             else
@@ -1516,15 +1497,9 @@ namespace VMP_CNR.Module.Heist.Planning
 
             PlanningRoom planningRoom = GetPlanningRoomByTeamId(dbPlayer.Team.Id);
 
-            if (planningRoom.CasinoPlanLevel == 1 && planningRoom.PlanningroomWardrobeContainer.GetItemAmount(CasinoRequiredOutfitId) >= CasinoRequiredOutfitAmount && VehicleHandler.Instance.PlanningVehicleCheckByModel(dbPlayer.Team.Id, CasinoRequiredVehicleModel))
-            {
-                return;
-            }
-            else
-            {
-                dbPlayer.SendNewNotification($"Es wurden noch nicht alle Anforderungen erfüllt um diesen Heist zu starten!", PlayerNotification.NotificationType.ERROR);
-                return;
-            }
+            
+            dbPlayer.SendNewNotification($"Es wurden noch nicht alle Anforderungen erfüllt um diesen Heist zu starten!", PlayerNotification.NotificationType.ERROR);
+            return;
         }
 
         public PlanningRoom GetPlanningRoomByTeamId(uint teamId)

@@ -23,15 +23,12 @@ namespace VMP_CNR.Module.Weather
         {
             Blackout = false;
             WaterHeight = 0.0f;
-            if (Configuration.Instance.DevMode)
-            {
-                NAPI.World.SetTime(15, 0, 0);
-            }
-            else
-            {
-                var now = DateTime.Now;
-                NAPI.World.SetTime(now.Hour, now.Minute, now.Second);
-            }
+
+            var now = DateTime.Now;
+
+            NAPI.World.SetTime(now.Hour, now.Minute, now.Second);
+            NAPI.World.SetWeather(Main.m_CurrentWeather);
+            
             return base.OnLoad();
         }
 
@@ -87,19 +84,10 @@ namespace VMP_CNR.Module.Weather
                     ChangeWeather(kvp.Value.NWeather, 300, false);
             }
 
-            NAPI.Task.Run(()=> { NAPI.World.SetTime((int)l_Hour, l_Time.Minute, l_Time.Second); });
-        }
-
-        public override void OnTenSecUpdate()
-        {
-            if (!OngoingWeatherTransition)
-                return;
-
-            if (DateTime.Now >= WeatherTransitionFinish)
-            {
-                Main.m_CurrentWeather = Main.m_DestWeather;
-                OngoingWeatherTransition = false;
-            }
+            NAPI.Task.Run(()=> { 
+                NAPI.World.SetTime((int)l_Hour, l_Time.Minute, l_Time.Second);
+                NAPI.World.SetWeather(Main.m_CurrentWeather);
+            });
         }
 
         public override void OnPlayerFirstSpawn(DbPlayer dbPlayer)

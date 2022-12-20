@@ -29,7 +29,7 @@ namespace VMP_CNR.Module.Laboratories
 
         protected override string GetQuery()
         {
-            return ""; // "SELECT * FROM `team_cannabislaboratories`";    DISABLE CANNABISLABS
+            return "SELECT * FROM `team_cannabislaboratories` WHERE 1=2"; //     DISABLE CANNABISLABS
         }
 
         public override Type[] RequiredModules()

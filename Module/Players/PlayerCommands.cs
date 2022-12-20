@@ -405,7 +405,7 @@ namespace VMP_CNR.Module.Players
                                                || !findPlayer.HasData("taxi_request")
                                                || dbPlayer.GetName() != findPlayer.GetData("taxi_request")
                                                || dbPlayer.Container.GetItemAmount(174)<1
-                                               || dbPlayer.phoneSetting.flugmodus)
+                                               || dbPlayer.PhoneSettings.flugmodus)
                         {
                             PlayerNotFoundOrNoService(dbPlayer);
                             return;
@@ -610,7 +610,7 @@ namespace VMP_CNR.Module.Players
             var garage = GarageModule.Instance[playerGarageId];
             if (garage == null || garage.HouseId != 0) return;
 
-            Container container = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.REFUND, 0, 0);
+            Container container = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.CHRISTMAS, 0, 0);
 
             if (Main.RefundPlayers.ContainsKey(dbPlayer))
             {
@@ -3270,13 +3270,13 @@ namespace VMP_CNR.Module.Players
             if (price > 10000000) price = 0;
             if (sxVeh.ownerId == dbPlayer.Id && sxVeh.jobid == 0 && sxVeh.databaseId > 0)
             {
-                Logger.AddToVehicleDestroyLog(sxVeh.databaseId, dbPlayer.Id, price);
+                //Logger.AddToVehicleDestroyLog(sxVeh.databaseId, dbPlayer.Id, price);
 
-                Main.DeletePlayerVehicle(dbPlayer, sxVeh);
-                dbPlayer.GiveMoney(price);
-                dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
-                KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
-                RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVeh, dbPlayer, dbPlayer, sxVeh.plate, false);
+               // Main.DeletePlayerVehicle(dbPlayer, sxVeh);
+                //dbPlayer.GiveMoney(price);
+                // dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
+                // KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
+                // RegistrationOfficeFunctions.UpdateVehicleRegistrationToDb(sxVeh, dbPlayer, dbPlayer, sxVeh.plate, false);
                 return;
             }
 
@@ -4407,7 +4407,7 @@ namespace VMP_CNR.Module.Players
 
                 if (dbPlayer.TeamId == (int)TeamTypes.TEAM_ARMY)
                 {
-                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Manager) return;
+                    if (dbPlayer.TeamRank < 7 && (int)dbPlayer.RankId < (int)AdminLevelTypes.Management) return;
                     var count = 0;
 
                     foreach (var currPlayer in TeamModule.Instance.Get((int)TeamTypes.TEAM_ARMY).GetTeamMembers())

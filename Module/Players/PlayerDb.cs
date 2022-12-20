@@ -616,7 +616,7 @@ namespace VMP_CNR.Module.Players
 
         public static void SaveRingtone(this DbPlayer dbPlayer)
         {
-            MySQLHandler.ExecuteAsync("UPDATE player SET `klingeltonId` = '" + dbPlayer.ringtone.Id + "' WHERE id = '" + dbPlayer.Id + "';");
+            MySQLHandler.ExecuteAsync("UPDATE player SET `klingeltonId` = '" + dbPlayer.Ringtone.Id + "' WHERE id = '" + dbPlayer.Id + "';");
         }
 
         public static void SaveJobSkill(this DbPlayer dbPlayer)

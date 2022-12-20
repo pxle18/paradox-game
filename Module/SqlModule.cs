@@ -44,6 +44,7 @@ namespace VMP_CNR.Module
         public void Add(TId key, TLoadable value) => _list.Add(key, value);
 
         public void Edit(TId key, TLoadable value) => _list[key] = value;
+        public void Remove(TId key) => _list.Remove(key);
 
         public void Update(TId key, TLoadable value, string tableName, string condition, params object[] data)
         {

@@ -244,7 +244,7 @@ namespace VMP_CNR.Module
                 }
                 catch (Exception e)
                 {
-                    Logger.Print(e.ToString());
+                    Logger.Print("OnPlayerSpawn " + module.GetType().Name + e.Message);
                 }
             }
         }
@@ -355,7 +355,7 @@ namespace VMP_CNR.Module
                 }
                 catch (Exception e)
                 {
-                    Logger.Print(e.ToString());
+                    Logger.Print("OnPlayerConnect " + module.GetType().Name + e.Message);
                 }
             }
         }
@@ -370,7 +370,7 @@ namespace VMP_CNR.Module
                 }
                 catch (Exception e)
                 {
-                    Logger.Print(e.Message);
+                    Logger.Print("OnPlayerLoadData " + module.GetType().Name + e.Message);
                 }
             }
         }

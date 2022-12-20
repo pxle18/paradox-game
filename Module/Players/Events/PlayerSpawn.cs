@@ -423,9 +423,9 @@ namespace VMP_CNR.Module.Players.Events
                                 dbPlayer.GetActiveBusiness()?.Id ?? 0, dbPlayer.grade[0], dbPlayer.Money[0], 0,
                                 dbPlayer.OwnHouse[0], dbPlayer.TeamId, dbPlayer.TeamRank, dbPlayer.Level, dbPlayer.IsInjured(), dbPlayer.IsInDuty(),
                                 dbPlayer.IsTied, dbPlayer.IsCuffed, dbPlayer.VoiceHash, dbPlayer.funkStatus, dbPlayer.handy[0], dbPlayer.job[0],
-                                dbPlayer.JobSkill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)AdminLevelTypes.Supporter,
+                                dbPlayer.JobSkill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)AdminLevelTypes.FirstLevelTeam,
                                 Configuration.Instance.WeaponDamageMultipier, Configuration.Instance.PlayerSync,
-                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.ringtone.Id, insurance, dbPlayer.zwd[0],
+                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.Ringtone.Id, insurance, dbPlayer.zwd[0],
                                 Configuration.Instance.MeleeDamageMultipier,
                                 Configuration.Instance.DamageLog
                                 );
@@ -502,7 +502,7 @@ namespace VMP_CNR.Module.Players.Events
                         {
                             NAPI.Task.Run(async () =>
                             {
-                                if (dbPlayer.IsNewbie())
+                                if (dbPlayer.HasData("firstCharacter"))
                                 {
                                     if (dbPlayer.IsInjured()) dbPlayer.Revive();
 

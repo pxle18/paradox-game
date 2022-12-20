@@ -50,6 +50,7 @@ namespace VMP_CNR.Module.Keys.Windows
 
             if (dbPlayer == null || !dbPlayer.IsValid() || !dbPlayer.HasData("vehBizAdd"))
             {
+                dbPlayer.SendNewNotification("Fehler #1.");
                 return;
             }
 
@@ -65,7 +66,11 @@ namespace VMP_CNR.Module.Keys.Windows
 
             string carName = vehicle.Data.IsModdedCar == 1 ? carName = vehicle.Data.mod_car_name : carName = vehicle.Data.Model;
 
-            if (vehicle.Data != null) return;
+            if (vehicle.Data == null)
+            {
+                dbPlayer.SendNewNotification("Fehler #2.");
+                return;
+            }
 
             var biz = dbPlayer.GetActiveBusiness();
 
@@ -75,10 +80,14 @@ namespace VMP_CNR.Module.Keys.Windows
                 return;
             }
 
-            BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
-            
-            dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
-            biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+            if (dbPlayer.TakeMoney(5000))
+            {
+                BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
+
+                dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+                biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+            }
+            else dbPlayer.SendNewNotification("Dafür hast du nicht genügend Geld.");
         }
 
         [RemoteEvent]
@@ -215,18 +224,9 @@ namespace VMP_CNR.Module.Keys.Windows
 
                     if (business != 0)
                     {
-                        if ((dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 6.0f
-                            && dbPlayer.Player.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 6.0f)
-                            ||
-                            (vehicle.Entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertPosition) > 8.0f
-                            && vehicle.Entity.Position.DistanceTo(BusinessModule.BusinessKeyInsertAirport) > 8.0f))
-                        {
-                            dbPlayer.SendNewNotification("Sie müssen mit ihrem Fahrzeug in der Business-Tower-Tiefgarage sein!");
-                            return;
-                        }
                         if (vehicle.Data != null && vehicle.Data.IsBusinessVehicle)
                         {
-                            int price = Convert.ToInt32(vehicle.Data.Price * 0.02);
+                            int price = Convert.ToInt32(5000);
 
                             dbPlayer.SetData("vehBizAdd", id);
 

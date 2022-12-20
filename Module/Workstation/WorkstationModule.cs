@@ -47,7 +47,6 @@ namespace VMP_CNR.Module.Workstation
                 if (workstation == null || workstation.Interval15) continue;
 
                 ProgressWorkstation(dbPlayer, workstation);
-
             }
         }
 
@@ -116,7 +115,7 @@ namespace VMP_CNR.Module.Workstation
             Workstation workstation = WorkstationModule.Instance.GetAll().Where(w => w.Value.NpcPosition.DistanceTo(dbPlayer.Player.Position) < 1.5f).FirstOrDefault().Value;
             if (workstation != null)
             {
-                if(!workstation.LimitTeams.Contains(dbPlayer.TeamId))
+                if(!workstation.LimitTeams.Contains(dbPlayer.TeamId) && !workstation.LimitTeams.Contains(99))
                 {
                     dbPlayer.SendNewNotification($"Du scheinst mir zu unseriös zu sein... Arbeitest du schon etwas anderes?");
                     return true;

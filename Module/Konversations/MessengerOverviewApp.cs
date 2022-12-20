@@ -179,7 +179,7 @@ namespace VMP_CNR.Module.Konversations
             }
             else
             {
-                if (!l_TargetPlayer.phoneSetting.flugmodus)
+                if (!l_TargetPlayer.PhoneSettings.flugmodus)
                 {
                     l_TargetPlayer.SendNewNotification($"Neue SMS von: {l_DbPlayer.handy[0].ToString()}");
                 }
@@ -268,7 +268,7 @@ namespace VMP_CNR.Module.Konversations
                 return;
             }
 
-            if (!l_Player.phoneSetting.flugmodus)
+            if (!l_Player.PhoneSettings.flugmodus)
             {
                 l_NewMessage.Receiver = true;
                 l_Json = NAPI.Util.ToJson(l_NewMessage);

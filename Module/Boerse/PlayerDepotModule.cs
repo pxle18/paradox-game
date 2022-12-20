@@ -48,13 +48,13 @@ namespace VMP_CNR.Module.Boerse
             if (dbPlayer.Player.Position.DistanceTo(DepotManagementPosition) > 1.5f) return false;
             
             // INTERNAL TEST RESTRICTION
-            if (dbPlayer.RankId != (int)AdminLevelTypes.Gamedesigner &&
+            if (dbPlayer.RankId != (int)AdminLevelTypes.AntiCheatTeam &&
                 dbPlayer.RankId != (int)AdminLevelTypes.SeniorGamedesigner &&
-                dbPlayer.RankId != (int)AdminLevelTypes.SuperAdministrator &&
-                dbPlayer.RankId != (int)AdminLevelTypes.Manager &&
-                dbPlayer.RankId != (int)AdminLevelTypes.Projektleitung &&
-                dbPlayer.RankId != (int)AdminLevelTypes.Entwicklungsleitung &&
-                dbPlayer.RankId != (int)AdminLevelTypes.SeniorEntwickler)
+                dbPlayer.RankId != (int)AdminLevelTypes.Staff &&
+                dbPlayer.RankId != (int)AdminLevelTypes.Management &&
+                dbPlayer.RankId != (int)AdminLevelTypes.Founder &&
+                dbPlayer.RankId != (int)AdminLevelTypes.QualityAssurance &&
+                dbPlayer.RankId != (int)AdminLevelTypes.PublicRelation)
                 return false;
 
             MenuManager.Instance.Build(PlayerMenu.ManageDepotMenu, dbPlayer).Show(dbPlayer);

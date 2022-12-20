@@ -13,7 +13,7 @@ namespace VMP_CNR.Module.PlayerName
 
         protected override string GetQuery()
         {
-            return "SELECT id, name, forumid, handynr FROM `player`;";
+            return "SELECT id, name, forumid, handy, rankId FROM `player`;";
         }
     }
 }

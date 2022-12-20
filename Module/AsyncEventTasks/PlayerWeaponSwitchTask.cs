@@ -37,7 +37,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
                 else dbPlayer.Player.PlayAnimation("anim@move_m@prisoner_cuffed_rc", "aim_low_loop", 0);
             }
 
-            if ((dbPlayer.Lic_Gun[0] <= 0 && dbPlayer.Level < 3) || dbPlayer.HasPerso[0] == 0)
+            if ((dbPlayer.Lic_Gun[0] <= 0 && dbPlayer.Level < 2) || dbPlayer.HasPerso[0] == 0)
             {
                 dbPlayer.RemoveWeapons();
                 dbPlayer.ResetAllWeaponComponents();

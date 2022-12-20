@@ -22,7 +22,7 @@ namespace VMP_CNR.Module.Telefon.App
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            TriggerNewClient(player, "responsePhoneSettings", dbPlayer.phoneSetting.flugmodus, dbPlayer.phoneSetting.lautlos, dbPlayer.phoneSetting.blockCalls);
+            TriggerNewClient(player, "responsePhoneSettings", dbPlayer.PhoneSettings.flugmodus, dbPlayer.PhoneSettings.lautlos, dbPlayer.PhoneSettings.blockCalls);
         }
 
         [RemoteEvent]
@@ -31,9 +31,9 @@ namespace VMP_CNR.Module.Telefon.App
             if (!player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
-            dbPlayer.phoneSetting.flugmodus = flugmodus;
-            dbPlayer.phoneSetting.lautlos = lautlos;
-            dbPlayer.phoneSetting.blockCalls = blockCalls;
+            dbPlayer.PhoneSettings.flugmodus = flugmodus;
+            dbPlayer.PhoneSettings.lautlos = lautlos;
+            dbPlayer.PhoneSettings.blockCalls = blockCalls;
 
             if (flugmodus)
             {

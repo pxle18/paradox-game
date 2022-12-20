@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Items
         NIGHTCLUB = 12,
         TeamOrder = 13,
         PRISONLOCKER = 14,
-        REFUND = 15,
+        CHRISTMAS = 15,
         HEAP = 16,
         TEAMFIGHT = 17,
         Copinv = 18,
@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Items
             {ContainerTypes.TeamOrder, new ContainerData() { DefaultSlots = 48, DefaultWeight = 2500000, DatabaseTable = "container_teamorder", InventoryName = "Team-Bestellungen" } },
             {ContainerTypes.PRISONLOCKER, new ContainerData() { DefaultSlots = 5, DefaultWeight = 10000, DatabaseTable = "container_prisonlocker", InventoryName = "Spind" } },
             {ContainerTypes.Copinv, new ContainerData() { DefaultSlots = 16, DefaultWeight = 200000, DatabaseTable = "container_copinv", InventoryName = "Spind" } },
-            {ContainerTypes.REFUND, new ContainerData() { DefaultSlots = 48, DefaultWeight = 2500000, DatabaseTable = "container_refund", InventoryName = "Erstattung" } },
+            {ContainerTypes.CHRISTMAS, new ContainerData() { DefaultSlots = 48, DefaultWeight = 2500000, DatabaseTable = "container_refund", InventoryName = "Weihnachten" } },
             {ContainerTypes.HEAP, new ContainerData() { DefaultSlots = 48, DefaultWeight = 1000000, DatabaseTable = "container_heap", InventoryName = "Boden" } },
             {ContainerTypes.TEAMFIGHT, new ContainerData() { DefaultSlots = 48, DefaultWeight = 2500000, DatabaseTable = "container_teamfight", InventoryName = "Fraktionskampf" } },
             {ContainerTypes.WEAPON_IMPORT, new ContainerData() { DefaultSlots = 48, DefaultWeight = 1000000, DatabaseTable = "container_weapon_import", InventoryName = "Schmuggelware" } },
@@ -115,8 +115,8 @@ namespace VMP_CNR.Module.Items
             {ContainerTypes.FVEHICLE2, new ContainerData() { DefaultSlots = 2, DefaultWeight = 6000, DatabaseTable = "container_fvehicle_2", InventoryName = "Handschuhfach" } },
             {ContainerTypes.MINECONTAINERSCHMELZEOUTPUT, new ContainerData() { DefaultSlots = 63, DefaultWeight = 5000000, DatabaseTable = "container_mine_schmelzofen_output", InventoryName = "SchmelzofenOutput" } },
             {ContainerTypes.HEROINLABORATORYFUEL, new ContainerData() { DefaultSlots = 6, DefaultWeight = 600000, DatabaseTable = "container_heroinlaboratory_fuel", InventoryName = "Heroinlabor Kraftstoff" } },
-            {ContainerTypes.HEROINLABORATORYINPUT, new ContainerData() { DefaultSlots = 3, DefaultWeight = 68000, DatabaseTable = "container_heroinlaboratory_input", InventoryName = "Heroinlabor Rohstoffe" } },
-            {ContainerTypes.HEROINLABORATORYOUTPUT, new ContainerData() { DefaultSlots = 4, DefaultWeight = 240000, DatabaseTable = "container_heroinlaboratory_output", InventoryName = "Heroinlabor Endprodukt" } },
+            {ContainerTypes.HEROINLABORATORYINPUT, new ContainerData() { DefaultSlots = 6, DefaultWeight = 150000, DatabaseTable = "container_heroinlaboratory_input", InventoryName = "Heroinlabor Rohstoffe" } },
+            {ContainerTypes.HEROINLABORATORYOUTPUT, new ContainerData() { DefaultSlots = 8, DefaultWeight = 240000, DatabaseTable = "container_heroinlaboratory_output", InventoryName = "Heroinlabor Endprodukt" } },
         };
     }
 }

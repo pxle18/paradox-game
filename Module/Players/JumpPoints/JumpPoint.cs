@@ -34,7 +34,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
         public bool Locked { get; set; }
         public bool InsideVehicle { get; set; }
         public float Range { get; set; }
-        //public GTANetworkAPI.Object Object { get; set; }
+        public GTANetworkAPI.Object Object { get; set; }
         public ColShape ColShape { get; set; }
         public DateTime LastBreak { get; set; }
         public bool Unbreakable { get; set; }

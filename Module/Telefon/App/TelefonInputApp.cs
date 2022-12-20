@@ -68,7 +68,7 @@ namespace VMP_CNR.Module.Telefon.App
                 return;
             }
 
-            if (l_Caller.phoneSetting.flugmodus)
+            if (l_Caller.PhoneSettings.flugmodus)
             {
                 //Flugmodus aktiviert... kein Anruf möglich
                 l_Caller.SendNewNotification("Der Flugmodus ist aktiviert... Kein Empfang", title: "NO SIGNAL", notificationType:PlayerNotification.NotificationType.ERROR);
@@ -119,12 +119,12 @@ namespace VMP_CNR.Module.Telefon.App
             }
 
 
-            if (l_CalledPlayer == null || l_CalledPlayer.Container.GetItemAmount(174) == 0 || l_CalledPlayer.phoneSetting.flugmodus || l_CalledPlayer.IsInAdminDuty() || l_CalledPlayer.IsInGuideDuty() || l_CalledPlayer.IsInGameDesignDuty())
+            if (l_CalledPlayer == null || l_CalledPlayer.Container.GetItemAmount(174) == 0 || l_CalledPlayer.PhoneSettings.flugmodus || l_CalledPlayer.IsInAdminDuty() || l_CalledPlayer.IsInGuideDuty() || l_CalledPlayer.IsInGameDesignDuty())
             {
                 l_Caller.SendNewNotification("Die angegebene Rufnummer ist derzeit nicht verfuegbar.", notificationType:PlayerNotification.NotificationType.ERROR);
                 return;
             }
-            if (l_CalledPlayer.phoneSetting.blockCalls)
+            if (l_CalledPlayer.PhoneSettings.blockCalls)
             {
                 l_Caller.SendNewNotification("Die angegebene Rufnummer hat eingehende Anrufe blockiert.", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;

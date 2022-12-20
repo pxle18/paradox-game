@@ -23,6 +23,8 @@ namespace VMP_CNR.Module.Configurations
             data.Clear();
 
             Configuration.Instance = new DefaultConfiguration(data);
+            MySQLHandler.Execute($"SET @@global.sql_mode= '';");
+
             return true;
         }
 

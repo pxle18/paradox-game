@@ -83,7 +83,6 @@ namespace VMP_CNR.Module.VehicleDeath
                                 {
                                     // Abziehen von Fbank
                                     TeamShelter shelter = TeamShelterModule.Instance.GetByTeam(sxVehicle.teamid);
-                                    shelter.TakeMoney(VehicleDeathModule.Instance.GetVehiclesRepairPrice(sxVehicle));
                                 }
 
                                 sxVehicle.SetTeamCarGarage(true);

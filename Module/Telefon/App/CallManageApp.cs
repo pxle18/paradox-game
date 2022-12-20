@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Telefon.App
                         if (!NAPI.Player.IsPlayerInAnyVehicle(dbCalledPlayer.Player) && dbCalledPlayer.CanInteract())
                             dbCalledPlayer.StopAnimation();
                     }
-                    dbCalledPlayer.playerWhoHearRingtone = new List<DbPlayer>();
+                    dbCalledPlayer.PlayerWhoHearRingtone = new List<DbPlayer>();
 
                 }
             }

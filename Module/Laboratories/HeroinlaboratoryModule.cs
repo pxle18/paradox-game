@@ -24,7 +24,7 @@ namespace VMP_CNR.Module.Laboratories
         public static List<uint> RessourceItemIds = new List<uint> { 1442, 14 }; //heroinampullen, toilettenreiniger
         public static List<uint> EndProductItemIds = new List<uint> { 1443 }; //Kiste veredeltes Heroin
         public static uint FuelItemId = 537; //Benzin
-        public static uint FuelAmountPerProcessing = 5; //Fuelverbrauch pro 15-Minuten-Kochvorgang (Spielerunabhängig)
+        public static uint FuelAmountPerProcessing = 1; //Fuelverbrauch pro 15-Minuten-Kochvorgang (Spielerunabhängig)
         public List<Team> HasAlreadyHacked = new List<Team>();
 
         protected override string GetQuery()

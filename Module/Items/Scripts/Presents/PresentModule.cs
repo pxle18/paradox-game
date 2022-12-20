@@ -24,6 +24,7 @@ namespace VMP_CNR.Module.Items.Scripts.Presents
         public override bool Load(bool reload = false)
         {
             PresentExport = new List<Present>();
+
             return base.Load();
         }
 
@@ -33,8 +34,6 @@ namespace VMP_CNR.Module.Items.Scripts.Presents
             {
                 PresentModule.PresentExport.Add(loadable);
             }
-
-            Logger.Print(NAPI.Util.ToJson(PresentModule.PresentExport));
         }
 
         public List<Present> GetByItemId(uint id)

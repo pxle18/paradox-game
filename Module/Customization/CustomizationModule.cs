@@ -2,6 +2,8 @@
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Dynamic;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.Players;
@@ -44,7 +46,7 @@ namespace VMP_CNR.Module.Customization
                 dynamic character = JsonConvert.DeserializeObject<dynamic>(characterString);
                 dbPlayer.Customization = JsonConvert.DeserializeObject<CharacterCustomization>(characterString);
 
-                if (character.Parents != null && character.Parents.Father != null)
+                if (PropertyExists(character, "Parents") && PropertyExists(character.Parents, "Father"))
                 {
                     ParentData parentData = new ParentData(
                         (byte)character.Parents.Father,
@@ -68,7 +70,8 @@ namespace VMP_CNR.Module.Customization
                 {
                     var temp = new AppearanceItem[11];
                     Array.Copy(dbPlayer.Customization.Appearance, temp, 10);
-                    temp[10] = new AppearanceItem((byte) 255, 0.0f);
+                    temp[10] = new AppearanceItem(255, 0.0f);
+
                     dbPlayer.Customization.Appearance = temp;
                 }
             }
@@ -76,6 +79,14 @@ namespace VMP_CNR.Module.Customization
             {
                 Logger.Crash(e);
             }
+        }
+
+        public bool PropertyExists(dynamic obj, string name)
+        {
+            if (obj == null) return false;
+            if (obj is IDictionary<string, object> dict) return dict.ContainsKey(name);
+            
+            return obj.GetType().GetProperty(name) != null;
         }
 
         public override void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer)

@@ -34,7 +34,7 @@ namespace VMP_CNR.Module.Laboratories
 
         protected override string GetQuery()
         {
-            return ""; //"SELECT * FROM `team_methlaboratories`"; //Random in Query rein    METHLAB DISABLED
+            return "SELECT * FROM `team_methlaboratories` WHERE 1=2"; ////Random in Query rein    METHLAB DISABLED
         }
         public override Type[] RequiredModules()
         {

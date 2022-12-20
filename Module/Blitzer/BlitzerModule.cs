@@ -202,7 +202,8 @@ namespace VMP_CNR.Module.Blitzer
                                     {
                                         dbPlayer.SetData("BlitzerTimestamp", DateTime.Now);
                                         string wantedstring = $"{sxVeh.Data.Model} ({sxVeh.databaseId}) mit {speed}/{xBlitzer.SpeedLimit} geblitzt - { DateTime.Now.Hour}:{ DateTime.Now.Minute} { DateTime.Now.Day}/{ DateTime.Now.Month}/{ DateTime.Now.Year}";
-                                        dbPlayer.AddCrime("Leitstelle", CrimeReasonModule.Instance.Get((uint)wantedReasonId), wantedstring);
+                                        // TODO: Edit before release
+                                        //dbPlayer.AddCrime("Leitstelle", CrimeReasonModule.Instance.Get((uint)wantedReasonId), wantedstring);
                                         dbPlayer.SendNewNotification($"Fahrzeug {sxVeh.Data.Model} ({sxVeh.databaseId}) wurde mit {speed}/{xBlitzer.SpeedLimit} km/h geblitzt! (Toleranz: {xBlitzer.Tolleranz} km/h einberechnet)", PlayerNotification.NotificationType.ERROR, title: "Blitzer", duration: 10000);
                                         dbPlayer.Player.TriggerNewClient("startScreenEffect", "MP_SmugglerCheckpoint", 3000, false);
                                         dbPlayer.Player.TriggerNewClient("startsoundplay", "Camera_Shoot", "Phone_Soundset_Franklin");

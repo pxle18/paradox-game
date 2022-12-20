@@ -144,7 +144,7 @@ namespace VMP_CNR.Module.Space
                 case Key.E:
                     if (dbPlayer.Player.Position.DistanceTo(RocketStartEarth) < 1.0f)
                     {
-                        if (dbPlayer.RankId == (int)AdminLevelTypes.SuperAdministrator || dbPlayer.RankId == (int)AdminLevelTypes.Manager || dbPlayer.RankId == (int)AdminLevelTypes.Projektleitung)
+                        if (dbPlayer.RankId == (int)AdminLevelTypes.Staff || dbPlayer.RankId == (int)AdminLevelTypes.Management || dbPlayer.RankId == (int)AdminLevelTypes.Founder)
                         {
                             if (CurrentRocketLocation == RocketLocation.Orbit)
                             {
@@ -174,7 +174,7 @@ namespace VMP_CNR.Module.Space
 
                     if (dbPlayer.Player.Position.DistanceTo(RocketStartMars) < 1.0f)
                     {
-                        if (dbPlayer.RankId == (int)AdminLevelTypes.SuperAdministrator || dbPlayer.RankId == (int)AdminLevelTypes.Manager || dbPlayer.RankId == (int)AdminLevelTypes.Projektleitung)
+                        if (dbPlayer.RankId == (int)AdminLevelTypes.Staff || dbPlayer.RankId == (int)AdminLevelTypes.Management || dbPlayer.RankId == (int)AdminLevelTypes.Founder)
                         {
                             if (CurrentRocketLocation == RocketLocation.Orbit)
                             {
@@ -343,7 +343,7 @@ namespace VMP_CNR.Module.Space
                         }
                     }
 
-                    if (dbPlayer.RankId == (int)AdminLevelTypes.SuperAdministrator || dbPlayer.RankId == (int)AdminLevelTypes.Manager || dbPlayer.RankId == (int)AdminLevelTypes.Projektleitung)
+                    if (dbPlayer.RankId == (int)AdminLevelTypes.Staff || dbPlayer.RankId == (int)AdminLevelTypes.Management || dbPlayer.RankId == (int)AdminLevelTypes.Founder)
                     {
                         if (RocketLocked)
                             dbPlayer.SendNewNotification("Rakete wurde aufgeschlossen!");

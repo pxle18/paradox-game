@@ -11,7 +11,6 @@ using VMP_CNR.Module.Business;
 using VMP_CNR.Module.Business.FuelStations;
 using static VMP_CNR.Module.Business.Apps.BusinessListApp;
 using System.Linq;
-using MySql.Data.MySqlClient.Memcached;
 using VMP_CNR.Module.Business.Apps;
 using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Business.Raffinery;

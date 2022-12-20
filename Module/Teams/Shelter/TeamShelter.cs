@@ -29,10 +29,13 @@ namespace VMP_CNR.Module.Teams.Shelter
             
             Dimension = reader.GetUInt32("interior_dimension");
             InventarPosition = new Vector3(reader.GetFloat("inventar_pos_x"), reader.GetFloat("inventar_pos_y"), reader.GetFloat("inventar_pos_z"));
+            
+            NAPI.Marker.CreateMarker(MarkerType.VerticalCylinder, InventarPosition, new Vector3(), new Vector3(), 1f, Team.RgbColor, false, Dimension);
 
             MenuPosition = new Vector3(reader.GetFloat("menu_pos_x"), reader.GetFloat("menu_pos_y"), reader.GetFloat("menu_pos_z"));
             MenuColShape = ColShapes.Create(MenuPosition, 2f, Dimension);
             MenuColShape.SetData("teamShelterMenuId", reader.GetUInt32("teamid"));
+            NAPI.Marker.CreateMarker(MarkerType.VerticalCylinder, MenuPosition, new Vector3(), new Vector3(), 1f, Team.RgbColor, false, Dimension);
         }
 
         public override uint GetIdentifier()

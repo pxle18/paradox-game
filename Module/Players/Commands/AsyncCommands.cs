@@ -383,7 +383,7 @@ namespace VMP_CNR.Module.Players.Commands
                                             " auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() + " hat ihnen $" +
                                                amount + " auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (dbPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                    if (dbPlayer.RankId < (int)AdminLevelTypes.Founder)
                         Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " auf die Hand gegeben!");
 
@@ -458,7 +458,7 @@ namespace VMP_CNR.Module.Players.Commands
 
                     dbPlayer.SendNewNotification("Sie haben " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() + " hat ihnen $" + amount + " Schwarzgeld auf die Hand gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (dbPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                    if (dbPlayer.RankId < (int)AdminLevelTypes.Founder)
                         Players.Instance.SendMessageToAuthorizedUsers("log", "Admin " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " Schwarzgeld auf die Hand gegeben!");
 
                     DatabaseLogging.Instance.LogAdminAction(player, findPlayer.GetName(), AdminLogTypes.log, $"{amount}$ GiveBlackMoneyHand");

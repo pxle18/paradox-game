@@ -126,7 +126,7 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsBadOrga()
         {
-            return Id == (int)TeamTypes.TEAM_PANTHERS || Id == (int)TeamTypes.TEAM_FALCONE || Id == (int)TeamTypes.TEAM_DEADLOCK|| Id == (int)TeamTypes.TEAM_OUTLAWS_MC || Id == (int)TeamTypes.TEAM_VOLKY;
+            return Id == (int)TeamTypes.TEAM_PANTHERS;
         }
 
         public bool IsWeaponTeam()

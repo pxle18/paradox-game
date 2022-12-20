@@ -56,6 +56,8 @@ using VMP_CNR.Module.Jails;
 using VMP_CNR.Module.Space;
 using System.Diagnostics;
 using VMP_CNR.Module.Weather;
+using VMP_CNR.Module.Procedures;
+using VMP_CNR.Module.Admin.Procedures;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -81,7 +83,7 @@ namespace VMP_CNR.Module.Admin
 
             }
         }
-        
+
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
         public void toggleevent(Player player)
@@ -97,7 +99,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             Configuration.Instance.EventActive = !Configuration.Instance.EventActive;
-            
+
             if (Configuration.Instance.EventActive)
                 dbPlayer.SendNewNotification("Event-Funk wurde freigegeben! Frequenz: 8888.1-9");
             else
@@ -119,7 +121,7 @@ namespace VMP_CNR.Module.Admin
             string msg = Configuration.Instance.ShowAllJumppoints
                 ? "Jump-Points Debug aktiviert! Es werden nun Notifications für ALLE Jumppoints angezeigt!"
                 : "Jump-Points Debug deaktiviert.";
-            
+
             dbPlayer.SendNewNotification(msg, NotificationType.ADMIN, "DEBUG", 10000);
         }
 
@@ -209,7 +211,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             DbPlayer target = Players.Players.Instance.FindPlayer(p_Door);
-            if(target != null && target.IsValid())
+            if (target != null && target.IsValid())
             {
                 l_DbPlayer.Player.TriggerNewClient("attachmeto", target.Player);
             }
@@ -491,6 +493,25 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
+        public void gotointerior(Player p_Player, string myString)
+        {
+            //if (!Configuration.Instance.DevMode) return;
+
+            var l_DbPlayer = p_Player.GetPlayer();
+            if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
+            {
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            if (!uint.TryParse(myString, out uint id)) return;
+            var interior = InteriorModule.Instance.Get(id);
+
+            l_DbPlayer.Player.SetPosition(interior.Position);
+        }
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
         public void gotofrak(Player p_Player, string myString)
         {
             //if (!Configuration.Instance.DevMode) return;
@@ -507,6 +528,20 @@ namespace VMP_CNR.Module.Admin
             l_DbPlayer.Player.SetPosition(team.TeamSpawns[0].Position);
         }
 
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void createjumppoint(Player p_Player)
+        {
+            //if (!Configuration.Instance.DevMode) return;
+            var l_DbPlayer = p_Player.GetPlayer();
+            if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod())
+            {
+                l_DbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            ProcedureModule.Instance.CreateProcedure(l_DbPlayer, new CreateJumppointCommandProcedure());
+        }
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -658,8 +693,8 @@ namespace VMP_CNR.Module.Admin
                                         gangwarMarker.Add(Spawners.Markers.Create(4, Flag_1, new Vector3(), new Vector3(), 1.0f, color.Alpha, color.Red, color.Green, color.Blue, 0));
                                         gangwarMarker.Add(Spawners.Markers.Create(4, Flag_2, new Vector3(), new Vector3(), 1.0f, color.Alpha, color.Red, color.Green, color.Blue, 0));
                                         gangwarMarker.Add(Spawners.Markers.Create(4, Flag_3, new Vector3(), new Vector3(), 1.0f, color.Alpha, color.Red, color.Green, color.Blue, 0));
-                                        gangwarMarker.Add(NAPI.Marker.CreateMarker(1, Position.Add(new Vector3(0,0,-30f)), new Vector3(), new Vector3(), 2 * Range, color, true, 0));
-                                        gangwarMarker.Add(NAPI.Marker.CreateMarker(0, Position, new Vector3(), new Vector3(), 2.0f, new Color(255,0,0), true, 0));
+                                        gangwarMarker.Add(NAPI.Marker.CreateMarker(1, Position.Add(new Vector3(0, 0, -30f)), new Vector3(), new Vector3(), 2 * Range, color, true, 0));
+                                        gangwarMarker.Add(NAPI.Marker.CreateMarker(0, Position, new Vector3(), new Vector3(), 2.0f, new Color(255, 0, 0), true, 0));
                                         for (int i = 0; i < 360; i += 6)
                                         {
                                             double angle = Math.PI * i / 180.0;
@@ -879,7 +914,7 @@ namespace VMP_CNR.Module.Admin
                                         farmspotsBlips.Add(Blips.Create(pos, $"FarmSpot-ID: {farm_id}", BlipType, 1.0f, true, 2, 255));
                                         if (farm_id == markerIndex)
                                         {
-                                            farmspotsMarker.Add(Markers.Create(1, pos.Add(new Vector3(0,0,10f)), new Vector3(0, 0, 0), new Vector3(0, 0, 0), 3.0f, 255, 255, 0, 0, 0));
+                                            farmspotsMarker.Add(Markers.Create(1, pos.Add(new Vector3(0, 0, 10f)), new Vector3(0, 0, 0), new Vector3(0, 0, 0), 3.0f, 255, 255, 0, 0, 0));
                                             for (double i = 0; i < 360; i += 90)
                                             {
                                                 double angle = Math.PI * i / 180.0;
@@ -924,7 +959,7 @@ namespace VMP_CNR.Module.Admin
             if (!int.TryParse(strings[1], out int range)) return;
             uint BlipType = 685 + (uint)farm_id;
 
-            if(previewBlip != null)
+            if (previewBlip != null)
                 previewBlip.Delete();
             if (previewMarkers.Count > 0)
                 previewMarkers.ForEach(marker => marker.Delete());
@@ -943,13 +978,13 @@ namespace VMP_CNR.Module.Admin
             {
                 previewBlip = Blips.Create(pos, $"FarmSpot-ID: {farm_id}", BlipType, 1.0f, true, 2, 255);
                 previewMarkers.Add(Markers.Create(1, pos, new Vector3(0, 0, 0), new Vector3(0, 0, 0), 2.0f, 255, 255, 0, 0, 0));
-                for (double i = 0; i < 360; i += (360/range))
+                for (double i = 0; i < 360; i += (360 / range))
                 {
                     double angle = Math.PI * i / 180.0;
                     double sinAngle = Math.Sin(angle);
                     double cosAngle = Math.Cos(angle);
                     Vector3 innerPos = pos.Add(new Vector3(range * cosAngle, range * sinAngle, 0));
-                    previewMarkers.Add(Markers.Create(1, innerPos.Add(new Vector3(0,0,2f)), new Vector3(0, 0, 0), new Vector3(0, 0, 0), 1.0f, 255, 0, 255, 0, 0));
+                    previewMarkers.Add(Markers.Create(1, innerPos.Add(new Vector3(0, 0, 2f)), new Vector3(0, 0, 0), new Vector3(0, 0, 0), 1.0f, 255, 0, 255, 0, 0));
                 }
             });
         }
@@ -969,13 +1004,13 @@ namespace VMP_CNR.Module.Admin
             }
 
             if (!Configuration.Instance.DevMode) return;
-           
+
             if (previewBlip != null)
                 previewBlip.Delete();
             if (previewMarkers.Count > 0)
                 previewMarkers.ForEach(marker => marker.Delete());
-            
-            foreach(JailCell jail in JailCellModule.Instance.GetAll().Values)
+
+            foreach (JailCell jail in JailCellModule.Instance.GetAll().Values)
             {
                 NAPI.Task.Run(() =>
                 {
@@ -1390,7 +1425,7 @@ namespace VMP_CNR.Module.Admin
 
             dbPlayer.Player.TriggerNewClient("addattachmenttest", function, bone, model, offset_x, offset_y, offset_z, rotation_x, rotation_y, rotation_z);
         }
-        
+
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
         public void hash(Player player, string propname)
@@ -1497,7 +1532,7 @@ namespace VMP_CNR.Module.Admin
 
             AttachmentModule.Instance.RemoveAttachment(dbPlayer, attachid);
         }
-        
+
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -1512,11 +1547,11 @@ namespace VMP_CNR.Module.Admin
             }
 
 
-            dbPlayer.phoneSetting.blockCalls ^= true;
+            dbPlayer.PhoneSettings.blockCalls ^= true;
             dbPlayer.SendNewNotification("blockCalls umgeschalten");
 
         }
-        
+
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
         public void updatemode(Player player, string args)
@@ -1547,7 +1582,7 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Manager)
+            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Founder && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Management)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -1571,7 +1606,7 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Projektleitung && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Manager)
+            if (dbPlayer.RankId != 11 && dbPlayer.RankId != (int)AdminLevelTypes.Founder && dbPlayer.RankId != 8 && dbPlayer.RankId != (int)AdminLevelTypes.Management)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -1773,7 +1808,7 @@ namespace VMP_CNR.Module.Admin
 
             Random rand = new Random();
             player.SetPosition(DealerModule.Instance.Get((uint)rand.Next(0, DealerModule.Instance.GetAll().Count)).Position);
-            
+
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -1811,19 +1846,19 @@ namespace VMP_CNR.Module.Admin
             }
 
 
-            if (!dbPlayer.noclip)
+            if (!dbPlayer.NoClip)
             {
                 dbPlayer.SendNewNotification("Starte NOCLIP");
                 dbPlayer.Player.TriggerNewClient("toggleNoClip", true);
                 NAPI.Task.Run(() => { player.Transparency = 0; });
-                dbPlayer.noclip = true;
+                dbPlayer.NoClip = true;
             }
             else
             {
                 dbPlayer.SendNewNotification("Beende NOCLIP");
                 dbPlayer.Player.TriggerNewClient("toggleNoClip", false);
                 NAPI.Task.Run(() => { player.Transparency = 255; });
-                dbPlayer.noclip = false;
+                dbPlayer.NoClip = false;
             }
 
         }
@@ -1885,17 +1920,17 @@ namespace VMP_CNR.Module.Admin
                     case 4:
                         color = 12;
                         break;
-                    case 5:
-                        color = 2;
-                        break;
-                    case 6:
+                    case (int)AdminLevelTypes.Management:
                         color = 1;
                         break;
-                    case 8:
-                        color = 2;
+                    case (int)AdminLevelTypes.Founder:
+                        color = 1;
                         break;
-                    case 11:
-                        color = 2;
+                    case (int)AdminLevelTypes.QualityAssurance:
+                        color = 1;
+                        break;
+                    case (int)AdminLevelTypes.PublicRelation:
+                        color = 1;
                         break;
                     case 21:
                         color = 11;
@@ -1925,8 +1960,6 @@ namespace VMP_CNR.Module.Admin
                     dbPlayer.SetClothes(2, 0, 0);
                     dbPlayer.SetClothes(9, 0, 0);
                 });
-                
-
 
                 dbPlayer.SendNewNotification("Adminduty aktiviert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.SUCCESS);
             }
@@ -2002,7 +2035,7 @@ namespace VMP_CNR.Module.Admin
                     MySQLHandler.ExecuteAsync(query);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -2177,7 +2210,7 @@ namespace VMP_CNR.Module.Admin
             var toFriskPlayer = Players.Players.Instance.FindPlayer(name, true);
             if (toFriskPlayer == null) return;
 
-            if (dbPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (dbPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     dbPlayer.GetName() + " durchsucht nun " + toFriskPlayer.GetName());
 
@@ -2269,7 +2302,7 @@ namespace VMP_CNR.Module.Admin
 
             var sxVeh = dbPlayer.Player.Vehicle.GetVehicle();
             if (sxVeh == null) return;
-            
+
             sxVeh.DynamicMotorMultiplier = x;
             dbPlayer.SendNewNotification($"Du hast den Speed auf {x}x gestellt");
 
@@ -2374,7 +2407,7 @@ namespace VMP_CNR.Module.Admin
                     Item.Name +
                     " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-                if (dbPlayer.RankId < (int)AdminLevelTypes.Manager)
+                if (dbPlayer.RankId < (int)AdminLevelTypes.Management)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         dbPlayer.GetName() + " hat " + findPlayer.GetName() + " " + amount + " " +
                     Item.Name + " gegeben.");
@@ -2632,10 +2665,7 @@ namespace VMP_CNR.Module.Admin
             var findPlayer = Players.Players.Instance.FindPlayer(command[0], true);
             if (findPlayer == null || !findPlayer.IsValid()) return;
 
-            dbPlayer.SendNewNotification("Kick eingeleitet! Wird in 10 Sekunden durchgeführt...", NotificationType.ADMIN);
             findPlayer.SendNewNotification($"Du wirst in wenigen Sekunden vom Gameserver gekickt: Grund: {command[1]}", NotificationType.ADMIN, "Kick", 10000);
-            await Task.Delay(10000);
-
 
             await Chats.SendGlobalMessage(dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " vom Server gekickt! (Grund: " + command[1] + ")", COLOR.RED, ICON.GLOB);
             dbPlayer.SendNewNotification($"Sie haben {findPlayer.GetName()} vom Server gekickt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
@@ -2909,7 +2939,7 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
-        public void gdduty(Player player)
+        public void acduty(Player player)
         {
             var dbPlayer = player.GetPlayer();
 
@@ -2980,14 +3010,14 @@ namespace VMP_CNR.Module.Admin
                 dbPlayer.SetClothes(2, 0, 0);
                 dbPlayer.SetClothes(9, 0, 0);
 
-                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun im " + dbPlayer.Rank.Name + "dienst!");
-                dbPlayer.SendNewNotification("Sie befinden sich nun im " + dbPlayer.Rank.Name + "dienst!");
+                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun im " + dbPlayer.Rank.Name + " Dienst!");
+                dbPlayer.SendNewNotification("Sie befinden sich nun im " + dbPlayer.Rank.Name + " Dienst!");
             }
             else
             {
                 dbPlayer.SetGameDesignDuty(false);
-                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun nicht mehr im " + dbPlayer.Rank.Name + "dienst!");
-                dbPlayer.SendNewNotification("Sie befinden sich nun nicht mehr im " + dbPlayer.Rank.Name + "dienst!");
+                Players.Players.Instance.SendMessageToAuthorizedUsers("dutyinfo", dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " ist nun nicht mehr im " + dbPlayer.Rank.Name + " Dienst!");
+                dbPlayer.SendNewNotification("Sie befinden sich nun nicht mehr im " + dbPlayer.Rank.Name + " Dienst!");
             }
         }
 
@@ -3012,8 +3042,8 @@ namespace VMP_CNR.Module.Admin
                             await NAPI.Task.WaitForMainThread(100);
                         }
 
-                        Vehicle myveh = Sxveh.Entity; 
-                        
+                        Vehicle myveh = Sxveh.Entity;
+
                         dbPlayer.SetData("guideveh", myveh);
 
                         await NAPI.Task.WaitForMainThread(2000);
@@ -3046,19 +3076,19 @@ namespace VMP_CNR.Module.Admin
                     var color = 64;
                     switch (dbPlayer.RankId)
                     {
-                        case (int)AdminLevelTypes.SuperAdministrator:
+                        case (int)AdminLevelTypes.Staff:
                             color = 145;
                             break;
-                        case (int)AdminLevelTypes.Administrator:
+                        case (int)AdminLevelTypes.ThirdLevelTeam:
                             color = 89;
                             break;
-                        case (int)AdminLevelTypes.Moderator:
+                        case (int)AdminLevelTypes.SecondLevelTeam:
                             color = 64;
                             break;
                         default:
-                            if (dbPlayer.RankId >= (int)AdminLevelTypes.Manager)
+                            if (dbPlayer.RankId >= (int)AdminLevelTypes.Management)
                                 color = 44;
-                            else if (dbPlayer.RankId == (int)AdminLevelTypes.Supporter)
+                            else if (dbPlayer.RankId == (int)AdminLevelTypes.FirstLevelTeam)
                                 color = 92;
                             break;
                     }
@@ -3076,7 +3106,7 @@ namespace VMP_CNR.Module.Admin
                             await NAPI.Task.WaitForMainThread(100);
                         }
                         dbPlayer.SetData("adminveh", myveh.Entity);
-                        
+
                         player.SetIntoVehicleSave(myveh.Entity, 0);
                     });
                 }
@@ -3419,7 +3449,7 @@ namespace VMP_CNR.Module.Admin
             dbPlayer.SendNewNotification("Sie haben sich zu " + destinationPlayer.GetName() +
                                      " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            if (dbPlayer.noclip)
+            if (dbPlayer.NoClip)
             {
                 dbPlayer.Player.TriggerNewClient("gotocam", NAPI.Util.ToJson(destinationPlayer.Player.Position));
             }
@@ -3565,7 +3595,7 @@ namespace VMP_CNR.Module.Admin
                 findPlayer.SetTeam(teamId);
                 findPlayer.TeamRank = 0;
 
-                if(findPlayer.GetName() != iPlayer.GetName())
+                if (findPlayer.GetName() != iPlayer.GetName())
                     findPlayer.SendNewNotification("Administrator " + iPlayer.GetName() +
                                                " hat Sie zum Mitglied der Fraktion " + TeamModule.Instance.Get(teamId).Name +
                                                " ernannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
@@ -3747,7 +3777,7 @@ namespace VMP_CNR.Module.Admin
                                             " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                     findPlayer.SendNewNotification("Administrator" + iPlayer.GetName() + " hat ihnen $" +
                                                amount + " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                    if (iPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                    if (iPlayer.RankId < (int)AdminLevelTypes.Founder)
                         Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                             "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " gegeben!");
 
@@ -3761,7 +3791,7 @@ namespace VMP_CNR.Module.Admin
                                         " entfernt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
                 findPlayer.SendNewNotification("Administrator" + iPlayer.GetName() + " hat ihnen $" +
                                            amount + " entfernt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                if (iPlayer.RankId < (int)AdminLevelTypes.Projektleitung)
+                if (iPlayer.RankId < (int)AdminLevelTypes.Founder)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         "Admin " + iPlayer.GetName() + " hat " + findPlayer.GetName() + " $" + amount + " entfernt!");
 
@@ -3919,7 +3949,7 @@ namespace VMP_CNR.Module.Admin
 
             if (findPlayer == null) return;
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " hat " + findPlayer.GetName() + " aus dem Gefaengnis entlassen!");
             //Main.freePlayer(iPlayer, findPlayer, true);
@@ -4186,7 +4216,7 @@ namespace VMP_CNR.Module.Admin
 
             Random rnd = new Random();
 
-            for(int i = 0; i < result; i++)
+            for (int i = 0; i < result; i++)
             {
                 Vector3 spawnPos = iPlayer.Player.Position.Add(new Vector3(rnd.Next(-(int)radius, (int)radius), rnd.Next(-(int)radius, (int)radius), 0));
 
@@ -4451,7 +4481,7 @@ namespace VMP_CNR.Module.Admin
                     iPlayer.SetData("lastDimensionSpectate", player.Dimension);
                 }
 
-                NAPI.Task.Run(()=>{ player.Transparency = 0; });
+                NAPI.Task.Run(() => { player.Transparency = 0; });
                 iPlayer.SetDimension(dbPlayer.Player.Dimension);
 
                 var pos = dbPlayer.Player.Position;
@@ -4470,13 +4500,13 @@ namespace VMP_CNR.Module.Admin
                     pos.Z += 3;
                 }
 
-            player.SetPosition(pos);
-            iPlayer.Player.Freeze(true, true, true);
+                player.SetPosition(pos);
+                iPlayer.Player.Freeze(true, true, true);
 
-            //iPlayer.Player.TriggerNewClient("spectateAdmin", dbPlayer.Player, true,0);
+                //iPlayer.Player.TriggerNewClient("spectateAdmin", dbPlayer.Player, true,0);
 
 
-                if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+                if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                         iPlayer.GetName() + " spectated nun " + dbPlayer.GetName());
 
@@ -4508,7 +4538,7 @@ namespace VMP_CNR.Module.Admin
             iPlayer.SetData("lastPositionSpectate", player.Position);
             iPlayer.SetData("lastDimensionSpectate", player.Dimension);
 
-            NAPI.Task.Run(() => {player.Transparency = 0; });
+            NAPI.Task.Run(() => { player.Transparency = 0; });
 
             iPlayer.SetDimension(dbPlayer.Player.Dimension);
 
@@ -4519,7 +4549,7 @@ namespace VMP_CNR.Module.Admin
             }
 
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " spectated nun " + dbPlayer.GetName());
 
@@ -4831,17 +4861,24 @@ namespace VMP_CNR.Module.Admin
 
                 NAPI.Task.Run(async () =>
                 {
-                    SxVehicle myveh = VehicleHandler.Instance.CreateServerVehicle(
-                    data.Id, true, player.Position,
-                    player.Rotation.Z, color1, color2, iPlayer.Player.Dimension, true, false, false, 0, iPlayer.GetName(),
-                    0, 999, (uint)iPlayer.Id, 200, 1000, "", "", 0, null, null, true);
-
-                    while (myveh.Entity == null)
+                    try
                     {
-                        await NAPI.Task.WaitForMainThread(100);
-                    }
+                        SxVehicle myveh = VehicleHandler.Instance.CreateServerVehicle(
+                            data.Id, true, player.Position,
+                            player.Rotation.Z, color1, color2, iPlayer.Player.Dimension, true, false, false, 0, iPlayer.GetName(),
+                            0, 999, (uint)iPlayer.Id, 200, 1000, "", "", 0, null, null, true);
 
-                    player.SetIntoVehicleSave(myveh.Entity, 0);
+                        while (myveh.Entity == null)
+                        {
+                            await NAPI.Task.WaitForMainThread(100);
+                        }
+
+                        player.SetIntoVehicleSave(myveh.Entity, 0);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.DebugLine(e.ToString());
+                    }
                 });
 
 
@@ -5111,13 +5148,13 @@ namespace VMP_CNR.Module.Admin
             var sxVeh = VehicleHandler.Instance.GetClosestVehicle(player.Position);
             if (sxVeh == null) return;
 
-            var name = (sxVeh.ownerId == 0) ? sxVeh.Team.Name :  PlayerNameModule.Instance.Get(sxVeh.ownerId).Name;
+            var name = (sxVeh.ownerId == 0) ? sxVeh.Team.Name : PlayerNameModule.Instance.Get(sxVeh.ownerId).Name;
 
             iPlayer.SendNewNotification(
                 $"Besitzer: {name} BesitzerID: {sxVeh.ownerId} Fahrer: {(sxVeh.GetOccupants().GetDriver() != null ? sxVeh.GetOccupants().GetDriver().GetName() : "Keiner")} " +
                 $"Letzter-Fahrer: {sxVeh.LastDriver} Fraktion: {sxVeh.Team.Name}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 15000);
 
-            if (iPlayer.RankId < (int)AdminLevelTypes.SuperAdministrator)
+            if (iPlayer.RankId < (int)AdminLevelTypes.Staff)
                 Players.Players.Instance.SendMessageToAuthorizedUsers("log",
                     iPlayer.GetName() + " sieht sich das Fahrzeug von " + name + " an");
 
@@ -5165,14 +5202,14 @@ namespace VMP_CNR.Module.Admin
                     iPlayer.SendNewNotification("Sie haben ein Administrator Fahrzeug gespawnt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.SUCCESS);
 
                     int color = 64;
-                    if (iPlayer.RankId == (int)AdminLevelTypes.SuperAdministrator) color = 145;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Administrator)
+                    if (iPlayer.RankId == (int)AdminLevelTypes.Staff) color = 145;
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.ThirdLevelTeam)
                         color = 89;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Moderator)
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.SecondLevelTeam)
                         color = 64;
-                    else if (iPlayer.RankId >= (int)AdminLevelTypes.Manager)
+                    else if (iPlayer.RankId >= (int)AdminLevelTypes.Management)
                         color = 44;
-                    else if (iPlayer.RankId == (int)AdminLevelTypes.Supporter)
+                    else if (iPlayer.RankId == (int)AdminLevelTypes.FirstLevelTeam)
                         color = 92;
 
                     if (!Enum.TryParse("2069146067", true, out VehicleHash hash)) return;
@@ -5330,7 +5367,7 @@ namespace VMP_CNR.Module.Admin
             DialogMigrator.CreateMenu(player, Dialogs.menu_player, "GVMP Team", "Teammitglieder");
 
             DialogMigrator.AddMenuItem(player, Dialogs.menu_player, GlobalMessages.General.Close(), "");
-            foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.Rank.Id!=0).OrderByDescending(x => x.Rank.Salary))
+            foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers().Where(x => x.Rank.Id != 0).OrderByDescending(x => x.Rank.Salary))
             {
                 if (!dbPlayer.IsValid()) continue;
                 if (dbPlayer.Rank.Id != 0)
@@ -5471,6 +5508,34 @@ namespace VMP_CNR.Module.Admin
             iPlayer.SendNewNotification(string.Format($"Position (x: {x} | y: {y} | z: {z}) saved as: {comment}"), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
         }
 
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void getpos(Player player, string comment = "")
+        {
+            var iPlayer = player.GetPlayer();
+
+            if (!iPlayer.CanAccessMethod())
+            {
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                return;
+            }
+
+            string x = player.Position.X.ToString().Replace(".", ",");
+            string y = player.Position.Y.ToString().Replace(".", ",");
+            string z = player.Position.Z.ToString().Replace(".", ",");
+            string heading = player.Rotation.Z.ToString().Replace(".", ",");
+
+            if (iPlayer.RageExtension.IsInVehicle)
+            {
+                x = player.Vehicle.Position.X.ToString().Replace(".", ",");
+                y = player.Vehicle.Position.Y.ToString().Replace(".", ",");
+                z = player.Vehicle.Position.Z.ToString().Replace(".", ",");
+                heading = player.Vehicle.Rotation.Z.ToString().Replace(".", ",");
+            }
+
+            Logger.Print($"{x} {y} {z} {heading} {comment}");
+            iPlayer.SendNewNotification($"Position gespeichert. {comment}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
+        }
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -5521,7 +5586,7 @@ namespace VMP_CNR.Module.Admin
 
             await NAPI.Task.WaitForMainThread(0);
 
-            if (!iPlayer.CanAccessMethod() && !Devmode && iPlayer.RankId != (int)AdminLevelTypes.Projektleitung)
+            if (!iPlayer.CanAccessMethod() && !Devmode && iPlayer.RankId != (int)AdminLevelTypes.Founder)
             {
                 iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -5650,6 +5715,7 @@ namespace VMP_CNR.Module.Admin
             }
 
             iPlayer.SetDimension(dimension_int);
+            iPlayer.SendNewNotification($"Dimension {iPlayer.Player.Dimension}");
         }
 
         [Command]
@@ -5897,6 +5963,91 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command(GreedyArg = true)]
+        public void createfvehicles(Player player)
+        {
+            var iPlayer = player.GetPlayer();
+
+            if (!iPlayer.CanAccessMethod() && !Devmode)
+            {
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            var teams = TeamModule.Instance.GetAll().Values.Where(t => t.IsGangsters());
+            foreach(Team team in teams)
+            {
+                var garage = GarageModule.Instance.GetAll().Values.FirstOrDefault(g => g.Teams.Contains(team.Id) && g.Teams.Count() == 1 && g.Classifications.Contains(1) && g.Npc != PedHash.Autoshop02SMM);
+                if(garage == null)
+                {
+                    Logger.Print("Invalid garage " + team.Name);
+                    continue;
+                }
+
+                /*
+                for (int i = 0; i < 3; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(978);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(78);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(529);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }*/
+                for (int i = 0; i < 5; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(631);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    var vehicleData = VehicleDataModule.Instance.GetDataById(632);
+                    string query = String.Format(
+                                            "INSERT INTO `fvehicles` (`vehiclehash`, `team`, `color1`, `color2`, `inGarage`, `model`, `fuel`, `plate`, `lastGarage`) VALUES ('{0}', '{1}', '{2}', '{3}', '1', '{4}', '100', '{5}', '{6}');",
+                                            vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model, team.Id, team.ColorId, team.ColorId,
+                                            vehicleData.Id, team.ShortName, garage.Id);
+                    MySQLHandler.Execute(query);
+
+                    Logger.Print($"{team.Name} - {i} | {(vehicleData.IsModdedCar == 1 ? vehicleData.mod_car_name : vehicleData.Model)}");
+                }
+                iPlayer.SendNewNotification($"Fraktionsfahrzeuge für {team.Name} erstellt.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            }
+        }
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command(GreedyArg = true)]
         public void count(Player player)
         {
             var iPlayer = player.GetPlayer();
@@ -5935,7 +6086,7 @@ namespace VMP_CNR.Module.Admin
         [Command]
         public void prop(Player player, string commandParams)
         {
-            var iPlayer = player.GetPlayer(); 
+            var iPlayer = player.GetPlayer();
 
             if (iPlayer == null || !iPlayer.IsValid()) return;
             if (!iPlayer.CanAccessMethod())
@@ -6071,11 +6222,11 @@ namespace VMP_CNR.Module.Admin
                 player.Vehicle.Transparency = int.TryParse(alpha, out int result) ? result : 255;
 
                 SxVehicle sxVehicle = player.Vehicle.GetVehicle();
-                if(sxVehicle != null && sxVehicle.IsValid())
+                if (sxVehicle != null && sxVehicle.IsValid())
                 {
-                    foreach(DbPlayer xPlayer in sxVehicle.GetOccupants().GetLegacyDictionary().Values)
+                    foreach (DbPlayer xPlayer in sxVehicle.GetOccupants().GetLegacyDictionary().Values)
                     {
-                        if(xPlayer != null && xPlayer.IsValid() && xPlayer.RageExtension.IsInVehicle && xPlayer.Player.Vehicle == player.Vehicle)
+                        if (xPlayer != null && xPlayer.IsValid() && xPlayer.RageExtension.IsInVehicle && xPlayer.Player.Vehicle == player.Vehicle)
                         {
                             xPlayer.Player.Transparency = int.TryParse(alpha, out int result2) ? result2 : 255;
                         }
@@ -6331,7 +6482,7 @@ namespace VMP_CNR.Module.Admin
             if (!Configuration.Instance.DevMode)
                 return;
 
-            if (dbPlayer.RankId != (uint)AdminLevelTypes.Projektleitung)
+            if (dbPlayer.RankId != (uint)AdminLevelTypes.Founder)
                 return;
 
             var modules = Modules.Instance.GetModules();
@@ -6368,11 +6519,11 @@ namespace VMP_CNR.Module.Admin
             long elapsedMs = lStopwatch.ElapsedMilliseconds;
             int vehiclesCount = VehicleHandler.SxVehicles.Count;
             int playerCount = Players.Players.Instance.players.Count;
-            
+
             dbPlayer.SendNewNotification($"Main-Thread Ping: {elapsedMs.ToString()}ms", NotificationType.ADMIN, "Benchmark");
             dbPlayer.SendNewNotification($"Spieler: {playerCount.ToString()}", NotificationType.ADMIN, "Benchmark");
             dbPlayer.SendNewNotification($"Fahrzeuge: {vehiclesCount.ToString()}", NotificationType.ADMIN, "Benchmark");
-            
+
             lStopwatch.Reset();
         }
     }

@@ -68,6 +68,7 @@ using VMP_CNR.Module.Clothes.Props;
 using VMP_CNR.Module.Clothes.Windows;
 using VMP_CNR.Module.Players.NAPIWrapper;
 using VMP_CNR.Module.Threading;
+using VMP_CNR.Module.Admin;
 
 namespace VMP_CNR
 {
@@ -88,15 +89,15 @@ namespace VMP_CNR
     internal enum AdminLevelTypes
     {
         Player = 0,
-        Supporter = 1,
-        Moderator = 2,
-        Administrator = 3,
-        SuperAdministrator = 4,
-        Manager = 5,
-        Projektleitung = 6,
-        Entwicklungsleitung = 8,
-        SeniorEntwickler = 11,
-        Gamedesigner = 13,
+        FirstLevelTeam = 1,
+        SecondLevelTeam = 2,
+        ThirdLevelTeam = 3,
+        AntiCheatTeam = 13,
+        Staff = 4,
+        Management = 5,
+        Founder = 6,
+        QualityAssurance = 8,
+        PublicRelation = 11,
         Gamedesignleitung = 14,
         SeniorGamedesigner = 23
     }
@@ -137,9 +138,9 @@ namespace VMP_CNR
         TEAM_GOV = 14,
         TEAM_CAYO = 15,
         TEAM_DPOS = 16,
-        TEAM_TRIADEN = 17,
+        TEAM_TRIADEN = 44,
         TEAM_VAGOS = 18,
-        TEAM_MARABUNTA = 19,
+        TEAM_MARABUNTA = 49,
         TEAM_NNM = 20,
         TEAM_SWAT = 21,
         TEAM_PLACEHOLDER_1 = 22,
@@ -147,7 +148,6 @@ namespace VMP_CNR
         TEAM_HOH = 24,
         TEAM_REDNECKS = 25,
         TEAM_LSC = 26,
-        TEAM_ICA = 27,
         TEAM_MINE1 = 28,
         TEAM_MINE2 = 29,
         TEAM_UNICORN = 30,
@@ -164,13 +164,9 @@ namespace VMP_CNR
         TEAM_CAFE_PLAZA = 41,
         TEAM_OUTLAWS_MC = 42,
         TEAM_PANTHERS = 43,
-        TEAM_MADRAZO = 44,
-        TEAM_BOSOZOKUKAI = 45,
-        TEAM_VOLKY = 46,
-        TEAM_BRATWA = 47,
-        TEAM_ORGANISAZIJA = 48,
-        TEAM_FALCONE = 49,
-        TEAM_DEADLOCK = 50
+        TEAM_BRATWA = 50,
+        TEAM_MADRAZO = 27,
+        TEAM_ORGANISAZIJA = 47,
     }
 
     internal enum JobTypes
@@ -230,8 +226,8 @@ namespace VMP_CNR
         public static DateTime adLastSend                       = DateTime.Now;
         public static List<LifeInvaderApp.AdsFound> adList      = new List<LifeInvaderApp.AdsFound>();
         public static List<NewsListApp.NewsFound> newsList      = new List<NewsListApp.NewsFound>();
-        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.CLEAR;
-        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.CLEAR;
+        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.XMAS;
+        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.XMAS;
         public static bool WeatherOverride = false;
 
         static int mysqlSaveInterval = 0;
@@ -684,8 +680,14 @@ namespace VMP_CNR
                 {
                     if (iPlayer.AccountStatus == AccountStatus.LoggedIn)
                     {
-                        iPlayer.MetaData.SaveBlocked = true;
-                        iPlayer.Save(true);
+                        try { 
+                            iPlayer.MetaData.SaveBlocked = true;
+                            iPlayer.Save(true);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Crash(e);
+                        }
                     }
                 }
             }
@@ -1680,6 +1682,7 @@ namespace VMP_CNR
         {
             if (!iPlayer.CanInteract()) return;
 
+            if (AdminModule.Instance.ToggleNoClip(iPlayer)) return;
             if (await Modules.Instance.OnKeyPressed(iPlayer, Key.K)) return;
 
             return;
@@ -1701,7 +1704,7 @@ namespace VMP_CNR
             {
                 foreach (var player in Players.Instance.GetValidPlayers())
                 {
-                    if (player.Container.GetItemAmount(174) > 0 && !player.phoneSetting.flugmodus)
+                    if (player.Container.GetItemAmount(174) > 0 && !player.PhoneSettings.flugmodus)
                     {
                         player.SendNewNotification(message, title: title, notificationType: PlayerNotification.NotificationType.NEWS);
                     }

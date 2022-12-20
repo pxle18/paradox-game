@@ -4025,12 +4025,6 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
-                                case (int)TeamTypes.TEAM_ICA:
-                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
-                                    if (dbPlayer.TeamRankPermission.Manage >= 1)
-                                        dbPlayer.SendNewNotification(
-                                             GlobalMessages.HelpLeader());
-                                    break;
                                 default:
                                     dbPlayer.SendNewNotification(
                                          GlobalMessages.Error.NoTeam());
@@ -4254,12 +4248,6 @@ namespace VMP_CNR
                                         discount = 100 - (dbPlayer.uni_business[0] * 2);
                                         price = Convert.ToInt32((discount / 100.0) * price);
                                     }
-                                }
-
-                                if (price > 50000 && dbPlayer.IsHomeless())
-                                {
-                                    dbPlayer.SendNewNotification("Ohne einen Wohnsitz können Sie dieses Fahrzeug nicht erwerben!");
-                                    return;
                                 }
 
                                 Task.Run(async () =>

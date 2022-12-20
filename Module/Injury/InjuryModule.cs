@@ -438,7 +438,7 @@ namespace VMP_CNR.Module.Injury
                         dbPlayer.PlayAnimation((int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl), "combat@damage@rb_writhe", "rb_writhe_loop");
 
 
-                        dbPlayer.phoneSetting.flugmodus = true;
+                        dbPlayer.PhoneSettings.flugmodus = true;
                         VoiceModule.Instance.ChangeFrequenz(dbPlayer, 0, true);
                         VoiceModule.Instance.turnOffFunk(dbPlayer);
 
