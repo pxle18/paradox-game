@@ -86,7 +86,7 @@ namespace VMP_CNR.Module.Workstation.Windows
 
             if(workstation != null)
             {
-                if (!workstation.LimitTeams.Contains(dbPlayer.TeamId))
+                if (!workstation.LimitTeams.Contains(dbPlayer.TeamId) && !workstation.LimitTeams.Contains(99))
                 {
                     dbPlayer.SendNewNotification($"Du scheinst mir zu unseriös zu sein... Arbeitest du schon etwas anderes?");
                     return;

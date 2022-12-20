@@ -436,6 +436,8 @@ namespace VMP_CNR.Module.Players.Db
         public Container WorkstationSourceContainer { get; set; }
         public Container WorkstationEndContainer { get; set; }
 
+        public Container ChristmasContainer { get; set; }
+
         public uint WorkstationId { get; set; }
 
         public Dictionary<uint, int> DeliveryJobSkillPoints { get; set; }

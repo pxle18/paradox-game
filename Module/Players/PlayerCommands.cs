@@ -610,7 +610,7 @@ namespace VMP_CNR.Module.Players
             var garage = GarageModule.Instance[playerGarageId];
             if (garage == null || garage.HouseId != 0) return;
 
-            Container container = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.REFUND, 0, 0);
+            Container container = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.CHRISTMAS, 0, 0);
 
             if (Main.RefundPlayers.ContainsKey(dbPlayer))
             {

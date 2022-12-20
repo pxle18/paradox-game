@@ -50,7 +50,7 @@ namespace VMP_CNR.Module.Items
             if (container.Type == ContainerTypes.PRISONLOCKER) ContainerManager.LoadedPrisonLockerContainers.Add(container.Id, container);
             if (container.Type == ContainerTypes.Copinv) ContainerManager.LoadedCopInvContainers.Add(container.Id, container);
             if (container.Type == ContainerTypes.WEAPON_IMPORT) ContainerManager.LoadedWeaponImportContainers.Add(container.Id, container);
-            if (container.Type == ContainerTypes.REFUND) ContainerManager.LoadedRefundContainers.Add(container.Id, container);
+            if (container.Type == ContainerTypes.CHRISTMAS) ContainerManager.LoadedRefundContainers.Add(container.Id, container);
         }
 
         public static int GetMaxSlots(ContainerTypes type)
@@ -79,7 +79,7 @@ namespace VMP_CNR.Module.Items
             if (type == ContainerTypes.PRISONLOCKER && LoadedPrisonLockerContainers.ContainsKey(id)) return LoadedPrisonLockerContainers[id];
             if (type == ContainerTypes.Copinv && LoadedCopInvContainers.ContainsKey(id)) return LoadedCopInvContainers[id];
             if (type == ContainerTypes.WEAPON_IMPORT && LoadedWeaponImportContainers.ContainsKey(id)) return LoadedWeaponImportContainers[id];
-            if (type == ContainerTypes.REFUND && LoadedRefundContainers.ContainsKey(id)) return LoadedRefundContainers[id];
+            if (type == ContainerTypes.CHRISTMAS && LoadedRefundContainers.ContainsKey(id)) return LoadedRefundContainers[id];
 
             string query = $"SELECT * FROM `{GetTableName(type)}` WHERE `id` = '{id}';";
             using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
@@ -116,7 +116,7 @@ namespace VMP_CNR.Module.Items
             if (type == ContainerTypes.PRISONLOCKER && LoadedPrisonLockerContainers.ContainsKey(id)) return LoadedPrisonLockerContainers[id];
             if (type == ContainerTypes.Copinv && LoadedCopInvContainers.ContainsKey(id)) return LoadedCopInvContainers[id];
             if (type == ContainerTypes.WEAPON_IMPORT && LoadedWeaponImportContainers.ContainsKey(id)) return LoadedWeaponImportContainers[id];
-            if (type == ContainerTypes.REFUND && LoadedRefundContainers.ContainsKey(id)) return LoadedRefundContainers[id];
+            if (type == ContainerTypes.CHRISTMAS && LoadedRefundContainers.ContainsKey(id)) return LoadedRefundContainers[id];
 
             string query = $"SELECT * FROM `{GetTableName(type)}` WHERE `id` = '{id}';";
             using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))

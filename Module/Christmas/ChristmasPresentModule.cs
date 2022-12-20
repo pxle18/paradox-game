@@ -1,19 +1,24 @@
 ﻿using GTANetworkAPI;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VMP_CNR;
 using VMP_CNR.Extensions;
 using VMP_CNR.Module.Christmas.Models;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Commands;
+using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Kasino.Windows;
 using VMP_CNR.Module.Logging;
+using VMP_CNR.Module.NpcSpawner;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Windows;
 using VMP_CNR.Module.RemoteEvents;
+using VMP_CNR.Module.Spawners;
 using VMP_CNR.Module.Sync;
 
 namespace VMP_CNR.Module.Christmas
@@ -28,17 +33,18 @@ namespace VMP_CNR.Module.Christmas
         [RemoteEvent]
         public void RedeemChristmasCode(Player player, string christmasCode, string remoteKey)
         {
-            if (player.CheckRemoteEventKey(remoteKey)) return;
+            if (!player.CheckRemoteEventKey(remoteKey)) return;
 
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            var christmasCodes = ChristmasPresentModule.Instance.GetAll().Values.ToList().FindAll(christmasPresent =>
-                christmasPresent.PlayerId == 1 && christmasPresent.Code == christmasCode);
+            var christmasCodes = ChristmasPresentModule.Instance.Presents.Where(christmasPresent => christmasPresent.Code.ToLower() == christmasCode.ToLower());
 
             if (christmasCodes.Count() <= 0)
             {
                 dbPlayer.SendNewNotification("Wir konnten leider keine Geschenke unter deinem Code. Bist du sicher, dass du bereits Geschenke im Adventskalender geöffnet hast?", PlayerNotification.NotificationType.ERROR, "XMAS.PRDX.TO", 8000);
+                Logger.Print(ChristmasPresentModule.Instance.Presents.Count().ToString());
+
                 return;
             }
 
@@ -46,22 +52,50 @@ namespace VMP_CNR.Module.Christmas
         }
     }
 
-    public sealed class ChristmasPresentModule : SqlModule<ChristmasPresentModule, ChristmasPresentModel, uint>
+    public class ChristmasPresentModule : Module<ChristmasPresentModule>
     {
-        private readonly Vector3 _presentLocation;
+        public readonly Vector3 PresentLocation = new Vector3(184.08896, -958.8136, 29.953785);
+        public readonly Vector3 TreeLocation = new Vector3(186.80109, -952.09033, 28.83992);
 
-        public ChristmasPresentModule()
+        public List<ChristmasPresentModel> Presents = new List<ChristmasPresentModel>();
+
+        public override Type[] RequiredModules()
         {
-            _presentLocation = new Vector3(-416.655, 1160.048, 325.858);
+            return new[] { typeof(ItemModelModule) };
         }
 
-        protected override string GetQuery() => "SELECT * FROM log_present_reward;";
-        public override Type[] RequiredModules() => new[] { typeof(ItemModelModule) };
+        public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
+        {
+            dbPlayer.ChristmasContainer = ContainerManager.LoadContainer(dbPlayer.Id, ContainerTypes.CHRISTMAS);
+        }
 
         protected override bool OnLoad()
         {
+            using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "SELECT * FROM log_present_reward";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var u = new ChristmasPresentModel(reader);
+                                Instance.Presents.Add(u);
+                            }
+                            catch (Exception e) { Logger.Print(e.ToString()); }
+                        }
+                }
+            }
+
+            new Npc(PedHash.Abigail, PresentLocation, 156, 0);
+            ObjectSpawn.Create(118627012, TreeLocation, new Vector3(0, 0, 0));
+
             PlayerNotifications.Instance.Add(
-                _presentLocation,
+                PresentLocation,
                 "PARADOX Roleplay", "Nehmt eure gesammelten Geschenke mit. I think it’s time, isn’t it?"
             );
 
@@ -70,47 +104,51 @@ namespace VMP_CNR.Module.Christmas
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
-            if (dbPlayer.Player.Position.DistanceTo(_presentLocation) > 10) return false;
+            if (key != Key.E || dbPlayer.RageExtension.IsInVehicle) return false;
 
-            try
+            if (dbPlayer.Player.Position.DistanceTo(PresentLocation) < 10.0f)
             {
-                Logger.Print("Size: " + GetAll().Values.ToList().Count());
-
-                var christmasCodes = GetAll().Values.ToList().FindAll(christmasPresent => christmasPresent.Code == "" && christmasPresent.PlayerId == dbPlayer.Id);
-
-                Logger.Print("Size Filtered: " + christmasCodes.Count());
-
-                if (christmasCodes == null || christmasCodes.Count() <= 0)
+                DateTime actualDate = System.DateTime.Now;
+                //Wenn letzte Abholung nicht am selben Tag sondern davor war
+                if (dbPlayer.xmasLast.Day < actualDate.Day || (dbPlayer.xmasLast.Day == 30 && dbPlayer.xmasLast.Month == 11))
                 {
-                    Logger.Print("Null lol");
-                    ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
-                    return true;
+                    try
+                    {
+                        var christmasCodes = Instance.Presents.Where(christmasPresent => christmasPresent.PlayerId == dbPlayer.Id);
+                        if (christmasCodes == null || christmasCodes.Count() <= 0)
+                        {
+                            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
+                            return true;
+                        }
+
+                        ProcessChristmasCodes(dbPlayer, christmasCodes);
+                    }
+                    catch (Exception e) { Logger.Print("XMAS " + e.ToString()); }
                 }
-
-                Logger.Print("Proccessing");
-                ProcessChristmasCodes(dbPlayer, christmasCodes);
+                else
+                {
+                    dbPlayer.SendNewNotification("Du hast dein Geschenk fuer heute bereits abgeholt. Wenn nicht - Sorry. Fix ich morgen", PlayerNotification.NotificationType.ERROR, "XMAS");
+                    return false;
+                }
+                return true;
             }
-            catch (Exception e) { Logger.Print(e.ToString()); }
-
-
-            return true;
+            return false;
         }
 
-        public void ProcessChristmasCodes(DbPlayer player, List<ChristmasPresentModel> christmasPresents)
+        public void ProcessChristmasCodes(DbPlayer player, IEnumerable<ChristmasPresentModel> christmasPresents)
         {
-            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Überprüfe dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
+            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Bitte öffne an diesem Punkt dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
 
             player.xmasLast = DateTime.Now;
             player.SaveChristmasState();
 
-            christmasPresents.ForEach(code =>
+            foreach (var code in christmasPresents.ToList())
             {
-                player.Container.AddItem(code.Item, code.Amount);
+                player.ChristmasContainer.AddItem(code.Item, code.Amount);
                 code.Delete();
 
-                Instance.Remove(code.Id);
-            });
+                Instance.Presents.Remove(code);
+            }
         }
     }
 }

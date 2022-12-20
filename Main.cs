@@ -138,9 +138,9 @@ namespace VMP_CNR
         TEAM_GOV = 14,
         TEAM_CAYO = 15,
         TEAM_DPOS = 16,
-        TEAM_TRIADEN = 17,
+        TEAM_TRIADEN = 44,
         TEAM_VAGOS = 18,
-        TEAM_MARABUNTA = 19,
+        TEAM_MARABUNTA = 49,
         TEAM_NNM = 20,
         TEAM_SWAT = 21,
         TEAM_PLACEHOLDER_1 = 22,
@@ -148,7 +148,6 @@ namespace VMP_CNR
         TEAM_HOH = 24,
         TEAM_REDNECKS = 25,
         TEAM_LSC = 26,
-        TEAM_ICA = 27,
         TEAM_MINE1 = 28,
         TEAM_MINE2 = 29,
         TEAM_UNICORN = 30,
@@ -165,13 +164,9 @@ namespace VMP_CNR
         TEAM_CAFE_PLAZA = 41,
         TEAM_OUTLAWS_MC = 42,
         TEAM_PANTHERS = 43,
-        TEAM_MADRAZO = 44,
-        TEAM_BOSOZOKUKAI = 45,
-        TEAM_VOLKY = 46,
-        TEAM_BRATWA = 47,
-        TEAM_ORGANISAZIJA = 48,
-        TEAM_FALCONE = 49,
-        TEAM_DEADLOCK = 50
+        TEAM_BRATWA = 50,
+        TEAM_MADRAZO = 27,
+        TEAM_ORGANISAZIJA = 47,
     }
 
     internal enum JobTypes
@@ -231,8 +226,8 @@ namespace VMP_CNR
         public static DateTime adLastSend                       = DateTime.Now;
         public static List<LifeInvaderApp.AdsFound> adList      = new List<LifeInvaderApp.AdsFound>();
         public static List<NewsListApp.NewsFound> newsList      = new List<NewsListApp.NewsFound>();
-        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.CLEAR;
-        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.CLEAR;
+        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.XMAS;
+        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.XMAS;
         public static bool WeatherOverride = false;
 
         static int mysqlSaveInterval = 0;
