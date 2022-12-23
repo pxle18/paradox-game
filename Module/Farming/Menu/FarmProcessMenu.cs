@@ -22,15 +22,14 @@ namespace VMP_CNR.Module.Business.Raffinery
 {
     public class FarmProcessMenuBuilder : MenuBuilder
     {
-        public FarmProcessMenuBuilder() : base(PlayerMenu.FarmProcessMenu)
-        {
-        }
+        public FarmProcessMenuBuilder() : base(PlayerMenu.FarmProcessMenu) { }
 
         public override Menu.Menu Build(DbPlayer dbPlayer)
         {
             var menu = new Menu.Menu(Menu, "Verarbeitung");
 
             menu.Add($"Schließen");
+            menu.Add($"Inventar verarbeiten");
 
             List<SxVehicle> sxVehicles = VehicleHandler.Instance.GetClosestVehiclesPlayerCanControl(dbPlayer, 20.0f);
             if(sxVehicles != null && sxVehicles.Count() > 0)
@@ -64,10 +63,17 @@ namespace VMP_CNR.Module.Business.Raffinery
 
                 if (dbPlayer.RageExtension.IsInVehicle) return false;
 
+                if (index == 1)
+                {
+                    FarmProcessModule.Instance.FarmProcessAction(farmProcess, dbPlayer, dbPlayer.Container);
+                    MenuManager.DismissCurrent(dbPlayer);
+                    return true;
+                }
+
                 List<SxVehicle> sxVehicles = VehicleHandler.Instance.GetClosestVehiclesPlayerCanControl(dbPlayer, 20.0f);
                 if (sxVehicles != null && sxVehicles.Count() > 0)
                 {
-                    int count = 1;
+                    int count = 2;
                     foreach (SxVehicle sxVehicle in sxVehicles)
                     {
                         if (index == count)

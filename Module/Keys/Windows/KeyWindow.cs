@@ -80,10 +80,14 @@ namespace VMP_CNR.Module.Keys.Windows
                 return;
             }
 
-            BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
-            
-            dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
-            biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+            if (dbPlayer.TakeMoney(5000))
+            {
+                BusinessVehicleExtension.AddVehicleKey(biz, id, carName);
+
+                dbPlayer.SendNewNotification("Sie haben " + biz.Name + " einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+                biz.SendMessageToMembers(dbPlayer.GetName() + " hat dem Business einen Schluessel fuer Fahrzeug " + carName + " (" + id + ") gegeben.");
+            }
+            else dbPlayer.SendNewNotification("Dafür hast du nicht genügend Geld.");
         }
 
         [RemoteEvent]
@@ -222,7 +226,7 @@ namespace VMP_CNR.Module.Keys.Windows
                     {
                         if (vehicle.Data != null && vehicle.Data.IsBusinessVehicle)
                         {
-                            int price = Convert.ToInt32(vehicle.Data.Price * 0.02);
+                            int price = Convert.ToInt32(5000);
 
                             dbPlayer.SetData("vehBizAdd", id);
 

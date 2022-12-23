@@ -337,7 +337,7 @@ namespace VMP_CNR.Module.Items
             {
                 Workstation.Workstation workstation = dbPlayer.GetWorkstation();
 
-                if(workstation != null && workstation.LimitTeams.Contains(dbPlayer.TeamId))
+                if(workstation != null && (workstation.LimitTeams.Contains(dbPlayer.TeamId) || workstation.LimitTeams.Contains(99)))
                 {
                     if (playerPosition.DistanceTo(workstation.EndPosition) < 2.0f && workstation.Dimension == playerDimension) return dbPlayer.WorkstationEndContainer;
                     if (playerPosition.DistanceTo(workstation.SourcePosition) < 2.0f && workstation.Dimension == playerDimension) return dbPlayer.WorkstationSourceContainer;
