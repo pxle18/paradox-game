@@ -199,7 +199,7 @@ namespace VMP_CNR.Module.Injury
                 if (dbPlayer.HasData("gangwarId"))
                 {
                     GangwarTown gangwarTown = GangwarTownModule.Instance.Get(dbPlayer.GetData("gangwarId"));
-                    if (gangwarTown != null)
+                    if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
                     {
                         // Player is in Range
                         injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
