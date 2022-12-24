@@ -36,7 +36,7 @@ namespace VMP_CNR.Module.RemoteEvents
                 return true;
             }
 
-            float antiSpamDuration = GetAntiSpamDuration(operationType);
+            double antiSpamDuration = GetAntiSpamDuration(operationType);
 
             if (dbPlayer.SpamProtection[operationType].AddSeconds(antiSpamDuration) > DateTime.Now)
                 return false;
@@ -45,16 +45,19 @@ namespace VMP_CNR.Module.RemoteEvents
             return true;
         }
 
-        private static float GetAntiSpamDuration(DbPlayer.OperationType operationType)
+        private static double GetAntiSpamDuration(DbPlayer.OperationType operationType)
         {
-            float duration = 2;
+            double duration = 2;
 
             switch (operationType)
             {
+                case DbPlayer.OperationType.ItemMove:
+                    duration = 0.5;
+                    break;
                 case DbPlayer.OperationType.PressedJ:
                 case DbPlayer.OperationType.PressedH:
                 case DbPlayer.OperationType.Smartphone:
-                    duration = 0.5f;
+                    duration = 0.5;
                     break;
                 case DbPlayer.OperationType.BusinessCreate:
                     duration = 30;
@@ -67,7 +70,7 @@ namespace VMP_CNR.Module.RemoteEvents
                     break;
                 case DbPlayer.OperationType.WeaponAmmoSync:
                 case DbPlayer.OperationType.InventoryOpened:
-                    duration = 3;
+                    duration = 1.5;
                     break;
             }
 

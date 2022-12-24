@@ -125,7 +125,6 @@ namespace VMP_CNR.Module.MAZ
                 dbPlayer.SendNewNotification($"MAZ {maz.Id} wurde geladen!");
             }
 
-
             return;
         }
 
@@ -160,7 +159,7 @@ namespace VMP_CNR.Module.MAZ
             bool ChanceRequireSuccess = false;
             Random random = new Random();
 
-            if (loadedAmount == 0 && random.Next(1, 600) < 4)
+            if (loadedAmount == 0 && random.Next(1, 600) < 3)
             {
                 ChanceRequireSuccess = true;
                 Logging.Logger.Debug("MAZ chance triggered");
@@ -203,12 +202,12 @@ namespace VMP_CNR.Module.MAZ
                 }
                 else if (rcheck <= 20) // marksmanmag
                 {
-                    container.AddItem(226, 10);
+                    container.AddItem(40, 10);
                     contValue -= 30;
                 }
                 else if (rcheck <= 30) // gusenberg
                 {
-                    container.AddItem(77, 4);
+                    container.AddItem(77, 1);
                     contValue -= 20;
                 }
                 else if (rcheck <= 45) // gusenberg mag
@@ -218,7 +217,7 @@ namespace VMP_CNR.Module.MAZ
                 }
                 else if (rcheck <= 70) // advancedrifle
                 {
-                    container.AddItem(81, 6);
+                    container.AddItem(81, 2);
                     contValue -= 17;
                 }
                 else if (rcheck <= 100) // advancedrifle mags

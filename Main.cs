@@ -595,6 +595,17 @@ namespace VMP_CNR
                         dbPlayer.SendNewNotification($"Spieler {iPlayer.GetName()} ist disconnected! (Grund: {disconnectReason})", title: "ANTI-OFFLINEFLUCHT", notificationType: PlayerNotification.NotificationType.SERVER);
                     }
                 }
+
+                if(iPlayer.Slammer != null)
+                {
+                    if(iPlayer.LastSlam.AddMinutes(5) > DateTime.Now)
+                    {
+                        var slammer = iPlayer.Slammer;
+                        if (slammer == null || !slammer.IsValid()) return;
+
+                        slammer.SendNewNotification($"Spieler {iPlayer.GetName()} ist erfolgreich slammed.", PlayerNotification.NotificationType.ADMIN, "SLAM");
+                    }
+                }
             }
             catch (Exception e)
             {

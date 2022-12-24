@@ -345,6 +345,9 @@ namespace VMP_CNR.Module.Players.Db
 
         public PhoneApps PhoneApps { get; set; }
 
+        public DbPlayer Slammer { get; set; }
+        public DateTime LastSlam { get; set; }
+
         public Dictionary<uint, String> VehicleKeys { get; set; }
 
         public Dictionary<uint, String> OwnVehicles { get; set; }

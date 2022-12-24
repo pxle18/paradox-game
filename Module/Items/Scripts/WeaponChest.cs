@@ -36,7 +36,7 @@ namespace VMP_CNR.Module.Items.Scripts
 
             // Choose Items
             float size = 0;
-            
+
             while (size < ItemData.Weight)
             {
                 // Results: 
@@ -203,14 +203,14 @@ namespace VMP_CNR.Module.Items.Scripts
                         amount = 10;
                         break;
                     case 2:
-                        xItem = 87; // marksman
-                        amount = 1;
+                        xItem = 40; // marksman
+                        amount = 2;
                         break;
                     case 3:
                     case 4:
                     case 5:
-                        xItem = 226; // marksam ammo
-                        amount = 10;
+                        xItem = 40; // marksam ammo
+                        amount = 3;
                         break;
                     case 6:
                     case 7:
@@ -268,19 +268,19 @@ namespace VMP_CNR.Module.Items.Scripts
                     case 38:
                     case 39:
                     case 40:
-                        xItem = 1250; // marksman griff
+                        xItem = 172; // marksman griff
                         amount = 1;
                         break;
                     case 41:
                     case 42:
                     case 43:
-                        xItem = 1243; // marksman 16er mag
+                        xItem = 172; // marksman 16er mag
                         amount = 1;
                         break;
                     case 44:
                     case 45:
                     case 46:
-                        xItem = 1238; // marksman light
+                        xItem = 172; // marksman light
                         amount = 1;
                         break;
                     case 47:
