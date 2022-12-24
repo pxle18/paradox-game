@@ -274,7 +274,8 @@ namespace VMP_CNR.Module.MAZ
 
                 Logging.Logger.Debug($"MAZ {maz.Id} loaded");
 
-                await Chats.SendGlobalMessage($"Zentrales Flugabwehrsystem: Es wurde der Absturz einer feindlichen Militärmaschine im Hoheitsgebiet Los Santos gemeldet!", COLOR.LIGHTBLUE, ICON.GOV);
+                await SendGlobalMessage($"Zentrales Flugabwehrsystem: Es wurde der Absturz einer feindlichen Militärmaschine im Hoheitsgebiet Los Santos gemeldet!", COLOR.LIGHTBLUE, ICON.GOV);
+                TeamModule.Instance.SendChatMessageToDepartments("Achtung: Flugzeugabstürze sind nur für Bad-Fraktionen. Sie dürfen dieses Event nicht anfahren.");
             });
         }
     }

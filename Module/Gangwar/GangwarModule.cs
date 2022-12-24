@@ -12,6 +12,7 @@ using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Events;
 using VMP_CNR.Module.Teamfight;
 using VMP_CNR.Module.Teams.Spawn;
+using VMP_CNR.Module.Vehicles;
 
 namespace VMP_CNR.Module.Gangwar
 {
@@ -105,15 +106,16 @@ namespace VMP_CNR.Module.Gangwar
             if (dbPlayer.Team.IsNearSpawn(dbPlayer.Player.Position) || GangwarTownModule.Instance.IsTeamSpawn(dbPlayer.Player.Position))
             {
                 TeamSpawn spawn = dbPlayer.Team.TeamSpawns.FirstOrDefault().Value;
+
                 if (spawn == null)
                 {
-                    dbPlayer.SendNewNotification("Du hast den Gangwar verlassen.");
+                    dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat den Gangwar verlassen.");
                     TeamfightFunctions.RemoveFromGangware(dbPlayer);
                     return;
                 }
 
                 NAPI.Task.Run(() => { player.Position = spawn.Position; });
-                dbPlayer.SendNewNotification("Du hast den Gangwar verlassen.");
+                dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat den Gangwar verlassen.");
                 TeamfightFunctions.RemoveFromGangware(dbPlayer);
             }
             else
@@ -127,13 +129,26 @@ namespace VMP_CNR.Module.Gangwar
         {
             foreach (GangwarTown gangwarTown in ActiveGangwarTowns.ToList())
             {
-                if (gangwarTown.LastAttacked.AddMinutes(GangwarModule.Instance.GangwarTimeLimit) < System.DateTime.Now)
+                Main.m_AsyncThread.AddToAsyncThread(new System.Threading.Tasks.Task(() =>
                 {
-                    // over time limit
+                    foreach (var sxVehicle in gangwarTown.Vehicles.ToList())
+                    {
+                        if (sxVehicle == null || !sxVehicle.IsValid() || sxVehicle.LastInteracted.AddMinutes(3) > DateTime.Now) continue;
+                        if (sxVehicle.GetOccupants().IsEmpty() == false) continue;
+
+                        uint vehicleIdentifier = sxVehicle.uniqueServerId;
+
+                        VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
+                        gangwarTown.Vehicles.RemoveAll(vehicle => vehicle.uniqueServerId == vehicleIdentifier);
+                    }
+                }));
+
+                if (gangwarTown.LastAttacked.AddMinutes(GangwarModule.Instance.GangwarTimeLimit) < System.DateTime.Now)
                     gangwarTown.Finish();
-                }
             }
+
         }
+
 
         public void TenSecUpdateHandle(GangwarTown gangwarTown)
         {
