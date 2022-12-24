@@ -47,13 +47,13 @@ namespace VMP_CNR.Module.Weather
                 else
                     Main.m_CurrentWeather = weather;
 
-                foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
+                //Needs Serverside + Clientside Setter for Snow on Ground + Syncing Weather all the time -soren
+                NAPI.World.SetWeather(weather);
+                Players.Players.Instance.GetValidPlayers().ForEach((player) =>
                 {
-                    Task.Run(async () =>
-                    {
-                        await ChangeWeatherForPlayer(dbPlayer, weather, transitionTime);
-                    });
-                }
+                    if (player != null)
+                        ChangeWeatherForPlayer(player, weather, transitionTime);
+                });
             }
         }
 
