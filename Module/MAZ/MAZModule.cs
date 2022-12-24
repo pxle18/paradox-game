@@ -157,9 +157,6 @@ namespace VMP_CNR.Module.MAZ
 
             if (loadedAmount > 0 && LastActive.AddHours(3) > DateTime.Now) return; // wenn schonma, dann mind 3h pause
 
-            // Unter 20 Soldaten im Dienst
-            if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
-
             bool ChanceRequireSuccess = false;
             Random random = new Random();
 
@@ -199,12 +196,7 @@ namespace VMP_CNR.Module.MAZ
             {
                 int rcheck = random.Next(1, 100);
 
-                if(rcheck <= 5) // marksman
-                {
-                    container.AddItem(87, 2);
-                    contValue -= 50;
-                }
-                else if (rcheck <= 10) // goldbarren
+                if (rcheck <= 10) // goldbarren
                 {
                     container.AddItem(487, 10);
                     contValue -= 30;

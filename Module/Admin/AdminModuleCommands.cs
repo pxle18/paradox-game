@@ -1627,7 +1627,6 @@ namespace VMP_CNR.Module.Admin
             {
                 var dbPlayer = player.GetPlayer();
                 if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
-                if (!Configuration.Instance.DevMode) return;
 
                 var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 

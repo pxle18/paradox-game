@@ -140,7 +140,6 @@ namespace VMP_CNR.Module.Tasks
                     if (Configuration.Instance.IsUpdateModeOn)
                     {
                         ComponentManager.Get<LoginWindow>().TriggerNewClient(dbPlayer.Player, "status", "Der Server befindet sich derzeit in Wartungsarbeiten!");
-                        if (dbPlayer.Rank.Id < 1) dbPlayer.Kick();
                     }
                 }
                 catch (Exception e) { Logger.Print(e.ToString()); }

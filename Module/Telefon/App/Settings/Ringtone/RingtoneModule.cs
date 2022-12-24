@@ -10,7 +10,7 @@ namespace VMP_CNR.Module.Telefon.App.Settings.Ringtone
     {
         protected override string GetQuery()
         {
-            return "SELECT * FROM `phone_ringtones`;";
+            return $"SELECT * FROM `phone_ringtones{(Configurations.Configuration.Instance.DevMode ? "_dev" : "")}`;";
         }
 
         public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)

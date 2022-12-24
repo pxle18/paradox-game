@@ -134,14 +134,11 @@ namespace VMP_CNR.Module.SpeedLimit
 
                     await Task.Delay(1000);
                     if (myveh != null) player.SetIntoVehicle(myveh.Entity, -1);
-
-
                 });
 
                 iPlayer.SetWaypoint(-2700.89f, 2348.3f);
                 iPlayer.SetData("messMode", true);
             }
-
 
             return;
         }

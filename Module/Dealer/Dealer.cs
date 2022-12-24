@@ -66,7 +66,7 @@ namespace VMP_CNR.Module.Dealer
             Random random       = new Random();
             //                                       Ressource                                Cap     Preisrange Normal                   Preisrange "Rein"               DateTime seitdem full - Init Wert
             HeroinampullenResource = new DealerResource("Heroinampullen",                     800,    (uint)random.Next(350, 370),        0,                              DateTime.Now);
-            HeroinKisteResource   = new DealerResource("Kiste mit veredelten Heroinampullen", 6500,   (uint)random.Next(26000, 28000),    0,                              DateTime.Now);
+            HeroinKisteResource   = new DealerResource("Kiste mit veredelten Heroinampullen", 6500,   (uint)random.Next(30000, 32000),    0,                              DateTime.Now);
             DiamondResource       = new DealerResource("Juwelen",                             50,     (uint)random.Next(5500, 5700),      0,                              DateTime.Now);
             GoldResource          = new DealerResource("Goldbarren",                          100,    (uint)random.Next(11000, 13000),    0,                              DateTime.Now);
             WeaponResource        = new DealerResource("Waffenset",                           4,      (uint)random.Next(380, 450),        0,                              DateTime.Now);

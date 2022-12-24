@@ -58,6 +58,7 @@ namespace VMP_CNR.Module.Vehicles
 
             // Do for kofferraum
             l_Vehicle.TrunkStateOpen = state;
+            l_Vehicle.SetData("VEHICLE_STANDBY", 1);
 
             // Sync to actuall vehicle door States (Serverside)
 
@@ -434,6 +435,8 @@ namespace VMP_CNR.Module.Vehicles
                 dbVehicle.Occupants.TriggerEventForOccupants("setNormalSpeed", dbVehicle.Entity, dbVehicle.Data.MaxSpeed);
             }
 
+            dbVehicle.SetData("VEHICLE_STANDBY", 1);
+
             if (dbVehicle.SyncExtension.EngineOn == false)
             {
                 if (HalloweenModule.isActive) return;
@@ -517,6 +520,7 @@ namespace VMP_CNR.Module.Vehicles
 
             if (!dbPlayer.CanControl(dbVehicle)) return;
             var l_Handler = new VehicleEventHandler();
+            dbVehicle.SetData("VEHICLE_STANDBY", 1);
 
             dbVehicle.respawnInteractionState = true;
             if (dbVehicle.SyncExtension.Locked)
@@ -693,6 +697,8 @@ namespace VMP_CNR.Module.Vehicles
                 dbPlayer.SendNewNotification("Fahrzeug zugeschlossen!", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;
             }
+
+            dbVehicle.SetData("VEHICLE_STANDBY", 1);
 
             // trunk handling -- bleibt 5 weil kommt vom client
             if (door == 5)

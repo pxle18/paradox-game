@@ -79,7 +79,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                         menu.Add("Frakmedic-Dienst verlassen"); // 10, 11
                 }
             }
-            
+
             return menu;
         }
 
@@ -93,7 +93,7 @@ namespace VMP_CNR.Module.Teams.Shelter
             public bool OnSelect(int index, DbPlayer dbPlayer)
             {
                 if (!dbPlayer.HasData("teamShelterMenuId")) return true;
-                var teamShelter = TeamShelterModule.Instance.Get(dbPlayer.GetData("teamShelterMenuId"));
+                TeamShelter teamShelter = TeamShelterModule.Instance.Get(dbPlayer.GetData("teamShelterMenuId"));
                 if (teamShelter == null || teamShelter.Team.Id != dbPlayer.TeamId) return true;
 
                 // Close menu
@@ -207,15 +207,18 @@ namespace VMP_CNR.Module.Teams.Shelter
                     }
                     else if (index == 4)
                     {
-                        if(dbPlayer.Team.IsBadOrga())
+                        if (dbPlayer.Team.IsBadOrga())
                         {
                             Module.Menu.MenuManager.Instance.Build(VMP_CNR.Module.Menu.PlayerMenu.PistoleCreateMenu, dbPlayer).Show(dbPlayer);
                             return false;
                         }
 
                         //Show random dealer
+                        var dealer = DealerModule.Instance.GetRandomDealer();
+                        var position = Utils.GenerateRandomPosition(dealer.Position);
+                        dbPlayer.Player.SendWayPoint(position.X, position.Y);
 
-                        if (teamShelter.DealerPosition == null)
+                        /**if (teamShelter.DealerPosition == null)
                         {
                             if (dbPlayer.TeamRankPermission.Manage < 1)
                             {
@@ -224,13 +227,17 @@ namespace VMP_CNR.Module.Teams.Shelter
                             }
 
                             var dealer = DealerModule.Instance.GetRandomDealer();
-                            teamShelter.DealerPosition = Utils.GenerateRandomPosition(dealer.Position);
+                            teamShelter.DealerPosition = dealer.Position;
                             teamShelter.TakeMoney(25000);
                         }
-                        float X = teamShelter.DealerPosition.X;
-                        float Y = teamShelter.DealerPosition.Y;
-                        dbPlayer.SetWaypoint(X, Y);
-                        dbPlayer.SendNewNotification("Hier irgendwo...");
+
+                        if (teamShelter.DealerPosition != null) { 
+                            float X = teamShelter.DealerPosition.X;
+                            float Y = teamShelter.DealerPosition.Y;
+                            dbPlayer.Player.TriggerNewClient("setPlayerGpsMarker", X, Y);
+                            dbPlayer.SendNewNotification("Hier irgendwo...");
+                        }
+                        */
                     }
                     else if (index == 5)
                     {

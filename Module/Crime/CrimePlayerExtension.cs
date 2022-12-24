@@ -164,9 +164,6 @@ namespace VMP_CNR.Module.Crime
         {
             if (dbPlayer.IsACop()  && dbPlayer.IsInDuty()) return;
 
-            var wanteds = dbPlayer.Wanteds[0];
-            if (dbPlayer.TempWanteds > 0 && dbPlayer.Wanteds[0] < 30) wanteds = 30;
-
             int jailtime = CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes);
             int jailcosts = CrimeModule.Instance.CalcJailCosts(dbPlayer.Crimes, dbPlayer.EconomyIndex);
 

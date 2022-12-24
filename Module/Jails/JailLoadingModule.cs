@@ -55,24 +55,11 @@ namespace VMP_CNR.Module.Jails
                 int jailtime = CrimeModule.Instance.CalcJailTime(dbPlayer.Crimes);
                 int jailcosts = CrimeModule.Instance.CalcJailCosts(dbPlayer.Crimes, dbPlayer.EconomyIndex);
 
-                // Checke auf Jailtime
-                if (jailtime > 0 && jailtime <= 29 && colShape.GetData<int>("jailGroup") != 5)
-                {
-                    dbPlayer.JailTime[0] = jailtime;
-                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
-                    dbPlayer.ArrestPlayer(null, false);
-                    dbPlayer.ApplyCharacter();
-                    dbPlayer.SetData("inJailGroup", colShape.GetData<int>("jailGroup"));
-                } // group 5 == sg
-                else if(colShape.GetData<int>("jailGroup") == 5 && jailtime >= 30)
-                {
-                    dbPlayer.JailTime[0] = jailtime;
-                    dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
-                    dbPlayer.ArrestPlayer(null, false);
-                    dbPlayer.ApplyCharacter();
-                    dbPlayer.SetData("inJailGroup", colShape.GetData<int>("jailGroup"));
-                }
-                
+                dbPlayer.JailTime[0] = jailtime;
+                dbPlayer.jailtimeReducing[0] = Convert.ToInt32(dbPlayer.JailTime[0] / 3);
+                dbPlayer.ArrestPlayer(null, false);
+                dbPlayer.ApplyCharacter();
+                dbPlayer.SetData("inJailGroup", colShape.GetData<int>("jailGroup"));
             }
             else
             {

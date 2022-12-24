@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VMP_CNR.Handler;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.GTAN;
 using VMP_CNR.Module.Injury;
@@ -22,14 +23,14 @@ namespace VMP_CNR.Module.Gangwar
         public int KillPoints = 3; // if A kills B, A gets points
         public int TimerFlagPoints = 1; // each ten sec if a player is in range without a enemy
         public Color StandardColor = new Color(255, 140, 0, 255);
-        
+
         public int GangwarTimeLimit = 45;
         public int GangwarTownLimit = 3;
 
         public List<GangwarTown> ActiveGangwarTowns = new List<GangwarTown>();
 
         public static List<int> GoldComponentIds = new List<int>() { 28, 147, 18, 261, 518, 451, 253, 140, 267, 44, 33, 201 };
-        
+
         protected override bool OnLoad()
         {
             MySQLHandler.Execute("ALTER TABLE `gangwar_garages` CHANGE `pos_1_x` `pos_1_x` FLOAT(11) NOT NULL, CHANGE `pos_1_y` `pos_1_y` FLOAT(11) NOT NULL, CHANGE `pos_1_z` `pos_1_z` FLOAT(11) NOT NULL, CHANGE `heading_1` `heading_1` FLOAT(11) NOT NULL, CHANGE `pos_2_x` `pos_2_x` FLOAT(11) NOT NULL, CHANGE `pos_2_y` `pos_2_y` FLOAT(11) NOT NULL, CHANGE `pos_2_z` `pos_2_z` FLOAT(11) NOT NULL, CHANGE `heading_2` `heading_2` FLOAT(11) NOT NULL, CHANGE `pos_3_x` `pos_3_x` FLOAT(11) NOT NULL, CHANGE `pos_3_y` `pos_3_y` FLOAT(11) NOT NULL, CHANGE `pos_3_z` `pos_3_z` FLOAT(11) NOT NULL, CHANGE `heading_3` `heading_3` FLOAT(11) NOT NULL;");
@@ -99,7 +100,7 @@ namespace VMP_CNR.Module.Gangwar
         public void Commandquitgw(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured()||!dbPlayer.CanInteract()) return;
+            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured() || !dbPlayer.CanInteract()) return;
             if (dbPlayer.Player.Dimension != GangwarModule.Instance.DefaultDimension) return;
             if (dbPlayer.Team.IsNearSpawn(dbPlayer.Player.Position) || GangwarTownModule.Instance.IsTeamSpawn(dbPlayer.Player.Position))
             {
@@ -214,8 +215,6 @@ namespace VMP_CNR.Module.Gangwar
             {
                 gangwarTown.Flag_3Marker.Color = StandardColor;
             }
-                
-            
         }
 
         public override void OnTenSecUpdate()
