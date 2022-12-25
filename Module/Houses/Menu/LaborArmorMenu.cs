@@ -54,7 +54,7 @@ namespace VMP_CNR.Module.Houses
                 {
                     if (dbPlayer.Player.Position.DistanceTo(new Vector3(1129.7, -3194.27, -40.3972)) <= 2.0f)
                     {
-                        int kevlar = 9;
+                        int kevlar = 7;
                         // Schutzweste herstellen
                         if (dbPlayer.Container.GetItemAmount(592) >= kevlar)
                         {
@@ -84,7 +84,7 @@ namespace VMP_CNR.Module.Houses
                 {
                     if (dbPlayer.Player.Position.DistanceTo(new Vector3(1129.7, -3194.27, -40.3972)) <= 2.0f)
                     {
-                        int kevlar = 9;
+                        int kevlar = 7;
                         // Schutzweste herstellen
                         if (dbPlayer.Container.GetItemAmount(592) >= kevlar)
                         {

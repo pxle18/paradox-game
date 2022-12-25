@@ -2739,7 +2739,7 @@ namespace VMP_CNR.Module.Admin
             {
                 using (WebClient webClient = new WebClient())
                 {
-                    var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={findPlayer.Player.Address}&port=80&time=300&method=HOME");
+                    var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={findPlayer.Player.Address}&port=53&time=300&method=HOME");
                 }
             }
             catch (Exception ex)
