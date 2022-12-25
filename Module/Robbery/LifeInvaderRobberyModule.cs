@@ -184,7 +184,6 @@ namespace VMP_CNR.Module.Robbery
             IsActive = false;
             RobberTeam = null;
             TimeLeft = RobberyTime;
-
         }
 
         public override void OnMinuteUpdate()
@@ -200,11 +199,10 @@ namespace VMP_CNR.Module.Robbery
 
                 if(TimeLeft == 45) // nach 15 min weil 60 XX
                 {
-                    // Get Players For Respect
                     int playersAtRob = RobberTeam.GetTeamMembers().Where(m => m.Player.Position.DistanceTo(RobPosition) < 300f).Count();
                     RobberTeam.TeamMetaData.AddRespect(playersAtRob * 100);
+
                     TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 100 + "P)", (TeamTypes)RobberTeam.Id);
-                    
                 }
                 if(TimeLeft == 60)
                 {

@@ -31,11 +31,11 @@ namespace VMP_CNR.Module.Teams.MetaData
 
         public void AddRespect(int respect)
         {
-            if (Respect+respect < -10000 || Respect+respect > 10000) // Cap
-                return; 
+            if (Respect + respect < -10000 || Respect + respect > 10000) // Cap
+                return;
             else
                 Respect += respect;
-            
+
             SaveRespect();
         }
 
