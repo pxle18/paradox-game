@@ -47,7 +47,6 @@ namespace VMP_CNR.Module.Weather
                 else
                     Main.m_CurrentWeather = weather;
 
-                //Needs Serverside + Clientside Setter for Snow on Ground + Syncing Weather all the time -soren
                 NAPI.World.SetWeather(weather);
                 Players.Players.Instance.GetValidPlayers().ForEach((player) =>
                 {
