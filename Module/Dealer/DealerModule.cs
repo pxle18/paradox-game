@@ -134,7 +134,7 @@ namespace VMP_CNR.Module.Dealer
         
         public Dealer GetRandomDealer()
         {
-            return GetAll().ElementAt(random.Next(0, MaxDealerCount)).Value;
+            return GetAll().ElementAt(random.Next(0, MaxDealerCount - 1)).Value;
         }
 
         [CommandPermission(PlayerRankPermission = true)]

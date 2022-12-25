@@ -48,6 +48,11 @@ namespace VMP_CNR.Module.Weather
                     Main.m_CurrentWeather = weather;
 
                 NAPI.World.SetWeather(weather);
+                Players.Players.Instance.GetValidPlayers().ForEach((player) =>
+                {
+                    if (player != null)
+                        ChangeWeatherForPlayer(player, weather, transitionTime);
+                });
             }
         }
 

@@ -33,14 +33,8 @@ namespace VMP_CNR.Module.Stadthalle
             MenuColShape.SetData("stadthalle_menu", true);
 
             Main.ServerBlips.Add(
-                Blips.Create(NameChangePosition, "Namensänderung", 267, 1.0f, color: 42)
+                Blips.Create(NameChangePosition, "PARADOX Stadthalle", 267, 1.0f, color: 42)
             );
-
-            new Npc(
-                Enum.TryParse("cs_lestercrest", true, out PedHash skin) ? skin : PedHash.LesterCrest, NameChangePosition, -153.85593f, 0
-            );
-
-            PlayerNotifications.Instance.Add(NameChangePosition, "Namensänderung", "Hier hast du die Möglichkeit deinen Namen zu ändern.");
 
             MenuManager.Instance.AddBuilder(new StadtHalleMenu());
             return base.OnLoad();
@@ -53,14 +47,6 @@ namespace VMP_CNR.Module.Stadthalle
             if (dbPlayer.HasData("stadthalle_menu"))
             {
                 MenuManager.Instance.Build(PlayerMenu.StadtHalleMenu, dbPlayer).Show(dbPlayer);
-                return true;
-            }
-
-            if (dbPlayer.Player.Position.DistanceTo(NameChangePosition) < 5)
-            {
-                ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, 
-                    new TextInputBoxWindowObject() { Title = "Namensänderung", Callback = "DoNamechangeRelease", Message = $"Namensänderung von {dbPlayer.RageExtension.Name}. Gib den neuen Namen an (Vorname_Nachname):" });
-
                 return true;
             }
 

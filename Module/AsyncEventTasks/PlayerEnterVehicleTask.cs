@@ -125,6 +125,7 @@ namespace VMP_CNR.Module.AsyncEventTasks
                     });
 
                     iPlayer.Player.TriggerNewClient("setPlayerVehicleMultiplier", sxVeh.DynamicMotorMultiplier);
+                    sxVeh.Entity.GetVehicle().LastInteracted = DateTime.Now;
 
                     if (seat == 0)
                         sxVeh.LastDriver = iPlayer.GetName();

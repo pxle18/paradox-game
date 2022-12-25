@@ -1459,9 +1459,6 @@ namespace VMP_CNR.Module.Players
                     return;
                 }
 
-                if (dbPlayer.Team.IsInTeamfight()) return;
-
-
                 // Juwe
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(-622.5494, -229.5598, 38.05706)) < 10.0f)
                 {
@@ -1853,6 +1850,11 @@ namespace VMP_CNR.Module.Players
             
         }
 
+        private readonly List<string> _badWords = new List<string>()
+        {
+            "1337Allahuakbar", "Hurensohn", "Bastard", "Fick"
+        };
+
         [CommandPermission]
         [Command(GreedyArg = true)]
         public void ooc(Player player, string oocText = " ")
@@ -1869,6 +1871,7 @@ namespace VMP_CNR.Module.Players
 
             try
             {
+                if (_badWords.Any(x => oocText.ToUpper().Contains(x.ToUpper()))) return;
                 var surroundingUsers = Players.Instance.GetPlayersInRange(dbPlayer.Player.Position, 50.0f); // NAPI.Player.GetPlayersInRadiusOfPlayer(50.0f, dbPlayer.Player);
 
                 foreach (DbPlayer user in surroundingUsers)

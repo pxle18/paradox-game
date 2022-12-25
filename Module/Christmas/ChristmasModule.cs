@@ -13,7 +13,7 @@ namespace VMP_CNR.Module.Christmas
 {
     public sealed class ChristmasModule : Module<ChristmasModule>
     {
-        public Vector3 PresentLocation = new Vector3(-416.655, 1160.048, 325.858);
+        public Vector3 PresentLocation = new Vector3(184.08896, -958.8136, 29.953785);
 
         enum Geschenke
         {
@@ -44,8 +44,6 @@ namespace VMP_CNR.Module.Christmas
         {
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
 
-            if (!EventModule.Instance.IsEventActive((uint)Events.Weihnachten2020)) return false;
-
             if (dbPlayer.Player.Position.DistanceTo(PresentLocation) <= 10)
             {
                 //Wenn Spieler in normaler World
@@ -70,7 +68,7 @@ namespace VMP_CNR.Module.Christmas
                                 // Meinen Papa...
                                 // Meine Geschwister
                                 // Und Espenhain, Felix, Evelyn, und mich (Euka)
-                                if (dbPlayer.Level >= 60)
+                                /*if (dbPlayer.Level >= 60)
                                     dbPlayer.Container.AddItem((uint)Geschenke.SchwarzesGeschenk);
                                 else if (dbPlayer.Level >= 50)
                                     dbPlayer.Container.AddItem((uint)Geschenke.GrauesGeschenk);
@@ -82,7 +80,7 @@ namespace VMP_CNR.Module.Christmas
                                     dbPlayer.Container.AddItem((uint)Geschenke.HellblauesGeschenk);
                                 else if (dbPlayer.Level >= 10)
                                     dbPlayer.Container.AddItem((uint)Geschenke.GrünesGeschenk);
-                                else
+                                else*/
                                     dbPlayer.Container.AddItem((uint)Geschenke.RotesGeschenk);
                             }
                             else

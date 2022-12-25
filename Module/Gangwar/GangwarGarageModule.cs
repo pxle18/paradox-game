@@ -2,9 +2,10 @@
 
 namespace VMP_CNR.Module.Gangwar
 {
-    public class GangwarGarageModule : SqlModule<GangwarGarageModule, GangwarGarage, uint> {
-        
-        protected override string GetQuery() {
+    public class GangwarGarageModule : SqlModule<GangwarGarageModule, GangwarGarage, uint>
+    {
+        protected override string GetQuery()
+        {
             return "SELECT * FROM `gangwar_garages`;";
         }
 

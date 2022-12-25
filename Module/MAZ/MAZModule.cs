@@ -125,7 +125,6 @@ namespace VMP_CNR.Module.MAZ
                 dbPlayer.SendNewNotification($"MAZ {maz.Id} wurde geladen!");
             }
 
-
             return;
         }
 
@@ -157,13 +156,10 @@ namespace VMP_CNR.Module.MAZ
 
             if (loadedAmount > 0 && LastActive.AddHours(3) > DateTime.Now) return; // wenn schonma, dann mind 3h pause
 
-            // Unter 20 Soldaten im Dienst
-            if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_ARMY).GetTeamMembers().Where(t => t.Duty).Count() < 25) return;
-
             bool ChanceRequireSuccess = false;
             Random random = new Random();
 
-            if (loadedAmount == 0 && random.Next(1, 600) < 4)
+            if (loadedAmount == 0 && random.Next(1, 600) < 3)
             {
                 ChanceRequireSuccess = true;
                 Logging.Logger.Debug("MAZ chance triggered");
@@ -199,24 +195,19 @@ namespace VMP_CNR.Module.MAZ
             {
                 int rcheck = random.Next(1, 100);
 
-                if(rcheck <= 5) // marksman
-                {
-                    container.AddItem(87, 2);
-                    contValue -= 50;
-                }
-                else if (rcheck <= 10) // goldbarren
+                if (rcheck <= 10) // goldbarren
                 {
                     container.AddItem(487, 10);
                     contValue -= 30;
                 }
                 else if (rcheck <= 20) // marksmanmag
                 {
-                    container.AddItem(226, 10);
+                    container.AddItem(40, 10);
                     contValue -= 30;
                 }
                 else if (rcheck <= 30) // gusenberg
                 {
-                    container.AddItem(77, 4);
+                    container.AddItem(77, 1);
                     contValue -= 20;
                 }
                 else if (rcheck <= 45) // gusenberg mag
@@ -226,7 +217,7 @@ namespace VMP_CNR.Module.MAZ
                 }
                 else if (rcheck <= 70) // advancedrifle
                 {
-                    container.AddItem(81, 6);
+                    container.AddItem(81, 2);
                     contValue -= 17;
                 }
                 else if (rcheck <= 100) // advancedrifle mags
@@ -282,7 +273,8 @@ namespace VMP_CNR.Module.MAZ
 
                 Logging.Logger.Debug($"MAZ {maz.Id} loaded");
 
-                await Chats.SendGlobalMessage($"Zentrales Flugabwehrsystem: Es wurde der Absturz einer feindlichen Militärmaschine im Hoheitsgebiet Los Santos gemeldet!", COLOR.LIGHTBLUE, ICON.GOV);
+                await SendGlobalMessage($"Zentrales Flugabwehrsystem: Es wurde der Absturz einer feindlichen Militärmaschine im Hoheitsgebiet Los Santos gemeldet!", COLOR.LIGHTBLUE, ICON.GOV);
+                TeamModule.Instance.SendChatMessageToDepartments("Achtung: Flugzeugabstürze sind nur für Bad-Fraktionen. Sie dürfen dieses Event nicht anfahren.");
             });
         }
     }

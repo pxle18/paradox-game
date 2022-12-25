@@ -16,9 +16,7 @@ namespace VMP_CNR.Module.Gangwar
 {
     public class GangwarVehicleMenu : MenuBuilder
     {
-        public GangwarVehicleMenu() : base(PlayerMenu.GangwarVehicleMenu)
-        {
-        }
+        public GangwarVehicleMenu() : base(PlayerMenu.GangwarVehicleMenu) { }
 
         public override Menu.Menu Build(DbPlayer dbPlayer)
         {
@@ -27,6 +25,7 @@ namespace VMP_CNR.Module.Gangwar
             menu.Add(GlobalMessages.General.Close());
             menu.Add("Waffenkits");
             menu.Add("Revolter");
+
             return menu;
         }
 

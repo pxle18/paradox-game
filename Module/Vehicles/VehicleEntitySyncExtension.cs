@@ -34,7 +34,7 @@ namespace VMP_CNR.Module.Vehicles
             NAPI.Task.Run(() =>
             {
                 NAPI.Vehicle.SetVehicleEngineStatus(this.Entity, status);
-
+                this.Entity.GetVehicle().LastInteracted = DateTime.Now;
                 this.EngineOn = status;
                 Entity.SetSharedData("engineStatus", status);
             });

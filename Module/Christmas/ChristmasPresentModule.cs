@@ -108,6 +108,7 @@ namespace VMP_CNR.Module.Christmas
 
             if (dbPlayer.Player.Position.DistanceTo(PresentLocation) < 10.0f)
             {
+                /*
                 DateTime actualDate = System.DateTime.Now;
                 //Wenn letzte Abholung nicht am selben Tag sondern davor war
                 if (dbPlayer.xmasLast.Day < actualDate.Day || (dbPlayer.xmasLast.Day == 30 && dbPlayer.xmasLast.Month == 11))
@@ -130,7 +131,7 @@ namespace VMP_CNR.Module.Christmas
                     dbPlayer.SendNewNotification("Du hast dein Geschenk fuer heute bereits abgeholt. Wenn nicht - Sorry. Fix ich morgen", PlayerNotification.NotificationType.ERROR, "XMAS");
                     return false;
                 }
-                return true;
+                return true;*/
             }
             return false;
         }
@@ -139,16 +140,16 @@ namespace VMP_CNR.Module.Christmas
         {
             player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Bitte öffne an diesem Punkt dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
 
-            player.xmasLast = DateTime.Now;
-            player.SaveChristmasState();
-
             foreach (var code in christmasPresents.ToList())
             {
                 player.ChristmasContainer.AddItem(code.Item, code.Amount);
                 code.Delete();
 
-                Instance.Presents.Remove(code);
+                Instance.Presents.RemoveAll(christmasPresent => christmasPresent.Id == christmasPresent.Id);
             }
+
+            player.xmasLast = DateTime.Now;
+            player.SaveChristmasState();
         }
     }
 }

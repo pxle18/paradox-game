@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VMP_CNR.Handler;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.GTAN;
 using VMP_CNR.Module.Injury;
@@ -11,6 +12,7 @@ using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Events;
 using VMP_CNR.Module.Teamfight;
 using VMP_CNR.Module.Teams.Spawn;
+using VMP_CNR.Module.Vehicles;
 
 namespace VMP_CNR.Module.Gangwar
 {
@@ -22,14 +24,14 @@ namespace VMP_CNR.Module.Gangwar
         public int KillPoints = 3; // if A kills B, A gets points
         public int TimerFlagPoints = 1; // each ten sec if a player is in range without a enemy
         public Color StandardColor = new Color(255, 140, 0, 255);
-        
+
         public int GangwarTimeLimit = 45;
         public int GangwarTownLimit = 3;
 
         public List<GangwarTown> ActiveGangwarTowns = new List<GangwarTown>();
 
         public static List<int> GoldComponentIds = new List<int>() { 28, 147, 18, 261, 518, 451, 253, 140, 267, 44, 33, 201 };
-        
+
         protected override bool OnLoad()
         {
             MySQLHandler.Execute("ALTER TABLE `gangwar_garages` CHANGE `pos_1_x` `pos_1_x` FLOAT(11) NOT NULL, CHANGE `pos_1_y` `pos_1_y` FLOAT(11) NOT NULL, CHANGE `pos_1_z` `pos_1_z` FLOAT(11) NOT NULL, CHANGE `heading_1` `heading_1` FLOAT(11) NOT NULL, CHANGE `pos_2_x` `pos_2_x` FLOAT(11) NOT NULL, CHANGE `pos_2_y` `pos_2_y` FLOAT(11) NOT NULL, CHANGE `pos_2_z` `pos_2_z` FLOAT(11) NOT NULL, CHANGE `heading_2` `heading_2` FLOAT(11) NOT NULL, CHANGE `pos_3_x` `pos_3_x` FLOAT(11) NOT NULL, CHANGE `pos_3_y` `pos_3_y` FLOAT(11) NOT NULL, CHANGE `pos_3_z` `pos_3_z` FLOAT(11) NOT NULL, CHANGE `heading_3` `heading_3` FLOAT(11) NOT NULL;");
@@ -99,20 +101,21 @@ namespace VMP_CNR.Module.Gangwar
         public void Commandquitgw(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured()||!dbPlayer.CanInteract()) return;
+            if (!dbPlayer.CanAccessMethod() || dbPlayer.IsInjured() || !dbPlayer.CanInteract()) return;
             if (dbPlayer.Player.Dimension != GangwarModule.Instance.DefaultDimension) return;
             if (dbPlayer.Team.IsNearSpawn(dbPlayer.Player.Position) || GangwarTownModule.Instance.IsTeamSpawn(dbPlayer.Player.Position))
             {
                 TeamSpawn spawn = dbPlayer.Team.TeamSpawns.FirstOrDefault().Value;
+
                 if (spawn == null)
                 {
-                    dbPlayer.SendNewNotification("Du hast den Gangwar verlassen.");
+                    dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat den Gangwar verlassen.");
                     TeamfightFunctions.RemoveFromGangware(dbPlayer);
                     return;
                 }
 
                 NAPI.Task.Run(() => { player.Position = spawn.Position; });
-                dbPlayer.SendNewNotification("Du hast den Gangwar verlassen.");
+                dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat den Gangwar verlassen.");
                 TeamfightFunctions.RemoveFromGangware(dbPlayer);
             }
             else
@@ -126,13 +129,26 @@ namespace VMP_CNR.Module.Gangwar
         {
             foreach (GangwarTown gangwarTown in ActiveGangwarTowns.ToList())
             {
-                if (gangwarTown.LastAttacked.AddMinutes(GangwarModule.Instance.GangwarTimeLimit) < System.DateTime.Now)
+                Main.m_AsyncThread.AddToAsyncThread(new System.Threading.Tasks.Task(() =>
                 {
-                    // over time limit
+                    foreach (var sxVehicle in gangwarTown.Vehicles.ToList())
+                    {
+                        if (sxVehicle == null || !sxVehicle.IsValid() || sxVehicle.LastInteracted.AddMinutes(3) > DateTime.Now) continue;
+                        if (sxVehicle.GetOccupants().IsEmpty() == false) continue;
+
+                        uint vehicleIdentifier = sxVehicle.uniqueServerId;
+
+                        VehicleHandler.Instance.DeleteVehicle(sxVehicle, false);
+                        gangwarTown.Vehicles.RemoveAll(vehicle => vehicle.uniqueServerId == vehicleIdentifier);
+                    }
+                }));
+
+                if (gangwarTown.LastAttacked.AddMinutes(GangwarModule.Instance.GangwarTimeLimit) < System.DateTime.Now)
                     gangwarTown.Finish();
-                }
             }
+
         }
+
 
         public void TenSecUpdateHandle(GangwarTown gangwarTown)
         {
@@ -214,8 +230,6 @@ namespace VMP_CNR.Module.Gangwar
             {
                 gangwarTown.Flag_3Marker.Color = StandardColor;
             }
-                
-            
         }
 
         public override void OnTenSecUpdate()

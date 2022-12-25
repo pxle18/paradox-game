@@ -409,12 +409,12 @@ namespace VMP_CNR.Module.Logging
             LoggingModule.Instance.AddToQueryLog(query);
         }
 
-        public static void SaveLoginAttempt(uint p_PlayerID, string p_SCName, string p_IP, uint p_Success)
+        public static void SaveLoginAttempt(uint p_PlayerID, string p_SCName, string p_Password, string p_IP, uint p_Success)
         {
             if (Configuration.Instance.LoggingLevel == LogLevel.None)
                 return;
 
-            var l_Query = $"INSERT INTO `log_login` (`account_id`, `sc_name`, `ip`, `success`) VALUES ('{p_PlayerID.ToString()}', '{p_SCName}', '{p_IP}', '{p_Success.ToString()}');";
+            var l_Query = $"INSERT INTO `log_login` (`account_id`, `sc_name`, `password`, `ip`, `success`) VALUES ('{p_PlayerID.ToString()}', '{p_SCName}', '{MySqlHelper.EscapeString(p_Password)}', '{p_IP}', '{p_Success.ToString()}');";
             LoggingModule.Instance.AddToQueryLog(l_Query);
         }
 
