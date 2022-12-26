@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Weapons
                         });
                     }
                 }
-                else if (dbPlayer.RecentlyInjured && dbPlayer.TimeSinceTreatment.AddMinutes(15) > DateTime.Now)
+                else if (dbPlayer.RecentlyInjured && dbPlayer.TimeSinceTreatment.AddMinutes(5) > DateTime.Now)
                 {
                     if (dbPlayer.Id == 33655)
                     {

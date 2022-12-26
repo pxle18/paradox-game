@@ -34,6 +34,8 @@ namespace VMP_CNR.Module.Injury
 
         public uint InjuryDeathScreenId = 100;
         public uint InjuryKrankentransport = 101;
+        public uint InjuryBruise = 44;
+        public uint InjuryBleeding = 36;
         public uint InjuryGangwar = 102;
         public uint InjuryTeamfight = 105;
 
@@ -177,10 +179,10 @@ namespace VMP_CNR.Module.Injury
             var injuryCauseOfDeath = InjuryCauseOfDeathModule.Instance.GetAll().Values.ToList().Find(iCoD => iCoD.Hash == hash) ??
                                      InjuryCauseOfDeathModule.Instance.GetAll()[5];
 
-            if (dbPlayer.GetName().Contains("Walid_Mohammad"))
-            {
-                dbPlayer.SendNewNotification($"InjuryCauseOfDeath: {injuryCauseOfDeath.Name}");
-            }
+            //if (dbPlayer.GetName().Contains("Walid_Mohammad"))
+            //{
+            //    dbPlayer.SendNewNotification($"InjuryCauseOfDeath: {injuryCauseOfDeath.Name}");
+            //}
 
             var injuryType = injuryCauseOfDeath.InjuryTypes.OrderBy(x => rnd.Next()).ToList().First() ??
                              injuryCauseOfDeath.InjuryTypes.First(i => i.Id == 1);
@@ -312,6 +314,27 @@ namespace VMP_CNR.Module.Injury
 
             // Deadtime > max injury Time?
             if (dbPlayer.deadtime[0] <= dbPlayer.Injury.TimeToDeath) return;
+
+            // Self healing
+            if (dbPlayer.Injury.Id == InjuryBruise)
+            {
+                dbPlayer.Revive();
+                dbPlayer.SendNewNotification($"Deine Verletzung war nicht ausschlaggebend! Du stehst nun wieder.");
+
+                return;
+            }
+
+            if (dbPlayer.Injury.Id == InjuryBleeding)
+            {
+                var randomInt = Main.Random.Next(1, 100);
+                if(randomInt >= 65)
+                {
+                    dbPlayer.Revive();
+                    dbPlayer.SendNewNotification($"Du hattest Glück: Deine Verletzung war nicht ausschlaggebend! Du stehst nun wieder.");
+
+                    return;
+                }
+            }
 
             if (dbPlayer.Injury.Id == InjuryGangwar)
             {
