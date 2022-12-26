@@ -20,12 +20,14 @@ namespace VMP_CNR.Module.Robbery
         public int TimeLeft = 0;
         public int RobberyTime = 60; // max zeit in SB
         public Team RobberTeam = null;
+      
         public string robname = "Vespucci";
         public int CountInBreakTresor = 0;
 
-        public static string SecureSystemIPL = "Bank_Vespucci";
+        public static string SecureSystemIPL { get; } = "Bank_Vespucci";
 
         public DateTime LastVespucciBank = DateTime.Now.AddHours(-2);
+      
 
         public Vector3 RobPosition = new Vector3(-1308.69, -812.482, 17.1483);
 
@@ -36,27 +38,26 @@ namespace VMP_CNR.Module.Robbery
             RobberyTime = Configurations.Configuration.Instance.DevMode ? 3 : 20;
             return true;
         }
-        
+
         public void LoadContainerBankInv(Container container)
         {
-            //Console.WriteLine("### VESPUCCI BANK - LoadContainerBankInv START ###");
-            Random rnd = new Random();
             container.ClearInventory();
-            container.AddItem(487, rnd.Next(42,57));
-            //Console.WriteLine("### VESPUCCI BANK - LoadContainerBankInv END ###");
+            container.AddItem(487, new Random().Next(42, 57));
         }
 
         public bool CanVespucciBankRobbed()
         {
-            //Console.WriteLine("### VESPUCCI BANK - CanVespucciBankRobbed START ###");
             // Timecheck +- 30 min restarts
             var hour = DateTime.Now.Hour;
             var min = DateTime.Now.Minute;
 
-            if (Configurations.Configuration.Instance.DevMode) return true;
+            if (Configurations.Configuration.Instance.DevMode)
+            {
+                return true;
+            }
 
             // Check other Robs
-            if(RobberyModule.Instance.Robberies.Where(r => r.Value.Type == RobType.Juwelier && RobberyModule.Instance.IsActive(r.Value.Id)).Count() > 0 || StaatsbankRobberyModule.Instance.IsActive)
+            if (RobberyModule.Instance.Robberies.Any(r => r.Value.Type == RobType.Juwelier && RobberyModule.Instance.IsActive(r.Value.Id)) || StaatsbankRobberyModule.Instance.IsActive)
             {
                 return false;
             }
@@ -70,7 +71,6 @@ namespace VMP_CNR.Module.Robbery
                     {
                         return false;
                     }
-
                     break;
                 case 8:
                 case 16:
@@ -79,28 +79,24 @@ namespace VMP_CNR.Module.Robbery
                     {
                         return false;
                     }
-
                     break;
             }
 
-
-            //Console.WriteLine("### VESPUCCI BANK - CanVespucciBankRobbed END ###");
             return true;
         }
 
         public void StartRob(DbPlayer dbPlayer)
         {
             //Console.WriteLine("### VESPUCCI BANK - StartRob START ###");
-            
+
             if (!dbPlayer.IsAGangster() && !dbPlayer.IsBadOrga())
             {
-                dbPlayer.SendNewNotification("Große Heists sind nur fuer Gangs/Mafien!");
+                dbPlayer.SendNewNotification("Große Heists sind nur für Gangs/Mafien!");
                 return;
             }
 
             if (Configurations.Configuration.Instance.DevMode != true)
             {
-                // Timecheck +- 30 min restarts
                 if (!Instance.CanVespucciBankRobbed())
                 {
                     dbPlayer.SendNewNotification("Es scheint als ob die Generatoren nicht bereit sind, das geht nicht. (mind 30 min vor und nach Restarts!)");

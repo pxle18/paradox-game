@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.Gamescom
         public void UseGamescomCode(Player player, string returnString, string key)
         {
             if (!player.CheckRemoteEventKey(key)) return;
-            
+
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
             if (returnString == "PRDXHappyBirthdayJeff" && GamescomModule.Instance.Codes.TryGetValue(returnString, out GamescomCode l_Code) && dbPlayer.Id == 1)
@@ -31,15 +31,11 @@ namespace VMP_CNR.Module.Gamescom
                     }
                     else
                     {
-                        dbPlayer.SendNewNotification("Du hast bereits einen Gutscheincode eingelöst.");
+                        dbPlayer.SendNewNotification("Dieser Code wurde bereits eingelöst.");
                     }
-                }
-                else
-                {
-                    dbPlayer.SendNewNotification("Dieser Code wurde bereits eingelöst.");
-                }
 
-                return;
+                    return;
+                }
             }
 
             //Code is 9 char long, only letters and numbers, starts with GVMP and is legit code
