@@ -14,9 +14,16 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         public Team Team { get; set; }
         public HashSet<Team> TeamsCanAccess { get; set; }
         public int Money { get; set; }
+        public DateTime LastRob { get; set; }
 
         public ShopTakeoverModel(MySql.Data.MySqlClient.MySqlDataReader reader) : base(reader)
         {
+            Name = reader.GetString("name");
+            Shop = ShopModule.Instance[reader.GetUInt32("shop_id")];
+            Team = TeamModule.Instance[reader.GetUInt32("ownerTeam")];
+            Money = reader.GetInt32("money");
+            LastRob = reader.GetDateTime("lastRob");
+
             TeamsCanAccess = GetHashSet<Team>(reader.GetString("teamsCanAccess"), (teamId, hashSet) =>
             {
                 var targetTeam = TeamModule.Instance[teamId];

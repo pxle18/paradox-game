@@ -11,7 +11,6 @@ namespace VMP_CNR.Module.ShopTakeover
      */
     public sealed class ShopTakeoverModule : SqlModule<ShopTakeoverModule, ShopTakeoverModel, uint>
     {
-        private readonly L
         protected override string GetQuery() => "SELECT * FROM shop_takeovers";
     }
 }
