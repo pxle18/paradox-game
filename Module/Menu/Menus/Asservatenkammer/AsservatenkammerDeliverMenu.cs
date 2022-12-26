@@ -8,9 +8,9 @@ namespace VMP_CNR.Module.Menu.Menus.Asservatenkammer
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Asservatenkammer");
+            var menu = new NativeMenu(Menu, "Asservatenkammer");
             menu.Add(GlobalMessages.General.Close(), "");
             menu.Add("Abgabe", "Ware abgeben");
             menu.Add("Informationen", "Bestand prüfen");

@@ -19,9 +19,9 @@ namespace VMP_CNR.Module.FIB.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "FIB Ortungsverwaltung");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "FIB Ortungsverwaltung");
             l_Menu.Add($"Schließen");
 
             if (!p_DbPlayer.HasData("fib_permit_id"))

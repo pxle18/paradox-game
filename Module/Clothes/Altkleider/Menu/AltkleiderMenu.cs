@@ -18,9 +18,9 @@ namespace VMP_CNR.Module.Clothes.Altkleider
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Altkleider");
+            var menu = new Menu.NativeMenu(Menu, "Altkleider");
             menu.Add(GlobalMessages.General.Close());
 
             foreach (var clothId in dbPlayer.Character.Wardrobe.ToList())

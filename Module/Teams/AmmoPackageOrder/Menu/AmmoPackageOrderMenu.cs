@@ -22,12 +22,12 @@ namespace VMP_CNR.Module.Teams.AmmoPackageOrder
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (dbPlayer.Team.Id != (int)TeamTypes.TEAM_HUSTLER) return null;
             if (dbPlayer.TeamRank < 8) return null;
 
-            var menu = new Menu.Menu(Menu, "Munitionsbestellung");
+            var menu = new Menu.NativeMenu(Menu, "Munitionsbestellung");
 
             menu.Add($"Schließen");
             foreach(DbTeam dbTeam in TeamModule.Instance.GetAll().Values.Where(t => t.IsGangsters()))

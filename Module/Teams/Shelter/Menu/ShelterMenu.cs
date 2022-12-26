@@ -29,10 +29,10 @@ namespace VMP_CNR.Module.Teams.Shelter
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("teamShelterMenuId")) return null;
-            var menu = new Menu.Menu(Menu, "Fraktionslager");
+            var menu = new Menu.NativeMenu(Menu, "Fraktionslager");
 
             menu.Add($"Schließen"); // 0
             menu.Add($"Fraktionsbank"); // 1

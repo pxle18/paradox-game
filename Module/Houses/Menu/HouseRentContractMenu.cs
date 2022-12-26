@@ -17,9 +17,9 @@ namespace VMP_CNR.Module.Houses
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Module.Menu.Menu(Menu, "Mietslot wählen");
+            var menu = new Module.Menu.NativeMenu(Menu, "Mietslot wählen");
 
             menu.Add($"Schließen");
             foreach (HouseRent houseRent in HouseRentModule.Instance.houseRents.ToList().Where(hr => hr.HouseId == dbPlayer.OwnHouse[0] && hr.PlayerId == 0))

@@ -10,11 +10,11 @@ namespace VMP_CNR.Module.Menu.Menus.Heists.Planningroom
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("planningroom_vehicle_tuning")) return null;
 
-            var menu = new Menu(Menu, "Planningroom", "Fahrzeuge modifizieren");
+            var menu = new NativeMenu(Menu, "Planningroom", "Fahrzeuge modifizieren");
 
             menu.Add($"Schließen");
             menu.Add($"Nummernschild ändern");

@@ -12,6 +12,7 @@ using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.JumpPoints;
 using VMP_CNR.Module.Teams;
+using static VMP_CNR.Module.Chat.Chats;
 
 namespace VMP_CNR.Module.Robbery
 {
@@ -38,11 +39,11 @@ namespace VMP_CNR.Module.Robbery
             RobberyTime = Configurations.Configuration.Instance.DevMode ? 3 : 20;
             return true;
         }
-        
+
         public void LoadContainerLifeInvader(Container container)
         {
             container.ClearInventory();
-            container.AddItem(1101, 1);
+            container.AddItem(1018, 3);
         }
 
         public bool CanLifeinvaderRobbed()
@@ -54,7 +55,7 @@ namespace VMP_CNR.Module.Robbery
             if (Configurations.Configuration.Instance.DevMode) return true;
 
             // Check other Robs
-            if(RobberyModule.Instance.Robberies.Where(r => r.Value.Type == RobType.Juwelier && RobberyModule.Instance.IsActive(r.Value.Id)).Count() > 0 || StaatsbankRobberyModule.Instance.IsActive || VespucciBankRobberyModule.Instance.IsActive)
+            if (RobberyModule.Instance.Robberies.Where(r => r.Value.Type == RobType.Juwelier && RobberyModule.Instance.IsActive(r.Value.Id)).Count() > 0 || StaatsbankRobberyModule.Instance.IsActive || VespucciBankRobberyModule.Instance.IsActive)
             {
                 return false;
             }
@@ -102,26 +103,27 @@ namespace VMP_CNR.Module.Robbery
                     return;
                 }
             }
-
-            if (Instance.IsActive || RobberyModule.Instance.LastScenario.AddHours(2) > DateTime.Now || (LastVespucciBank.AddHours(2) > DateTime.Now && !Configurations.Configuration.Instance.DevMode))
+            if (dbPlayer.Team.Id == 12)
             {
-                dbPlayer.SendNewNotification("Der Lifeinvader wurde bereits ausgeraubt oder ist derzeit nicht verfügbar!");
-                return;
-            }
+                if (Instance.IsActive || RobberyModule.Instance.LastScenario.AddHours(2) > DateTime.Now || (LastVespucciBank.AddHours(2) > DateTime.Now && !Configurations.Configuration.Instance.DevMode))
+                {
+                    dbPlayer.SendNewNotification("Der Lifeinvader wurde bereits ausgeraubt oder ist derzeit nicht verfügbar!");
+                    return;
+                }
 
-            if (TeamModule.Instance.DutyCops < 20 && !Configurations.Configuration.Instance.DevMode)
-            {
-                dbPlayer.SendNewNotification("Es muessen mindestens 20 Beamte im Dienst sein!");
-                return;
-            }
+                if (TeamModule.Instance.DutyCops < 20 && !Configurations.Configuration.Instance.DevMode)
+                {
+                    dbPlayer.SendNewNotification("Es muessen mindestens 20 Beamte im Dienst sein!");
+                    return;
+                }
 
-            var vtc = RobberyModule.Instance.ValidTeamScenario(this.robname, dbPlayer.Team.Id);
-            if (!vtc.check)
-            {
-                dbPlayer.SendNewNotification($"Sie sind noch auf der Fahndungsliste, nächste Möglichkeit am {vtc.lastrob}");
-                return;
+                var vtc = RobberyModule.Instance.ValidTeamScenario(this.robname, dbPlayer.Team.Id);
+                if (!vtc.check)
+                {
+                    dbPlayer.SendNewNotification($"Sie sind noch auf der Fahndungsliste, nächste Möglichkeit am {vtc.lastrob}");
+                    return;
+                }
             }
-
             // Set start datas
             TimeLeft = RobberyTime;
             IsActive = true;
@@ -131,12 +133,13 @@ namespace VMP_CNR.Module.Robbery
             // Messages
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, ein Einbruch im Lifeinvader wurde gemeldet!");
             TeamModule.Instance.SendMessageToTeam("Sie beginnen einen Ueberfall auf den Lifeinvader!", (TeamTypes)RobberTeam.Id);
+            await Chats.SendGlobalMessage($"Der Lifeinvader meldet einen Überfall / Einbruch - die Server werden gerade aufgeschweißt.", COLOR.LIGHTBLUE, ICON.GOV, 8000);
 
             LastVespucciBank = DateTime.Now;
 
             RobberyModule.Instance.LastScenario = DateTime.Now;
             RobberyModule.Instance.SetTeamScenario(this.robname, dbPlayer.Team.Id);
-                
+
             int time = 300000;
             if (Configuration.Instance.DevMode) time = 30000;
             // Aufschließen lul
@@ -164,22 +167,24 @@ namespace VMP_CNR.Module.Robbery
             IsHacked = true;
         }
 
-        public void CloseRob()
+        public async void CloseRob()
         {
             StaticContainer StaticContainer = StaticContainerModule.Instance.Get((uint)StaticContainerTypes.LIFEINVADERROB);
             StaticContainer.Container.ClearInventory();
             StaticContainer.Locked = true;
 
+            await Chats.SendGlobalMessage($"Der Lifeinvader-Überfall ist vorbei - die Server sind wieder verfügbar.", COLOR.LIGHTBLUE, ICON.GOV, 8000);
 
             this.IsActive = false;
             this.RobberTeam = null;
             this.TimeLeft = RobberyTime;
         }
 
-        public void CancelRob()
+        public async void CancelRob()
         {
             TeamModule.Instance.SendChatMessageToDepartments("An Alle Einheiten, der Einbruch auf den Lifeinvader wurde erfolgreich verhindert!");
             TeamModule.Instance.SendMessageToTeam("Der Überfall ist gescheitert!", (TeamTypes)RobberTeam.Id);
+            await Chats.SendGlobalMessage($"Der Lifeinvader-Überfall konnte gestoppt werden - die Server sind wieder verfügbar.", COLOR.LIGHTBLUE, ICON.GOV, 8000);
 
             IsActive = false;
             RobberTeam = null;
@@ -188,23 +193,23 @@ namespace VMP_CNR.Module.Robbery
 
         public override void OnMinuteUpdate()
         {
-            if(IsActive)
+            if (IsActive)
             {
                 // Check if Teamplayer is in Reange
-                if(RobberTeam == null || RobberTeam.GetTeamMembers().Where(p => p != null && p.IsValid() && !p.IsInjured() && p.Player.Position.DistanceTo(RobPosition) < 50.0f).Count() <= 0)
+                if (RobberTeam == null || RobberTeam.GetTeamMembers().Where(p => p != null && p.IsValid() && !p.IsInjured() && p.Player.Position.DistanceTo(RobPosition) < 50.0f).Count() <= 0)
                 {
                     CancelRob();
                     return;
                 }
 
-                if(TimeLeft == 45) // nach 15 min weil 60 XX
+                if (TimeLeft == 45) // nach 15 min weil 60 XX
                 {
                     int playersAtRob = RobberTeam.GetTeamMembers().Where(m => m.Player.Position.DistanceTo(RobPosition) < 300f).Count();
                     RobberTeam.TeamMetaData.AddRespect(playersAtRob * 100);
 
                     TeamModule.Instance.SendMessageToTeam("Durch den Überfall erhält ihr Team Ansehen! (" + playersAtRob * 100 + "P)", (TeamTypes)RobberTeam.Id);
                 }
-                if(TimeLeft == 60)
+                if (TimeLeft == 60)
                 {
                     CloseRob();
                 }

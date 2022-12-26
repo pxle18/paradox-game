@@ -12,9 +12,9 @@ namespace VMP_CNR.Module.Menu.Menus.Account
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Schluessel");
+            var menu = new NativeMenu(Menu, "Schluessel");
             menu.Add(GlobalMessages.General.Close(), "");
 
             // List Fahrzeuge

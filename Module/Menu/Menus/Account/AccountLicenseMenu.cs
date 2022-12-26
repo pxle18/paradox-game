@@ -5,9 +5,9 @@ namespace VMP_CNR
 {
     public class AccountLicenseMenuBuilder : MenuBuilder
     {
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Lizenzen");
+            var menu = new NativeMenu(Menu, "Lizenzen");
             switch (dbPlayer.Lic_Car[0])
             {
                 case 1:

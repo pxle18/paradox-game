@@ -3247,7 +3247,7 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true, AllowedDeath = true)]
         [Command(GreedyArg = true)]
-        public void arev(Player player, string name)
+        public void arev(Player player, string name, string reason = "")
         {
             var dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
@@ -3263,7 +3263,6 @@ namespace VMP_CNR.Module.Admin
 
             PlayerSpawn.OnPlayerSpawn(findPlayer.Player);
             DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.arev, $"{dbPlayer.GetName()} (ID: {dbPlayer.Id}) belebte {findPlayer.GetName()} (ID: {findPlayer.Id}) wieder.", 0, Configuration.Instance.DevMode);
-
         }
 
 

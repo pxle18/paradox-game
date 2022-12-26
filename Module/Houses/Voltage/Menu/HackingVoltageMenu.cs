@@ -19,9 +19,9 @@ namespace VMP_CNR.Module.Houses.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Module.Menu.Menu(Menu, "Sicherheitssystem Hacking", "");
+            var menu = new Module.Menu.NativeMenu(Menu, "Sicherheitssystem Hacking", "");
 
             menu.Add($"Schließen");
             menu.Add($"Paleto Police");

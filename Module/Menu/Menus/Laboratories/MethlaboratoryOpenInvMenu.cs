@@ -18,7 +18,7 @@ namespace VMP_CNR
 
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (dbPlayer.DimensionType[0] == DimensionType.Heroinlaboratory)
             {
@@ -42,7 +42,7 @@ namespace VMP_CNR
             }
             else return null;
 
-            Menu menu = new Menu(Menu, "Labor Inhalte");
+            NativeMenu menu = new NativeMenu(Menu, "Labor Inhalte");
             menu.Add("Schließen", "");
             menu.Add("Durchsuchen", "");
             if(dbPlayer.IsACop())

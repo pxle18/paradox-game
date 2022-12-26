@@ -18,9 +18,9 @@ namespace VMP_CNR.Module.Gangwar
     {
         public GangwarVehicleMenu() : base(PlayerMenu.GangwarVehicleMenu) { }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            Menu.Menu menu = new Menu.Menu(Menu, "Gangwar - Fahrzeuge");
+            Menu.NativeMenu menu = new Menu.NativeMenu(Menu, "Gangwar - Fahrzeuge");
 
             menu.Add(GlobalMessages.General.Close());
             menu.Add("Waffenkits");
@@ -47,7 +47,7 @@ namespace VMP_CNR.Module.Gangwar
                 {
                     case 0: return true;
                     case 1:
-                        Menu.Menu menu = MenuManager.Instance.Build(PlayerMenu.GangwarWeaponMenu, dbPlayer);
+                        Menu.NativeMenu menu = MenuManager.Instance.Build(PlayerMenu.GangwarWeaponMenu, dbPlayer);
                         menu.Show(dbPlayer);
                         return false;
                     case 2: 

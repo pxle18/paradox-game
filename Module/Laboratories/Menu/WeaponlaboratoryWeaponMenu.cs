@@ -17,9 +17,9 @@ namespace VMP_CNR.Module.Laboratories.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Module.Menu.Menu(Menu, "Herstellung");
+            var menu = new Module.Menu.NativeMenu(Menu, "Herstellung");
 
             menu.Add($"Schließen");
             foreach(KeyValuePair<uint, int> kvp in WeaponlaboratoryModule.Instance.WeaponHerstellungList)

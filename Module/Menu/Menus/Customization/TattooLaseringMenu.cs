@@ -18,9 +18,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Tattoo Lasering");
+            var menu = new NativeMenu(Menu, "Tattoo Lasering");
             
             foreach(uint id in dbPlayer.Customization.Tattoos)
             {

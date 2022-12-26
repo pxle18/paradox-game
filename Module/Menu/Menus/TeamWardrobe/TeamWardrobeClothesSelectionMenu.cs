@@ -16,7 +16,7 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("teamWardrobeSlot"))
             {
@@ -31,7 +31,7 @@ namespace VMP_CNR
             }
 
             var slot = slots[slotId];
-            var menu = new Menu(Menu, slot.Name);
+            var menu = new NativeMenu(Menu, slot.Name);
             menu.Add(GlobalMessages.General.Close());
 
             if (dbPlayer.IsFreeMode())

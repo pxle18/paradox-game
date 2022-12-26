@@ -22,11 +22,11 @@ namespace VMP_CNR.Module.Teams.Blacklist.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (p_DbPlayer == null || !p_DbPlayer.IsValid() || !p_DbPlayer.IsAGangster() || !p_DbPlayer.HasData("blsetplayer")) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Blacklist Hinzufügen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Blacklist Hinzufügen");
             l_Menu.Add($"Schließen");
             
             foreach (KeyValuePair<int, BlacklistType> kvp in BlacklistModule.Instance.blacklistTypes)

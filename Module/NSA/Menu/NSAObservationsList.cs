@@ -21,9 +21,9 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "NSA Observationen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "NSA Observationen");
             l_Menu.Add($"Schließen");
             l_Menu.Add($"Observation hinzufügen");
 

@@ -21,13 +21,13 @@ namespace VMP_CNR.Module.Business.FuelStations
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.TryData("fuelstationId", out uint fuelStationId)) return null;
             var fuelstation = FuelStationModule.Instance.Get(fuelStationId);
             if (fuelstation == null) return null;
             
-            var menu = new Menu.Menu(Menu, fuelstation.Name);
+            var menu = new Menu.NativeMenu(Menu, fuelstation.Name);
 
             menu.Add($"Schließen");
 

@@ -6,7 +6,7 @@ using VMP_CNR.Module.Players.Db;
 
 namespace VMP_CNR.Module.Menu
 {
-    public class Menu
+    public class NativeMenu
     {
         public string Title { get; set; }
 
@@ -29,7 +29,7 @@ namespace VMP_CNR.Module.Menu
 
         public List<Item> Items = new List<Item>();
 
-        public Menu(PlayerMenu menuId, string title = "", string description = "")
+        public NativeMenu(PlayerMenu menuId, string title = "", string description = "")
         {
             MenuId = menuId;
             Title = title;
@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Menu
             Menu = menu;
         }
 
-        public abstract Menu Build(DbPlayer dbPlayer);
+        public abstract NativeMenu Build(DbPlayer dbPlayer);
 
         public abstract IMenuEventHandler GetEventHandler();
     }

@@ -17,14 +17,14 @@ namespace VMP_CNR.Module.Export.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             ItemExportNpc itemExportNpc = ItemExportNpcModule.Instance.GetAll().Values.FirstOrDefault(ie => ie.Position.DistanceTo(dbPlayer.Player.Position) < 3.0f);
 
 
             if (itemExportNpc == null) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Export Händler");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Export Händler");
 
             l_Menu.Add(GlobalMessages.General.Close(), "");
             foreach (var kvp in itemExportNpc.ItemExportList)

@@ -15,9 +15,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Animation Menu");
+            var menu = new NativeMenu(Menu, "Animation Menu");
             menu.Add("Schließen", "");
             menu.Add("Animation beenden", "");
             foreach (KeyValuePair<uint, AnimationCategory> kvp in AnimationCategoryModule.Instance.GetAll())

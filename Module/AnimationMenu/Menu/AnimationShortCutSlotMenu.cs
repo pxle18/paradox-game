@@ -12,9 +12,9 @@ namespace VMP_CNR.Module.AnimationMenu
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Slot auswählen");
+            var menu = new Menu.NativeMenu(Menu, "Slot auswählen");
 
             menu.Add($"Schließen");
 

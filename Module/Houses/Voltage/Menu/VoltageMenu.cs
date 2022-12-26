@@ -16,9 +16,9 @@ namespace VMP_CNR.Module.Houses.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Module.Menu.Menu(Menu, "Stromkasten", "");
+            var menu = new Module.Menu.NativeMenu(Menu, "Stromkasten", "");
 
             menu.Add($"Schließen");
             menu.Add($"Messung durchführen");

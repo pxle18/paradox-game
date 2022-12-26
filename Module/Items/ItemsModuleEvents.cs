@@ -1119,9 +1119,6 @@ namespace VMP_CNR.Module.Items
                         case "sellhousescript":
                             usedSuccessfully = await ItemScript.SellHouseScript(dbPlayer);
                             break;
-                        case "transmitter":
-                            usedSuccessfully = await ItemScript.Transmitter(dbPlayer);
-                            break;
                         case "cig":
                             usedSuccessfully = await ItemScript.SmokeCigarrette(dbPlayer);
                             break;

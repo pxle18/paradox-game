@@ -235,7 +235,7 @@ namespace VMP_CNR.Module.Players
             l_VehOwner.SetData("lsc_vehkey_request", l_VehicleID);
             l_DbPlayer.SendNewNotification($"Du hast eine Schlüssel Anfrage zum Tunen des Fahrzeugs {l_VehicleID.ToString()} abgesendet.");
         }
-        
+
         [Command]
         public void acceptlsc(Player p_Player)
         {
@@ -338,10 +338,10 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            uint l_VehicleID    = l_DbPlayer.GetData("lsc_bill_vehicle");
-            uint l_Amount       = l_DbPlayer.GetData("lsc_bill_amount");
-            uint l_TunerID      = l_DbPlayer.GetData("lsc_bill_tuner");
-            uint l_BillID       = l_DbPlayer.GetData("lsc_bill_id");
+            uint l_VehicleID = l_DbPlayer.GetData("lsc_bill_vehicle");
+            uint l_Amount = l_DbPlayer.GetData("lsc_bill_amount");
+            uint l_TunerID = l_DbPlayer.GetData("lsc_bill_tuner");
+            uint l_BillID = l_DbPlayer.GetData("lsc_bill_id");
 
             SxVehicle l_Vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(l_VehicleID);
             if (l_Vehicle == null)
@@ -404,7 +404,7 @@ namespace VMP_CNR.Module.Players
                                                || findPlayer.Dimension[0] != dbPlayer.Dimension[0]
                                                || !findPlayer.HasData("taxi_request")
                                                || dbPlayer.GetName() != findPlayer.GetData("taxi_request")
-                                               || dbPlayer.Container.GetItemAmount(174)<1
+                                               || dbPlayer.Container.GetItemAmount(174) < 1
                                                || dbPlayer.PhoneSettings.flugmodus)
                         {
                             PlayerNotFoundOrNoService(dbPlayer);
@@ -465,7 +465,7 @@ namespace VMP_CNR.Module.Players
                 if (l_DbPlayer == null)
                     return;
 
-                if (l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_POLICE && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_MEDIC && l_DbPlayer.TeamId != (uint) TeamTypes.TEAM_GOV)
+                if (l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_FIB && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_POLICE && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_ARMY && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_MEDIC && l_DbPlayer.TeamId != (uint)TeamTypes.TEAM_GOV)
                     return;
 
                 DbPlayer l_FindPlayer = Players.Instance.FindPlayer(p_Name);
@@ -491,14 +491,14 @@ namespace VMP_CNR.Module.Players
                 return;
             }));
         }
-        
+
         [CommandPermission]
         [Command]
         public void gamescom(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
-            if (dbPlayer.Container.GetInventoryFreeSpace() > 1000 && dbPlayer.Container.MaxSlots-dbPlayer.Container.GetUsedSlots() >= 1)
+            if (dbPlayer.Container.GetInventoryFreeSpace() > 1000 && dbPlayer.Container.MaxSlots - dbPlayer.Container.GetUsedSlots() >= 1)
             {
                 GTANetworkAPI.NAPI.Task.Run(() => ComponentManager.Get<TextInputBoxWindow>().Show()(
                     dbPlayer, new TextInputBoxWindowObject() { Title = "Gamescom Code einlösen", Callback = "UseGamescomCode", Message = "Gib den Gutscheincode ein." }));
@@ -624,7 +624,7 @@ namespace VMP_CNR.Module.Players
             }
             List<ClientContainerObject> containerList = new List<ClientContainerObject>();
             containerList.Add(dbPlayer.Container.ConvertForClient(1, "", dbPlayer.Money[0]));
-            
+
 
             // Find Now The Inventory
             string clientsending = "[";
@@ -925,11 +925,6 @@ namespace VMP_CNR.Module.Players
             {
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (!dbPlayer.CanAccessMethod() || dbPlayer.Player == null) return;
-                if (dbPlayer.marryLic != 1)
-                {
-                    dbPlayer.SendNewNotification(GlobalMessages.Error.NoMarry(), title: "SERVER" ,notificationType: PlayerNotification.NotificationType.SERVER);
-                    return;
-                }
 
                 var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
@@ -944,15 +939,22 @@ namespace VMP_CNR.Module.Players
 
                 var player1 = Players.Instance.FindPlayer(command[0]);
                 if (player1 == null) return;
+
                 var player2 = Players.Instance.FindPlayer(command[1]);
                 if (player2 == null) return;
+
                 if (player1 == player2) return;
-                
+
+                if (dbPlayer.GetName() == player1.GetName() || dbPlayer.GetName() == player2.GetName())
+                {
+                    dbPlayer.SendNewNotification("Du darfst nicht dein eigener Trauzeuge sein.");
+                    return;
+                }
 
                 if ((dbPlayer.Player.Position.DistanceTo(new Vector3(-538.46, -176.525, 38.22)) < 5.0f
-                    || dbPlayer.Player.Position.DistanceTo(new Vector3(-530.09, -191.157, 38.22)) < 5.0f)
-                    &&
-                    dbPlayer.Player.Position.DistanceTo(player1.Player.Position) < 5.0f && dbPlayer.Player.Position.DistanceTo(player2.Player.Position) < 5.0f)
+                || dbPlayer.Player.Position.DistanceTo(new Vector3(-530.09, -191.157, 38.22)) < 5.0f)
+                &&
+                dbPlayer.Player.Position.DistanceTo(player1.Player.Position) < 5.0f && dbPlayer.Player.Position.DistanceTo(player2.Player.Position) < 5.0f)
                 {
                     if (player1.married[0] > 0 || player2.married[0] > 0)
                     {
@@ -961,30 +963,28 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    dbPlayer.SendNewNotification("Hochzeitsanfrage wurde an " + player1.GetName() + " & " +  player2.GetName() + " gesendet!");
+                    dbPlayer.SendNewNotification("Hochzeitsanfrage wurde an " + player1.GetName() + " & " + player2.GetName() + " gesendet!");
 
-                    player1.SendNewNotification("Standesamt-Beamter "+ dbPlayer.GetName()+" möchte Sie mit " + player2.GetName() + " trauen. (/acceptmarry um anzunehmen)!");
-                    player2.SendNewNotification("Standesamt-Beamter " + dbPlayer.GetName() + " möchte Sie mit " + player1.GetName() + " trauen. (/acceptmarry um anzunehmen)!");
+                    player1.SendNewNotification("Trauzeuge " + dbPlayer.GetName() + " möchte Sie mit " + player2.GetName() + " trauen. (/acceptmarry um anzunehmen)!");
+                    player2.SendNewNotification("Trauzeuge " + dbPlayer.GetName() + " möchte Sie mit " + player1.GetName() + " trauen. (/acceptmarry um anzunehmen)!");
 
 
                     player1.SetData("marry", player2.GetName());
-                    player2.SetData("marry", player1.GetName());                    
+                    player2.SetData("marry", player1.GetName());
 
                     player1.SetData("beamter_Player1", dbPlayer.GetName());
                     player2.SetData("beamter_Player2", dbPlayer.GetName());
                     dbPlayer.SetData("beamter_Player1Name", player1.GetName());
                     dbPlayer.SetData("beamter_Player2Name", player2.GetName());
                     dbPlayer.SetData("bPlayer1Accepted", 0);
-                    dbPlayer.SetData("bPlayer2Accepted", 0);                    
-                    
-                    
+                    dbPlayer.SetData("bPlayer2Accepted", 0);
                 }
                 else
                 {
                     dbPlayer.SendNewNotification("Das Brautpaar muss sich im Standesamt Büro befinden!");
                 }
             }));
-        }        
+        }
 
         [CommandPermission]
         [Command]
@@ -994,18 +994,18 @@ namespace VMP_CNR.Module.Players
             if (!dbPlayer.CanAccessMethod()) return;
 
             if (!dbPlayer.HasData("marry")) return;
-            if (!dbPlayer.HasData("beamter_Player1") && !dbPlayer.HasData("beamter_Player2")) return; 
+            if (!dbPlayer.HasData("beamter_Player1") && !dbPlayer.HasData("beamter_Player2")) return;
             DbPlayer beamter = null;
 
             await NAPI.Task.WaitForMainThread(0);
 
-           if (dbPlayer.married[0] > 0)
+            if (dbPlayer.married[0] > 0)
             {
                 dbPlayer.SendNewNotification(
                     "Sie sind bereits verheiratet!");
                 return;
-            }            
-            
+            }
+
             if (dbPlayer.HasData("beamter_Player1"))
             {
                 string beamterName = dbPlayer.GetData("beamter_Player1");
@@ -1015,14 +1015,14 @@ namespace VMP_CNR.Module.Players
                 if (beamter == null)
                 {
                     dbPlayer.SendNewNotification(
-                        "Standesamt-Beamter nicht gefunden!");
+                        "Trauzeuge nicht gefunden!");
                     return;
                 }
 
                 if (beamter.Player.Position.DistanceTo(dbPlayer.Player.Position) > 10.0f)
                 {
                     dbPlayer.SendNewNotification(
-                        "Standesamt-Beamter nicht in Reichweite!");
+                        "Trauzeuge nicht in Reichweite!");
                     return;
                 }
 
@@ -1031,9 +1031,9 @@ namespace VMP_CNR.Module.Players
 
                 beamter.SetData("bPlayer1Accepted", 1);
                 beamter.SendNewNotification(
-                    "Hochzeitsanfrage wurde von " + dbPlayer.GetName() + " bestätigt!");               
+                    "Hochzeitsanfrage wurde von " + dbPlayer.GetName() + " bestätigt!");
             }
-            
+
             else if (dbPlayer.HasData("beamter_Player2"))
             {
                 string beamterName = dbPlayer.GetData("beamter_Player2");
@@ -1043,14 +1043,14 @@ namespace VMP_CNR.Module.Players
                 if (beamter == null)
                 {
                     dbPlayer.SendNewNotification(
-                        "Standesamt-Beamter nicht gefunden, oder nicht in Reichweite!");
+                        "Trauzeuge nicht gefunden, oder nicht in Reichweite!");
                     return;
                 }
 
                 if (beamter.Player.Position.DistanceTo(dbPlayer.Player.Position) > 10.0f)
                 {
                     dbPlayer.SendNewNotification(
-                        "Standesamt-Beamter nicht in Reichweite!");
+                        "Trauzeuge nicht in Reichweite!");
                     return;
                 }
 
@@ -1059,32 +1059,32 @@ namespace VMP_CNR.Module.Players
 
                 beamter.SetData("bPlayer2Accepted", 1);
                 beamter.SendNewNotification(
-                    "Hochzeitsanfrage wurde von " + dbPlayer.GetName() + " bestätigt!");                
+                    "Hochzeitsanfrage wurde von " + dbPlayer.GetName() + " bestätigt!");
             }
             else
-            {                
+            {
                 return;
             }
 
 
             await NAPI.Task.WaitForMainThread(0);
 
-            int ownerAccept = beamter.GetData("bPlayer1Accepted");            
-            int customerAccept = beamter.GetData("bPlayer2Accepted");            
-            
+            int ownerAccept = beamter.GetData("bPlayer1Accepted");
+            int customerAccept = beamter.GetData("bPlayer2Accepted");
+
             // Wenn Beide bestaetigt haben
             if (ownerAccept != 1) return;
             if (customerAccept != 1) return;
 
             if (!beamter.HasData("beamter_Player1Name")) return;
-            if (!beamter.HasData("beamter_Player2Name")) return;            
+            if (!beamter.HasData("beamter_Player2Name")) return;
 
             string ownername = beamter.GetData("beamter_Player1Name");
             string customername = beamter.GetData("beamter_Player2Name");
 
             DbPlayer owner = Players.Instance.GetByName(ownername);
             DbPlayer customer = Players.Instance.GetByName(customername);
-            
+
             if (owner == null || customer == null)
             {
                 dbPlayer.SendNewNotification(
@@ -1104,7 +1104,7 @@ namespace VMP_CNR.Module.Players
                     "Eine der Ehepartner wurde nicht gefunden oder ist nicht in Reichweite!");
                 return;
             }
-           
+
 
             if (!beamter.Container.CanInventoryItemAdded(670, 1))
             {
@@ -1138,7 +1138,7 @@ namespace VMP_CNR.Module.Players
             beamter.ResetData("beamter_Player2Name");
             beamter.ResetData("bPlayer1Accepted");
             beamter.ResetData("bPlayer2Accepted");
-            
+
         }
 
         [CommandPermission]
@@ -1148,8 +1148,8 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int) TeamTypes.TEAM_FIB &&
-                dbPlayer.TeamId != (int) TeamTypes.TEAM_ARMY && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB &&
+                dbPlayer.TeamId != (int)TeamTypes.TEAM_ARMY && dbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) return;
 
             DialogMigrator.CreateMenu(player, Dialogs.menu_show_wanteds, "Gesuchte Personen", "");
             DialogMigrator.AddMenuItem(player, Dialogs.menu_show_wanteds, GlobalMessages.General.Close(), "");
@@ -1179,37 +1179,37 @@ namespace VMP_CNR.Module.Players
         [Command]
         public async void seat(Player player, string commandParams)
         {
-            
-                try
+
+            try
+            {
+                DbPlayer dbPlayer = player.GetPlayer();
+                if (!dbPlayer.CanAccessMethod()) return;
+                if (dbPlayer.IsCuffed || dbPlayer.IsTied) return;
+
+                var command = commandParams.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+                if (command.Length <= 0) return;
+                if (!int.TryParse(command[0], out int seatLocation)) return;
+
+                if (seatLocation == 0) return;
+                if (dbPlayer.RageExtension.IsInVehicle && seatLocation > -2 && seatLocation < 15)
                 {
-                    DbPlayer dbPlayer = player.GetPlayer();
-                    if (!dbPlayer.CanAccessMethod()) return;
-                    if (dbPlayer.IsCuffed || dbPlayer.IsTied) return;
-
-                    var command = commandParams.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
-                    if (command.Length <= 0) return;
-                    if (!int.TryParse(command[0], out int seatLocation)) return;
-
-                    if (seatLocation == 0) return;
-                    if (dbPlayer.RageExtension.IsInVehicle && seatLocation > -2 && seatLocation < 15)
+                    if (dbPlayer.Player.Vehicle.IsSeatFree(seatLocation))
                     {
-                        if (dbPlayer.Player.Vehicle.IsSeatFree(seatLocation))
-                        {
-                            dbPlayer.ChangeSeat(seatLocation);
-                        }
+                        dbPlayer.ChangeSeat(seatLocation);
                     }
                 }
-                catch(Exception e)
-                {
-                    Logger.Crash(e);
-                }
-            
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+            }
+
         }
 
         [CommandPermission]
         [Command]
         public void checkwanted(Player player, string name)
-        { 
+        {
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
             if (!dbPlayer.IsACop()) return;
@@ -1219,7 +1219,7 @@ namespace VMP_CNR.Module.Players
 
             dbPlayer.SendNewNotification(findPlayer.GetName() + " Wanteds:" + findPlayer.Wanteds[0]);
         }
-        
+
         [CommandPermission]
         [Command]
         public void buyhouse(Player player)
@@ -1233,7 +1233,7 @@ namespace VMP_CNR.Module.Players
                     "Um ein Haus zu kaufen, benoetigen Sie einen Personalausweis!");
                 return;
             }
-            
+
             if (dbPlayer.OwnHouse[0] != 0)
             {
                 dbPlayer.SendNewNotification("Sie besitzten bereits ein Haus!");
@@ -1257,8 +1257,8 @@ namespace VMP_CNR.Module.Players
                     dbPlayer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(house.Price));
                     return;
                 }
-                
-                if(dbPlayer.IsTenant()) dbPlayer.RemoveTenant();
+
+                if (dbPlayer.IsTenant()) dbPlayer.RemoveTenant();
                 HouseKeyHandler.Instance.DeleteAllHouseKeys(house);
 
                 dbPlayer.SendNewNotification("Sie haben diese Immobilie fuer " + price + "$ erworben.", title: "", notificationType: PlayerNotification.NotificationType.SUCCESS);
@@ -1374,7 +1374,7 @@ namespace VMP_CNR.Module.Players
         public void flimit(Player player)
         {
             DbPlayer dbPlayer = player.GetPlayer();
-            
+
             if (DateTime.Compare(dbPlayer.LastReport.AddMinutes(2), DateTime.Now) < 0)
             {
                 uint myTeam = dbPlayer.TeamId;
@@ -1408,7 +1408,7 @@ namespace VMP_CNR.Module.Players
 
 
         }
-        
+
         [CommandPermission]
         [Command]
         public void tognews(Player player)
@@ -1429,7 +1429,7 @@ namespace VMP_CNR.Module.Players
                 Main.setNewsActivated(player, true);
             }
         }
-        
+
         [CommandPermission]
         [Command]
         public void rob(Player player)
@@ -1599,12 +1599,12 @@ namespace VMP_CNR.Module.Players
                     WeaponFactoryRobberyModule.Instance.StartRob(dbPlayer);
                     return;
                 }
-                
+
                 dbPlayer.SendNewNotification(
                     GlobalMessages.General.Usage("Hier können Sie nichts ausrauben!"));
             }));
         }
-        
+
         [CommandPermission]
         [Command]
         public async void findrob(Player player)
@@ -1733,7 +1733,7 @@ namespace VMP_CNR.Module.Players
                 }
                 await AsyncCommands.Instance.SendGovMessage(dbPlayer, govMessage);
             }
-            if(dbPlayer.TeamId == (uint)TeamTypes.TEAM_CAYO && dbPlayer.TeamRank >= 10)
+            if (dbPlayer.TeamId == (uint)TeamTypes.TEAM_CAYO && dbPlayer.TeamRank >= 10)
             {
                 if (string.IsNullOrWhiteSpace(govMessage) || govMessage.Length < 2)
                 {
@@ -1743,7 +1743,7 @@ namespace VMP_CNR.Module.Players
                 await AsyncCommands.Instance.SendCayoMessage(dbPlayer, govMessage);
             }
         }
-        
+
         [CommandPermission]
         [Command(Alias = "hilfe")]
         public void help(Player player)
@@ -1765,7 +1765,7 @@ namespace VMP_CNR.Module.Players
 
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_help);
         }
-        
+
         [CommandPermission]
         [Command]
         public void jail(Player player)
@@ -1782,7 +1782,7 @@ namespace VMP_CNR.Module.Players
             catch (Exception e)
             {
                 Logging.Logger.Crash(e);
-            }            
+            }
         }
 
         [CommandPermission]
@@ -1813,41 +1813,41 @@ namespace VMP_CNR.Module.Players
         [Command(GreedyArg = true)]
         public async void support(Player player, string nachricht = " ")
         {
-            
-                DbPlayer dbPlayer = player.GetPlayer();
-                if (!dbPlayer.CanAccessMethod()) return;
 
-                if (string.IsNullOrWhiteSpace(nachricht))
-                {
-                    dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/support", "[Grund/Nachricht]"));
-                    return;
+            DbPlayer dbPlayer = player.GetPlayer();
+            if (!dbPlayer.CanAccessMethod()) return;
+
+            if (string.IsNullOrWhiteSpace(nachricht))
+            {
+                dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/support", "[Grund/Nachricht]"));
+                return;
             }
-            
-                string message = Regex.Replace(nachricht, @"[^a-zA-Z0-9\s]", "");
-                message = message.Length == 0 ? "Sonderzeichen entfernt" : message;
 
-                bool response = Support.TicketModule.Instance.Add(dbPlayer, new Support.Ticket(dbPlayer, message));
+            string message = Regex.Replace(nachricht, @"[^a-zA-Z0-9\s]", "");
+            message = message.Length == 0 ? "Sonderzeichen entfernt" : message;
 
-                if (response && !message.Equals("cancel"))
+            bool response = Support.TicketModule.Instance.Add(dbPlayer, new Support.Ticket(dbPlayer, message));
+
+            if (response && !message.Equals("cancel"))
+            {
+                AsyncCommands.Instance.HandleSupport(dbPlayer.GetName(), dbPlayer.ForumId, nachricht);
+                dbPlayer.SendNewNotification("Deine Nachricht wurde an die Administration gesendet! Benutze \"/support cancel\" um die Anfrage wieder zu beenden.", duration: 15000);
+            }
+            else
+            {
+
+                if (message.Equals("cancel", StringComparison.OrdinalIgnoreCase))
                 {
-                    AsyncCommands.Instance.HandleSupport(dbPlayer.GetName(), dbPlayer.ForumId, nachricht);
-                    dbPlayer.SendNewNotification("Deine Nachricht wurde an die Administration gesendet! Benutze \"/support cancel\" um die Anfrage wieder zu beenden.", duration:15000);
+                    Support.TicketModule.Instance.DeleteTicketByOwner(dbPlayer);
+                    dbPlayer.SendNewNotification("Ihr Ticket wurde geschlossen!", notificationType: PlayerNotification.NotificationType.ADMIN);
                 }
                 else
                 {
-
-                    if (message.Equals("cancel", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Support.TicketModule.Instance.DeleteTicketByOwner(dbPlayer);
-                        dbPlayer.SendNewNotification("Ihr Ticket wurde geschlossen!", notificationType:PlayerNotification.NotificationType.ADMIN);
+                    dbPlayer.SendNewNotification("Es ist bereits ein Ticket offen! Benutze \"/support cancel\" um die Anfrage wieder zu beenden.", PlayerNotification.NotificationType.ADMIN, duration: 10000);
                 }
-                    else
-                    {
-                        dbPlayer.SendNewNotification("Es ist bereits ein Ticket offen! Benutze \"/support cancel\" um die Anfrage wieder zu beenden.", PlayerNotification.NotificationType.ADMIN, duration: 10000);
-                    }
 
-                }
-            
+            }
+
         }
 
         private readonly List<string> _badWords = new List<string>()
@@ -1881,7 +1881,7 @@ namespace VMP_CNR.Module.Players
                     if (user.Player.Dimension == dbPlayer.Player.Dimension)
                     {
                         user.SendNewNotification(
-                            oocText, title:$"OOC - ({dbPlayer.GetName()})", notificationType:PlayerNotification.NotificationType.OOC);
+                            oocText, title: $"OOC - ({dbPlayer.GetName()})", notificationType: PlayerNotification.NotificationType.OOC);
                     }
                 }
             }
@@ -2002,7 +2002,7 @@ namespace VMP_CNR.Module.Players
             if (string.IsNullOrWhiteSpace(playerName))
             {
                 dbPlayer.SendNewNotification(
-                    GlobalMessages.General.Usage("/givelic", "[PlayerName]"), notificationType:PlayerNotification.NotificationType.SERVER);
+                    GlobalMessages.General.Usage("/givelic", "[PlayerName]"), notificationType: PlayerNotification.NotificationType.SERVER);
                 return;
             }
 
@@ -2050,7 +2050,7 @@ namespace VMP_CNR.Module.Players
             try
             {
                 if (!dbPlayer.IsACop() && !dbPlayer.IsAMedic()) return;
-                    if (string.IsNullOrWhiteSpace(commandParams))
+                if (string.IsNullOrWhiteSpace(commandParams))
                 {
                     dbPlayer.SendNewNotification(GlobalMessages.General.Usage("/drugtest", "name"));
                     return;
@@ -2081,7 +2081,7 @@ namespace VMP_CNR.Module.Players
                     "Ein Beamter hat einen Drogenabstrich genommen!");
 
                 await NAPI.Task.WaitForMainThread(5000);
-                
+
                 dbPlayer.SendNewNotification(
                     $"Drogentest von " + findPlayer.GetName() + " war " +
                     (findPlayer.Drugtest() ? "positiv" : "negativ") + "!");
@@ -2150,7 +2150,7 @@ namespace VMP_CNR.Module.Players
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(895.7319, -178.6453, 74.70035)) <= 30.0f)
                 {
                     dbPlayer.SetData("taxi", betrag);
-                
+
                     dbPlayer.SendNewNotification(
                         "Du bist nun fuer $" + betrag + " im Taxi Dienst!");
                     dbPlayer.SendNewNotification(
@@ -2210,7 +2210,7 @@ namespace VMP_CNR.Module.Players
                     dbPlayer.SendNewNotification("Gesuchte Person " + playerFromPool.GetName() + " wurde geortet!");
                     NSAModule.Instance.SendMessageToNSALead($"{dbPlayer.GetName()} hat die Person {playerFromPool.GetName()} geortet!");
 
-                    if(dbPlayer.IsNSADuty || (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.FindFlags.HasFlag(FindFlags.Continuous)))
+                    if (dbPlayer.IsNSADuty || (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.FindFlags.HasFlag(FindFlags.Continuous)))
                     {
                         dbPlayer.SetData("nsaOrtung", playerFromPool.Id);
                     }
@@ -2225,7 +2225,7 @@ namespace VMP_CNR.Module.Players
                 }
             }));
         }
-        
+
         [CommandPermission]
         [Command]
         public void findhouse(Player player, string name)
@@ -2253,7 +2253,7 @@ namespace VMP_CNR.Module.Players
                     return;
                 }
 
-                if(Int32.TryParse(name, out int houseId))
+                if (Int32.TryParse(name, out int houseId))
                 {
                     House xHouse = HouseModule.Instance.Get((uint)houseId);
                     if (xHouse == null) return;
@@ -2290,7 +2290,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB)
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB && dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE && dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -2301,7 +2301,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
             }
-            
+
             if (string.IsNullOrWhiteSpace(name) || name.Length <= 3)
             {
                 dbPlayer.SendNewNotification("Fehler beim finden passiert...");
@@ -2363,7 +2363,7 @@ namespace VMP_CNR.Module.Players
             }
             return;
         }
-    
+
         /*
         [CommandPermission]
         [Command(GreedyArg = true)]
@@ -2433,7 +2433,7 @@ namespace VMP_CNR.Module.Players
                 if (dbPlayer == null) return;
 
                 uint teamId = dbPlayer.TeamId;
-                if(dbPlayer.IsNSADuty)
+                if (dbPlayer.IsNSADuty)
                 {
                     teamId = (uint)TeamTypes.TEAM_IAA;
                 }
@@ -2444,9 +2444,9 @@ namespace VMP_CNR.Module.Players
                 TeamLeitstellenObject teamLeitstellenObject = LeitstellenPhoneModule.Instance.GetLeitstelle(teamId);
                 if (teamLeitstellenObject == null) return;
 
-                if(teamLeitstellenObject.Acceptor != null && teamLeitstellenObject.Acceptor.IsValid())
+                if (teamLeitstellenObject.Acceptor != null && teamLeitstellenObject.Acceptor.IsValid())
                 {
-                    if(teamLeitstellenObject.Acceptor.Id == dbPlayer.Id)
+                    if (teamLeitstellenObject.Acceptor.Id == dbPlayer.Id)
                     {
                         teamLeitstellenObject.Acceptor = null;
                         dbPlayer.SendNewNotification("Du hast die Einsatzleitung beendet!", title: "Info", notificationType: PlayerNotification.NotificationType.INFO);
@@ -2478,7 +2478,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
 
-            if (dbPlayer.TeamId != (uint) TeamTypes.TEAM_NEWS) return;
+            if (dbPlayer.TeamId != (uint)TeamTypes.TEAM_NEWS) return;
 
             if (uint.TryParse(p_NewsID, out uint l_ID)) new NewsListApp().deleteNews(l_ID);
         }
@@ -2490,10 +2490,10 @@ namespace VMP_CNR.Module.Players
             var l_DbPlayer = p_Player.GetPlayer();
             if (l_DbPlayer == null || !l_DbPlayer.CanAccessMethod()) return;
 
-            if (l_DbPlayer.TeamId != (int) TeamTypes.TEAM_GOV) return;
+            if (l_DbPlayer.TeamId != (int)TeamTypes.TEAM_GOV) return;
             if (l_DbPlayer.TeamRank < 11)
             {
-                l_DbPlayer.SendNewNotification("Nur der Gouverneur oder der Premierminister kann auf die Staatskasse zugreifen.", notificationType:PlayerNotification.NotificationType.ERROR);
+                l_DbPlayer.SendNewNotification("Nur der Gouverneur oder der Premierminister kann auf die Staatskasse zugreifen.", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;
             }
 
@@ -2604,7 +2604,7 @@ namespace VMP_CNR.Module.Players
             {
                 dbPlayer.SendNewNotification(
                     GlobalMessages.General.Usage("/eventkasse", "[giveplayer/deposit]", "Betrag"));
-                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_NEWS)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_NEWS)
                 {
                     dbPlayer.SendNewNotification(
                         "Es befinden sich $" + newsShelter.Money +
@@ -2635,7 +2635,7 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
-                    if (dbPlayer.TeamId != (int) TeamTypes.TEAM_NEWS || dbPlayer.TeamRank < 8) return;
+                    if (dbPlayer.TeamId != (int)TeamTypes.TEAM_NEWS || dbPlayer.TeamRank < 8) return;
                     if (betrag > 0 && betrag <= newsShelter.Money)
                     {
                         var findPlayer = Players.Instance.FindPlayer(arg2[2]);
@@ -2711,7 +2711,7 @@ namespace VMP_CNR.Module.Players
                     break;
             }
         }
-        
+
         [CommandPermission]
         [Command]
         public void resetfakename(Player p_Player)
@@ -2809,7 +2809,7 @@ namespace VMP_CNR.Module.Players
             }
             else
             {
-                dbPlayer.SendNewNotification( "Dieses Fahrzeug ist kein Privatfahrzeug!");
+                dbPlayer.SendNewNotification("Dieses Fahrzeug ist kein Privatfahrzeug!");
             }
         }
 
@@ -2842,7 +2842,7 @@ namespace VMP_CNR.Module.Players
                 {
                     var l_Shelter = TeamShelterModule.Instance.GetAll().FirstOrDefault(s => s.Value.Team.Id == (uint)TeamTypes.TEAM_LSC).Value;
                     if (l_Shelter == null || l_Shelter.Team == null) return;
-                    
+
                     if (l_Shelter.Money < 10000)
                     {
                         dbPlayer.SendNewNotification("Nicht genügend Geld auf der Fraktionskasse! Benötigt: 10000!");
@@ -2988,7 +2988,7 @@ namespace VMP_CNR.Module.Players
                     DbPlayer vehOwner = Players.Instance.GetByDbId(sxVeh.ownerId);
                     if (vehOwner == null || !vehOwner.IsValid()) return;
 
-                    if(vehOwner.Player.Position.DistanceTo(sxVeh.Entity.Position) > 10.0f)
+                    if (vehOwner.Player.Position.DistanceTo(sxVeh.Entity.Position) > 10.0f)
                     {
                         dbPlayer.SendNewNotification(
                             "Besitzer muss in der Nähe des Fahrzeuges sein!");
@@ -3275,7 +3275,7 @@ namespace VMP_CNR.Module.Players
             {
                 //Logger.AddToVehicleDestroyLog(sxVeh.databaseId, dbPlayer.Id, price);
 
-               // Main.DeletePlayerVehicle(dbPlayer, sxVeh);
+                // Main.DeletePlayerVehicle(dbPlayer, sxVeh);
                 //dbPlayer.GiveMoney(price);
                 // dbPlayer.SendNewNotification("Fahrzeug erfolgreich fuer $" + price + " verschrottet!");
                 // KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price * 4);
@@ -3454,100 +3454,100 @@ namespace VMP_CNR.Module.Players
             }));
         }
 
-       /* [CommandPermission]
-        [Command(GreedyArg = true)]
-        public void sellhouse(Player player, string command = " ")
-        {
-            DbPlayer dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod()) return;
+        /* [CommandPermission]
+         [Command(GreedyArg = true)]
+         public void sellhouse(Player player, string command = " ")
+         {
+             DbPlayer dbPlayer = player.GetPlayer();
+             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.job[0] != (int) jobs.JOB_Makler) return;
-            if (!ServerFeatures.IsActive("makler-haus"))
-            {
-                dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
-                return;
-            }
+             if (dbPlayer.job[0] != (int) jobs.JOB_Makler) return;
+             if (!ServerFeatures.IsActive("makler-haus"))
+             {
+                 dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
+                 return;
+             }
 
-            try
-            {
-                var arg2 = command.Split(' ');
+             try
+             {
+                 var arg2 = command.Split(' ');
 
-                if (string.IsNullOrWhiteSpace(command) || !Main.validateArgs(command, 3))
-                {
-                    dbPlayer.SendNewNotification(
-                        MSG.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
-                    return;
-                }
+                 if (string.IsNullOrWhiteSpace(command) || !Main.validateArgs(command, 3))
+                 {
+                     dbPlayer.SendNewNotification(
+                         MSG.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
+                     return;
+                 }
 
-                House iHouse;
-                if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) == null)
-                    return;
-                if (!int.TryParse(arg2[2], out var price))
-                {
-                    dbPlayer.SendNewNotification("Der Preis war nicht gueltig!");
-                    return;
-                }
+                 House iHouse;
+                 if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) == null)
+                     return;
+                 if (!int.TryParse(arg2[2], out var price))
+                 {
+                     dbPlayer.SendNewNotification("Der Preis war nicht gueltig!");
+                     return;
+                 }
 
-                
 
-                var Owner = Players.Instance.FindPlayer(arg2[0]);
-                var Customer = Players.Instance.FindPlayer(arg2[1]);
 
-                if (Owner == null || Customer == null
-                                  || dbPlayer.Player.Position.DistanceTo(Owner.Player.Position) >= 10.0f
-                                  || dbPlayer.Player.Position.DistanceTo(Customer.Player.Position) >= 10.0f)
-                {
-                    dbPlayer.SendNewNotification(
-                        "Besitzer oder Kunde nicht gefunden, oder nicht in Reichweite!");
-                    return;
-                }
+                 var Owner = Players.Instance.FindPlayer(arg2[0]);
+                 var Customer = Players.Instance.FindPlayer(arg2[1]);
 
-                if (iHouse.OwnerId != Owner.Id)
-                {
-                    dbPlayer.SendNewNotification(
-                        "Verkaeufer nicht gefunden oder nicht an seinem Haus!");
-                    return;
-                }
+                 if (Owner == null || Customer == null
+                                   || dbPlayer.Player.Position.DistanceTo(Owner.Player.Position) >= 10.0f
+                                   || dbPlayer.Player.Position.DistanceTo(Customer.Player.Position) >= 10.0f)
+                 {
+                     dbPlayer.SendNewNotification(
+                         "Besitzer oder Kunde nicht gefunden, oder nicht in Reichweite!");
+                     return;
+                 }
 
-                if (Customer.ownHouse[0] > 0)
-                {
-                    dbPlayer.SendNewNotification(
-                        "Der Kunde besitzt bereits ein Haus!");
-                    return;
-                }
+                 if (iHouse.OwnerId != Owner.Id)
+                 {
+                     dbPlayer.SendNewNotification(
+                         "Verkaeufer nicht gefunden oder nicht an seinem Haus!");
+                     return;
+                 }
 
-                Owner.SetData("mMakler_Owner", dbPlayer.GetName());
-                Customer.SetData("mMakler_Customer", dbPlayer.GetName());
-                dbPlayer.SetData("mMakler_CustomerName", Customer.GetName());
-                dbPlayer.SetData("mMakler_OwnerName", Owner.GetName());
-                dbPlayer.SetData("mOwnerAccepted", 0);
-                dbPlayer.SetData("mCustomerAccepted", 0);
-                dbPlayer.SetData("mPrice", price);
-                dbPlayer.SetData("mType", "Haus");
+                 if (Customer.ownHouse[0] > 0)
+                 {
+                     dbPlayer.SendNewNotification(
+                         "Der Kunde besitzt bereits ein Haus!");
+                     return;
+                 }
 
-                dbPlayer.SendNewNotification(
-                    "Angebot an " + Customer.GetName() +
-                    " unterbreitet, Preis: $" +
-                    price);
-                Customer.SendNewNotification(
-                    "Makler " + dbPlayer.GetName() +
-                    " hat Ihnen ein Angebot fuer diese Immobilie unterbreitet, Preis: $" + price);
-                Customer.SendNewNotification(
-                    "Benutzen Sie /acceptmakler um das Angebot anzunehmen.");
-                Owner.SendNewNotification(
-                    "Makler " + dbPlayer.GetName() + " moechte Ihr Haus an " +
-                    Customer.GetName() + " verkaufen, Preis: $" + price);
-                Owner.SendNewNotification(
-                    "Sie bekommen davon $" +
-                    (price - (price / 10 * 3)) +
-                    " ausgezahlt. /acceptmakler um das Angebot anzunehmen.");
-            }
-            catch (Exception e)
-            {
-                Logger.Crash(e);
-            }
-        }
-       */
+                 Owner.SetData("mMakler_Owner", dbPlayer.GetName());
+                 Customer.SetData("mMakler_Customer", dbPlayer.GetName());
+                 dbPlayer.SetData("mMakler_CustomerName", Customer.GetName());
+                 dbPlayer.SetData("mMakler_OwnerName", Owner.GetName());
+                 dbPlayer.SetData("mOwnerAccepted", 0);
+                 dbPlayer.SetData("mCustomerAccepted", 0);
+                 dbPlayer.SetData("mPrice", price);
+                 dbPlayer.SetData("mType", "Haus");
+
+                 dbPlayer.SendNewNotification(
+                     "Angebot an " + Customer.GetName() +
+                     " unterbreitet, Preis: $" +
+                     price);
+                 Customer.SendNewNotification(
+                     "Makler " + dbPlayer.GetName() +
+                     " hat Ihnen ein Angebot fuer diese Immobilie unterbreitet, Preis: $" + price);
+                 Customer.SendNewNotification(
+                     "Benutzen Sie /acceptmakler um das Angebot anzunehmen.");
+                 Owner.SendNewNotification(
+                     "Makler " + dbPlayer.GetName() + " moechte Ihr Haus an " +
+                     Customer.GetName() + " verkaufen, Preis: $" + price);
+                 Owner.SendNewNotification(
+                     "Sie bekommen davon $" +
+                     (price - (price / 10 * 3)) +
+                     " ausgezahlt. /acceptmakler um das Angebot anzunehmen.");
+             }
+             catch (Exception e)
+             {
+                 Logger.Crash(e);
+             }
+         }
+        */
         [CommandPermission]
         [Command(GreedyArg = true)]
         public void sellstorage(Player player, string command = " ")
@@ -3555,7 +3555,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.job[0] != (int) JobTypes.JOB_Makler) return;
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_Makler) return;
             if (!ServerFeatures.IsActive("makler-lager"))
             {
                 dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
@@ -3760,141 +3760,35 @@ namespace VMP_CNR.Module.Players
             {
                 // Haus wird verkauft
                 case "Haus":
-                {
-                    House iHouse;
-                    if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) ==
-                        null) return;
-
-                    if (!customer.TakeBankMoney(price, $"Makler-Hauskauf - Haus {iHouse.Id}"))
                     {
-                        dbPlayer.SendNewNotification(
-                            "Der Kunde hat nicht genug Geld!");
-                        customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
-                        return;
-                    }
+                        House iHouse;
+                        if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) ==
+                            null) return;
 
-                    // Haus switch Process
-                    owner.OwnHouse[0] = 0;
-                    if(owner.IsTenant()) owner.RemoveTenant();
-                    customer.OwnHouse[0] = iHouse.Id;
-
-                    HouseKeyHandler.Instance.DeleteAllHouseKeys(iHouse);
-                    iHouse.OwnerId = customer.Id;
-                    iHouse.OwnerName = customer.GetName();
-                    iHouse.SaveOwner();
-
-                    var provision = price / 10;
-
-                    owner.GiveBankMoney(price - provision * 3, $"Makler-Hausverkauf - Haus {iHouse.Id}");
-                    makler.GiveBankMoney(provision, $"Makler-Provision - Haus {iHouse.Id}");
-
-                    KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision * 3);
-
-                    owner.ResetData("mMakler_Owner");
-                    customer.ResetData("mMakler_Customer");
-                    makler.ResetData("mOwnerAccepted");
-                    makler.ResetData("mCustomerAccepted");
-                    makler.ResetData("mPrice");
-                    makler.ResetData("mMakler_CustomerName");
-                    makler.ResetData("mMakler_OwnerName");
-
-                    makler.SendNewNotification(
-                        "Sie haben das Haus erfolgreich verkauft! Ihre Provision $" + provision);
-                    customer.SendNewNotification(
-                        "Sie haben das Haus erfolgreich fuer $" +
-                        price +
-                        " erworben!");
-                    owner.SendNewNotification(
-                        "Ihr Haus wurde an " + customer.GetName() +
-                        " fuer $" +
-                        (price - provision * 3) + " verkauft!");
-                    makler.JobSkillsIncrease(7);
-                    KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price - provision * 2);
-                    return;
-                }
-                // Storage wird verkauft
-                case "Storage":
-                {
-                    if (!makler.HasData("objectId")) return;
-
-                    StorageRoom storageRoom = StorageRoomModule.Instance.Get(makler.GetData("objectId"));
-                    if (storageRoom == null || makler.Player.Position.DistanceTo(storageRoom.Position) > 5.0f)
-                    {
-                        dbPlayer.SendNewNotification("Lager nicht gefunden oder in der nähe!");
-                        return;
-                    }
-
-                    if (!customer.TakeBankMoney(price, $"Makler-Lagerkauf - Lager {storageRoom.Id}"))
-                    {
-                        dbPlayer.SendNewNotification(
-                            "Der Kunde hat nicht genug Geld!");
-                        customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
-                        return;
-                    }
-
-                    // Haus switch Process
-                    storageRoom.SetOwnerTo(customer);
-
-                    var provision = price / 10;
-
-                    owner.GiveBankMoney(price - provision * 3, $"Makler-Lagerverkauf - Lager {storageRoom.Id}");
-                    makler.GiveBankMoney(provision, $"Makler-Provision - Lager {storageRoom.Id}");
-
-                    KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision * 3);
-
-                    owner.ResetData("mMakler_Owner");
-                    customer.ResetData("mMakler_Customer");
-                    makler.ResetData("mOwnerAccepted");
-                    makler.ResetData("mCustomerAccepted");
-                    makler.ResetData("mPrice");
-                    makler.ResetData("mMakler_CustomerName");
-                    makler.ResetData("mMakler_OwnerName");
-                    makler.ResetData("objectId");
-
-                        makler.SendNewNotification(
-                        "Sie haben den Lagerraum erfolgreich verkauft! Ihre Provision $" + provision);
-                    customer.SendNewNotification(
-                        "Sie haben den Lagerraum erfolgreich fuer $" +
-                        price +
-                        " erworben!");
-                    owner.SendNewNotification(
-                        "Ihr Lagerraum wurde an " + customer.GetName() +
-                        " fuer $" +
-                        (price - provision * 3) + " verkauft!");
-                    makler.JobSkillsIncrease(7);
-                    KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price - provision * 2);
-                    return;
-                }
-                case "Fahrzeug":
-                {
-                    foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
-                    {
-                        if (vehicle == null) continue;
-                        if (!(dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= 10.0f)) continue;
-                        if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
-
-                        if (vehicle.Registered)
-                        {
-                            dbPlayer.SendNewNotification("Das Fahrzeug muss abgemeldet sein damit es verkauft werden kann.");
-                            return;
-                        }
-                        if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
-                        if (!customer.TakeBankMoney(price, $"Makler-Fahrzeugkauf - Modell: {vehicle.Data.Model}"))
+                        if (!customer.TakeBankMoney(price, $"Makler-Hauskauf - Haus {iHouse.Id}"))
                         {
                             dbPlayer.SendNewNotification(
-                                "Der Kaeufer hat nicht genug Geld!");
+                                "Der Kunde hat nicht genug Geld!");
                             customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
                             return;
                         }
-                        // Vehicle switch Process
-                        Main.ChangePlayerVehicleOwner(owner, customer, vehicle);
+
+                        // Haus switch Process
+                        owner.OwnHouse[0] = 0;
+                        if (owner.IsTenant()) owner.RemoveTenant();
+                        customer.OwnHouse[0] = iHouse.Id;
+
+                        HouseKeyHandler.Instance.DeleteAllHouseKeys(iHouse);
+                        iHouse.OwnerId = customer.Id;
+                        iHouse.OwnerName = customer.GetName();
+                        iHouse.SaveOwner();
 
                         var provision = price / 10;
 
-                        owner.GiveBankMoney(price - (provision * 2), $"Makler-Fahrzeugverkauf - Modell: {vehicle.Data.Model}");
-                        makler.GiveBankMoney(provision, $"Makler-Provision - Modell: {vehicle.Data.Model}");
+                        owner.GiveBankMoney(price - provision * 3, $"Makler-Hausverkauf - Haus {iHouse.Id}");
+                        makler.GiveBankMoney(provision, $"Makler-Provision - Haus {iHouse.Id}");
 
-                        KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision);
+                        KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision * 3);
 
                         owner.ResetData("mMakler_Owner");
                         customer.ResetData("mMakler_Customer");
@@ -3903,25 +3797,131 @@ namespace VMP_CNR.Module.Players
                         makler.ResetData("mPrice");
                         makler.ResetData("mMakler_CustomerName");
                         makler.ResetData("mMakler_OwnerName");
-                        makler.ResetData("mVehicleToSell");
 
                         makler.SendNewNotification(
-                            "Sie haben das Fahrzeug erfolgreich verkauft! Ihre Provision $" +
-                            provision);
+                            "Sie haben das Haus erfolgreich verkauft! Ihre Provision $" + provision);
                         customer.SendNewNotification(
-                            "Sie haben das Fahrzeug erfolgreich fuer $" +
-                            price + " erworben!");
+                            "Sie haben das Haus erfolgreich fuer $" +
+                            price +
+                            " erworben!");
                         owner.SendNewNotification(
-                            "Ihr Fahrzeug wurde an " +
-                            customer.GetName() +
-                            " fuer $" + (price - (provision * 2)) + " verkauft!");
-                            RegistrationOfficeFunctions.GiveVehicleContract(customer, vehicle, owner.GetName());
-                            makler.JobSkillsIncrease(3);
+                            "Ihr Haus wurde an " + customer.GetName() +
+                            " fuer $" +
+                            (price - provision * 3) + " verkauft!");
+                        makler.JobSkillsIncrease(7);
+                        KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price - provision * 2);
                         return;
                     }
+                // Storage wird verkauft
+                case "Storage":
+                    {
+                        if (!makler.HasData("objectId")) return;
 
-                    return;
-                }
+                        StorageRoom storageRoom = StorageRoomModule.Instance.Get(makler.GetData("objectId"));
+                        if (storageRoom == null || makler.Player.Position.DistanceTo(storageRoom.Position) > 5.0f)
+                        {
+                            dbPlayer.SendNewNotification("Lager nicht gefunden oder in der nähe!");
+                            return;
+                        }
+
+                        if (!customer.TakeBankMoney(price, $"Makler-Lagerkauf - Lager {storageRoom.Id}"))
+                        {
+                            dbPlayer.SendNewNotification(
+                                "Der Kunde hat nicht genug Geld!");
+                            customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
+                            return;
+                        }
+
+                        // Haus switch Process
+                        storageRoom.SetOwnerTo(customer);
+
+                        var provision = price / 10;
+
+                        owner.GiveBankMoney(price - provision * 3, $"Makler-Lagerverkauf - Lager {storageRoom.Id}");
+                        makler.GiveBankMoney(provision, $"Makler-Provision - Lager {storageRoom.Id}");
+
+                        KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision * 3);
+
+                        owner.ResetData("mMakler_Owner");
+                        customer.ResetData("mMakler_Customer");
+                        makler.ResetData("mOwnerAccepted");
+                        makler.ResetData("mCustomerAccepted");
+                        makler.ResetData("mPrice");
+                        makler.ResetData("mMakler_CustomerName");
+                        makler.ResetData("mMakler_OwnerName");
+                        makler.ResetData("objectId");
+
+                        makler.SendNewNotification(
+                        "Sie haben den Lagerraum erfolgreich verkauft! Ihre Provision $" + provision);
+                        customer.SendNewNotification(
+                            "Sie haben den Lagerraum erfolgreich fuer $" +
+                            price +
+                            " erworben!");
+                        owner.SendNewNotification(
+                            "Ihr Lagerraum wurde an " + customer.GetName() +
+                            " fuer $" +
+                            (price - provision * 3) + " verkauft!");
+                        makler.JobSkillsIncrease(7);
+                        KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, price - provision * 2);
+                        return;
+                    }
+                case "Fahrzeug":
+                    {
+                        foreach (var vehicle in VehicleHandler.Instance.GetAllVehicles())
+                        {
+                            if (vehicle == null) continue;
+                            if (!(dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= 10.0f)) continue;
+                            if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
+
+                            if (vehicle.Registered)
+                            {
+                                dbPlayer.SendNewNotification("Das Fahrzeug muss abgemeldet sein damit es verkauft werden kann.");
+                                return;
+                            }
+                            if (!owner.IsOwner(vehicle) || makler.GetData("mVehicleToSell") != vehicle) continue;
+                            if (!customer.TakeBankMoney(price, $"Makler-Fahrzeugkauf - Modell: {vehicle.Data.Model}"))
+                            {
+                                dbPlayer.SendNewNotification(
+                                    "Der Kaeufer hat nicht genug Geld!");
+                                customer.SendNewNotification(GlobalMessages.Money.NotEnoughMoney(price));
+                                return;
+                            }
+                            // Vehicle switch Process
+                            Main.ChangePlayerVehicleOwner(owner, customer, vehicle);
+
+                            var provision = price / 10;
+
+                            owner.GiveBankMoney(price - (provision * 2), $"Makler-Fahrzeugverkauf - Modell: {vehicle.Data.Model}");
+                            makler.GiveBankMoney(provision, $"Makler-Provision - Modell: {vehicle.Data.Model}");
+
+                            KassenModule.Instance.ChangeMoney(KassenModule.Kasse.STAATSKASSE, provision);
+
+                            owner.ResetData("mMakler_Owner");
+                            customer.ResetData("mMakler_Customer");
+                            makler.ResetData("mOwnerAccepted");
+                            makler.ResetData("mCustomerAccepted");
+                            makler.ResetData("mPrice");
+                            makler.ResetData("mMakler_CustomerName");
+                            makler.ResetData("mMakler_OwnerName");
+                            makler.ResetData("mVehicleToSell");
+
+                            makler.SendNewNotification(
+                                "Sie haben das Fahrzeug erfolgreich verkauft! Ihre Provision $" +
+                                provision);
+                            customer.SendNewNotification(
+                                "Sie haben das Fahrzeug erfolgreich fuer $" +
+                                price + " erworben!");
+                            owner.SendNewNotification(
+                                "Ihr Fahrzeug wurde an " +
+                                customer.GetName() +
+                                " fuer $" + (price - (provision * 2)) + " verkauft!");
+                            RegistrationOfficeFunctions.GiveVehicleContract(customer, vehicle, owner.GetName());
+                            makler.JobSkillsIncrease(3);
+                            return;
+                        }
+
+                        return;
+                    }
             }
         }
 
@@ -3993,7 +3993,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_NEWS)
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_NEWS)
             {
                 return;
             }
@@ -4022,7 +4022,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.IsACop() && dbPlayer.RankId == (int) AdminLevelTypes.Player) return;
+            if (dbPlayer.IsACop() && dbPlayer.RankId == (int)AdminLevelTypes.Player) return;
             if (string.IsNullOrWhiteSpace(weedCommand))
             {
                 dbPlayer.SendNewNotification(
@@ -4067,13 +4067,13 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
 
-            if (dbPlayer.TeamId != (int) TeamTypes.TEAM_MEDIC && dbPlayer.TeamId != (int) TeamTypes.TEAM_POLICE) return;
+            if (dbPlayer.TeamId != (int)TeamTypes.TEAM_MEDIC && dbPlayer.TeamId != (int)TeamTypes.TEAM_POLICE) return;
             if (string.IsNullOrWhiteSpace(spawnCommand))
             {
-                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_POLICE)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_POLICE)
                     dbPlayer.SendNewNotification(
                         GlobalMessages.General.Usage("/fspawnchange", "[LS/County/LS2]"));
-                if (dbPlayer.TeamId == (int) TeamTypes.TEAM_MEDIC)
+                if (dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC)
                     dbPlayer.SendNewNotification(
                         GlobalMessages.General.Usage("/fspawnchange", "[LS/LS2/County/Fire]"));
                 return;
@@ -4101,7 +4101,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            if (string.Equals(spawnCommand.ToLower(), "fire") && dbPlayer.TeamId == (int) TeamTypes.TEAM_MEDIC)
+            if (string.Equals(spawnCommand.ToLower(), "fire") && dbPlayer.TeamId == (int)TeamTypes.TEAM_MEDIC)
             {
                 dbPlayer.fspawn[0] = 3;
                 dbPlayer.SendNewNotification(
@@ -4138,7 +4138,7 @@ namespace VMP_CNR.Module.Players
                 }
             }
         }
-        
+
         [CommandPermission]
         [Command]
         public void createlic(Player player, string createlicCommand = " ")
@@ -4148,7 +4148,7 @@ namespace VMP_CNR.Module.Players
 
             Job xjob;
             xjob = JobsModule.Instance.GetJob(dbPlayer.job[0]);
-            if (dbPlayer.job[0] != (int) JobTypes.JOB_PLAGIAT)
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_PLAGIAT)
             {
                 dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
                 return;
@@ -4186,7 +4186,7 @@ namespace VMP_CNR.Module.Players
             DialogMigrator.AddMenuItem(dbPlayer.Player, Dialogs.menu_job_createlicenses, "Menu schließen", "");
             DialogMigrator.OpenUserMenu(dbPlayer, Dialogs.menu_job_createlicenses);
         }
-        
+
         [CommandPermission()]
         [Command]
         public void dropguns(Player player)
@@ -4212,7 +4212,7 @@ namespace VMP_CNR.Module.Players
             }));
             dbPlayer.SaveWeapons();
         }
-                
+
         private static void PlayerNotFoundOrNoService(DbPlayer dbPlayer, bool emergency = false)
         {
             dbPlayer.SendNewNotification(
@@ -4256,9 +4256,9 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            var command = commandParameter.Split(new[] {' '}, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+            var command = commandParameter.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
-            if (dbPlayer.job[0] != (int) JobTypes.JOB_WEAPONDEALER || !dbPlayer.IsAGangster()) return;
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_WEAPONDEALER || !dbPlayer.IsAGangster()) return;
             if (dbPlayer.DimensionType[0] != DimensionType.WeaponFactory)
             {
                 dbPlayer.SendNewNotification(
@@ -4287,9 +4287,9 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            var command = commandParameter.Split(new[] {' '}, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+            var command = commandParameter.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
-            if (dbPlayer.job[0] == (int) JobTypes.JOB_PLAGIAT)
+            if (dbPlayer.job[0] == (int)JobTypes.JOB_PLAGIAT)
             {
                 if (string.Equals(command[0], "get"))
                 {
@@ -4322,7 +4322,7 @@ namespace VMP_CNR.Module.Players
                 else if (string.Equals(command[0], "deliver"))
                 {
                     Job xjob;
-                    if ((xjob = JobsModule.Instance.GetJob((int) JobTypes.JOB_PLAGIAT)) != null)
+                    if ((xjob = JobsModule.Instance.GetJob((int)JobTypes.JOB_PLAGIAT)) != null)
                     {
                         if (dbPlayer.Player.Position.DistanceTo(new Vector3(xjob.Position.X, xjob.Position.Y, xjob.Position.Z)) <= 2.0f)
                         {
@@ -4375,7 +4375,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            var command = commandParameter.Split(new[] {' '}, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+            var command = commandParameter.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
             var findPlayer = Players.Instance.FindPlayer(command[0]);
             if (findPlayer == null) return;

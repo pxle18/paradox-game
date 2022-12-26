@@ -18,7 +18,7 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasTattooShop())
             {
@@ -44,7 +44,7 @@ namespace VMP_CNR
                 return null;
             }
 
-            var menu = new Menu(Menu, "Tattoo Licenses");
+            var menu = new NativeMenu(Menu, "Tattoo Licenses");
             menu.Add(GlobalMessages.General.Close());
 
             for (uint itr = 0; itr < PagesAmount; itr++)

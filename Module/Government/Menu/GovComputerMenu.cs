@@ -22,9 +22,9 @@ namespace VMP_CNR.Module.Government.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "GOV Computermenü");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "GOV Computermenü");
             l_Menu.Add($"Schließen");
             l_Menu.Add($"Scheidung bearbeiten");
             l_Menu.Add($"Namensänderung");

@@ -24,9 +24,9 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "NSA Keycard Nutzungen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "NSA Keycard Nutzungen");
             l_Menu.Add($"Schließen");
 
             if (p_DbPlayer.TryData("doorId", out uint doorId))

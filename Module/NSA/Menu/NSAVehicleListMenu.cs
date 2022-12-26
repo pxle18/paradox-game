@@ -18,9 +18,9 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "NSA Fahrzeugverwaltung");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "NSA Fahrzeugverwaltung");
             l_Menu.Add($"Schließen");
             
             foreach(SxVehicle sxVehicle in VehicleHandler.Instance.GetClosestVehiclesFromTeam(p_DbPlayer.Player.Position, (int)TeamTypes.TEAM_FIB, 10.0f))

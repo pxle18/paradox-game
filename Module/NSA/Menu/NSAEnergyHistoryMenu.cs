@@ -21,9 +21,9 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "IAA Energiemeldung History");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "IAA Energiemeldung History");
             l_Menu.Add($"Schließen");
 
             foreach (TransactionHistoryObject transactionHistoryObject in NSAModule.TransactionHistory.ToList().Where(t => t.TransactionType == TransactionType.ENERGY))

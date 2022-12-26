@@ -24,9 +24,9 @@ namespace VMP_CNR.Module.Business.Raffinery
     {
         public FarmProcessMenuBuilder() : base(PlayerMenu.FarmProcessMenu) { }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Verarbeitung");
+            var menu = new Menu.NativeMenu(Menu, "Verarbeitung");
 
             menu.Add($"Schließen");
             menu.Add($"Inventar verarbeiten");

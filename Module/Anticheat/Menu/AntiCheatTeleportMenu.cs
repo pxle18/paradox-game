@@ -16,13 +16,13 @@ namespace VMP_CNR.Module.Anticheat.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (p_DbPlayer == null) return null;
 
             p_DbPlayer.Player.TriggerNewClient("removeAcMark");
 
-            var l_Menu = new Module.Menu.Menu(Menu, "AC Meldungen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "AC Meldungen");
 
             l_Menu.Add($"Schließen");
 

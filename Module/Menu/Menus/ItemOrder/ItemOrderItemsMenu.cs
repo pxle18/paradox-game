@@ -19,12 +19,12 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             ItemOrderNpc itemOrderNpc = ItemOrderNpcModule.Instance.GetByPlayerPosition(dbPlayer);
             if (itemOrderNpc == null) return null;
 
-            var menu = new Menu(Menu, "Verarbeitung");
+            var menu = new NativeMenu(Menu, "Verarbeitung");
 
             if (itemOrderNpc.RequiredTeams.Count == 0 || itemOrderNpc.RequiredTeams.Contains((int)dbPlayer.TeamId))
             {

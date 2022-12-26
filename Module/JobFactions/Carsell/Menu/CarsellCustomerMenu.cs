@@ -23,11 +23,11 @@ namespace VMP_CNR.Module.Carsell.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (!p_DbPlayer.RageExtension.IsInVehicle) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Fahrzeug Bereitstellen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Fahrzeug Bereitstellen");
 
             l_Menu.Add($"Schließen");
 

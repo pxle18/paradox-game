@@ -13,8 +13,8 @@ namespace VMP_CNR.Module.Gangwar
         public GangwarWeaponMenu() : base(PlayerMenu.GangwarWeaponMenu) {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer) {
-            Menu.Menu menu = new Menu.Menu(Menu, "Gangwar - Waffenkits");
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer) {
+            Menu.NativeMenu menu = new Menu.NativeMenu(Menu, "Gangwar - Waffenkits");
 
             menu.Add(GlobalMessages.General.Close());
             menu.Add("Advancedrifle");

@@ -10,13 +10,13 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.TryData("nightclubId", out uint nightClubId)) return null;
             NightClub nightClub = NightClubModule.Instance.Get(nightClubId);
             if (nightClub == null) return null;
             
-            var menu = new Menu.Menu(Menu, nightClub.Name);
+            var menu = new Menu.NativeMenu(Menu, nightClub.Name);
 
             menu.Add($"Schließen");
 

@@ -23,12 +23,12 @@ namespace VMP_CNR.Module.Teams.AmmoArmory
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             AmmoArmorie ammoArmorie = AmmoArmoryModule.Instance.GetByPosition(dbPlayer.Player.Position);
             if (ammoArmorie == null || !dbPlayer.Team.IsGangsters() || dbPlayer.Team.Id != ammoArmorie.TeamId) return null;
 
-            var menu = new Menu.Menu(Menu, "Munitionskammer (" + ammoArmorie.Packets + "P | " + ammoArmorie.Powder +" SP)");
+            var menu = new Menu.NativeMenu(Menu, "Munitionskammer (" + ammoArmorie.Packets + "P | " + ammoArmorie.Powder +" SP)");
 
             menu.Add($"Schließen");
 

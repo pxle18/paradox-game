@@ -25,7 +25,7 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (!p_DbPlayer.HasData("nsa_target_player_id")) return null;
 
@@ -35,7 +35,7 @@ namespace VMP_CNR.Module.NSA.Menu
             NSAObservation nSAObservation = NSAObservationModule.ObservationList.ToList().FirstOrDefault(o => o.Value.PlayerId == targetOne.Id).Value;
             if (nSAObservation == null) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "NSA Observation (" + targetOne.GetName() + ")");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "NSA Observation (" + targetOne.GetName() + ")");
             l_Menu.Add($"Schließen");
 
 

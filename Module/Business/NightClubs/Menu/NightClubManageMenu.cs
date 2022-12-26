@@ -11,7 +11,7 @@ namespace VMP_CNR.Module.Business.NightClubs
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (dbPlayer.Player.Dimension == 0) return null;
             NightClub nightClub = NightClubModule.Instance.Get(dbPlayer.Player.Dimension);
@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Business.NightClubs
             // Check Rights
             if (!nightClub.IsOwnedByBusines() || !dbPlayer.IsMemberOfBusiness() || !dbPlayer.GetActiveBusinessMember().NightClub || dbPlayer.GetActiveBusiness().BusinessBranch.NightClubId != nightClub.Id) return null;
 
-            var menu = new Menu.Menu(Menu, nightClub.Name);
+            var menu = new Menu.NativeMenu(Menu, nightClub.Name);
 
             menu.Add($"Schließen");
             menu.Add($"NightClub umbenennen");

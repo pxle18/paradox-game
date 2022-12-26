@@ -21,11 +21,11 @@ namespace VMP_CNR.Module.Crime
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.IsACop() || !dbPlayer.Duty) return null;
             
-            var menu = new Menu.Menu(Menu, "Gefaengnisuebersicht");
+            var menu = new Menu.NativeMenu(Menu, "Gefaengnisuebersicht");
 
             menu.Add($"Schließen");
 

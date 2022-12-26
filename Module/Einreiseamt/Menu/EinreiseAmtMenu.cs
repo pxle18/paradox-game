@@ -21,7 +21,7 @@ namespace VMP_CNR.Module.Einreiseamt
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.IsEinreiseAmt() || !dbPlayer.HasData("einreiseamtp")) return null;
 
@@ -29,7 +29,7 @@ namespace VMP_CNR.Module.Einreiseamt
             if (foundPlayer == null || !foundPlayer.IsValid() || !foundPlayer.IsNewbie()) return null;
 
 
-            var menu = new Menu.Menu(Menu, "Einreise " + foundPlayer.GetName());
+            var menu = new Menu.NativeMenu(Menu, "Einreise " + foundPlayer.GetName());
 
             menu.Add($"Schließen");
             menu.Add($"Level " + foundPlayer.Level + " | GB: " + foundPlayer.birthday[0]);

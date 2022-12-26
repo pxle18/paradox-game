@@ -24,9 +24,9 @@ namespace VMP_CNR.Module.Carsell.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "Fahrzeug entfernen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Fahrzeug entfernen");
             l_Menu.Add($"Schließen");
 
             using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))

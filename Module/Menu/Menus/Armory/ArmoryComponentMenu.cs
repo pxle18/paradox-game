@@ -17,9 +17,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Armory Components");
+            var menu = new NativeMenu(Menu, "Armory Components");
 
             menu.Add(GlobalMessages.General.Close(), "");
             menu.Add("Zurueck", "");

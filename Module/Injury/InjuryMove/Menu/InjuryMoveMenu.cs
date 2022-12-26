@@ -17,11 +17,11 @@ namespace VMP_CNR.Module.Injury.InjuryMove.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (!p_DbPlayer.HasData("playerToMove")) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Krankentransport");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Krankentransport");
             l_Menu.Add($"Schließen");
 
             InjuryMovePoint actualMovePoint = InjuryMoveModule.Instance.GetAll().Values.Where(ip => ip.Position.DistanceTo(p_DbPlayer.Player.Position) < 2.0f && ip.Dimension == p_DbPlayer.Player.Dimension).FirstOrDefault();

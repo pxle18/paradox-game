@@ -16,12 +16,12 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             ItemOrderNpc itemOrderNpc = ItemOrderNpcModule.Instance.GetByPlayerPosition(dbPlayer);
             if (itemOrderNpc == null) return null;
             
-            var menu = new Menu(Menu, "Fertiggestellt");
+            var menu = new NativeMenu(Menu, "Fertiggestellt");
             
             foreach(ItemOrder itemOrder in ItemOrderModule.Instance.GetPlayerFinishedListByNpc(dbPlayer, itemOrderNpc))
             {

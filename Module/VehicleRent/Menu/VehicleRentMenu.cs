@@ -22,9 +22,9 @@ namespace VMP_CNR.Module.VehicleRent
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Fahrzeug vermieten");
+            var menu = new Menu.NativeMenu(Menu, "Fahrzeug vermieten");
 
             menu.Add($"Schließen");
 

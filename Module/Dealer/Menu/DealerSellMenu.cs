@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.Dealer.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("current_dealer")) return null;
 
@@ -27,7 +27,7 @@ namespace VMP_CNR.Module.Dealer.Menu
             if (l_Dealer == null)
                 return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Dealer", l_Dealer.Note);
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Dealer", l_Dealer.Note);
             l_Menu.Add("Schließen", "");
             if(dbPlayer.Team.IsHeroinTeam())
             {

@@ -13,9 +13,9 @@ namespace VMP_CNR.Module.Menu.Menus.Guenther
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Fahrstuhl");
+            var menu = new NativeMenu(Menu, "Fahrstuhl");
             menu.Add("Eingangstür");
             menu.Add("Garage");
             menu.Add(GlobalMessages.General.Close());
