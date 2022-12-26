@@ -167,7 +167,7 @@ namespace VMP_CNR.Module.Injury
             // if death in jail add jailtime +10
             if (dbPlayer.JailTime[0] > 0)
             {
-                dbPlayer.JailTime[0] += 10;
+                dbPlayer.JailTime[0] += 2;
             }
 
             dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
@@ -176,6 +176,11 @@ namespace VMP_CNR.Module.Injury
             var rnd = new Random();
             var injuryCauseOfDeath = InjuryCauseOfDeathModule.Instance.GetAll().Values.ToList().Find(iCoD => iCoD.Hash == hash) ??
                                      InjuryCauseOfDeathModule.Instance.GetAll()[5];
+
+            if (dbPlayer.GetName().Contains("Walid_Mohammad"))
+            {
+                dbPlayer.SendNewNotification($"InjuryCauseOfDeath: {injuryCauseOfDeath.Name}");
+            }
 
             var injuryType = injuryCauseOfDeath.InjuryTypes.OrderBy(x => rnd.Next()).ToList().First() ??
                              injuryCauseOfDeath.InjuryTypes.First(i => i.Id == 1);
@@ -296,12 +301,11 @@ namespace VMP_CNR.Module.Injury
             if (!dbPlayer.HasData("InjuryMovePointID"))
             {
                 // isch da son medischiner in der näh? dann machn wa ken timer runna sonst gibbet huddel
-                if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() && 
+                if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() &&
                 m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 10.0f && !m.IsInjured() && !m.IsCuffed && !m.IsTied && m.IsInDuty()).Count() <= 0)
                 {
                     dbPlayer.deadtime[0]++;
                 }
-
             }
 
             dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
@@ -477,7 +481,7 @@ namespace VMP_CNR.Module.Injury
 
             if (dbPlayer.RecentlyInjured)
             {
-                if (dbPlayer.TimeSinceTreatment.AddMinutes(15) > DateTime.Now)
+                if (dbPlayer.TimeSinceTreatment.AddMinutes(5) > DateTime.Now)
                 {
                     NAPI.Player.SetPlayerCurrentWeapon(dbPlayer.Player, WeaponHash.Unarmed);
                     dbPlayer.SendNewNotification("Du fühlst dich noch zu schwach um eine Waffe zu bedienen!");
