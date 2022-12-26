@@ -13,6 +13,7 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         public Shop Shop { get; set; }
         public Team Team { get; set; }
         public HashSet<Team> TeamsCanAccess { get; set; }
+        public int Money { get; set; }
 
         public ShopTakeoverModel(MySql.Data.MySqlClient.MySqlDataReader reader) : base(reader)
         {

@@ -8,6 +8,7 @@ using VMP_CNR.Module.Houses;
 using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Module.ShopTakeover.Models;
 using VMP_CNR.Module.Teams;
 using VMP_CNR.Module.Vehicles.Data;
 using VMP_CNR.Module.Vehicles.Garages;
@@ -20,12 +21,15 @@ namespace VMP_CNR.Module.ShopTakeover
 
         public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            uint shopTakeoverId = dbPlayer.SetData("shopTakeoverId");
+            uint shopTakeoverId = dbPlayer.GetData("shopTakeoverId");
+
+            ShopTakeoverModel shopTakeover = ShopTakeoverModule.Instance[shopTakeoverId];
+            if (shopTakeover == null) return null;
+           
             var menu = new NativeMenu(Menu, "Shop-Takeover - Verwaltung");
 
             menu.Add("Schliessen");
-            menu.Add($"Schutzgeld einsammeln (${");
-            menu.Add("Revolter");
+            menu.Add($"Schutzgeld einsammeln (${shopTakeover.Money}");
 
             return menu;
         }
