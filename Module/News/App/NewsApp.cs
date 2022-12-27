@@ -38,7 +38,10 @@ namespace VMP_CNR.Module.News.App
         [RemoteEvent]
         public void addNews(Player player, int newsType, string title, string content, string key)
         {
-            if (!player.CheckRemoteEventKey(key)) return;
+            if (!player.CheckRemoteEventKey(key))
+            {
+                return;
+            }
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid() || dbPlayer.TeamId != 4) return;
 
@@ -49,21 +52,19 @@ namespace VMP_CNR.Module.News.App
             title = title.Replace("\"\"", "");
             content = content.Replace("\"\"", "");
 
-            var l_NewsID = (uint)Main.newsList.Count + 1;
-            Main.newsList.Add(new NewsFound(l_NewsID, title + " (" + (l_NewsID.ToString()) + ")", content, newsType));
+            uint newsId = (uint)Main.newsList.Count + 1;
+            Main.newsList.Add(new NewsFound(newsId, $"{title} ({newsId})", content, newsType));
 
-            Main.newsList.Sort(delegate (NewsFound x, NewsFound y)
-            {
-                return y.Id.CompareTo(x.Id);
-            });
+            Main.newsList.Sort((x, y) => y.Id.CompareTo(x.Id));
 
             // Update NewsList
-            this.SendNewsList(player);
+            SendNewsList(player);
 
-            if (newsType == 0)
-                Main.sendNotificationToPlayersWhoCanReceive("[NEWS] Es wurde ein Wetterbericht veroeffentlicht. Check die News App!", "Weazel News");
-            else
-                Main.sendNotificationToPlayersWhoCanReceive("[NEWS] Es wurde eine News veroeffentlicht. Check die News App!", "Weazel News");
+            string notificationText = newsType == 0 ?
+                "[NEWS] Es wurde ein Wetterbericht veröffentlicht. Check die News App!" :
+                "[NEWS] Es wurde eine News veröffentlicht. Check die News App!";
+            Main.sendNotificationToPlayersWhoCanReceive(notificationText, "Weazel News");
+           
         }
 
         private void SendNewsList(Player player)
@@ -71,21 +72,24 @@ namespace VMP_CNR.Module.News.App
             TriggerNewClient(player, "updateNews", NAPI.Util.ToJson(Main.newsList));
         }
 
-        public void deleteNews(uint p_NewsID)
+        public void deleteNews(uint newsId)
         {
-            if (Main.newsList.Exists(n => n.Id == p_NewsID))
+            if (Main.newsList.Exists(n => n.Id == newsId))
             {
-                NewsFound l_News = Main.newsList.Find(n => n.Id == p_NewsID);
-                Main.newsList.Remove(l_News);
+                NewsFound news = Main.newsList.Find(n => n.Id == newsId);
+                Main.newsList.Remove(news);
             }
         }
 
-
         [RemoteEvent]
-        public void removeNews(Player player, uint p_NewsID, string key)
+        public void RemoveNews(Player player, uint newsId, string key)
         {
-            if (!player.CheckRemoteEventKey(key)) return;
-            deleteNews(p_NewsID);
+            if (!player.CheckRemoteEventKey(key))
+            {
+                return;
+            }
+
+            deleteNews(newsId);
         }
     }
 }
