@@ -92,7 +92,6 @@ namespace VMP_CNR.Module.Injury
 
         public override void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint hash)
         {
-
             dbPlayer.CancelPhoneCall();
             dbPlayer.ClosePhone();
 
@@ -203,13 +202,15 @@ namespace VMP_CNR.Module.Injury
             if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team))
             {
                 // in GW Gebiet
-                if (dbPlayer.HasData("gangwarId"))
+                if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
                 {
-                    GangwarTown gangwarTown = GangwarTownModule.Instance.Get(dbPlayer.GetData("gangwarId"));
-                    if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+                    injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
+
+                    if (dbPlayer.HasData("gangwarId"))
                     {
+                        GangwarTown gangwarTown = GangwarTownModule.Instance.Get(dbPlayer.GetData("gangwarId"));
+
                         // Player is in Range
-                        injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
 
                         if (dbPlayer.Team.Id == gangwarTown.AttackerTeam.Id)
                         {
@@ -327,7 +328,7 @@ namespace VMP_CNR.Module.Injury
             if (dbPlayer.Injury.Id == InjuryBleeding)
             {
                 var randomInt = Main.Random.Next(1, 100);
-                if(randomInt >= 65)
+                if (randomInt >= 65)
                 {
                     dbPlayer.Revive();
                     dbPlayer.SendNewNotification($"Du hattest Glück: Deine Verletzung war nicht ausschlaggebend! Du stehst nun wieder.");
