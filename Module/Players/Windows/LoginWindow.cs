@@ -50,6 +50,12 @@ namespace VMP_CNR.Module.Players.Windows
                 DbPlayer dbPlayer = player.GetPlayer();
                 if (dbPlayer == null) return;
 
+                if (dbPlayer?.SocialClubName != player?.SocialClubName)
+                {
+                    player?.Kick("Invalid SocialName");
+                    return;
+                }
+
                 if (Configuration.Instance.IsUpdateModeOn)
                 {
                     if (dbPlayer.Rank.Id < 1) dbPlayer.Kick();
