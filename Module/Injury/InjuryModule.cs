@@ -136,7 +136,7 @@ namespace VMP_CNR.Module.Injury
                 return;
             }
 
-            if (iKiller != null && iKiller.IsValid() && iKiller.IsACop() && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.IsInjured())
+            if (iKiller != null && iKiller.IsValid() && (iKiller.IsACop() || iKiller.IsAMedic()) && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.IsInjured())
             {
                 dbPlayer.SetData("SMGkilledPos", dbPlayer.Player.Position);
                 dbPlayer.SetData("SMGkilledDim", dbPlayer.Player.Dimension);

@@ -1227,6 +1227,12 @@ namespace VMP_CNR.Module.Players
                         return;
                     }
 
+                    if (destinationDbPlayer.Injury.Id == InjuryModule.Instance.InjuryBruise)
+                    {
+                        dbPlayer.SendNewNotification("Für diese Verletzung benötigst du keine Stabilisation.");
+                        return;
+                    }
+
                     if (dbPlayer.Container.GetItemAmount(Verbandskasten) > 0)
                     {
                         if(destinationDbPlayer.Injury.StabilizedInjuryId == 0)
@@ -1236,6 +1242,7 @@ namespace VMP_CNR.Module.Players
                             if (dbPlayer.Team.Id == (int)TeamTypes.TEAM_MEDIC || dbPlayer.ParamedicLicense) dbPlayer.SendNewNotification($"Veletzung: {destinationDbPlayer.Injury.Name}!");
                             return;
                         }
+
                         Main.m_AsyncThread.AddToAsyncThread(new Task(async () =>
                         {
                             if (destinationDbPlayer.Injury.Id != 17)
@@ -1261,6 +1268,7 @@ namespace VMP_CNR.Module.Players
                                 destinationDbPlayer.SendNewNotification("Du kannst nichts mehr für diese Person tun...");
                                 return;
                             }
+
 
                             destinationDbPlayer.Stabilize();
                         }));

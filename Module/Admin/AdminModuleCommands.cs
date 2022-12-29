@@ -2675,7 +2675,7 @@ namespace VMP_CNR.Module.Admin
             findPlayer.Save();
             //findPlayer.SendNewNotification("Saved your stuff!");
             findPlayer.Player.SendNotification($"Sie wurden gekickt. Grund {command[1]}");
-            findPlayer.Player.Kick();
+            findPlayer.Player.KickSilent();
             dbPlayer.SendNewNotification("Kicked.");
 
         }
@@ -2703,17 +2703,18 @@ namespace VMP_CNR.Module.Admin
             await NAPI.Task.WaitForMainThread(0);
 
             findPlayer.Player.SendNotification($"Sie wurden gekickt. Grund: Powernap!");
-            findPlayer.Player.Kick();
+            findPlayer.Player.KickSilent();
+
             dbPlayer.SendNewNotification("Successfully Kicked.");
         }
 
         private readonly List<string> _whitelistedSlammers = new List<string>()
         {
-            "Eric_Blanco", "Walid_Mohammad", "Ali_Kuznecow", "Deni_West", "Dragan_Baroganovic", "Emilio_Down"
+            "Eric_Blanco", "Walid_Mohammad", "Ali_Kuznecow", "Deni_West", "Dragan_Baroganovic", "Emilio_Down", "Yasha_Yamaguchi", "Kardash_Yamaguchi"
         };
         
         [Command(GreedyArg = true)]
-        public async void offline(Player player, string commandParams)
+        public void offline(Player player, string commandParams)
         {
             var dbPlayer = player.GetPlayer();
             if (dbPlayer == null || !dbPlayer.IsValid()) return;
@@ -3247,7 +3248,7 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true, AllowedDeath = true)]
         [Command(GreedyArg = true)]
-        public void arev(Player player, string name, string reason = "")
+        public void arev(Player player, string name)
         {
             var dbPlayer = player.GetPlayer();
             if (!dbPlayer.CanAccessMethod()) return;
