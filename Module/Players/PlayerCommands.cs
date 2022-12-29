@@ -2111,11 +2111,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SendNewNotification("Sie haben nicht die benötigten Lizenzen!");
                 return;
             }
-            if (dbPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Sie haben keinen offiziellen Wohnsitz und können daher kein Taxi fahren!");
-                return;
-            }
+
             if (string.IsNullOrWhiteSpace(commandText))
             {
                 dbPlayer.SendNewNotification(

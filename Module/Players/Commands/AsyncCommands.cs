@@ -184,12 +184,6 @@ namespace VMP_CNR.Module.Players.Commands
 
             if (findPlayer == dbPlayer) return;
 
-            if (findPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Ohne Wohnsitz kann diese Person keine Lizenz erhalten!");
-                return;
-            }
-
             if (dbPlayer.Player.Position.DistanceTo(new Vector3(-810.6085, -1347.864, 5.166561)) >= 20.0f)
             {
                 dbPlayer.SendNewNotification("Du musst an dem Fahrschulgebaeude sein um Scheine auszustellen!");

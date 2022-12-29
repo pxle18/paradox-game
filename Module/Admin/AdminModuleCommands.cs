@@ -2407,8 +2407,11 @@ namespace VMP_CNR.Module.Admin
                     Item.Name +
                     " gegeben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-                if (dbPlayer.RankId < (int)AdminLevelTypes.Management)
+                if (dbPlayer.RankId < (int)AdminLevelTypes.Staff)
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log",
+                        dbPlayer.GetName() + " hat " + findPlayer.GetName() + " " + amount + " " +
+                    Item.Name + " gegeben.");
+                else Players.Players.Instance.SendMessageToHighTeam("highteam-log",
                         dbPlayer.GetName() + " hat " + findPlayer.GetName() + " " + amount + " " +
                     Item.Name + " gegeben.");
 
@@ -2452,10 +2455,20 @@ namespace VMP_CNR.Module.Admin
 
             var searchedPlayer = Players.Players.Instance.FindPlayer(command[0], true);
             if (searchedPlayer == null) return;
+
+            if (command[1] == "0")
+            {
+                searchedPlayer.ApplyCharacter();
+                dbPlayer.SendNewNotification("Skin wiederhergestellt.");
+            }
+
             if (Enum.TryParse(command[1], true, out PedHash skin))
             {
                 searchedPlayer.SetSkin(skin);
+                dbPlayer.SendNewNotification("Skin gesetzt.");
             }
+            else dbPlayer.SendNewNotification("Skin nicht gefunden.");
+
             return;
         }
 
@@ -4446,9 +4459,8 @@ namespace VMP_CNR.Module.Admin
             iPlayer.SendNewNotification("Sie haben " + dbPlayer.GetName() +
                                     " von der Community ausgeschlossen!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            if (!iPlayer.Rank.CanAccessFeature("hiddenBans"))
-                await Chats.SendGlobalMessage(iPlayer.Rank.Name + " " + iPlayer.GetName() + " hat " +
-                                               dbPlayer.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
+            await Chats.SendGlobalMessage(iPlayer.Rank.Name + " " + iPlayer.GetName() + " hat " +
+                                            dbPlayer.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
 
             DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm, "Community-Ausschluss", 0, Devmode);
             dbPlayer.warns[0] = 3;
@@ -5042,12 +5054,12 @@ namespace VMP_CNR.Module.Admin
                                                " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
             }
 
-            DatabaseLogging.Instance.LogAdminAction(player, findplayer.GetName(), AdminLogTypes.timeban, command[2], hours, Devmode);
             findplayer.timeban[0] = banstamp;
             findplayer.Save();
             findplayer.Player.SendNotification("Timeban " + hours + " Stunden, Grund: " + command[2]);
             findplayer.Player.Kick("Timeban " + hours + " Stunden, Grund: " + command[2]);
             findplayer.Player.Kick();
+            DatabaseLogging.Instance.LogAdminAction(player, findplayer.GetName(), AdminLogTypes.timeban, command[2], hours, Devmode);
         }
 
         [CommandPermission(PlayerRankPermission = true)]
