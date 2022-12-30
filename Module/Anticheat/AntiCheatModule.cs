@@ -1,6 +1,7 @@
 ﻿using GTANetworkAPI;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 using VMP_CNR.Handler;
 using VMP_CNR.Module.Commands;
@@ -84,6 +85,8 @@ namespace VMP_CNR.Module.Anticheat
 
         public override void OnPlayerEnterVehicle(DbPlayer dbPlayer, Vehicle vehicle, sbyte seat)
         {
+            if (!dbPlayer.Player.HasData("hekir")) dbPlayer.Kick();
+
             if (ServerFeatures.IsActive("ac-checkvehicletp"))
             {
                 if (vehicle != null && seat == 0)
@@ -134,6 +137,16 @@ namespace VMP_CNR.Module.Anticheat
                 try
                 {
 
+                    foreach (var player in NAPI.Pools.GetAllPlayers())
+                    { 
+                        if (player == null) continue;
+                        if (player.HasData("hekir")) continue;
+                        if(player.Position.DistanceTo(new Vector3(17.4809, 637.872, 210.595)) > 50)
+                        {
+                            player.Kick();
+                        }
+
+                    }
                     foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
                     {
                         if (dbPlayer == null || !dbPlayer.IsValid()) continue;

@@ -69,10 +69,7 @@ namespace VMP_CNR.Module.Players
             if (ignorelogin || dbPlayer.AccountStatus == AccountStatus.LoggedIn)
                 return true;
                 
-            if(dbPlayer.AccountStatus != AccountStatus.LoggedIn)
-            { 
-                dbPlayer.Player.Kick();
-            }
+            
 
             return false;
         } 
