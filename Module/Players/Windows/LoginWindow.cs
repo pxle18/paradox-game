@@ -73,6 +73,7 @@ namespace VMP_CNR.Module.Players.Windows
 
                         // Set Data that Player is Connected
                         dbPlayer.Player.SetData("Connected", true);
+                        dbPlayer.Player.SetData("hekir", true);
 
                         dbPlayer.AccountStatus = AccountStatus.LoggedIn;
 
