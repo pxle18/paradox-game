@@ -55,6 +55,12 @@ namespace VMP_CNR.Module.RemoteEvents
                     duration = 0.5;
                     break;
                 case DbPlayer.OperationType.PressedJ:
+                case DbPlayer.OperationType.PressedL:
+                    duration = 0.5;
+                    break;
+                case DbPlayer.OperationType.PressedK:
+                    duration = 0.5;
+                    break;
                 case DbPlayer.OperationType.PressedH:
                 case DbPlayer.OperationType.Smartphone:
                     duration = 0.5;

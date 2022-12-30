@@ -19,7 +19,7 @@ namespace VMP_CNR.Module.VehicleSpawner
 
         protected override string GetQuery()
         {
-            return "SELECT * FROM `vehicles` WHERE !(`pos_x` = '0')  AND `inGarage` = '0';";
+            return "SELECT * FROM `vehicles` WHERE !(`pos_x` = '0') AND DATEDIFF(NOW(), lastUpdate) < 1.5 AND `inGarage` = '0';";
         }
 
         protected override void OnItemLoaded(PlayerVehicle playerVehicle)

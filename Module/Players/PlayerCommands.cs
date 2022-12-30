@@ -1334,7 +1334,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            if (DateTime.Compare(dbPlayer.LastReport.AddMinutes(5), DateTime.Now) < 0)
+            if (DateTime.Compare(dbPlayer.LastReport.AddMinutes(1), DateTime.Now) < 0)
             {
                 String playerList = "";
 
@@ -1342,13 +1342,15 @@ namespace VMP_CNR.Module.Players
                 {
                     if (user == null || !user.IsValid()) continue;
                     if (user.Id == dbPlayer.Id) continue;
+                    if (user.Team.Id == dbPlayer.Team.Id) continue;
+
                     if (user.Player.Dimension == player.Dimension)
                     {
-                        if (user.Player.Position.DistanceTo(dbPlayer.Player.Position) < 50.0f)
+                        if (user.Player.Position.DistanceTo(dbPlayer.Player.Position) < 200.0f)
                         {
                             if (!playerList.Equals("")) playerList += ",";
 
-                            playerList += user.Id;
+                            playerList += user.GetName();
                         }
                     }
                 }
@@ -1364,7 +1366,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            dbPlayer.SendNewNotification("Du hast in den letzten 5 Minuten bereits einen Report abgesendet.", PlayerNotification.NotificationType.ADMIN);
+            dbPlayer.SendNewNotification("Du hast in den letzten 1 Minuten bereits einen Report abgesendet.", PlayerNotification.NotificationType.ADMIN);
 
 
         }
@@ -2109,11 +2111,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SendNewNotification("Sie haben nicht die benötigten Lizenzen!");
                 return;
             }
-            if (dbPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Sie haben keinen offiziellen Wohnsitz und können daher kein Taxi fahren!");
-                return;
-            }
+
             if (string.IsNullOrWhiteSpace(commandText))
             {
                 dbPlayer.SendNewNotification(

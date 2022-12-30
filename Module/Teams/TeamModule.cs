@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Teams
 
         public bool IsWeaponTeamId(uint Id)
         {
-            return Id == (int)TeamTypes.TEAM_HUSTLER;
+            return Id == (int)TeamTypes.TEAM_HUSTLER || Id == (int)TeamTypes.TEAM_MADRAZO;
         }
         public bool IsMethTeamId(uint Id)
         {
@@ -63,8 +63,7 @@ namespace VMP_CNR.Module.Teams
                 Id == (int)TeamTypes.TEAM_YAKUZA ||
                 Id == (int)TeamTypes.TEAM_LCN ||
                 Id == (int)TeamTypes.TEAM_ORGANISAZIJA ||
-                Id == (int)TeamTypes.TEAM_BRATWA||
-                Id == (int)TeamTypes.TEAM_MADRAZO;
+                Id == (int)TeamTypes.TEAM_BRATWA;
         }
         public bool IsWeedTeamId(uint Id)
         {
@@ -77,7 +76,7 @@ namespace VMP_CNR.Module.Teams
         {
             return Id == (int)TeamTypes.TEAM_BALLAS || Id == (int)TeamTypes.TEAM_LOST || Id == (int)TeamTypes.TEAM_IRISHMOB ||
                    Id == (int)TeamTypes.TEAM_GROVE || Id == (int)TeamTypes.TEAM_VAGOS || Id == (int)TeamTypes.TEAM_MARABUNTA ||
-                   Id == (int)TeamTypes.TEAM_REDNECKS || Id == (int)TeamTypes.TEAM_HOH || Id == (int)TeamTypes.TEAM_MADRAZO ||
+                   Id == (int)TeamTypes.TEAM_REDNECKS || Id == (int)TeamTypes.TEAM_HOH ||
                    Id == (int)TeamTypes.TEAM_TRIADEN || Id == (int)TeamTypes.TEAM_YAKUZA || Id == (int)TeamTypes.TEAM_LCN ||
                    Id == (int)TeamTypes.TEAM_ORGANISAZIJA || Id == (int)TeamTypes.TEAM_BRATWA;
         }

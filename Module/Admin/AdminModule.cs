@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Admin
             if (iKiller == null || !iKiller.IsValid()) return false;
             if (dbPlayer == null || !dbPlayer.IsValid()) return false;
 
-            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0)
+            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0 && iKiller.DimensionType[0] != DimensionType.Gangwar)
             {
                 dbPlayer.SendNewNotification(StringsModule.Instance["KILL_WILL_NOTICE"]);
                 Players.Players.Instance.SendMessageToAuthorizedUsers("deathlog",

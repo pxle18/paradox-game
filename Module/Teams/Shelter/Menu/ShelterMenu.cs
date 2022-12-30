@@ -192,6 +192,9 @@ namespace VMP_CNR.Module.Teams.Shelter
                                         break;
                                 }
 
+                                dbPlayer.Container.AddItem(60, 1);
+                                dbPlayer.Container.AddItem(201, 10);
+
                                 dbPlayer.SendNewNotification(
                                     "Sie haben ihre Waffen aus dem Arsenal genommen! (900$ Kosten)", title: "Fraktion", notificationType: PlayerNotification.NotificationType.FRAKTION);
                             }

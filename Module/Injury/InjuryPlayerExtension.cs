@@ -165,12 +165,6 @@ namespace VMP_CNR.Module.Injury
             {
                 if (dbPlayer.Injury.StabilizedInjuryId != 0 && dbPlayer.Injury.Id != InjuryModule.Instance.InjuryGangwar)
                 {
-                    if(dbPlayer.Injury.Id == InjuryModule.Instance.InjuryBruise)
-                    {
-                        dbPlayer.SendNewNotification("Für diese Verletzung benötigst du keine Stabilisation.");
-                        return;
-                    }
-
                     dbPlayer.SendNewNotification($"Sie wurden stabilisiert!");
                     dbPlayer.SetPlayerInjury(InjuryTypeModule.Instance.Get((uint)dbPlayer.Injury.StabilizedInjuryId));
 
