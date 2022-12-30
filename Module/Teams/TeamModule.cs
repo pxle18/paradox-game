@@ -79,7 +79,7 @@ namespace VMP_CNR.Module.Teams
                    Id == (int)TeamTypes.TEAM_GROVE || Id == (int)TeamTypes.TEAM_VAGOS || Id == (int)TeamTypes.TEAM_MARABUNTA ||
                    Id == (int)TeamTypes.TEAM_REDNECKS || Id == (int)TeamTypes.TEAM_HOH || Id == (int)TeamTypes.TEAM_MADRAZO ||
                    Id == (int)TeamTypes.TEAM_TRIADEN || Id == (int)TeamTypes.TEAM_YAKUZA || Id == (int)TeamTypes.TEAM_LCN ||
-                   Id == (int)TeamTypes.TEAM_ORGANISAZIJA || Id == (int)TeamTypes.TEAM_BRATWA;
+                   Id == (int)TeamTypes.TEAM_ORGANISAZIJA || Id == (int)TeamTypes.TEAM_BRATWA || Id == (int)TeamTypes.TEAM_MADRAZO;
         }
 
         public bool IsGangsterTeamId(uint Id)
