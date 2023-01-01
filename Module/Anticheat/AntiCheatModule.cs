@@ -127,6 +127,32 @@ namespace VMP_CNR.Module.Anticheat
             dbPlayer.Player.Kick();
         }
 
+        public override void OnMinuteUpdate()
+        {
+            if (!ServerFeatures.IsActive("anticheat"))
+                return;
+
+            Main.m_AsyncThread.AddToAsyncThread(new System.Threading.Tasks.Task(() =>
+            {
+                try
+                {
+                    foreach (var player in NAPI.Pools.GetAllPlayers())
+                    {
+                        if (player == null) continue;
+                        if (player.HasData("hekir")) continue;
+
+                        var dbPlayer = player.GetPlayer();
+                        if (dbPlayer == null) continue;
+
+                        if (dbPlayer.AuthKey == "") continue;
+
+                        if (player.Position.DistanceTo(new Vector3(17.4809, 637.872, 210.595)) > 50) player.Kick();
+                    }
+                }
+                catch { }
+            }));
+        }
+
         public override void OnFiveSecUpdate()
         {
             if (!ServerFeatures.IsActive("anticheat"))
@@ -136,17 +162,6 @@ namespace VMP_CNR.Module.Anticheat
             {
                 try
                 {
-
-                    foreach (var player in NAPI.Pools.GetAllPlayers())
-                    { 
-                        if (player == null) continue;
-                        if (player.HasData("hekir")) continue;
-                        if(player.Position.DistanceTo(new Vector3(17.4809, 637.872, 210.595)) > 50)
-                        {
-                            player.Kick();
-                        }
-
-                    }
                     foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
                     {
                         if (dbPlayer == null || !dbPlayer.IsValid()) continue;
@@ -216,7 +231,7 @@ namespace VMP_CNR.Module.Anticheat
 
         public static void CheckVehicleGotTeleported(DbPlayer dbPlayer, SxVehicle sxVehicle)
         {
-            
+
             if (sxVehicle != null && sxVehicle.IsValid() && dbPlayer != null && dbPlayer.IsValid() && !dbPlayer.CanControl(sxVehicle))
             {
                 if (sxVehicle.databaseId == 0 || (!sxVehicle.IsPlayerVehicle() && !sxVehicle.IsTeamVehicle())) return;
@@ -299,7 +314,7 @@ namespace VMP_CNR.Module.Anticheat
 
                         int vehicleSpeed = Convert.ToInt32(sxVeh.Data.MaxSpeed * 1.20);
 
-                        if(sxVeh.Data.MaxSpeed > 0 && vehicleSpeed + 10 < Speed)
+                        if (sxVeh.Data.MaxSpeed > 0 && vehicleSpeed + 10 < Speed)
                         {
                             if (dbPlayer.HasData("speedCheckFirst"))
                             {
