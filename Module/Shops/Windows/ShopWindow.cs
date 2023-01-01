@@ -97,7 +97,7 @@ namespace VMP_CNR.Module.Shops.Windows
                     if (item == null) continue;
                     ItemModel itemData = ItemModelModule.Instance.Get((uint)item.itemId);
 
-                    if (item.count < 0)
+                    if (item.count < 1)
                     {
                         dbPlayer.SendNewNotification("Du kannst keine negative Anzahl kaufen!");
                         return;
