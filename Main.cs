@@ -555,6 +555,32 @@ namespace VMP_CNR
             AsyncEventTasks.ExitColShapeTask(shape, player);
         }
 
+        [ServerEvent(Event.UnhandledException)]
+        public void OnUnhandledException(Exception exception)
+        {
+            try
+            {
+                return;
+            } catch (Exception e)
+            {
+                Console.WriteLine("SOREN ALARM SYSTEM (WIHUU) : " + exception.Message);
+            }
+        }
+
+        [ServerEvent(Event.FirstChanceException)]
+        public void OnFirstChanceException(Exception exception)
+        {
+            try
+            {
+                return;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("SOREN ALARM SYSTEM (WIHUU) : " + exception.Message);
+            }
+        }
+
+
         [ServerEvent(Event.PlayerEnterColshape)]
         public void onEntityEnterColShape(ColShape shape, Player player)
         {

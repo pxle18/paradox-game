@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GTANetworkAPI;
+using MySqlX.XDevAPI;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 using VMP_CNR.Handler;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Commands;
+using VMP_CNR.Module.Doors;
 using VMP_CNR.Module.Events.Halloween;
 using VMP_CNR.Module.Injury;
 using VMP_CNR.Module.Items;
@@ -331,6 +334,7 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public void REQUEST_VEHICLE_FlATBED_UNLOAD(Player client, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             return;
             /*DbPlayer dbPlayer = client.GetPlayer();
@@ -356,6 +360,7 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public async Task REQUEST_VEHICLE_FRISK(Player player, Vehicle vehicle, string key)
         {
+            if (player == null) return;
             if (!player.CheckRemoteEventKey(key)) return;
 
             if (vehicle == null) return;
@@ -559,6 +564,8 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_LOCK(Player client, string key)
         {
+            if (client == null) return;
+            if (String.IsNullOrEmpty(key)) return;
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleLockInside(client);
         }
@@ -603,6 +610,7 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_LOCK_OUTSIDE(Player client, Vehicle vehicle, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleLockOutside(client, vehicle);
         }
@@ -657,6 +665,10 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_DOOR(Player client, int door, string key)
         {
+            if (client == null) return;
+            if (door.GetType() != typeof(int)) return;
+            if (String.IsNullOrEmpty(key)) return;
+
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleDoorInside(client, door);
         }
@@ -757,6 +769,7 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public async void REQUEST_VEHICLE_REPAIR(Player client, Vehicle vehicle, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = client.GetPlayer();
             if (!dbPlayer.CanAccessRemoteEvent() || dbPlayer.RageExtension.IsInVehicle) return;
