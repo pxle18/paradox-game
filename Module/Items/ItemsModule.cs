@@ -37,7 +37,6 @@ namespace VMP_CNR.Module.Items
 {
     public sealed class ItemsModule : Module<ItemsModule>
     {
-
         public override void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader)
         {
             var id = reader.GetUInt32("id");

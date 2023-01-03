@@ -374,7 +374,7 @@ namespace VMP_CNR.Module.Players
             }
         }
 
-        public async Task<DbPlayer> Load(MySqlDataReader reader, Player player)
+        public async Task<DbPlayer> Load(MySqlDataReader reader, Player player, bool reload = false)
         {
             DbPlayer dbPlayer = new DbPlayer(reader)
             {
@@ -402,6 +402,7 @@ namespace VMP_CNR.Module.Players
 
                 // Add Verweis
                 player.SetData("player", dbPlayer);
+                player.Name = reader.GetString("Name");
 
                 // Forumid
                 dbPlayer.ForumId = reader.GetInt32("forumid");

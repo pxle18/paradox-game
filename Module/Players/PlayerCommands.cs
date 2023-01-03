@@ -3452,14 +3452,14 @@ namespace VMP_CNR.Module.Players
             }));
         }
 
-        /* [CommandPermission]
+        [CommandPermission]
          [Command(GreedyArg = true)]
          public void sellhouse(Player player, string command = " ")
          {
              DbPlayer dbPlayer = player.GetPlayer();
              if (!dbPlayer.CanAccessMethod()) return;
 
-             if (dbPlayer.job[0] != (int) jobs.JOB_Makler) return;
+             if (dbPlayer.job[0] != (int) JobTypes.JOB_Makler) return;
              if (!ServerFeatures.IsActive("makler-haus"))
              {
                  dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
@@ -3473,7 +3473,7 @@ namespace VMP_CNR.Module.Players
                  if (string.IsNullOrWhiteSpace(command) || !Main.validateArgs(command, 3))
                  {
                      dbPlayer.SendNewNotification(
-                         MSG.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
+                         GlobalMessages.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
                      return;
                  }
 
@@ -3485,8 +3485,6 @@ namespace VMP_CNR.Module.Players
                      dbPlayer.SendNewNotification("Der Preis war nicht gueltig!");
                      return;
                  }
-
-
 
                  var Owner = Players.Instance.FindPlayer(arg2[0]);
                  var Customer = Players.Instance.FindPlayer(arg2[1]);
@@ -3507,7 +3505,7 @@ namespace VMP_CNR.Module.Players
                      return;
                  }
 
-                 if (Customer.ownHouse[0] > 0)
+                 if (Customer.OwnHouse[0] > 0)
                  {
                      dbPlayer.SendNewNotification(
                          "Der Kunde besitzt bereits ein Haus!");
@@ -3545,7 +3543,7 @@ namespace VMP_CNR.Module.Players
                  Logger.Crash(e);
              }
          }
-        */
+        
         [CommandPermission]
         [Command(GreedyArg = true)]
         public void sellstorage(Player player, string command = " ")

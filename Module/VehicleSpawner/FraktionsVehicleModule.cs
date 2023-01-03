@@ -24,7 +24,6 @@ namespace VMP_CNR.Module.VehicleSpawner
 
         protected override void OnItemLoaded(FraktionsVehicle fvehicle)
         {
-            Logging.Logger.Debug("model " + fvehicle.Model);
             var data = VehicleDataModule.Instance.GetDataById((uint)fvehicle.Model);
             if (data == null) return;
             if (data.Disabled) return;

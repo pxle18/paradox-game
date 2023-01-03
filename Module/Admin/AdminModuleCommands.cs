@@ -59,6 +59,7 @@ using VMP_CNR.Module.Weather;
 using VMP_CNR.Module.Procedures;
 using VMP_CNR.Module.Admin.Procedures;
 using System.Net;
+using VMP_CNR.Module.Tasks;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -741,6 +742,18 @@ namespace VMP_CNR.Module.Admin
                     }
                 });
             });
+        }
+
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command]
+        public void colshape(Player p_Player, string myString)
+        {
+            if (!Configuration.Instance.DevMode)
+                return;
+
+            if (!int.TryParse(myString, out int scale)) return;
+            Markers.Create(1, p_Player.Position.Subtract(new Vector3(0, 0, 1)), new Vector3(0, 0, 0), new Vector3(0, 0, 0), scale, 255, 255, 0, 0, 0);
         }
 
         public static List<Blip> houseBlips = new List<Blip>();
@@ -2725,7 +2738,7 @@ namespace VMP_CNR.Module.Admin
         {
             "Eric_Blanco", "Walid_Mohammad", "Ali_Kuznecow", "Deni_West", "Dragan_Baroganovic", "Emilio_Down", "Yasha_Yamaguchi", "Kardash_Yamaguchi"
         };
-        
+
         [Command(GreedyArg = true)]
         public void offline(Player player, string commandParams)
         {
@@ -2745,7 +2758,7 @@ namespace VMP_CNR.Module.Admin
             if (_whitelistedSlammers.Any(x => slammedName.ToUpper().Contains(x.ToUpper()))) return;
 
             dbPlayer.SendNewNotification($"Slammed {findPlayer.GetName()}!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-            
+
             findPlayer.Slammer = dbPlayer;
             findPlayer.LastSlam = DateTime.Now;
 
@@ -3911,16 +3924,6 @@ namespace VMP_CNR.Module.Admin
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
-        public void reloadmodule(Player player, string module)
-        {
-            var dbPlayer = player.GetPlayer();
-            if (!dbPlayer.CanAccessMethod()) return;
-
-            dbPlayer.SendNewNotification(Modules.Instance.Reload(module) ? "Reloaded" : "Module not found", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-        }
-
-        [CommandPermission(PlayerRankPermission = true)]
-        [Command]
         public void supportinsel(Player player)
         {
             var iPlayer = player.GetPlayer();
@@ -5047,12 +5050,10 @@ namespace VMP_CNR.Module.Admin
             var banstamp = DateTime.Now.AddHours(hours).GetTimestamp();
             iPlayer.SendNewNotification("Sie haben " + findplayer.GetName() + " fuer " + hours +
                                     " Stunden vom Server gebannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-            if (!iPlayer.Rank.CanAccessFeature("hiddenBans"))
-            {
-                await Chats.SendGlobalMessage("Administrator " + iPlayer.GetName() + " hat " +
-                                               findplayer.GetName() + " fuer " + hours +
-                                               " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
-            }
+
+            await Chats.SendGlobalMessage("Administrator " + iPlayer.GetName() + " hat " +
+                                           findplayer.GetName() + " fuer " + hours +
+                                           " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
 
             findplayer.timeban[0] = banstamp;
             findplayer.Save();
@@ -5586,7 +5587,9 @@ namespace VMP_CNR.Module.Admin
                 heading = player.Vehicle.Rotation.Z.ToString().Replace(".", ",");
             }
 
-            Logger.Print($"{x} {y} {z} {heading} {comment}");
+            Logger.Print($"{x} {y} {z} - {heading} | {comment}");
+            DiscordHandler.SendMessage("Position - " + DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), $"{x} {y} {z} - {heading} | {comment}");
+
             iPlayer.SendNewNotification($"Position gespeichert. {comment}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
         }
 

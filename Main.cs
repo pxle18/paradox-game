@@ -69,6 +69,7 @@ using VMP_CNR.Module.Clothes.Windows;
 using VMP_CNR.Module.Players.NAPIWrapper;
 using VMP_CNR.Module.Threading;
 using VMP_CNR.Module.Admin;
+using System.Net;
 
 namespace VMP_CNR
 {
@@ -525,6 +526,8 @@ namespace VMP_CNR
             Logger.Print("PP      AA   AA RR   RR AA   AA DDDDDD   OOOO0  XX    XX    ");
             Logger.Print("");
             Logger.Print("© module & zeroday. backdooring your systems since cnw v1 ");
+
+            Logger.Print(Dns.GetHostName());
 
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;
