@@ -5025,9 +5025,9 @@ namespace VMP_CNR.Module.Admin
             }
 
             var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
-            if (command.Length < 2) return;
-            int hours;
-            bool result = Int32.TryParse(command[1], out hours);
+            if (command.Length <= 2) return;
+
+            bool result = Int32.TryParse(command[1], out int hours);
             if (!result)
             {
                 iPlayer.SendNewNotification("Not a number!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
