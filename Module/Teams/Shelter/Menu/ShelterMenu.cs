@@ -148,6 +148,9 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     case (int)TeamTypes.TEAM_BRATWA:
                                         dbPlayer.GiveWeapon(WeaponHash.Wrench, 0);
                                         break;
+                                    case (int)TeamTypes.TEAM_BALKANEROS:
+                                        dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
+                                        break;
                                     case (int)TeamTypes.TEAM_ORGANISAZIJA:
                                         dbPlayer.GiveWeapon(WeaponHash.Hammer, 0);
                                         break;

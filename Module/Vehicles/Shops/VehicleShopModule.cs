@@ -28,39 +28,62 @@ namespace VMP_CNR.Module.Vehicles.Shops
 
         protected override bool OnLoad()
         {
-            if (shopVehicles != null)
+            try
             {
-                foreach (var shopVehicle in shopVehicles.Values)
+                if (shopVehicles != null)
                 {
-                    shopVehicle.ColShape.Delete();
-                    shopVehicle.Entity?.Entity.Delete();
+                    foreach (var shopVehicle in shopVehicles.Values)
+                    {
+                        if (shopVehicle.ColShape != null) shopVehicle.ColShape?.Delete();
+                        if (shopVehicle.Entity != null) shopVehicle.Entity?.Entity.Delete();
+                    }
+
+                    shopVehicles.Clear();
                 }
-
-                shopVehicles.Clear();
-            }
-            else
-            {
-                shopVehicles = new Dictionary<int, ShopVehicle>();
-            }
-
-            if (vehicleShops == null)
-            {
-                vehicleShops = new Dictionary<int, VehicleShop>();
-            }
-            else
-            {
-                foreach (var vehicleShop in vehicleShops.Values)
+                else
                 {
-                    vehicleShop.Blip.Delete();
-                    vehicleShop.ColShape.Delete();
+                    shopVehicles = new Dictionary<int, ShopVehicle>();
                 }
-
-                vehicleShops.Clear();
             }
+            catch (Exception e) { Logger.DebugLine(e.ToString()); }
 
-            LoadVehicles();
-            LoadSpecialVehicles();
-            LoadCarShops();
+            try
+            {
+                if (vehicleShops == null)
+                {
+                    vehicleShops = new Dictionary<int, VehicleShop>();
+                }
+                else
+                {
+                    foreach (var vehicleShop in vehicleShops.Values)
+                    {
+                        vehicleShop.Blip?.Delete();
+                        vehicleShop.ColShape?.Delete();
+                    }
+
+                    vehicleShops.Clear();
+                }
+            }
+            catch (Exception e) { Logger.DebugLine(e.ToString()); }
+
+            try
+            {
+                LoadVehicles();
+            }
+            catch (Exception e) { Logger.DebugLine(e.ToString()); }
+
+            try
+            {
+                LoadSpecialVehicles();
+            }
+            catch (Exception e) { Logger.DebugLine(e.ToString()); }
+
+            try
+            {
+                LoadCarShops();
+            }
+            catch (Exception e) { Logger.DebugLine(e.ToString()); }
+
             return true;
         }
 
@@ -167,7 +190,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
                                     Price = data.Price - reader.GetInt32("discount"),
                                     IsSpecialCar = false,
                                     LimitedBuyed = 0,
-                                    LimitedAmount = 0,                                    
+                                    LimitedAmount = 0,
                                 };
 
                                 NAPI.Task.Run(async () =>
@@ -239,16 +262,14 @@ namespace VMP_CNR.Module.Vehicles.Shops
                                 if (!string.IsNullOrEmpty(playerIdsString))
                                 {
                                     string[] splittedPlayerIds = playerIdsString.Split(",");
-                                    
-                                    foreach(string playerIdString in splittedPlayerIds)
+
+                                    foreach (string playerIdString in splittedPlayerIds)
                                     {
-                                        if(!int.TryParse(playerIdString, out int playerId)) return;
+                                        if (!int.TryParse(playerIdString, out int playerId)) return;
                                         vehicleShop.PlayerIds.Add(playerId);
                                     }
                                 }
-
                             }
-
 
                             vehicleShop.RestrictedTeams = new HashSet<int>();
                             string teamString = reader.GetString("restricted_teams");
@@ -338,7 +359,7 @@ namespace VMP_CNR.Module.Vehicles.Shops
                 {
                     var shopVehicle = GetShopVehicle(shopVehicleId);
                     if (shopVehicle == null) return false;
-                    dbPlayer.SendNewNotification($"Preis: ${shopVehicle.Price} Steuer: ${shopVehicle.Data.Tax} Inventar: {shopVehicle.Data.InventoryWeight/1000} kg Slots: {shopVehicle.Data.InventorySize}", title: $"{shopVehicle.Name}");
+                    dbPlayer.SendNewNotification($"Preis: ${shopVehicle.Price} Steuer: ${shopVehicle.Data.Tax} Inventar: {shopVehicle.Data.InventoryWeight / 1000} kg Slots: {shopVehicle.Data.InventorySize}", title: $"{shopVehicle.Name}");
                     return true;
                 }
 

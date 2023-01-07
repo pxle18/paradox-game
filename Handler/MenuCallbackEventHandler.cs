@@ -4013,6 +4013,12 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
                                              GlobalMessages.HelpLeader());
                                     break;
+                                case (int)TeamTypes.TEAM_BALKANEROS:
+                                    dbPlayer.SendNewNotification(GlobalMessages.HelpGang());
+                                    if (dbPlayer.TeamRankPermission.Manage >= 1)
+                                        dbPlayer.SendNewNotification(
+                                             GlobalMessages.HelpLeader());
+                                    break;
                                 case (int)TeamTypes.TEAM_NNM:
                                     dbPlayer.Player.SendNotification(GlobalMessages.HelpGang());
                                     if (dbPlayer.TeamRankPermission.Manage >= 1)

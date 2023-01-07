@@ -2302,6 +2302,8 @@ namespace VMP_CNR.Module.Admin
                     Logger.Crash(new ArgumentOutOfRangeException());
                     break;
             }
+
+            DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.afind, foundPlayer.GetName(), 0, Configuration.Instance.DevMode);
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -3532,8 +3534,8 @@ namespace VMP_CNR.Module.Admin
                 destinationPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() +
                                                   " hat sich zu ihnen teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             }
-
         }
+
 
         [CommandPermission(PlayerRankPermission = true)]
         [Command]
@@ -4381,6 +4383,30 @@ namespace VMP_CNR.Module.Admin
                 dbPlayer.Player.Kick("Account gesperrt, (3 Abmahnungen) Grund: " + command[1]);
             }
 
+        }
+
+        [CommandPermission(PlayerRankPermission = true)]
+        [Command(GreedyArg = true)]
+        public async Task rename(Player player, string commandParams)
+        {
+
+            var iPlayer = player.GetPlayer();
+
+            if (!iPlayer.CanAccessMethod())
+            {
+                iPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions(), title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                return;
+            }
+
+            var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
+            if (command.Length <= 1) return;
+
+            var dbPlayer = Players.Players.Instance.FindPlayer(command[0], true);
+            if (dbPlayer == null) return;
+
+            iPlayer.SendNewNotification("Sie wurden temporär zu " + command[1] + " umgenannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+
+            dbPlayer.SendNewNotification("Du hast nun: " + dbPlayer.GetName() + " zu " + command[1] + " temporär umbennant.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
         }
 
         [CommandPermission(PlayerRankPermission = true)]

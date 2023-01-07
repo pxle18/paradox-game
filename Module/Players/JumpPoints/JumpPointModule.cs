@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
 
         public override Type[] RequiredModules()
         {
-            return new[] {typeof(TeamModule)};
+            return new[] { typeof(TeamModule) };
         }
 
         protected override bool OnLoad()
@@ -74,16 +74,10 @@ namespace VMP_CNR.Module.Players.JumpPoints
         {
             int objectModel;
             var objectPosition = jumpPoint.Position.Copy();
-            if (jumpPoint.Range >= 5)
-            {
-                objectModel = -399820605;
-                objectPosition.Z += 0.3f;
-            }
-            else
-            {
-                objectPosition.Z -= 1f;
-                objectModel = -1916383162;
-            }
+
+            objectPosition.Z -= 1f;
+            objectModel = -1916383162;
+
             if (!jumpPoint.HideInfos)
             {
                 jumpPoint.Object =
@@ -174,7 +168,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
                         return false;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logging.Logger.Crash(e);
             }

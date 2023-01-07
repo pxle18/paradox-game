@@ -118,6 +118,8 @@ namespace VMP_CNR
         arev = 11,
         setdpos = 12,
         setgarage = 13,
+
+        afind = 14,
     }
 
     public enum TeamTypes
@@ -168,6 +170,7 @@ namespace VMP_CNR
         TEAM_BRATWA = 50,
         TEAM_MADRAZO = 27,
         TEAM_ORGANISAZIJA = 47,
+        TEAM_BALKANEROS = 52,
     }
 
     internal enum JobTypes
@@ -1328,6 +1331,10 @@ namespace VMP_CNR
                     }
 
                     if (!Configuration.Instance.DevMode) Configuration.Instance.IsServerOpen = false;
+
+                    await Task.Delay(5000);
+
+                    Environment.Exit(0);
 
                     return;
                 }
