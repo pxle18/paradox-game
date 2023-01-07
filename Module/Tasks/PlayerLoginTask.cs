@@ -134,18 +134,6 @@ namespace VMP_CNR.Module.Tasks
                         return;
                     }
 
-                    if (await SocialBanHandler.Instance.IsHwidBanned(_player))
-                    {
-                        AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "HWID");
-                        return;
-                    }
-                    
-                    if (await SocialBanHandler.Instance.IsPlayerSocialBanned(_player))
-                    {
-                        AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "SocialClub");
-                        return;
-                    }
-
                     if (dbPlayer.AccountStatus == AccountStatus.LoggedIn) return;
 
                     ComponentManager.Get<LoginWindow>().Show()(dbPlayer);

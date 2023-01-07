@@ -139,11 +139,23 @@ namespace VMP_CNR.Module.Players.Windows
 
                         dbPlayer.IsFirstSpawn = true;
                         // Character Sync
-                        NAPI.Task.Run(() =>
+                        NAPI.Task.Run(async () =>
                         {
                             dbPlayer.ApplyCharacter(true);
                             dbPlayer.ApplyPlayerHealth();
                             dbPlayer.Player.TriggerEvent("setPlayerHealthRechargeMultiplier");
+
+                            if (await SocialBanHandler.Instance.IsHwidBanned(dbPlayer.Player))
+                            {
+                                AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "HWID");
+                                return;
+                            }
+
+                            if (await SocialBanHandler.Instance.IsPlayerSocialBanned(dbPlayer.Player))
+                            {
+                                AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "SocialClub");
+                                return;
+                            }
                         }, 3000);
 
                         PlayerSpawn.OnPlayerSpawn(player);
