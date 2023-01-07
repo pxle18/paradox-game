@@ -23,9 +23,9 @@ namespace VMP_CNR.Module.Stadthalle
         }
 
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Stadthalle");
+            var menu = new Menu.NativeMenu(Menu, "Stadthalle");
 
             menu.Add($"Schließen");
             menu.Add("Mietvertrag kündigen");

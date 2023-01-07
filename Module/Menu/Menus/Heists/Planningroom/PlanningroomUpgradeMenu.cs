@@ -9,11 +9,11 @@ namespace VMP_CNR.Module.Menu.Menus.Heists.Planningroom
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             PlanningRoom room = PlanningModule.Instance.GetPlanningRoomByTeamId(dbPlayer.Team.Id);
 
-            var menu = new Menu(Menu, "Upgrade Menu");
+            var menu = new NativeMenu(Menu, "Upgrade Menu");
 
             menu.Add($"Schließen");
 

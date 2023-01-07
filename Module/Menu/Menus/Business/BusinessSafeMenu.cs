@@ -9,12 +9,12 @@ namespace VMP_CNR.Module.Menu.Menus.Business
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             var biz = BusinessModule.Instance.GetById((uint) -dbPlayer.Player.Dimension);
             if (biz == null) return null;
 
-            var menu = new Menu(Menu, "Business Tower");
+            var menu = new NativeMenu(Menu, "Business Tower");
 
             menu.Add("Geldtresor", "Geld abheben/einzahlen");
 

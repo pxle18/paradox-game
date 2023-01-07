@@ -10,9 +10,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Freiberuf Müllabfuhr", "Müllabfuhr Los Santos");
+            var menu = new NativeMenu(Menu, "Freiberuf Müllabfuhr", "Müllabfuhr Los Santos");
             menu.Add("Arbeit starten");
             menu.Add("Fahrzeug mieten 500$");
             menu.Add("Rückgabe");

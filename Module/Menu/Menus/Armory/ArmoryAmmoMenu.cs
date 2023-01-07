@@ -21,9 +21,9 @@ namespace VMP_CNR.Module.Menu.Menus.Armory
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Armory Munition");
+            var menu = new NativeMenu(Menu, "Armory Munition");
 
             menu.Add(GlobalMessages.General.Close(), "");
 

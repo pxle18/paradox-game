@@ -23,9 +23,9 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "StaatObserv v1.0");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "StaatObserv v1.0");
             l_Menu.Add($"Schließen");
             l_Menu.Add($"FIB Transaction History");
             l_Menu.Add($"FIB Energie History");

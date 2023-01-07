@@ -18,14 +18,14 @@ namespace VMP_CNR.Module.AirFlightControl.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (p_DbPlayer == null) return null;
 
             AirFlightAirport airFlightAirport = AirFlightAirportModule.Instance.GetByPosition(p_DbPlayer.Player.Position);
             if (airFlightAirport == null) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Fracht Lieferungen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Fracht Lieferungen");
 
             l_Menu.Add($"Schließen");
             l_Menu.Add($"Aktuelle Lieferung abbrechen");

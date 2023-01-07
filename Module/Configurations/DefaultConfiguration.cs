@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 
 namespace VMP_CNR.Module.Configurations
 {
@@ -55,7 +56,7 @@ namespace VMP_CNR.Module.Configurations
         {
             DevLog = false;
             Ptr = false;
-            DevMode = false;
+            DevMode = Dns.GetHostName() == "v1281832.v-server.me";
             VoiceChannel = "INGAME_LIVE";
             VoiceChannelPassword = "WALID";
             IsServerOpen = false;
@@ -96,7 +97,7 @@ namespace VMP_CNR.Module.Configurations
             MaxPlayers = data.ContainsKey("max_players") ? int.Parse(data["max_players"]) : 1000;
 
             // Damage Multipliers
-            WeaponDamageMultipier = 0.35f;
+            WeaponDamageMultipier = 0.4f;
             MeleeDamageMultipier = 0.25f;
 
             DamageLog = data.ContainsKey("damagelog") ? bool.Parse(data["damagelog"]) : false;
@@ -117,16 +118,15 @@ namespace VMP_CNR.Module.Configurations
         
         public string GetMySqlConnection()
         {
-            return Ptr
-                ? "server='45.135.201.56'; uid='gvmp'; pwd='YLuOibDV75DglViZ'; database='dev_gvmp_ptr_1.1';max pool size=999;SslMode=none;convert zero datetime=True;"
-                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; port=3306; database='ingame_live';max pool size=999;SslMode=none;convert zero datetime=True;";
+            string hostName = Dns.GetHostName();
+
+            return $"server='db.prdx.to'; uid='{mysql_user}'; pwd='{mysql_pw}'; port=3306; database='ingame_{(hostName == "v1281832.v-server.me" ? "test" : "live")}';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
         
         public string GetMySqlConnectionBoerse()
         {
-            return Ptr
-                ? "server='45.135.201.56'; uid='gvmp'; pwd='YLuOibDV75DglViZ'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;"
-                : "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
+            return 
+                "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
 
         public string GetMySqlConnectionForum()

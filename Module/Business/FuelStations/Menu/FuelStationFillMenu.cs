@@ -28,9 +28,9 @@ namespace VMP_CNR.Module.Business.FuelStations
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Benzin liefern");
+            var menu = new Menu.NativeMenu(Menu, "Benzin liefern");
 
             menu.Add($"Schließen");
 

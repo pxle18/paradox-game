@@ -21,12 +21,12 @@ namespace VMP_CNR.Module.Warehouse
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             Warehouse warehouse = WarehouseModule.Instance.GetThis(dbPlayer.Player.Position);
             if (warehouse == null) return null;
 
-            var menu = new Menu.Menu(Menu, "Warenlager Verkauf");
+            var menu = new Menu.NativeMenu(Menu, "Warenlager Verkauf");
 
             menu.Add($"Schließen");
 

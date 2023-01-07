@@ -11,11 +11,11 @@ namespace VMP_CNR.Module.AnimationMenu
     {
         public AnimationShortCutMenuBuilder() : base(PlayerMenu.AnimationShortCutMenu) { }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("animSlot")) return null;
 
-            var menu = new Menu.Menu(Menu, $"Animation für Slot {dbPlayer.GetData("animSlot")} auswählen");
+            var menu = new Menu.NativeMenu(Menu, $"Animation für Slot {dbPlayer.GetData("animSlot")} auswählen");
 
             menu.Add($"Schließen");
 

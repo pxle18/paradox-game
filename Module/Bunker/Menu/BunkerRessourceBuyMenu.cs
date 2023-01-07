@@ -20,10 +20,10 @@ namespace VMP_CNR.Module.Bunker.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
            
-            var l_Menu = new Module.Menu.Menu(Menu, "Bunker Import", "");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Bunker Import", "");
             l_Menu.Add("Schließen", "");
 
             l_Menu.Add("100x Aluminiumbarren 80000$", "");

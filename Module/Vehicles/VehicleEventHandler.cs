@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GTANetworkAPI;
+using MySqlX.XDevAPI;
 using Newtonsoft.Json;
+using Org.BouncyCastle.Asn1.X509.Qualified;
 using VMP_CNR.Handler;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Commands;
+using VMP_CNR.Module.Doors;
 using VMP_CNR.Module.Events.Halloween;
 using VMP_CNR.Module.Injury;
 using VMP_CNR.Module.Items;
@@ -42,13 +45,13 @@ namespace VMP_CNR.Module.Vehicles
             });
         }
 
-        public void ToggleTrunkState(DbPlayer dbPlayer, SxVehicle l_Vehicle, bool state) 
+        public void ToggleTrunkState(DbPlayer dbPlayer, SxVehicle l_Vehicle, bool state)
         {
             if (l_Vehicle == null || l_Vehicle.Data == null)
                 return;
 
             uint trunkDoorDefault = 5;
-            if(l_Vehicle.Data.VehDoorTrunk > 0)
+            if (l_Vehicle.Data.VehDoorTrunk > 0)
             {
                 trunkDoorDefault = l_Vehicle.Data.VehDoorTrunk;
             }
@@ -63,7 +66,7 @@ namespace VMP_CNR.Module.Vehicles
             // Sync to actuall vehicle door States (Serverside)
 
             l_Vehicle.DoorStates[trunkDoorDefault] = state;
-            if(l_Vehicle.Data.VehDoorTrunk2 > 0) // 2 tür
+            if (l_Vehicle.Data.VehDoorTrunk2 > 0) // 2 tür
             {
                 l_Vehicle.DoorStates[l_Vehicle.Data.VehDoorTrunk2] = state;
             }
@@ -141,7 +144,7 @@ namespace VMP_CNR.Module.Vehicles
             }
             else
                 sxVeh.SetData("lastSireneStateChange", DateTime.Now);
-            
+
             if (dbPlayer.Player.VehicleSeat == 0)
             {
                 if (!sxVeh.SirensActive) return;
@@ -162,7 +165,7 @@ namespace VMP_CNR.Module.Vehicles
             if (!p_Client.CheckRemoteEventKey(key)) return;
             SxVehicle l_Vehicle = p_Vehicle.GetVehicle();
             DbPlayer l_DbPlayer = p_Client.GetPlayer();
-            if (l_Vehicle == null|| l_DbPlayer == null) return;
+            if (l_Vehicle == null || l_DbPlayer == null) return;
 
             p_Client.TriggerNewClient("setNormalSpeed", p_Vehicle, l_Vehicle.Data.MaxSpeed);
         }
@@ -179,8 +182,8 @@ namespace VMP_CNR.Module.Vehicles
             if (l_SxVehicle == null || !l_SxVehicle.IsValid() || l_SxVehicle.databaseId == 0)
                 return;
 
-            var l_Tuning        = l_SxVehicle.Mods;
-            var l_DoorStates    = l_SxVehicle.DoorStates;
+            var l_Tuning = l_SxVehicle.Mods;
+            var l_DoorStates = l_SxVehicle.DoorStates;
 
             try
             {
@@ -189,7 +192,7 @@ namespace VMP_CNR.Module.Vehicles
 
                 bool AnkerState = false;
                 if (l_SxVehicle.HasData("anker") && l_SxVehicle.GetData("anker")) AnkerState = true;
-                p_Client.TriggerNewClient("responseVehicleSyncData", p_RequestedVehicle, JsonConvert.SerializeObject(l_Tuning), 
+                p_Client.TriggerNewClient("responseVehicleSyncData", p_RequestedVehicle, JsonConvert.SerializeObject(l_Tuning),
                     JsonConvert.SerializeObject(l_DoorStates), l_SxVehicle.Data.LiveryIndex);
             }
             catch (Exception e)
@@ -210,7 +213,20 @@ namespace VMP_CNR.Module.Vehicles
             if (l_SxVehicle == null || !l_SxVehicle.IsValid())
                 return;
 
-            p_Client.TriggerNewClient("refreshSireneState", p_RequestedVehicle, l_SxVehicle.SirensActive, l_SxVehicle.SilentSiren);
+            var l_Tuning = l_SxVehicle.Mods;
+
+            try
+            {
+                p_Client.TriggerNewClient("refreshSireneState", p_RequestedVehicle, l_SxVehicle.SirensActive, l_SxVehicle.SilentSiren);
+                p_Client.TriggerNewClient("syncVehLivery", p_RequestedVehicle, l_SxVehicle.Data.LiveryIndex);
+                
+                if (l_Tuning.TryGetValue(80, out int headLightColor))
+                    p_Client.TriggerNewClient("syncVehHeadlight", p_RequestedVehicle, headLightColor);
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+            }
         }
 
         [RemoteEventPermission]
@@ -232,13 +248,13 @@ namespace VMP_CNR.Module.Vehicles
 
             // number plate
             msg += "Nummernschild: " + dbVehicle.Entity.NumberPlate;
-            
+
             // vehicle model name
             if (dbVehicle.Data.IsModdedCar == 1)
                 msg += " Modell: " + dbVehicle.Data.mod_car_name;
             else
                 msg += " Modell: " + dbVehicle.Data.Model;
-            
+
             // vehicle serial number
             if (dbVehicle.Undercover)
             {
@@ -258,66 +274,67 @@ namespace VMP_CNR.Module.Vehicles
                 msg += " Seriennummer: " + dbVehicle.databaseId;
             }
 
-            if(dbVehicle.CarsellPrice > 0)
+            if (dbVehicle.CarsellPrice > 0)
             {
                 msg += " VB $" + string.Format("{0:0,0}", dbVehicle.CarsellPrice);
             }
 
             dbPlayer.SendNewNotification(msg, PlayerNotification.NotificationType.INFO, "KFZ", 10000);
         }
-                
+
         //[RemoteEventPermission]
         //[RemoteEvent]
         //public void REQUEST_VEHICLE_FlATBED_LOAD(Player client, Vehicle vehicle, string key)
         //{
         //    if (!client.CheckRemoteEventKey(key)) return;
         //    return;
-            /*DbPlayer dbPlayer = client.GetPlayer();
-            if (!dbPlayer.CanAccessRemoteEvent()) return;
-            if (!dbPlayer.IsInDuty() || dbPlayer.TeamId != (int) teams.TEAM_DPOS) return;
-            var dbVehicle = vehicle.GetVehicle();
-            if (!dbVehicle.IsValid()) return;
-            
-            var offsetFlatbed = vehicle.GetModel().GetFlatbedVehicleOffset();
-            if (offsetFlatbed == null)
-                return;
-            
-            if (offsetFlatbed == null) return;
+        /*DbPlayer dbPlayer = client.GetPlayer();
+        if (!dbPlayer.CanAccessRemoteEvent()) return;
+        if (!dbPlayer.IsInDuty() || dbPlayer.TeamId != (int) teams.TEAM_DPOS) return;
+        var dbVehicle = vehicle.GetVehicle();
+        if (!dbVehicle.IsValid()) return;
 
-            // Respawnstate
-            dbVehicle.respawnInteractionState = true;
-            
-            foreach (var dposVehicle in VehicleHandler.Instance.GetAllVehicles())
+        var offsetFlatbed = vehicle.GetModel().GetFlatbedVehicleOffset();
+        if (offsetFlatbed == null)
+            return;
+
+        if (offsetFlatbed == null) return;
+
+        // Respawnstate
+        dbVehicle.respawnInteractionState = true;
+
+        foreach (var dposVehicle in VehicleHandler.Instance.GetAllVehicles())
+        {
+            if (dposVehicle == null || dposVehicle.entity == null) continue;
+            Vector3 offset = new Vector3(0,0,0);
+            if (dposVehicle.entity.GetModel() == VehicleHash.Flatbed && offsetFlatbed != null
+                                                                     && vehicle.Position.DistanceTo(
+                                                                         dposVehicle.entity.Position) <=
+                                                                     12.0f)
             {
-                if (dposVehicle == null || dposVehicle.entity == null) continue;
-                Vector3 offset = new Vector3(0,0,0);
-                if (dposVehicle.entity.GetModel() == VehicleHash.Flatbed && offsetFlatbed != null
-                                                                         && vehicle.Position.DistanceTo(
-                                                                             dposVehicle.entity.Position) <=
-                                                                         12.0f)
-                {
-                    offset = offsetFlatbed;
-                }
-                else
-                {
-                    continue;
-                }
-                
-                if (dposVehicle.entity.HasData("loadedVehicle")) continue;
-                
-                var call = new NodeCallBuilder("attachTo").AddVehicle(dposVehicle.entity).AddInt(0).AddFloat(offset.X).AddFloat(offset.Y).AddFloat(offset.Z).AddFloat(0).AddFloat(0).AddFloat(0).AddBool(true).AddBool(false).AddBool(false).AddBool(false).AddInt(0).AddBool(false).Build();
-                vehicle.Call(call);
+                offset = offsetFlatbed;
+            }
+            else
+            {
+                continue;
+            }
 
-                dposVehicle.entity.SetData("loadedVehicle", vehicle);
-                vehicle.SetData("isLoaded", true);
-                return;
-            }*/
+            if (dposVehicle.entity.HasData("loadedVehicle")) continue;
+
+            var call = new NodeCallBuilder("attachTo").AddVehicle(dposVehicle.entity).AddInt(0).AddFloat(offset.X).AddFloat(offset.Y).AddFloat(offset.Z).AddFloat(0).AddFloat(0).AddFloat(0).AddBool(true).AddBool(false).AddBool(false).AddBool(false).AddInt(0).AddBool(false).Build();
+            vehicle.Call(call);
+
+            dposVehicle.entity.SetData("loadedVehicle", vehicle);
+            vehicle.SetData("isLoaded", true);
+            return;
+        }*/
         //}
 
         [RemoteEventPermission]
         [RemoteEvent]
         public void REQUEST_VEHICLE_FlATBED_UNLOAD(Player client, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             return;
             /*DbPlayer dbPlayer = client.GetPlayer();
@@ -343,6 +360,7 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public async Task REQUEST_VEHICLE_FRISK(Player player, Vehicle vehicle, string key)
         {
+            if (player == null) return;
             if (!player.CheckRemoteEventKey(key)) return;
 
             if (vehicle == null) return;
@@ -406,21 +424,21 @@ namespace VMP_CNR.Module.Vehicles
             if (client.VehicleSeat != 0) return;
             if (!dbVehicle.CanInteract) return;
             if (!dbPlayer.CanControl(dbVehicle)) return;
-            
+
             // Respawnstate
             dbVehicle.respawnInteractionState = true;
 
             // EMP
-            if(dbVehicle.IsInAntiFlight())
+            if (dbVehicle.IsInAntiFlight())
             {
                 client.Vehicle.GetVehicle().SyncExtension.SetEngineStatus(false);
                 dbVehicle.SyncExtension.SetEngineStatus(false);
                 return;
             }
-            
+
             if (dbVehicle.fuel == 0 && dbVehicle.SyncExtension.EngineOn == false)
             {
-                dbPlayer.SendNewNotification("Dieses Fahrzeug hat kein Benzin mehr!", notificationType:PlayerNotification.NotificationType.ERROR);
+                dbPlayer.SendNewNotification("Dieses Fahrzeug hat kein Benzin mehr!", notificationType: PlayerNotification.NotificationType.ERROR);
                 return;
             }
 
@@ -442,7 +460,7 @@ namespace VMP_CNR.Module.Vehicles
                 if (HalloweenModule.isActive) return;
                 if (dbVehicle.EngineDisabled) return;
 
-                dbPlayer.SendNewNotification("Motor eingeschaltet!", notificationType:PlayerNotification.NotificationType.SUCCESS);
+                dbPlayer.SendNewNotification("Motor eingeschaltet!", notificationType: PlayerNotification.NotificationType.SUCCESS);
                 client.Vehicle.GetVehicle().SyncExtension.SetEngineStatus(true);
 
                 // Sync Vehicle Lights
@@ -477,7 +495,7 @@ namespace VMP_CNR.Module.Vehicles
                 client.Vehicle.GetVehicle().SyncExtension.SetEngineStatus(false);
             }
         }
-        
+
         [RemoteEventPermission]
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_INDICATORS(Player client, string key)
@@ -546,6 +564,8 @@ namespace VMP_CNR.Module.Vehicles
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_LOCK(Player client, string key)
         {
+            if (client == null) return;
+            if (String.IsNullOrEmpty(key)) return;
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleLockInside(client);
         }
@@ -585,11 +605,12 @@ namespace VMP_CNR.Module.Vehicles
             }
         }
 
-        
+
         [RemoteEventPermission]
         [RemoteEvent]
         public void REQUEST_VEHICLE_TOGGLE_LOCK_OUTSIDE(Player client, Vehicle vehicle, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleLockOutside(client, vehicle);
         }
@@ -642,8 +663,12 @@ namespace VMP_CNR.Module.Vehicles
 
         [RemoteEventPermission]
         [RemoteEvent]
-        public  void REQUEST_VEHICLE_TOGGLE_DOOR(Player client, int door, string key)
+        public void REQUEST_VEHICLE_TOGGLE_DOOR(Player client, int door, string key)
         {
+            if (client == null) return;
+            if (door.GetType() != typeof(int)) return;
+            if (String.IsNullOrEmpty(key)) return;
+
             if (!client.CheckRemoteEventKey(key)) return;
             handleVehicleDoorInside(client, door);
         }
@@ -671,7 +696,7 @@ namespace VMP_CNR.Module.Vehicles
 
                 ComponentManager.Get<EjectWindow>().Show()(dbPlayer, sxVeh);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Logger.Crash(e);
             }
@@ -739,11 +764,12 @@ namespace VMP_CNR.Module.Vehicles
             handleVehicleDoorOutside(client, vehicle, door);
         }
 
-        
+
         [RemoteEventPermission]
         [RemoteEvent]
-        public  async void REQUEST_VEHICLE_REPAIR(Player client, Vehicle vehicle, string key)
+        public async void REQUEST_VEHICLE_REPAIR(Player client, Vehicle vehicle, string key)
         {
+            if (client == null) return;
             if (!client.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = client.GetPlayer();
             if (!dbPlayer.CanAccessRemoteEvent() || dbPlayer.RageExtension.IsInVehicle) return;

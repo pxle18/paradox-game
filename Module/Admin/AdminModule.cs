@@ -1,6 +1,7 @@
 ﻿using System;
 using GTANetworkAPI;
 using VMP_CNR.Handler;
+using VMP_CNR.Module.Injury;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Strings;
@@ -39,14 +40,26 @@ namespace VMP_CNR.Module.Admin
 
         public override bool OnPlayerDeathBefore(DbPlayer dbPlayer, NetHandle killer, uint weapon)
         {
-            if (killer.GetEntityType() != EntityType.Player || killer.ToPlayer() == dbPlayer.Player) return false;
+            if (killer.GetEntityType() != EntityType.Player) return false;
+           
+            if(killer.ToPlayer() == dbPlayer.Player) return false;
+            try
+            {
+                if (!killer.ToPlayer().HasData("hekir"))
+                {
+                    dbPlayer.Revive();
+                    killer.ToPlayer().Kick();
+                    return false;
+                }
+            }
+            catch { }
             var xKiller = killer.ToPlayer();
             var iKiller = xKiller.GetPlayer();
 
             if (iKiller == null || !iKiller.IsValid()) return false;
             if (dbPlayer == null || !dbPlayer.IsValid()) return false;
 
-            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0)
+            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0 && iKiller.DimensionType[0] != DimensionType.Gangwar)
             {
                 dbPlayer.SendNewNotification(StringsModule.Instance["KILL_WILL_NOTICE"]);
                 Players.Players.Instance.SendMessageToAuthorizedUsers("deathlog",

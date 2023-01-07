@@ -9,9 +9,9 @@ namespace VMP_CNR.Module.Menu.Menus.Heists.Planningroom
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Schmiede Mitarbeiter");
+            var menu = new NativeMenu(Menu, "Schmiede Mitarbeiter");
 
             menu.Add($"Schließen");
             menu.Add($"Tresortür anfertigen");

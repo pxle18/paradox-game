@@ -16,10 +16,10 @@ namespace VMP_CNR.Module.Staatsgefaengnis.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
          
-            var l_Menu = new Module.Menu.Menu(Menu, "Job Auswahl");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Job Auswahl");
 
             l_Menu.Add($"Schließen");
             l_Menu.Add($"Aktuellen Job beenden");

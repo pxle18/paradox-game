@@ -16,9 +16,9 @@ namespace VMP_CNR.Module.Boerse.Menu
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            Module.Menu.Menu menu = new Module.Menu.Menu(PlayerMenu.ManageDepotMenu, "Depot-Management", "");
+            Module.Menu.NativeMenu menu = new Module.Menu.NativeMenu(PlayerMenu.ManageDepotMenu, "Depot-Management", "");
             menu.Add("Schließen", "");
             menu.Add("Depot erstellen", "");
             

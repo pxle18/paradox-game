@@ -21,7 +21,7 @@ namespace VMP_CNR.Module.FIB.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (!p_DbPlayer.HasData("fib_phone_history"))
                 return null;
@@ -30,7 +30,7 @@ namespace VMP_CNR.Module.FIB.Menu
             if (l_Target == null || !l_Target.IsValid())
                 return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "Telekommunikationsdaten");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Telekommunikationsdaten");
             l_Menu.Add($"Schließen");
 
             if (!ReversePhoneModule.Instance.phoneHistory.ContainsKey(l_Target.Id))

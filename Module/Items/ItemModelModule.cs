@@ -14,6 +14,11 @@ namespace VMP_CNR.Module.Items
     {
         public ConcurrentDictionary<int, Dictionary<int, int>> LogItems = new ConcurrentDictionary<int, Dictionary<int, int>>();
 
+        public override Type[] RequiredModules()
+        {
+            return new[] { typeof(ItemsModule) };
+        }
+
         public void LogItem(int itemId, int teamId, int amount)
         {
             try
@@ -48,7 +53,7 @@ namespace VMP_CNR.Module.Items
 
         protected override void OnLoaded()
         {
-            Logging.Logger.Debug($"Loaded {this.GetAll().Count} Items");
+            Logging.Logger.Print($"Loaded {this.GetAll().Count} Items");
             base.OnLoaded();
         }
 

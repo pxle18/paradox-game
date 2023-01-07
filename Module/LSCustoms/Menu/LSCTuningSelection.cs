@@ -14,9 +14,9 @@ namespace VMP_CNR.Module.LSCustoms.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "LSC Tuning Menü");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "LSC Tuning Menü");
             l_Menu.Add($"Schließen");
 
             var l_Tunings = Helper.Helper.m_Mods;

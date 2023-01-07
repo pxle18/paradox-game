@@ -15,9 +15,9 @@ namespace VMP_CNR.Module.Teams.Shelter
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu.Menu(Menu, "Fraktionskampf", "Fraktionskampf Verwaltung");
+            var menu = new Menu.NativeMenu(Menu, "Fraktionskampf", "Fraktionskampf Verwaltung");
 
             menu.Add($"Schließen");
             menu.Add($"Kampfantrag stellen");

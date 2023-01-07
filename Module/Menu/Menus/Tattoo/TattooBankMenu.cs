@@ -22,7 +22,7 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.TryData("tattooShopId", out uint tattooShopId)) return null;
             var tattooShop = TattooShopModule.Instance.Get(tattooShopId);
@@ -30,7 +30,7 @@ namespace VMP_CNR
 
             if (!dbPlayer.GetActiveBusinessMember().Manage || dbPlayer.GetActiveBusinessMember().BusinessId != tattooShop.BusinessId) return null;
 
-            var menu = new Menu(Menu, "Tattoo Shop");
+            var menu = new NativeMenu(Menu, "Tattoo Shop");
 
 
             menu.Add($"Bank öffnen");

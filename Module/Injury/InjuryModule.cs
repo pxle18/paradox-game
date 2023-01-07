@@ -34,6 +34,8 @@ namespace VMP_CNR.Module.Injury
 
         public uint InjuryDeathScreenId = 100;
         public uint InjuryKrankentransport = 101;
+        public uint InjuryBruise = 44;
+        public uint InjuryBleeding = 36;
         public uint InjuryGangwar = 102;
         public uint InjuryTeamfight = 105;
 
@@ -90,7 +92,6 @@ namespace VMP_CNR.Module.Injury
 
         public override void OnPlayerDeath(DbPlayer dbPlayer, NetHandle killer, uint hash)
         {
-
             dbPlayer.CancelPhoneCall();
             dbPlayer.ClosePhone();
 
@@ -134,7 +135,7 @@ namespace VMP_CNR.Module.Injury
                 return;
             }
 
-            if (iKiller != null && iKiller.IsValid() && iKiller.IsACop() && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.IsInjured())
+            if (iKiller != null && iKiller.IsValid() && (iKiller.IsACop() || iKiller.IsAMedic()) && (WeaponHash)hash == WeaponHash.Smg && !dbPlayer.IsInjured())
             {
                 dbPlayer.SetData("SMGkilledPos", dbPlayer.Player.Position);
                 dbPlayer.SetData("SMGkilledDim", dbPlayer.Player.Dimension);
@@ -167,7 +168,7 @@ namespace VMP_CNR.Module.Injury
             // if death in jail add jailtime +10
             if (dbPlayer.JailTime[0] > 0)
             {
-                dbPlayer.JailTime[0] += 10;
+                dbPlayer.JailTime[0] += 2;
             }
 
             dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
@@ -176,6 +177,11 @@ namespace VMP_CNR.Module.Injury
             var rnd = new Random();
             var injuryCauseOfDeath = InjuryCauseOfDeathModule.Instance.GetAll().Values.ToList().Find(iCoD => iCoD.Hash == hash) ??
                                      InjuryCauseOfDeathModule.Instance.GetAll()[5];
+
+            //if (dbPlayer.GetName().Contains("Walid_Mohammad"))
+            //{
+            //    dbPlayer.SendNewNotification($"InjuryCauseOfDeath: {injuryCauseOfDeath.Name}");
+            //}
 
             var injuryType = injuryCauseOfDeath.InjuryTypes.OrderBy(x => rnd.Next()).ToList().First() ??
                              injuryCauseOfDeath.InjuryTypes.First(i => i.Id == 1);
@@ -196,13 +202,15 @@ namespace VMP_CNR.Module.Injury
             if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team))
             {
                 // in GW Gebiet
-                if (dbPlayer.HasData("gangwarId"))
+                if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
                 {
-                    GangwarTown gangwarTown = GangwarTownModule.Instance.Get(dbPlayer.GetData("gangwarId"));
-                    if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+                    injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
+
+                    if (dbPlayer.HasData("gangwarId"))
                     {
+                        GangwarTown gangwarTown = GangwarTownModule.Instance.Get(dbPlayer.GetData("gangwarId"));
+
                         // Player is in Range
-                        injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
 
                         if (dbPlayer.Team.Id == gangwarTown.AttackerTeam.Id)
                         {
@@ -296,18 +304,38 @@ namespace VMP_CNR.Module.Injury
             if (!dbPlayer.HasData("InjuryMovePointID"))
             {
                 // isch da son medischiner in der näh? dann machn wa ken timer runna sonst gibbet huddel
-                if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() && 
+                if (TeamModule.Instance.Get((uint)TeamTypes.TEAM_MEDIC).Members.Values.ToList().Where(m => m != null && m.IsValid() &&
                 m.Player.Position.DistanceTo(dbPlayer.Player.Position) < 10.0f && !m.IsInjured() && !m.IsCuffed && !m.IsTied && m.IsInDuty()).Count() <= 0)
                 {
                     dbPlayer.deadtime[0]++;
                 }
-
             }
 
             dbPlayer.Player.TriggerNewClient("startScreenEffect", "DeathFailMPIn", 5000, true);
 
             // Deadtime > max injury Time?
             if (dbPlayer.deadtime[0] <= dbPlayer.Injury.TimeToDeath) return;
+
+            // Self healing
+            if (dbPlayer.Injury.Id == InjuryBruise)
+            {
+                dbPlayer.Revive();
+                dbPlayer.SendNewNotification($"Deine Verletzung war nicht ausschlaggebend! Du stehst nun wieder.");
+
+                return;
+            }
+
+            if (dbPlayer.Injury.Id == InjuryBleeding)
+            {
+                var randomInt = Main.Random.Next(1, 100);
+                if (randomInt >= 65)
+                {
+                    dbPlayer.Revive();
+                    dbPlayer.SendNewNotification($"Du hattest Glück: Deine Verletzung war nicht ausschlaggebend! Du stehst nun wieder.");
+
+                    return;
+                }
+            }
 
             if (dbPlayer.Injury.Id == InjuryGangwar)
             {
@@ -477,7 +505,7 @@ namespace VMP_CNR.Module.Injury
 
             if (dbPlayer.RecentlyInjured)
             {
-                if (dbPlayer.TimeSinceTreatment.AddMinutes(15) > DateTime.Now)
+                if (dbPlayer.TimeSinceTreatment.AddMinutes(5) > DateTime.Now)
                 {
                     NAPI.Player.SetPlayerCurrentWeapon(dbPlayer.Player, WeaponHash.Unarmed);
                     dbPlayer.SendNewNotification("Du fühlst dich noch zu schwach um eine Waffe zu bedienen!");

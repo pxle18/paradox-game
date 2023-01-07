@@ -17,12 +17,12 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("animCat")) return null;
             int catId = dbPlayer.GetData("animCat");
 
-            var menu = new Menu(Menu, AnimationCategoryModule.Instance.Get((uint)catId).Name);
+            var menu = new NativeMenu(Menu, AnimationCategoryModule.Instance.Get((uint)catId).Name);
             menu.Add("Schließen", "");
             foreach (KeyValuePair<uint, AnimationItem> kvp in AnimationItemModule.Instance.GetAll().Where(i => i.Value.CategoryId == catId))
             {

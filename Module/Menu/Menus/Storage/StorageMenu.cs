@@ -18,12 +18,12 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             StorageRoom storageRoom = StorageRoomModule.Instance.GetClosest(dbPlayer);
             if (storageRoom != null)
             {
-                var menu = new Menu(Menu, $"Lagerraum ({storageRoom.Id})");
+                var menu = new NativeMenu(Menu, $"Lagerraum ({storageRoom.Id})");
                 if (storageRoom.IsBuyable())
                 {
                     menu.Add("Lagerraum kaufen $" + storageRoom.Price);

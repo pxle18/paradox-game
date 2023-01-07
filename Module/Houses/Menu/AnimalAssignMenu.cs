@@ -18,9 +18,9 @@ namespace VMP_CNR.Module.Houses
         {
         }
 
-        public override Module.Menu.Menu Build(DbPlayer dbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Module.Menu.Menu(Menu, "Haustier auswählen");
+            var menu = new Module.Menu.NativeMenu(Menu, "Haustier auswählen");
 
             menu.Add($"Schließen");
             menu.Add($"Haustier abgeben");

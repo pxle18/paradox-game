@@ -18,9 +18,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Schönheitsklinik");
+            var menu = new NativeMenu(Menu, "Schönheitsklinik");
 
             menu.Add($"Schönheitschirugie");
             menu.Add($"Tattoos lasern");

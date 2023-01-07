@@ -22,9 +22,9 @@ namespace VMP_CNR.Module.Carsell.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "Verwaltung");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Verwaltung");
 
             l_Menu.Add($"Fahrzeug bestellen");
             l_Menu.Add($"Fahrzeug entfernen");

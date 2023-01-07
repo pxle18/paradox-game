@@ -19,9 +19,9 @@ namespace VMP_CNR.Module.Racing.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "Racing Arena");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Racing Arena");
 
             l_Menu.Add($"Schließen");
             foreach (RacingLobby racingLobby in RacingModule.Lobbies)

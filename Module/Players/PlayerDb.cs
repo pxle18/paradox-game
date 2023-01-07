@@ -68,9 +68,11 @@ namespace VMP_CNR.Module.Players
 
             if (ignorelogin || dbPlayer.AccountStatus == AccountStatus.LoggedIn)
                 return true;
+                
+            
 
             return false;
-        }
+        } 
 
         public static void Save(this DbPlayer dbPlayer, bool disconnect = false)
         {

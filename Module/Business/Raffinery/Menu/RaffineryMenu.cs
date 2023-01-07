@@ -25,13 +25,13 @@ namespace VMP_CNR.Module.Business.Raffinery
         {
         }
 
-        public override Menu.Menu Build(DbPlayer dbPlayer)
+        public override Menu.NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.TryData("raffineryId", out uint raffineryId)) return null;
             var raffinery = RaffineryModule.Instance.Get(raffineryId);
             if (raffinery == null) return null;
             
-            var menu = new Menu.Menu(Menu, "Oelfoerderpumpe");
+            var menu = new Menu.NativeMenu(Menu, "Oelfoerderpumpe");
 
             menu.Add($"Schließen");
 

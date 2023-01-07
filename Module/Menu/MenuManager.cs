@@ -162,6 +162,7 @@ namespace VMP_CNR.Module.Menu
         AnimalAssignMenu = 316,
         TruckerJobStartMenu = 317,
         GangwarWeaponMenu = 318,
+        ShopTakeoverAttackMenu = 319,
     }
 
     public class MenuManager
@@ -190,7 +191,7 @@ namespace VMP_CNR.Module.Menu
             }
         }
 
-        public Menu Build(PlayerMenu menu, DbPlayer dbPlayer)
+        public NativeMenu Build(PlayerMenu menu, DbPlayer dbPlayer)
         {
             return menuBuilders.TryGetValue(menu, out var value) ? value.Build(dbPlayer) : null;
         }

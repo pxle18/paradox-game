@@ -133,7 +133,7 @@ namespace VMP_CNR.Module.Gangwar
                 {
                     foreach (var sxVehicle in gangwarTown.Vehicles.ToList())
                     {
-                        if (sxVehicle == null || !sxVehicle.IsValid() || sxVehicle.LastInteracted.AddMinutes(3) > DateTime.Now) continue;
+                        if (sxVehicle == null || !sxVehicle.IsValid() || sxVehicle.LastInteracted.AddMinutes(6) > DateTime.Now) continue;
                         if (sxVehicle.GetOccupants().IsEmpty() == false) continue;
 
                         uint vehicleIdentifier = sxVehicle.uniqueServerId;

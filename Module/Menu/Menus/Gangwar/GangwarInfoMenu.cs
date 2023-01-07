@@ -15,10 +15,10 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             GangwarTown gangwar = GangwarTownModule.Instance.GetByPosition(dbPlayer.Player.Position);
-            var menu = new Menu(Menu, gangwar.Name);
+            var menu = new NativeMenu(Menu, gangwar.Name);
 
             menu.Add(GlobalMessages.General.Close(), "");
 

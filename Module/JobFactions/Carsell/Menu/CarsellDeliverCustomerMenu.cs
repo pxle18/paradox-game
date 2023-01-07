@@ -29,9 +29,9 @@ namespace VMP_CNR.Module.Carsell.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
-            var l_Menu = new Module.Menu.Menu(Menu, "Bestellung abschliessen");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "Bestellung abschliessen");
             l_Menu.Add($"Schließen");
 
             // Show finished orders from team

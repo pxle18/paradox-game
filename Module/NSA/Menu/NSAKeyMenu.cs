@@ -21,14 +21,14 @@ namespace VMP_CNR.Module.NSA.Menu
 
         }
 
-        public override Module.Menu.Menu Build(DbPlayer p_DbPlayer)
+        public override Module.Menu.NativeMenu Build(DbPlayer p_DbPlayer)
         {
             if (!p_DbPlayer.HasData("nsa_target_player_id")) return null;
 
             DbPlayer l_Target = Players.Players.Instance.FindPlayerById(p_DbPlayer.GetData("nsa_target_player_id"));
             if (l_Target == null || !l_Target.IsValid()) return null;
 
-            var l_Menu = new Module.Menu.Menu(Menu, "NSA Schlüssel (" + l_Target.GetName() + ")");
+            var l_Menu = new Module.Menu.NativeMenu(Menu, "NSA Schlüssel (" + l_Target.GetName() + ")");
             l_Menu.Add($"Schließen");
             
             foreach (KeyValuePair<uint, string> kvp in l_Target.VehicleKeys)

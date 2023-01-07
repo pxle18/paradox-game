@@ -12,9 +12,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Fraktionskleiderschrank");
+            var menu = new NativeMenu(Menu, "Fraktionskleiderschrank");
             menu.Add(GlobalMessages.General.Close());
             foreach (var kvp in ClothesShopModule.Instance.GetClothesSlots())
             {

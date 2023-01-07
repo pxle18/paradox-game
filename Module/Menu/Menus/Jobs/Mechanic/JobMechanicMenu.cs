@@ -20,7 +20,7 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
             if (!dbPlayer.HasData("tuneVeh")) return null;
 
@@ -31,7 +31,7 @@ namespace VMP_CNR
 
             Dictionary<int, int> l_Dic = new Dictionary<int, int>();
 
-            var menu = new Menu(Menu, $"Tuning");
+            var menu = new NativeMenu(Menu, $"Tuning");
             menu.Add(GlobalMessages.General.Close(), "");
             menu.Add("Anbringen", "");
             menu.Add("Standard", "");

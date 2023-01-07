@@ -14,9 +14,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Business Verwaltung");
+            var menu = new NativeMenu(Menu, "Business Verwaltung");
 
             menu.Add(GlobalMessages.General.Close(), "");
 

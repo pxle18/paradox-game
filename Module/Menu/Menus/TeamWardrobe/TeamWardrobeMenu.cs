@@ -9,9 +9,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Kleiderschrank");
+            var menu = new NativeMenu(Menu, "Kleiderschrank");
             menu.Add("Skins");
             menu.Add("Kleidung");
             menu.Add("Accessoires");

@@ -15,6 +15,5 @@ namespace VMP_CNR.Module.Outfits
         {
             return "SELECT * FROM `outfits`;";
         }
-
     }
 }

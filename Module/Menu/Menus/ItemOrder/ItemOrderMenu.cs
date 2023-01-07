@@ -11,9 +11,9 @@ namespace VMP_CNR
         {
         }
 
-        public override Menu Build(DbPlayer dbPlayer)
+        public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            var menu = new Menu(Menu, "Verarbeitung");
+            var menu = new NativeMenu(Menu, "Verarbeitung");
             menu.Add("Waren verarbeiten");
             menu.Add("Waren entnehmen");
             menu.Add(GlobalMessages.General.Close());

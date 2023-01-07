@@ -558,7 +558,7 @@ namespace VMP_CNR.Module
         {
             foreach (var module in _modules)
             {
-                if (!module.Value.GetType().ToString().Equals(name)) continue;
+                if (!module.Value.GetType().Name.Equals(name)) continue;
                 module.Value.Load(true);
                 return true;
             }
