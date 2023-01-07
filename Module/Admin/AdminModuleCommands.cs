@@ -4404,9 +4404,10 @@ namespace VMP_CNR.Module.Admin
             var dbPlayer = Players.Players.Instance.FindPlayer(command[0], true);
             if (dbPlayer == null) return;
 
-            iPlayer.SendNewNotification("Sie wurden temporär zu " + command[1] + " umgenannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            dbPlayer.SendNewNotification("Sie wurden temporär zu " + command[1] + " umgenannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
-            dbPlayer.SendNewNotification("Du hast nun: " + dbPlayer.GetName() + " zu " + command[1] + " temporär umbennant.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            iPlayer.SendNewNotification("Du hast nun: " + dbPlayer.GetName() + " zu " + command[1] + " temporär umbennant.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+            dbPlayer.Player.Name = command[1];
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -4490,6 +4491,8 @@ namespace VMP_CNR.Module.Admin
 
             await Chats.SendGlobalMessage(iPlayer.Rank.Name + " " + iPlayer.GetName() + " hat " +
                                             dbPlayer.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
+
+            dbPlayer.Player.TriggerEvent("flushRemoteHashKey", dbPlayer.Id);
 
             DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm, "Community-Ausschluss", 0, Devmode);
             dbPlayer.warns[0] = 3;
@@ -5050,43 +5053,48 @@ namespace VMP_CNR.Module.Admin
                 return;
             }
 
-            var command = commandParams.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
-            if (command.Length <= 2) return;
-
-            bool result = Int32.TryParse(command[1], out int hours);
-            if (!result)
+            try
             {
-                iPlayer.SendNewNotification("Not a number!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                return;
+
+                if (commandParams == "") return;
+                var command = commandParams.Split(" ");
+
+                bool result = Int32.TryParse(command[1], out int hours);
+                if (!result)
+                {
+                    iPlayer.SendNewNotification("Not a number!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    return;
+                }
+
+                var findplayer = Players.Players.Instance.FindPlayer(command[0], true);
+                if (findplayer == null)
+                {
+                    iPlayer.SendNewNotification("Spieler nicht gefunden", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    return;
+                }
+
+                if (hours > 99 || hours < 1)
+                {
+                    iPlayer.SendNewNotification("Fehlerhafte Stundenanzahl", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+                    return;
+                }
+
+                var banstamp = DateTime.Now.AddHours(hours).GetTimestamp();
+                iPlayer.SendNewNotification("Sie haben " + findplayer.GetName() + " fuer " + hours +
+                                        " Stunden vom Server gebannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
+
+                await Chats.SendGlobalMessage("Administrator " + iPlayer.GetName() + " hat " +
+                                               findplayer.GetName() + " fuer " + hours +
+                                               " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
+
+                findplayer.timeban[0] = banstamp;
+                findplayer.Save();
+                findplayer.Player.SendNotification("Timeban " + hours + " Stunden, Grund: " + command[2]);
+                findplayer.Player.Kick("Timeban " + hours + " Stunden, Grund: " + command[2]);
+                findplayer.Player.Kick();
+                DatabaseLogging.Instance.LogAdminAction(player, findplayer.GetName(), AdminLogTypes.timeban, command[2], hours, Devmode);
             }
-
-            var findplayer = Players.Players.Instance.FindPlayer(command[0], true);
-            if (findplayer == null)
-            {
-                iPlayer.SendNewNotification("Spieler nicht gefunden", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                return;
-            }
-
-            if (hours > 99 || hours < 1)
-            {
-                iPlayer.SendNewNotification("Fehlerhafte Stundenanzahl", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-                return;
-            }
-
-            var banstamp = DateTime.Now.AddHours(hours).GetTimestamp();
-            iPlayer.SendNewNotification("Sie haben " + findplayer.GetName() + " fuer " + hours +
-                                    " Stunden vom Server gebannt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
-
-            await Chats.SendGlobalMessage("Administrator " + iPlayer.GetName() + " hat " +
-                                           findplayer.GetName() + " fuer " + hours +
-                                           " Stunden vom Server gebannt! (Grund: " + command[2] + ")", COLOR.RED, ICON.GLOB);
-
-            findplayer.timeban[0] = banstamp;
-            findplayer.Save();
-            findplayer.Player.SendNotification("Timeban " + hours + " Stunden, Grund: " + command[2]);
-            findplayer.Player.Kick("Timeban " + hours + " Stunden, Grund: " + command[2]);
-            findplayer.Player.Kick();
-            DatabaseLogging.Instance.LogAdminAction(player, findplayer.GetName(), AdminLogTypes.timeban, command[2], hours, Devmode);
+            catch { }
         }
 
         [CommandPermission(PlayerRankPermission = true)]

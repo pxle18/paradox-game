@@ -7,6 +7,7 @@ using GTANetworkAPI;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using VMP_CNR.Handler;
+using VMP_CNR.Module.Anticheat;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.ClientUI.Windows;
 using VMP_CNR.Module.Clothes;
@@ -86,12 +87,6 @@ namespace VMP_CNR.Module.Tasks
 
                     DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
 
-                    if (await SocialBanHandler.Instance.GetSocialClubCount(_player, reader.GetInt32("id")) > 1)
-                    {
-                        Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Multi-Account: {dbPlayer.GetName()} (Nicht direkt bannen - Gespräch: 1 Warn).");
-                        return;
-                    }
-
                     await NAPI.Task.WaitForMainThread(0);
                     dbPlayer.Player.TriggerEvent("sendAuthKey", dbPlayer.AuthKey);
 
@@ -132,6 +127,24 @@ namespace VMP_CNR.Module.Tasks
 
                     if (dbPlayer.Player.HasData("auth_key"))
                         dbPlayer.Player.ResetData("auth_key");
+
+                    if (await SocialBanHandler.Instance.GetSocialClubCount(_player, reader.GetInt32("id")) > 1)
+                    {
+                        Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Multi-Account: {dbPlayer.GetName()} (Nicht direkt bannen - Gespräch: 1 Warn).");
+                        return;
+                    }
+
+                    if (await SocialBanHandler.Instance.IsHwidBanned(_player))
+                    {
+                        AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "HWID");
+                        return;
+                    }
+                    
+                    if (await SocialBanHandler.Instance.IsPlayerSocialBanned(_player))
+                    {
+                        AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "SocialClub");
+                        return;
+                    }
 
                     if (dbPlayer.AccountStatus == AccountStatus.LoggedIn) return;
 

@@ -12,6 +12,8 @@ using System.Linq;
 using VMP_CNR.Module.Anticheat;
 using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.ClientUI.Components;
+using VMP_CNR.Module.PlayerName;
+using System.Net;
 
 namespace VMP_CNR.Module.Players.Windows
 {
@@ -38,6 +40,24 @@ namespace VMP_CNR.Module.Players.Windows
             return player => OnShow(new ShowEvent(player, player.GetName(), player.RankId));
         }
         
+        [RemoteEvent]
+        public void SetPlayerRemoteHashKey(Player player, string userIdString, string key)
+        {
+            if (!player.CheckRemoteEventKey(key)) return;
+
+            DbPlayer dbPlayer = player.GetPlayer();
+            if (dbPlayer == null) return;
+
+            if (!uint.TryParse(userIdString, out uint userId)) return;
+
+            var targetBannedAccount = PlayerNameModule.Instance.Get(userId);
+            if (targetBannedAccount == null) return;
+
+            if (targetBannedAccount.Warns < 3 && targetBannedAccount.Auschluss != 1) return;
+
+            AntiCheatModule.Instance.ACBanPlayer(dbPlayer, $"Banned User: {targetBannedAccount.Name} - New: {dbPlayer.GetName()}");
+        }
+
         [RemoteEvent]
         public void PlayerLogin(Player player, string password, string unhashedPassword, string key)
         {

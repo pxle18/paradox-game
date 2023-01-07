@@ -15,7 +15,7 @@ namespace VMP_CNR.Module.Players
         {
             // Remove Freigeschaltet Gruppe
             if (!Configuration.Instance.DevMode && ServerFeatures.IsActive("forumsync"))
-                MySQLHandler.ExecuteForum($"DELETE FROM wcf1_user_to_group WHERE userID = '{forumId}' AND groupID = '63'");
+                MySQLHandler.ExecuteForum($"UPDATE wcf1_user SET banned = '1' AND banReason = 'Communityauschluss' WHERE userID = '{forumId}'");
         }
 
         public static bool HasValidForumAccount(int forumid)

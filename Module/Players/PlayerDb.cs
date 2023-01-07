@@ -420,6 +420,12 @@ namespace VMP_CNR.Module.Players
                 ups.Add(xstr);
             }
 
+            if ((xstr = Helper.Helper.ComplainPlayerDataString(dbPlayer.HardwareID, "Hwid")) != "")
+            {
+                dbPlayer.HardwareID[1] = dbPlayer.HardwareID[0];
+                ups.Add(xstr);
+            }
+
             if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.fgehalt, "fgehalt")) != "")
             {
                 dbPlayer.fgehalt[1] = dbPlayer.fgehalt[0];
@@ -577,7 +583,7 @@ namespace VMP_CNR.Module.Players
             if (lz != "") ups.Add("`pos_z` = '" + lz + "'");
             if (heading != "") ups.Add("`pos_heading` = '" + heading + "'");
             ups.Add("`dimension` = '" + dbPlayer.MetaData.Dimension + "'");
-            
+
             if (dbPlayer.SocialClubName == "") ups.Add("`SCName` = '" + dbPlayer.Player.SocialClubName + "'");
 
             if ((xstr = Helper.Helper.GetWeapons(dbPlayer)) != "")
