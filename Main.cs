@@ -1312,13 +1312,15 @@ namespace VMP_CNR
             {
                 if (m_RestartMinuten == 0)
                 {
+                    await Chats.SendGlobalMessage($"[SERVER-RESTART] Der Server wurde neugestartet!", COLOR.ORANGE, ICON.GLOB);
+
                     foreach (var itr in Players.Instance.players.Values)
                     {
                         if (itr == null || !itr.IsValid()) continue;
                         if (itr.Player != null)
                         {
                             itr.Save();
-                            itr.Player.Kick();
+                            itr.Player.KickSilent();
                         }
                     }
 
@@ -1402,9 +1404,6 @@ namespace VMP_CNR
                         }
                         else if (min == 58)
                         {
-                            // Clear Whitelist
-                            MySQLHandler.ExecuteAsync("DELETE FROM whitelist.whitelisted_ips2");
-
                             Logger.Print(
                                 "Alle Tasks wurden beendet, Server darf nun ausgeschaltet werden!");
                         }
