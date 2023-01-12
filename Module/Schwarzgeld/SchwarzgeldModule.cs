@@ -58,9 +58,9 @@ namespace VMP_CNR.Module.Schwarzgeld
                         house.SaveBlackMoney();
 
                         // Intervall tick
-                        if (!house.BlackMoneyBatterieContainer.IsEmpty() && house.BlackMoneyBatterieContainer.GetItemAmount(Batteries) >= 10) // 10 Batteries pro tick
+                        if (!house.BlackMoneyBatterieContainer.IsEmpty() && house.BlackMoneyBatterieContainer.GetItemAmount(Batteries) >= 7) // 10 Batteries pro tick
                         {
-                            house.BlackMoneyBatterieContainer.RemoveItem(Batteries, 10);
+                            house.BlackMoneyBatterieContainer.RemoveItem(Batteries, 7);
                             if (house.BlackMoneyTick > 0) house.BlackMoneyTick--;
                         }
                         else house.BlackMoneyTick++;
@@ -69,15 +69,17 @@ namespace VMP_CNR.Module.Schwarzgeld
                         int chance = rnd.Next(1, 1000);
                         if (chance > (995 - (house.BlackMoneyTick*50))) // 0,5% + 5% * tick
                         {
-                            HousesVoltage housesVoltage = HousesVoltageModule.Instance.GetClosestFromPosition(house.Position);
-                            if (housesVoltage != null)
-                            {
-                                // Add to Voltage for futureing stuff -- only show once
-                                if (!housesVoltage.DetectedHouses.Contains(house.Id))
+                            if(rnd.Next(1, 10) >= 3) { 
+                                HousesVoltage housesVoltage = HousesVoltageModule.Instance.GetClosestFromPosition(house.Position);
+                                if (housesVoltage != null)
                                 {
-                                    housesVoltage.DetectedHouses.Add(house.Id);
-                                    TeamModule.Instance.SendMessageToTeam($"Energie-Detection: Es wurde ein erhöhter Stromverbrauch gemeldet!", TeamTypes.TEAM_FIB, 10000, 3);
-                                    NSAPlayerExtension.AddEnergyHistory($"Energieverbrauch Meldung (Stromkasten)", housesVoltage.Position);
+                                    // Add to Voltage for futureing stuff -- only show once
+                                    if (!housesVoltage.DetectedHouses.Contains(house.Id))
+                                    {
+                                        housesVoltage.DetectedHouses.Add(house.Id);
+                                        TeamModule.Instance.SendMessageToTeam($"Energie-Detection: Es wurde ein erhöhter Stromverbrauch gemeldet!", TeamTypes.TEAM_FIB, 10000, 3);
+                                        NSAPlayerExtension.AddEnergyHistory($"Energieverbrauch Meldung (Stromkasten)", housesVoltage.Position);
+                                    }
                                 }
                             }
                         }

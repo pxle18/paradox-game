@@ -52,7 +52,7 @@ namespace VMP_CNR.Module.Players
                     {
                         return true;
                     }
-
+                     
                     if (sxVehicle.Team.IsCops() && dbPlayer.IsNSADuty && dbPlayer.IsNSAState >= (int)NSA.NSARangs.NORMAL)
                     {
                         return true;

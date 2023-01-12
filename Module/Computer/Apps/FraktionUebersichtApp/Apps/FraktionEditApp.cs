@@ -308,7 +308,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
             }
             else
             {
-                PlayerName.PlayerName playerName = PlayerName.PlayerNameModule.Instance.Get(playerId);
+                PlayerName.PlayerNameModel playerName = PlayerName.PlayerNameModule.Instance.Get(playerId);
                 if (!Configurations.Configuration.Instance.DevMode)
                 {
                     if (playerName != null)

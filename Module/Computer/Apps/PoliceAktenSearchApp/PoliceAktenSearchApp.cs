@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.Computer.Apps.PoliceAktenSearchApp
             }
 
             // by Player Name
-            foreach (PlayerName.PlayerName pn in PlayerNameModule.Instance.GetAll().Values.Where(pn => pn.Name.ToLower().Contains(searchQuery.ToLower()) || resultPlayerIds.Contains(pn.Id)).Take(30).ToList())
+            foreach (PlayerName.PlayerNameModel pn in PlayerNameModule.Instance.GetAll().Values.Where(pn => pn.Name.ToLower().Contains(searchQuery.ToLower()) || resultPlayerIds.Contains(pn.Id)).Take(30).ToList())
             {
                 results.Add(pn.Name);
             }

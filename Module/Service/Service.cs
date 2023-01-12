@@ -44,7 +44,7 @@ namespace VMP_CNR.Module.Service
         {
             Logging.Logger.Debug("new eval " + PlayerId + " " + Amount);
             string nstr = "";
-            PlayerName.PlayerName pName = PlayerName.PlayerNameModule.Instance.Get(PlayerId);
+            PlayerName.PlayerNameModel pName = PlayerName.PlayerNameModule.Instance.Get(PlayerId);
             if(pName != null)
             {
                 nstr = pName.Name;

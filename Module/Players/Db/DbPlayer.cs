@@ -264,7 +264,9 @@ namespace VMP_CNR.Module.Players.Db
         public int[] Lic_FirstAID { get; set; }
         public int[] timeban { get; set; }
         public int TemporaryPlayerId { get; set; }
+        public int[] Ausschluss { get; set; }
         public int[] warns { get; set; }
+        public string[] HardwareID { get; set; }
         public int[] fgehalt { get; set; }
         public int[] paycheck { get; set; }
         public uint[] handy { get; set; }

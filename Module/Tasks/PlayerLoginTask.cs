@@ -7,6 +7,7 @@ using GTANetworkAPI;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using VMP_CNR.Handler;
+using VMP_CNR.Module.Anticheat;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.ClientUI.Windows;
 using VMP_CNR.Module.Clothes;
@@ -84,13 +85,16 @@ namespace VMP_CNR.Module.Tasks
                         return;
                     }
 
-                    DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
-
-                    if (await SocialBanHandler.Instance.GetSocialClubCount(_player, reader.GetInt32("id")) > 1)
+                    if(_player.SocialClubName == "")
                     {
-                        Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Multi-Account: {dbPlayer.GetName()} (Nicht direkt bannen - Gespräch: 1 Warn).");
+                        _player.SendNotification("Bitte Spiel neustarten. (Social-Club-Bug)");
+                        await Task.Delay(500);
+
+                        _player.Kick("Bitte Spiel neustarten. (Social-Club-Bug)");
                         return;
                     }
+
+                    DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
 
                     await NAPI.Task.WaitForMainThread(0);
                     dbPlayer.Player.TriggerEvent("sendAuthKey", dbPlayer.AuthKey);
@@ -132,6 +136,12 @@ namespace VMP_CNR.Module.Tasks
 
                     if (dbPlayer.Player.HasData("auth_key"))
                         dbPlayer.Player.ResetData("auth_key");
+
+                    if (await SocialBanHandler.Instance.GetSocialClubCount(_player, reader.GetInt32("id")) > 1)
+                    {
+                        Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Multi-Account: {dbPlayer.GetName()} (Nicht direkt bannen - Gespräch: 1 Warn).");
+                        return;
+                    }
 
                     if (dbPlayer.AccountStatus == AccountStatus.LoggedIn) return;
 

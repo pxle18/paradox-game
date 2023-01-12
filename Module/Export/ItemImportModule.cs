@@ -81,7 +81,7 @@ namespace VMP_CNR.Module.Export
     {
         private readonly Vector3 _importPosition = new Vector3(2707.3198, 2776.9255, 37.877968);
 
-        public int DailyBatteryCap = 166;
+        public int DailyBatteryCap = 195;
         public int BatteryPrice = 125;
 
         public uint BatteryItemId = 15;

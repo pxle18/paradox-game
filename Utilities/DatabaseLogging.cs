@@ -87,7 +87,7 @@ namespace VMP_CNR
             MySQLHandler.ExecuteAsync(query);
         }
 
-        public void LogAcpAdminAction(PlayerName admin, string user, AdminLogTypes type, string reason)
+        public void LogAcpAdminAction(PlayerNameModel admin, string user, AdminLogTypes type, string reason)
         {
             string xtype = "undefined";
 

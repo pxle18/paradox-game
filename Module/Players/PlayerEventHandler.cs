@@ -334,6 +334,7 @@ namespace VMP_CNR.Module.Players
                 }
                 else dbPlayer.ResetData("lastWeaponPacked");
             }
+            dbPlayer.SetData("lastWeaponPacked", DateTime.Now);
 
             var gun = dbPlayer.Player.CurrentWeapon;
             if (gun == 0) return;
