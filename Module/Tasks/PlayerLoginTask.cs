@@ -85,6 +85,15 @@ namespace VMP_CNR.Module.Tasks
                         return;
                     }
 
+                    if(_player.SocialClubName == "")
+                    {
+                        _player.SendNotification("Bitte Spiel neustarten. (Social-Club-Bug)");
+                        await Task.Delay(500);
+
+                        _player.Kick("Bitte Spiel neustarten. (Social-Club-Bug)");
+                        return;
+                    }
+
                     DbPlayer dbPlayer = await Players.Players.Instance.Load(reader, _player);
 
                     await NAPI.Task.WaitForMainThread(0);

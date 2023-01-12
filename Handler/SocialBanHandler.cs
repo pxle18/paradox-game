@@ -28,6 +28,7 @@ namespace VMP_CNR
 
             // Main Thread, durch PlayerWrapper
             string scname = await new PlayerWrapper(player).getProperty("SocialClubName");
+            if (scname == "") return false;
 
             // Wechsel in einen Background Thread
             await Task.Delay(1);
@@ -55,6 +56,7 @@ namespace VMP_CNR
 
             // Main Thread, durch PlayerWrapper
             string scname = await new PlayerWrapper(player).getProperty("Serial");
+            if (scname == "") return false;
 
             // Wechsel in einen Background Thread
             await Task.Delay(1);

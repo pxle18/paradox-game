@@ -127,6 +127,7 @@ namespace VMP_CNR.Module.Anticheat
 
             dbPlayer.HardwareID[0] = dbPlayer.Player.Serial;
             dbPlayer.warns[0] = 3;
+            dbPlayer.Ausschluss[0] = 1;
             dbPlayer.Save();
             SocialBanHandler.Instance.AddEntry(dbPlayer.Player);
             dbPlayer.Player.SendNotification("Permanenter Ausschluss!");

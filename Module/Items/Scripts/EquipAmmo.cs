@@ -19,6 +19,17 @@ namespace VMP_CNR.Module.Items.Scripts
             {
                 if (dbPlayer.RageExtension.IsInVehicle || !dbPlayer.CanInteract()) return false;
 
+                if (dbPlayer.HasData("lastWeaponMagEquipped"))
+                {
+                    DateTime date = dbPlayer.GetData("lastWeaponMagEquipped");
+                    if (date.AddSeconds(5) > DateTime.Now)
+                    {
+                        return false;
+                    }
+                    else dbPlayer.ResetData("lastWeaponMagEquipped");
+                }
+                dbPlayer.SetData("lastWeaponMagEquipped", DateTime.Now);
+
                 string[] parts = ItemData.Script.ToLower().Replace("ammo_", "").Split('_');
                 if (parts.Length < 1) return false;
 

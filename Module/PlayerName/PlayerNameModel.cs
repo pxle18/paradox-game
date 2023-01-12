@@ -5,7 +5,7 @@ using System.Text;
 
 namespace VMP_CNR.Module.PlayerName
 {
-    public class PlayerName : Loadable<uint>
+    public class PlayerNameModel : Loadable<uint>
     {
         public uint Id { get; set; }
         public string Name { get; set; }
@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.PlayerName
         public int Warns { get; set; }
         public int Auschluss { get; set; }
 
-        public PlayerName(MySqlDataReader reader) : base(reader)
+        public PlayerNameModel(MySqlDataReader reader) : base(reader)
         {
             Id = reader.GetUInt32("id");
             Name = reader.GetString("Name");

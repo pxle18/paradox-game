@@ -60,6 +60,7 @@ using VMP_CNR.Module.Procedures;
 using VMP_CNR.Module.Admin.Procedures;
 using System.Net;
 using VMP_CNR.Module.Tasks;
+using VMP_CNR.Module.Anticheat;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -2693,8 +2694,6 @@ namespace VMP_CNR.Module.Admin
             var findPlayer = Players.Players.Instance.FindPlayer(command[0], true);
             if (findPlayer == null || !findPlayer.IsValid()) return;
 
-            findPlayer.SendNewNotification($"Du wirst in wenigen Sekunden vom Gameserver gekickt: Grund: {command[1]}", NotificationType.ADMIN, "Kick", 10000);
-
             await Chats.SendGlobalMessage(dbPlayer.Rank.Name + " " + dbPlayer.GetName() + " hat " + findPlayer.GetName() + " vom Server gekickt! (Grund: " + command[1] + ")", COLOR.RED, ICON.GLOB);
             dbPlayer.SendNewNotification($"Sie haben {findPlayer.GetName()} vom Server gekickt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
@@ -2705,7 +2704,6 @@ namespace VMP_CNR.Module.Admin
             findPlayer.Player.SendNotification($"Sie wurden gekickt. Grund {command[1]}");
             findPlayer.Player.KickSilent();
             dbPlayer.SendNewNotification("Kicked.");
-
         }
 
         [CommandPermission(PlayerRankPermission = true)]
@@ -4493,15 +4491,8 @@ namespace VMP_CNR.Module.Admin
             await Chats.SendGlobalMessage(iPlayer.Rank.Name + " " + iPlayer.GetName() + " hat " +
                                             dbPlayer.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
 
-            dbPlayer.Player.TriggerEvent("flushRemoteHashKey", dbPlayer.Id);
-
             DatabaseLogging.Instance.LogAdminAction(player, dbPlayer.GetName(), AdminLogTypes.perm, "Community-Ausschluss", 0, Devmode);
-            dbPlayer.warns[0] = 3;
-            SocialBanHandler.Instance.AddEntry(dbPlayer.Player);
-            dbPlayer.Player.SendNotification("Permanenter Ausschluss!");
-            PlayerLoginDataValidationModule.SyncUserBanToForum(dbPlayer.ForumId);
-            dbPlayer.Player.Kick("Permanenter Ausschluss!");
-            dbPlayer.Player.Kick();
+            AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "Community-Ausschluss");
         }
 
         [CommandPermission(PlayerRankPermission = true)]

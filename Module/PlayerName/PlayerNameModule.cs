@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VMP_CNR.Module.PlayerName
 {
-    public class PlayerNameModule : SqlModule<PlayerNameModule, PlayerName, uint>
+    public class PlayerNameModule : SqlModule<PlayerNameModule, PlayerNameModel, uint>
     {
         /**
          * TODO:

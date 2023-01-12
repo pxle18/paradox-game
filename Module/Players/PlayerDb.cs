@@ -408,6 +408,12 @@ namespace VMP_CNR.Module.Players
                 ups.Add(xstr);
             }
 
+            if ((xstr = Helper.Helper.ComplainPlayerDataInt(dbPlayer.Ausschluss, "ausschluss")) != "")
+            {
+                dbPlayer.Ausschluss[1] = dbPlayer.Ausschluss[0];
+                ups.Add(xstr);
+            }
+
             if ((xstr = Helper.Helper.ComplainPlayerDataString(dbPlayer.job_skills, "job_skills")) != "")
             {
                 dbPlayer.job_skills[1] = dbPlayer.job_skills[0];

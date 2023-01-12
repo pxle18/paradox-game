@@ -156,6 +156,12 @@ namespace VMP_CNR.Module.Players.Windows
                                 AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "SocialClub");
                                 return;
                             }
+
+                            if (dbPlayer.Ausschluss[0] == 1)
+                            {
+                                AntiCheatModule.Instance.ACBanPlayer(dbPlayer, "Community-Ausschluss");
+                                return;
+                            }
                         }, 3000);
 
                         PlayerSpawn.OnPlayerSpawn(player);
