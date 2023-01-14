@@ -25,20 +25,26 @@ namespace VMP_CNR.Module.Progressbar
 
         public async Task<bool> RunProgressBar(DbPlayer player, Func<Task> action, string title, string message, int duration, bool abortable = true)
         {
-            if (player == null || !player.IsValid()) return false;
-
-            lock (player)
+            try
             {
-                player.CancellationToken = new CancellationTokenSource();
+                if (player == null || !player.IsValid()) return false;
 
-                Chats.sendProgressBar(player, duration);
+                lock (player)
+                {
+                    player.CancellationToken = new CancellationTokenSource();
+
+                    Chats.sendProgressBar(player, duration);
+                }
+
+                bool result = await Task.Delay(duration, player.CancellationToken.Token).ContinueWith(task => !task.IsCanceled);
+
+                if (result && player != null && player.IsValid()) await action();
+
+                return result;
             }
+            catch { }
 
-            bool result = await Task.Delay(duration, player.CancellationToken.Token).ContinueWith(task => !task.IsCanceled);
-
-            if (result && player != null && player.IsValid()) await action();
-
-            return result;
+            return false;
         }
 
         public bool CancelProgressBar(DbPlayer player)

@@ -13,6 +13,7 @@ using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.JobFactions.Carsell;
 using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Players.BigDataSender;
+using VMP_CNR.Module.Teams.Shelter;
 
 namespace VMP_CNR.Module.Vehicles.Windows
 {
@@ -115,14 +116,20 @@ namespace VMP_CNR.Module.Vehicles.Windows
                             if (!dbPlayer.TakeMoney(2500))
                             {
                                 dbPlayer.SendNewNotification(
-                                    
+
                                     "Um ein Fahrzeug freizukaufen benötigst du mindestens $2500 fuer eine Kaution!");
                                 return;
                             }
                             else
                             {
+                                try
+                                {
+                                    TeamShelterModule.Instance.Get((int)TeamTypes.TEAM_DPOS).GiveMoney(dbPlayer, 500, "Fahrzeugkaution");
+                                }
+                                catch { }
+
                                 dbPlayer.SendNewNotification(
-                                    "Fahrzeug fuer 2500$ Freigekauft.");
+                                "Fahrzeug fuer 2500$ Freigekauft.");
                             }
                         }
 
@@ -168,11 +175,11 @@ namespace VMP_CNR.Module.Vehicles.Windows
                                 return;
                             }
                             Item kaufVertrag = dbPlayer.Container.GetItemById(641);
-                            if(kaufVertrag == null || kaufVertrag.Data == null || !kaufVertrag.Data.ContainsKey("vehicleId") || kaufVertrag.Data["vehicleId"] != vehicleId)
+                            if (kaufVertrag == null || kaufVertrag.Data == null || !kaufVertrag.Data.ContainsKey("vehicleId") || kaufVertrag.Data["vehicleId"] != vehicleId)
                             {
                                 dbPlayer.SendNewNotification($"Sie benötigen Ihren Kaufvertrag um das Fahrzeug zu entnehmen!");
                                 return;
-                            } 
+                            }
                         }
 
                         SynchronizedTaskManager.Instance.Add(
@@ -181,7 +188,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
 
                     break;
                 case "takein":
-                 
+
                     if (garage.IsTeamGarage() && garage.Teams.Contains(currTeam))
                     {
                         var vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(vehicleId, currTeam);
@@ -190,9 +197,10 @@ namespace VMP_CNR.Module.Vehicles.Windows
                         if (vehicle == null || vehicle.teamid != currTeam) return;
                         if (vehicle.Visitors.Count != 0) return;
                         if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
-                        if (vehicle.GetOccupants().IsEmpty() == false) {
+                        if (vehicle.GetOccupants().IsEmpty() == false)
+                        {
                             dbPlayer.SendNewNotification("Da ist noch ein*e Mitfahrer*in im Kofferraum");
-                            return; 
+                            return;
                         }
 
                         if (vehicle.CreatedDate.AddSeconds(10) > DateTime.Now)

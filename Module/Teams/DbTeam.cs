@@ -190,7 +190,7 @@ namespace VMP_CNR.Module.Teams
         public bool GetsExtraNightPayday()
         {
             return Id == (int)TeamTypes.TEAM_POLICE || Id == (int)TeamTypes.TEAM_IAA || Id == (int)TeamTypes.TEAM_FIB ||
-                   Id == (int)TeamTypes.TEAM_ARMY || Id == (int)TeamTypes.TEAM_MEDIC || Id == (int)TeamTypes.TEAM_SWAT;
+                   Id == (int)TeamTypes.TEAM_ARMY || Id == (int)TeamTypes.TEAM_MEDIC || Id == (int)TeamTypes.TEAM_SWAT || Id == (int)TeamTypes.TEAM_DPOS;
         }
 
         public bool IsStaatsfraktion()

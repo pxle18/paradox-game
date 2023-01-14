@@ -38,7 +38,7 @@ namespace VMP_CNR.Module.Items.Scripts
             dbPlayer.StopAnimation();
             dbPlayer.SetCannotInteract(false);
 
-            return true;
+            return finishedProgressbar;
         }
 
         public static async Task<bool> FMedikit(DbPlayer dbPlayer, ItemModel ItemData)
