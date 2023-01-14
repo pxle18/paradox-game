@@ -530,8 +530,6 @@ namespace VMP_CNR
             Logger.Print("");
             Logger.Print("© module & zeroday. backdooring your systems since cnw v1 ");
 
-            Logger.Print(Dns.GetHostName());
-
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;
 
@@ -1253,10 +1251,10 @@ namespace VMP_CNR
             player.TriggerNewClient("updateMoney", iPlayer.Money[0]);
             player.TriggerNewClient("updateBlackMoney", iPlayer.BlackMoney[0]);
 
-            if (Ptr)
+            if (DevMode)
             {
                 iPlayer.SendNewNotification(
-                    "ACHTUNG: Sie befinden sich auf dem Public-Test-Server (PTS)");
+                    "ACHTUNG: Sie befinden sich auf dem Test-Server.");
                 iPlayer.SendNewNotification(
                     "Daten können verloren gehen und werden nicht auf die Live DB synchronisiert!");
             }

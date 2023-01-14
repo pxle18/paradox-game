@@ -46,6 +46,7 @@ using VMP_CNR.Module.NSA.Observation;
 using VMP_CNR.Module.Animal;
 using VMP_CNR.Module.PlayerDataCustom;
 using VMP_CNR.Module.Procedures.Interfaces;
+using System.Threading;
 
 namespace VMP_CNR.Module.Players.Db
 {
@@ -493,6 +494,9 @@ namespace VMP_CNR.Module.Players.Db
 
         public string AuthKey { get; set; }
 
+        public bool IsProgressBarRunning { get; set; }
+        public CancellationTokenSource CancellationToken { get; set; } = null;
+
         public Payment.PaymentStatus ChoosenPaymentState { get; set; }
 
         public DateTime LastShapeSynced { get; set; }
@@ -608,6 +612,7 @@ namespace VMP_CNR.Module.Players.Db
             InParamedicDuty = false;
 
             AuthKey = Helper.Helper.GenerateAuthKey();
+            CancellationToken = null;
 
             this.SetACLogin();
         }
