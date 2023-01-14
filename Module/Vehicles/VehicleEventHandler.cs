@@ -15,6 +15,7 @@ using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Module.Progressbar.Extensions;
 using VMP_CNR.Module.RemoteEvents;
 using VMP_CNR.Module.Vehicles.Windows;
 
@@ -393,8 +394,9 @@ namespace VMP_CNR.Module.Vehicles
                 dbPlayer.Player.TriggerNewClient("freezePlayer", true);
                 dbPlayer.PlayAnimation((int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl), "amb@prop_human_parking_meter@male@base", "base");
 
-                Chat.Chats.sendProgressBar(dbPlayer, 8000);
-                await Task.Delay(8000);
+                bool finishedProgressbar = await dbPlayer.RunProgressBar(() => Task.CompletedTask, "Durchsuchung", "Du durchsuchst gerade ein Fahrzeug.", 8 * 1000);
+
+                if (!finishedProgressbar) return;
 
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();

@@ -27,9 +27,9 @@ namespace VMP_CNR.Module.Teams.AmmoArmory
 
         public override bool Load(bool reload = false)
         {
-
             MenuManager.Instance.AddBuilder(new AmmoArmorieMenuBuilder());
             MenuManager.Instance.AddBuilder(new AmmoArmoriePriceMenuBuilder());
+
             return base.Load(reload);
         }
 
