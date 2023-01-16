@@ -25,6 +25,12 @@ namespace VMP_CNR.Module.ShopTakeover
 
             ShopTakeoverModel shopTakeover = ShopTakeoverModule.Instance[shopTakeoverId];
             if (shopTakeover == null) return null;
+
+            if(shopTakeover.Team.Id == dbPlayer.Team.Id)
+            {
+                dbPlayer.SendNewNotification("WOW WOW WOW! Was versucht du da??? THATS NOT UR SHOP HOMES!!");
+                return null;
+            }
            
             var menu = new NativeMenu(Menu, "Shop-Takeover - Verwaltung");
 

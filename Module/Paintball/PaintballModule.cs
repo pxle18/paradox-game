@@ -54,24 +54,21 @@ namespace VMP_CNR.Module.Paintball
     public class PaintballModule : Module<PaintballModule>
     {
 
-        public static bool PaintballDeactivated = false;
         public static Random Rand = new Random();
         public static Dictionary<string, dynamic> pbLobbies = new Dictionary<string, dynamic>();
         public static Vector3 PaintballMenuPosition = new Vector3(568.955, 2796.59, 42.0183);
 
         protected override bool OnLoad()
         {
-            if (!PaintballDeactivated)
-            {
-                MenuManager.Instance.AddBuilder(new PaintballEnterMenuBuilder());
-                new Npc(PedHash.Marine03SMY, new Vector3(568.955, 2796.59, 42.0183), 270, 0);
-            }
+            MenuManager.Instance.AddBuilder(new PaintballEnterMenuBuilder());
+            new Npc(PedHash.Marine03SMY, new Vector3(568.955, 2796.59, 42.0183), 270, 0);
+
             return base.OnLoad();
         }
 
         public override void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer)
         {
-            if(dbPlayer.Paintball == 1)
+            if (dbPlayer.Paintball == 1)
             {
                 dbPlayer.Dimension[0] = 0;
                 dbPlayer.DimensionType[0] = DimensionType.World;
@@ -82,7 +79,6 @@ namespace VMP_CNR.Module.Paintball
 
         public void StartPaintball(DbPlayer dbPlayer, uint id)
         {
-            if (PaintballDeactivated) return;
             if (dbPlayer != null)
             {
                 dbPlayer.SetData("ac-ignorews", 4);
@@ -105,17 +101,17 @@ namespace VMP_CNR.Module.Paintball
 
 
 
-        public void Spawn(DbPlayer dbPlayer,bool quit=false,bool colshapeSpawn=false)
+        public void Spawn(DbPlayer dbPlayer, bool quit = false, bool colshapeSpawn = false)
         {
             if (dbPlayer != null && dbPlayer.HasData("paintball_map"))
             {
                 var playerMap = dbPlayer.GetData("paintball_map");
                 PaintballArea pba = PaintballAreaModule.Instance.Get(playerMap);
 
-                if (pba.pbPlayers.ContainsKey(dbPlayer)|| quit)
+                if (pba.pbPlayers.ContainsKey(dbPlayer) || quit)
                 {
 
-                    if (pba.pbPlayers[dbPlayer].life <= 0|| quit)
+                    if (pba.pbPlayers[dbPlayer].life <= 0 || quit)
                     {
                         NAPI.Task.Run(async () =>
                         {
@@ -242,7 +238,7 @@ namespace VMP_CNR.Module.Paintball
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -377,9 +373,7 @@ namespace VMP_CNR.Module.Paintball
         }
     }
 
-
-
-    public class PaintballConfirm: Script
+    public class PaintballConfirm : Script
     {
         [RemoteEvent]
         public void PbaConfirm(Player p_Player, string pb_map, string none, string key)
@@ -407,7 +401,7 @@ namespace VMP_CNR.Module.Paintball
             if (!p_Player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (!dbPlayer.HasData("pba_choose")) return;
-            
+
             PaintballArea pba = PaintballAreaModule.Instance.Get(dbPlayer.GetData("pba_choose"));
             if (pba.Password == returnstring)
             {
