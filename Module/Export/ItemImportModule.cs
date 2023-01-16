@@ -105,7 +105,7 @@ namespace VMP_CNR.Module.Export
             if (dbPlayer == null || !dbPlayer.IsValid() || key != Key.E) return false;
             if (dbPlayer.Player.Position.DistanceTo(_importPosition) > 10.0f) return false;
 
-            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Batterie-Import", Callback = "ImportBatteries", Message = "Gebe die Anzahl an Batterien an die du erwerben möchtest: ($125 - 165x pro Wende)." });
+            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Batterie-Import", Callback = "ImportBatteries", Message = "Gebe die Anzahl an Batterien an die du erwerben möchtest: ($125 - 195x pro Wende)." });
 
             return true;
         }
