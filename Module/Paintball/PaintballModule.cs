@@ -155,8 +155,8 @@ namespace VMP_CNR.Module.Paintball
                             dbPlayer.SetDimension(0);
                             dbPlayer.Dimension[0] = 0;
                             dbPlayer.DimensionType[0] = DimensionType.World;
-                            dbPlayer.Player.SetPosition(PaintballMenuPosition);
 
+                            NAPI.Task.Run(() => { dbPlayer.Spawn(PaintballMenuPosition); });
                         });
                     }
                     else
@@ -169,7 +169,7 @@ namespace VMP_CNR.Module.Paintball
                             dbPlayer.SetDimension(pba.PaintBallDimension);
                             dbPlayer.Dimension[0] = pba.PaintBallDimension;
                             dbPlayer.DimensionType[0] = DimensionType.Paintball;
-                            dbPlayer.Player.SetPosition(new Vector3(spawn.x, spawn.y, spawn.z));
+                            NAPI.Task.Run(() => { dbPlayer.Spawn(new Vector3(spawn.x, spawn.y, spawn.z)); });
 
                             if (!colshapeSpawn)
                             {
