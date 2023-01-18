@@ -31,13 +31,13 @@ namespace VMP_CNR.Module.Stadthalle
             menu.Add("Mietvertrag kündigen");
             menu.Add("Zufalls-Handynummer");
             menu.Add("Wunsch-Handynummer");
+            menu.Add("Namensänderung");
 
             /*
             if (dbPlayer.married[0] != 0)
             {
                 menu.Add("Scheidung einreichen");
             }*/
-
 
             return menu;
         }
@@ -107,7 +107,16 @@ namespace VMP_CNR.Module.Stadthalle
                         Message = "Du kannst eine Nummer auswählen zwischen 4-7 Stellen. Die Preise sind wie folgt: 5-7 Stellen jeweils 25.000$ * Visumsstufe. Reine 4 Stellige Nummern kosten 200.000$ * Visumsstufe. " +
                             "Gib bitte deine Wunschnummer ein:"
                     });
+                }
+                else if (index == 4)
+                {
+                    kosten = dbPlayer.Level * 15000;
+                    if (dbPlayer.Container.GetItemAmount(670) >= 1)
+                    {
+                        kosten = dbPlayer.Level * 5000;
+                    }
 
+                    ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Namensänderung", Callback = "DoNamechangeRelease", Message = $"Kosten ${kosten} | Gib den neuen Namen an (Vorname_Nachname):" });
                 }
                 /*
                 else if (index == 4)

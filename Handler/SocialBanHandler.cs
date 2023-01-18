@@ -28,6 +28,7 @@ namespace VMP_CNR
 
             // Main Thread, durch PlayerWrapper
             string scname = await new PlayerWrapper(player).getProperty("SocialClubName");
+            if (scname == "") return false;
 
             // Wechsel in einen Background Thread
             await Task.Delay(1);
@@ -36,6 +37,34 @@ namespace VMP_CNR
             {
                 await conn.OpenAsync();
                 cmd.CommandText = $"SELECT * FROM socialbans WHERE Name = '{MySqlHelper.EscapeString(scname)}';";
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    if (reader.HasRows)
+                    {
+                        return true;
+                    }
+                }
+                await conn.CloseAsync();
+            }
+
+            return false;
+        }
+
+        public async Task<bool> IsHwidBanned(Player player)
+        {
+            if (player == null) return false;
+
+            // Main Thread, durch PlayerWrapper
+            string scname = await new PlayerWrapper(player).getProperty("Serial");
+            if (scname == "") return false;
+
+            // Wechsel in einen Background Thread
+            await Task.Delay(1);
+            using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
+            using (var cmd = conn.CreateCommand())
+            {
+                await conn.OpenAsync();
+                cmd.CommandText = $"SELECT * FROM player WHERE Hwid = '{MySqlHelper.EscapeString(scname)}' AND warns >= 3;";
                 using (var reader = await cmd.ExecuteReaderAsync())
                 {
                     if (reader.HasRows)

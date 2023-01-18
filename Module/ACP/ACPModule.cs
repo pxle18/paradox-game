@@ -6,97 +6,140 @@ using System.Text;
 using System.Threading.Tasks;
 using GTANetworkAPI;
 using MySql.Data.MySqlClient;
+using VMP_CNR.Module.Anticheat;
 using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.Configurations;
+using VMP_CNR.Module.Items;
+using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.PlayerName;
 using VMP_CNR.Module.Players;
+using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Ranks;
+using static VMP_CNR.Module.Chat.Chats;
 
 namespace VMP_CNR.Module.ACP
 {
     public sealed class ACPModule : Module<ACPModule>
-    { 
-        public override bool Load(bool reload = false)
+    {
+        enum ActionType: int
         {
-            return true;
+            KICK = 1,
+            WARN,
+            SUSPEND,
+            CALL_TO_SUPPORT,
+            RELOAD_CONTAINER_PLAYER,
+            RELOAD_CONTAINER_VEHICLE,
         }
-
-
-        enum ActionType
-        {
-            KICK=0,
-            WHISPER=1,
-            SETMONEY = 2,
-        }
-
+         
         public override async Task OnTenSecUpdateAsync()
         {
             if (!ServerFeatures.IsActive("acpupdate"))
                 return;
 
-            using (MySqlConnection conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
-            using (MySqlCommand cmd = conn.CreateCommand())
+            using (var keyConn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
+            using (var keyCmd = keyConn.CreateCommand())
             {
-                await conn.OpenAsync();
-                cmd.CommandText = $"SELECT * FROM acp_action";
-                using (DbDataReader reader = await cmd.ExecuteReaderAsync())
+                await keyConn.OpenAsync();
+                keyCmd.CommandText = "SELECT * FROM acp_action";
+                using (var reader = await keyCmd.ExecuteReaderAsync())
                 {
-                    int lastId = 0;
-                    while (await reader.ReadAsync())
+                    if (reader.HasRows)
                     {
-                        lastId = await reader.GetFieldValueAsync<int>(0);
-                        int playerId = await reader.GetFieldValueAsync<int>(1);
-                        PlayerName.PlayerName admin = PlayerNameModule.Instance.GetAll().Values.ToList().Where(pn => pn.Id == (uint) playerId).FirstOrDefault();
-                        ActionType actionType = (ActionType)await reader.GetFieldValueAsync<int>(2);
-                        var actionInfo = (await reader.GetFieldValueAsync<string>(3)).Split(new string[] { "###" }, StringSplitOptions.None);
-
-                        var findPlayer = Players.Players.Instance.FindPlayer(actionInfo[0]);
-                        if (findPlayer == null || !findPlayer.IsValid())
-                            continue;
-
-                        switch (actionType)
+                        while (await reader.ReadAsync())
                         {
-                            //TAGETPLAYERID###REASON
-                            case ActionType.KICK:
-                                findPlayer.SendNewNotification($"Du wirst in 60 Sekunden vom Server gekickt! Grund: {actionInfo[1]}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 25000);
-                                await Task.Delay(30000);
-                                findPlayer.SendNewNotification($"Du wirst in 30 Sekunden vom Server gekickt! Grund: {actionInfo[1]}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
-                                await Task.Delay(30000);
-                                await Chats.SendGlobalMessage(RankModule.Instance.Get(admin.RankId).Name + " " + admin.Name + " hat " +
-                                                              findPlayer.GetName() + " vom Server gekickt! (Grund: " + actionInfo[1] + ")", Chats.COLOR.RED, Chats.ICON.GLOB);
-                                DatabaseLogging.Instance.LogAcpAdminAction(admin, findPlayer.GetName(), AdminLogTypes.kick, actionInfo[1]);
-                                findPlayer.Save();
-                                findPlayer.SendNewNotification($"Sie wurden gekickt. Grund {actionInfo[1]}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
-                                findPlayer.Player.Kick();
-                                break;
-                            case ActionType.WHISPER:
-                                findPlayer.SendNewNotification($"{actionInfo[1]}", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
-                                break;
-                            case ActionType.SETMONEY:
-                                if (!int.TryParse(actionInfo[1], out int amount))
-                                    break; ;
+                            int id = reader.GetInt32("id");
 
-                                if (amount > 0)
-                                {
-                                    findPlayer.GiveBankMoney(amount);
+                            uint adminId = reader.GetUInt32("admin_id");
+                            uint playerId = reader.GetUInt32("player_id");
 
-                                    findPlayer.SendNewNotification("ERSTATTUNG: Ihnen wurde$" +
-                                                               amount + " auf Ihr Konto gutgeschrieben.", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN, duration: 30000);
+                            ActionType actionType = (ActionType)reader.GetInt32("action_type");
 
-                                    DatabaseLogging.Instance.LogAcpAdminAction(admin.Name, findPlayer.GetName(), AdminLogTypes.log, $"{amount}$ Givemoney");
-                                }
+                            var action = reader.GetString("action");
+                            var actionArgument = action.Split("###");
 
-                                break;
-                            default:
-                                break;
+                            PlayerNameModel adminPlayer = PlayerNameModule.Instance.Get(adminId);
+                            if (adminPlayer == null) continue;
+
+                            var targetPlayer = Players.Players.Instance.FindPlayerById(playerId);
+                            if (targetPlayer == null) continue;
+
+                            switch (actionType)
+                            {
+                                case ActionType.KICK:
+                                    KickPlayer(targetPlayer, adminPlayer, actionArgument[0]);
+                                    break;
+
+                                case ActionType.WARN:
+                                    WarnPlayer(targetPlayer, adminPlayer, actionArgument[0]);
+                                    break;
+
+                                case ActionType.SUSPEND:
+                                    SuspendPlayer(targetPlayer, adminPlayer);
+                                    break;
+
+                                case ActionType.CALL_TO_SUPPORT:
+                                    CallToSupport(targetPlayer, adminPlayer);
+                                    break;
+
+                                case ActionType.RELOAD_CONTAINER_PLAYER:
+                                    ReloadContainerPlayer(targetPlayer, adminPlayer);
+                                    break;
+                            }
+
+                            MySQLHandler.ExecuteAsync($"DELETE FROM `acp_action` WHERE `id` = '{id}'");
                         }
-
-                        MySQLHandler.ExecuteAsync($"DELETE FROM `acp_action` WHERE `id` = '{lastId}'");
                     }
                 }
-
-                await conn.CloseAsync();
+                await keyConn.CloseAsync();
             }
+        }
+
+        private async void KickPlayer(DbPlayer player, PlayerNameModel admin, string reason)
+        {
+            if (player == null || !player.IsValid()) return;
+
+            await SendGlobalMessage("ACP: " + admin.Name + " hat " + player.GetName() + " vom Server gekickt! (Grund: " + reason + ")", COLOR.RED, ICON.GLOB);
+
+            player.Save();
+            player.SendNewNotification($"Sie wurden gekickt. Grund {reason}", PlayerNotification.NotificationType.ADMIN);
+            player.Player.TriggerNewClient("freezePlayer", true);
+
+            await Task.Delay(5000);
+
+            player.SendNewNotification("Kicked.");
+            player.Player.Kick();
+        }
+
+        private void WarnPlayer(DbPlayer player, PlayerNameModel admin, string reason)
+        {
+            if (player == null || !player.IsValid()) return;
+
+            player.SendNewNotification($"Sie haben eine Verwarnung von {admin.Name} wegen {reason} erhalten. Für mehr Informationen kontaktieren Sie denn Support.", PlayerNotification.NotificationType.ADMIN, "ADMIN", 30 * 1000);
+        }
+
+        private async void SuspendPlayer(DbPlayer player, PlayerNameModel admin)
+        {
+            if (player == null || !player.IsValid()) return;
+
+            await Chats.SendGlobalMessage("ACP: " + admin.Name + " hat " +
+                                            player.GetName() + " von der Community ausgeschlossen!", COLOR.RED, ICON.GLOB);
+
+            AntiCheatModule.Instance.ACBanPlayer(player, "Community-Ausschluss von " + admin.Name);
+        }
+
+        private void ReloadContainerPlayer(DbPlayer player, PlayerNameModel admin)
+        {
+            Players.Players.Instance.SendMessageToHighTeam("highteam-log", $"(ACP) {admin.Name} hat das Inventar von {player.GetName()} verändert.");
+
+            player.Container = ContainerManager.LoadContainer(player.Id, ContainerTypes.PLAYER, 0);
+        }
+
+        private void CallToSupport(DbPlayer player, PlayerNameModel admin)
+        {
+            if (player == null || !player.IsValid()) return;
+
+            player.SendNewNotification("Sobald die aktive RP-Situation abgeschlossen, bitte im TeamSpeak-Support einfinden. @" + admin.Name, PlayerNotification.NotificationType.ADMIN, "ADMIN - " + admin.Name, 30 * 1000);
         }
     }
 }
+ 

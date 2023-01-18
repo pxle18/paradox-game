@@ -308,7 +308,7 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
             }
             else
             {
-                PlayerName.PlayerName playerName = PlayerName.PlayerNameModule.Instance.Get(playerId);
+                PlayerName.PlayerNameModel playerName = PlayerName.PlayerNameModule.Instance.Get(playerId);
                 if (!Configurations.Configuration.Instance.DevMode)
                 {
                     if (playerName != null)
@@ -357,6 +357,8 @@ namespace VMP_CNR.Module.Computer.Apps.FraktionUebersichtApp.Apps
                             }
 
                             MySQLHandler.ExecuteAsync($"UPDATE player SET rang = '0', team = '0', mediclic = 0 WHERE id = '{playerId}'");
+                            MySQLHandler.ExecuteAsync($"UPDATE player SET lastuninvite = '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' WHERE `id` = '{playerId}'");
+
                             MySQLHandler.ExecuteAsync($"UPDATE player_rights SET title = '', r_bank = 0, r_inventory = 0, r_manage = 0 WHERE accountid = '{playerId}'");
                             dbPlayer.Team.SendNotification($"{dbPlayer.GetName()} hat {overview.Name} aus der Fraktion entlassen.");
 

@@ -22,7 +22,7 @@ namespace VMP_CNR.Module.Laboratories
         public static List<uint> RessourceItemIds = new List<uint> { 300, 468, 470, 462, 464 }; //Eisenbarren, Plastik, Abzug, Alubarren, Broncebarren
         public static uint EndProductItemId = 976; //Waffenset
         public static uint FuelItemId = 537; //Benzin
-        public static uint FuelAmountPerProcessing = 5; //Fuelverbrauch pro 15-Minuten-Kochvorgang (Spielerunabhängig)
+        public static uint FuelAmountPerProcessing = 1; //Fuelverbrauch pro 15-Minuten-Kochvorgang (Spielerunabhängig)
         public List<Team> HasAlreadyHacked = new List<Team>();
 
         // Item Id, Price (Aufpreis)

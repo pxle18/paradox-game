@@ -69,6 +69,7 @@ using VMP_CNR.Module.Clothes.Windows;
 using VMP_CNR.Module.Players.NAPIWrapper;
 using VMP_CNR.Module.Threading;
 using VMP_CNR.Module.Admin;
+using System.Net;
 
 namespace VMP_CNR
 {
@@ -117,6 +118,8 @@ namespace VMP_CNR
         arev = 11,
         setdpos = 12,
         setgarage = 13,
+
+        afind = 14,
     }
 
     public enum TeamTypes
@@ -167,6 +170,7 @@ namespace VMP_CNR
         TEAM_BRATWA = 50,
         TEAM_MADRAZO = 27,
         TEAM_ORGANISAZIJA = 47,
+        TEAM_BALKANEROS = 52,
     }
 
     internal enum JobTypes
@@ -226,8 +230,8 @@ namespace VMP_CNR
         public static DateTime adLastSend                       = DateTime.Now;
         public static List<LifeInvaderApp.AdsFound> adList      = new List<LifeInvaderApp.AdsFound>();
         public static List<NewsListApp.NewsFound> newsList      = new List<NewsListApp.NewsFound>();
-        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.XMAS;
-        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.XMAS;
+        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.CLEAR;
+        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.CLEAR;
         public static bool WeatherOverride = false;
 
         static int mysqlSaveInterval = 0;
@@ -554,6 +558,32 @@ namespace VMP_CNR
             if (player == null) return;
             AsyncEventTasks.ExitColShapeTask(shape, player);
         }
+
+        [ServerEvent(Event.UnhandledException)]
+        public void OnUnhandledException(Exception exception)
+        {
+            try
+            {
+                return;
+            } catch (Exception e)
+            {
+                Console.WriteLine("SOREN ALARM SYSTEM (WIHUU) : " + exception.Message);
+            }
+        }
+
+        [ServerEvent(Event.FirstChanceException)]
+        public void OnFirstChanceException(Exception exception)
+        {
+            try
+            {
+                return;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("SOREN ALARM SYSTEM (WIHUU) : " + exception.Message);
+            }
+        }
+
 
         [ServerEvent(Event.PlayerEnterColshape)]
         public void onEntityEnterColShape(ColShape shape, Player player)
@@ -1221,10 +1251,10 @@ namespace VMP_CNR
             player.TriggerNewClient("updateMoney", iPlayer.Money[0]);
             player.TriggerNewClient("updateBlackMoney", iPlayer.BlackMoney[0]);
 
-            if (Ptr)
+            if (DevMode)
             {
                 iPlayer.SendNewNotification(
-                    "ACHTUNG: Sie befinden sich auf dem Public-Test-Server (PTS)");
+                    "ACHTUNG: Sie befinden sich auf dem Test-Server.");
                 iPlayer.SendNewNotification(
                     "Daten können verloren gehen und werden nicht auf die Live DB synchronisiert!");
             }
@@ -1280,13 +1310,15 @@ namespace VMP_CNR
             {
                 if (m_RestartMinuten == 0)
                 {
+                    await Chats.SendGlobalMessage($"[SERVER-RESTART] Der Server wurde neugestartet!", COLOR.ORANGE, ICON.GLOB);
+
                     foreach (var itr in Players.Instance.players.Values)
                     {
                         if (itr == null || !itr.IsValid()) continue;
                         if (itr.Player != null)
                         {
                             itr.Save();
-                            itr.Player.Kick();
+                            itr.Player.KickSilent();
                         }
                     }
 
@@ -1299,6 +1331,10 @@ namespace VMP_CNR
                     }
 
                     if (!Configuration.Instance.DevMode) Configuration.Instance.IsServerOpen = false;
+
+                    await Task.Delay(5000);
+
+                    Environment.Exit(0);
 
                     return;
                 }
@@ -1366,9 +1402,6 @@ namespace VMP_CNR
                         }
                         else if (min == 58)
                         {
-                            // Clear Whitelist
-                            MySQLHandler.ExecuteAsync("DELETE FROM whitelist.whitelisted_ips2");
-
                             Logger.Print(
                                 "Alle Tasks wurden beendet, Server darf nun ausgeschaltet werden!");
                         }

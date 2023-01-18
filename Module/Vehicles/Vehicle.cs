@@ -66,7 +66,6 @@ namespace VMP_CNR.Module.Vehicles
                 {
                     VehicleHandler.Instance.DeleteVehicle(sxVeh, false);
                 }
-
             });
         }
 

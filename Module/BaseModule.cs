@@ -12,6 +12,7 @@ using VMP_CNR.Handler;
 using VMP_CNR.Module.Doors;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Module.Tasks;
 
 namespace VMP_CNR.Module
 {
@@ -135,6 +136,16 @@ namespace VMP_CNR.Module
                 _currentLog = new StringBuilder();
                 _loaded = OnLoad();
 
+                if (reload)
+                {
+                    foreach (var player in Players.Players.Instance.GetValidPlayers())
+                    {
+                        if (player == null) continue;
+                        SynchronizedTaskManager.Instance.Add(
+                            new PlayerLiveReloadTask(player, reader => OnPlayerLoadData(player, reader))
+                        );
+                    }
+                }
 
                 stopwatch.Stop();
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VMP_CNR.Module.PlayerName
 {
-    public class PlayerNameModule : SqlModule<PlayerNameModule, PlayerName, uint>
+    public class PlayerNameModule : SqlModule<PlayerNameModule, PlayerNameModel, uint>
     {
         /**
          * TODO:
@@ -13,7 +13,7 @@ namespace VMP_CNR.Module.PlayerName
 
         protected override string GetQuery()
         {
-            return "SELECT id, name, forumid, handy, rankId FROM `player`;";
+            return "SELECT id, name, forumid, handy, rankId, warns, ausschluss FROM `player`;";
         }
     }
 }

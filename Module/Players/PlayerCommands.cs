@@ -1334,7 +1334,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            if (DateTime.Compare(dbPlayer.LastReport.AddMinutes(5), DateTime.Now) < 0)
+            if (DateTime.Compare(dbPlayer.LastReport.AddMinutes(1), DateTime.Now) < 0)
             {
                 String playerList = "";
 
@@ -1342,13 +1342,15 @@ namespace VMP_CNR.Module.Players
                 {
                     if (user == null || !user.IsValid()) continue;
                     if (user.Id == dbPlayer.Id) continue;
+                    if (user.Team.Id == dbPlayer.Team.Id) continue;
+
                     if (user.Player.Dimension == player.Dimension)
                     {
-                        if (user.Player.Position.DistanceTo(dbPlayer.Player.Position) < 50.0f)
+                        if (user.Player.Position.DistanceTo(dbPlayer.Player.Position) < 200.0f)
                         {
                             if (!playerList.Equals("")) playerList += ",";
 
-                            playerList += user.Id;
+                            playerList += user.GetName();
                         }
                     }
                 }
@@ -1364,7 +1366,7 @@ namespace VMP_CNR.Module.Players
                 return;
             }
 
-            dbPlayer.SendNewNotification("Du hast in den letzten 5 Minuten bereits einen Report abgesendet.", PlayerNotification.NotificationType.ADMIN);
+            dbPlayer.SendNewNotification("Du hast in den letzten 1 Minuten bereits einen Report abgesendet.", PlayerNotification.NotificationType.ADMIN);
 
 
         }
@@ -2109,11 +2111,7 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.SendNewNotification("Sie haben nicht die benötigten Lizenzen!");
                 return;
             }
-            if (dbPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Sie haben keinen offiziellen Wohnsitz und können daher kein Taxi fahren!");
-                return;
-            }
+
             if (string.IsNullOrWhiteSpace(commandText))
             {
                 dbPlayer.SendNewNotification(
@@ -3454,100 +3452,102 @@ namespace VMP_CNR.Module.Players
             }));
         }
 
-        /* [CommandPermission]
-         [Command(GreedyArg = true)]
-         public void sellhouse(Player player, string command = " ")
-         {
-             DbPlayer dbPlayer = player.GetPlayer();
-             if (!dbPlayer.CanAccessMethod()) return;
+        [CommandPermission]
+        [Command(GreedyArg = true)]
+        public void sellhouse(Player player, string command = " ")
+        {
+            DbPlayer dbPlayer = player.GetPlayer();
+            if (!dbPlayer.CanAccessMethod()) return;
 
-             if (dbPlayer.job[0] != (int) jobs.JOB_Makler) return;
-             if (!ServerFeatures.IsActive("makler-haus"))
-             {
-                 dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
-                 return;
-             }
+            if (dbPlayer.job[0] != (int)JobTypes.JOB_Makler) return;
+            if (!ServerFeatures.IsActive("makler-haus"))
+            {
+                dbPlayer.SendNewNotification("Diese Funktion ist derzeit deaktiviert. Weitere Informationen findest du im Forum.");
+                return;
+            }
 
-             try
-             {
-                 var arg2 = command.Split(' ');
+            try
+            {
+                var arg2 = command.Split(' ');
 
-                 if (string.IsNullOrWhiteSpace(command) || !Main.validateArgs(command, 3))
-                 {
-                     dbPlayer.SendNewNotification(
-                         MSG.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
-                     return;
-                 }
+                if (string.IsNullOrWhiteSpace(command) || !Main.validateArgs(command, 3))
+                {
+                    dbPlayer.SendNewNotification(
+                        GlobalMessages.General.Usage("/sellhouse", "Besitzer", "Kunde Preis"));
+                    return;
+                }
 
-                 House iHouse;
-                 if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) == null)
-                     return;
-                 if (!int.TryParse(arg2[2], out var price))
-                 {
-                     dbPlayer.SendNewNotification("Der Preis war nicht gueltig!");
-                     return;
-                 }
+                House iHouse;
+                if ((iHouse = HouseModule.Instance.GetThisHouseFromPos(dbPlayer.Player.Position, true)) == null)
+                {
+                    dbPlayer.SendNewNotification("Haus nicht gefunden!");
+                    return;
+                }
 
+                if (!int.TryParse(arg2[2], out var price))
+                {
+                    dbPlayer.SendNewNotification("Der Preis war nicht gueltig!");
+                    return;
+                }
 
+                var Owner = Players.Instance.FindPlayer(arg2[0]);
+                var Customer = Players.Instance.FindPlayer(arg2[1]);
 
-                 var Owner = Players.Instance.FindPlayer(arg2[0]);
-                 var Customer = Players.Instance.FindPlayer(arg2[1]);
+                if (Owner == null || Customer == null
+                                  || dbPlayer.Player.Position.DistanceTo(Owner.Player.Position) >= 10.0f
+                                  || dbPlayer.Player.Position.DistanceTo(Customer.Player.Position) >= 10.0f)
+                {
+                    dbPlayer.SendNewNotification(
+                        "Besitzer oder Kunde nicht gefunden, oder nicht in Reichweite!");
+                    return;
+                }
 
-                 if (Owner == null || Customer == null
-                                   || dbPlayer.Player.Position.DistanceTo(Owner.Player.Position) >= 10.0f
-                                   || dbPlayer.Player.Position.DistanceTo(Customer.Player.Position) >= 10.0f)
-                 {
-                     dbPlayer.SendNewNotification(
-                         "Besitzer oder Kunde nicht gefunden, oder nicht in Reichweite!");
-                     return;
-                 }
+                if (iHouse.OwnerId != Owner.Id)
+                {
+                    dbPlayer.SendNewNotification(
+                        "Verkaeufer nicht gefunden oder nicht an seinem Haus!");
+                    return;
+                }
 
-                 if (iHouse.OwnerId != Owner.Id)
-                 {
-                     dbPlayer.SendNewNotification(
-                         "Verkaeufer nicht gefunden oder nicht an seinem Haus!");
-                     return;
-                 }
+                if (Customer.OwnHouse[0] > 0)
+                {
+                    dbPlayer.SendNewNotification(
+                        "Der Kunde besitzt bereits ein Haus!");
+                    return;
+                }
 
-                 if (Customer.ownHouse[0] > 0)
-                 {
-                     dbPlayer.SendNewNotification(
-                         "Der Kunde besitzt bereits ein Haus!");
-                     return;
-                 }
+                Owner.SetData("mMakler_Owner", dbPlayer.GetName());
+                Customer.SetData("mMakler_Customer", dbPlayer.GetName());
+                dbPlayer.SetData("mMakler_CustomerName", Customer.GetName());
+                dbPlayer.SetData("mMakler_OwnerName", Owner.GetName());
+                dbPlayer.SetData("mOwnerAccepted", 0);
+                dbPlayer.SetData("mCustomerAccepted", 0);
+                dbPlayer.SetData("mPrice", price);
+                dbPlayer.SetData("mType", "Haus");
 
-                 Owner.SetData("mMakler_Owner", dbPlayer.GetName());
-                 Customer.SetData("mMakler_Customer", dbPlayer.GetName());
-                 dbPlayer.SetData("mMakler_CustomerName", Customer.GetName());
-                 dbPlayer.SetData("mMakler_OwnerName", Owner.GetName());
-                 dbPlayer.SetData("mOwnerAccepted", 0);
-                 dbPlayer.SetData("mCustomerAccepted", 0);
-                 dbPlayer.SetData("mPrice", price);
-                 dbPlayer.SetData("mType", "Haus");
+                dbPlayer.SendNewNotification(
+                    "Angebot an " + Customer.GetName() +
+                    " unterbreitet, Preis: $" +
+                    price);
+                Customer.SendNewNotification(
+                    "Makler " + dbPlayer.GetName() +
+                    " hat Ihnen ein Angebot fuer diese Immobilie unterbreitet, Preis: $" + price);
+                Customer.SendNewNotification(
+                    "Benutzen Sie /acceptmakler um das Angebot anzunehmen.");
+                Owner.SendNewNotification(
+                    "Makler " + dbPlayer.GetName() + " moechte Ihr Haus an " +
+                    Customer.GetName() + " verkaufen, Preis: $" + price);
+                Owner.SendNewNotification(
+                    "Sie bekommen davon $" +
+                    (price - (price / 10 * 3)) +
+                    " ausgezahlt. /acceptmakler um das Angebot anzunehmen.");
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+            }
+        }
 
-                 dbPlayer.SendNewNotification(
-                     "Angebot an " + Customer.GetName() +
-                     " unterbreitet, Preis: $" +
-                     price);
-                 Customer.SendNewNotification(
-                     "Makler " + dbPlayer.GetName() +
-                     " hat Ihnen ein Angebot fuer diese Immobilie unterbreitet, Preis: $" + price);
-                 Customer.SendNewNotification(
-                     "Benutzen Sie /acceptmakler um das Angebot anzunehmen.");
-                 Owner.SendNewNotification(
-                     "Makler " + dbPlayer.GetName() + " moechte Ihr Haus an " +
-                     Customer.GetName() + " verkaufen, Preis: $" + price);
-                 Owner.SendNewNotification(
-                     "Sie bekommen davon $" +
-                     (price - (price / 10 * 3)) +
-                     " ausgezahlt. /acceptmakler um das Angebot anzunehmen.");
-             }
-             catch (Exception e)
-             {
-                 Logger.Crash(e);
-             }
-         }
-        */
         [CommandPermission]
         [Command(GreedyArg = true)]
         public void sellstorage(Player player, string command = " ")

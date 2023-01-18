@@ -15,12 +15,5 @@ namespace VMP_CNR.Module.Paintball
         {
             return "SELECT * FROM `paintball` WHERE active=1;";
         }
-
-        protected override void OnItemLoaded(PaintballArea pba)
-        {
-           
-        }
-
     }
-
 }

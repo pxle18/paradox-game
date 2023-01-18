@@ -54,24 +54,21 @@ namespace VMP_CNR.Module.Paintball
     public class PaintballModule : Module<PaintballModule>
     {
 
-        public static bool PaintballDeactivated = false;
         public static Random Rand = new Random();
         public static Dictionary<string, dynamic> pbLobbies = new Dictionary<string, dynamic>();
         public static Vector3 PaintballMenuPosition = new Vector3(568.955, 2796.59, 42.0183);
 
         protected override bool OnLoad()
         {
-            if (!PaintballDeactivated)
-            {
-                MenuManager.Instance.AddBuilder(new PaintballEnterMenuBuilder());
-                new Npc(PedHash.Marine03SMY, new Vector3(568.955, 2796.59, 42.0183), 270, 0);
-            }
+            MenuManager.Instance.AddBuilder(new PaintballEnterMenuBuilder());
+            new Npc(PedHash.Marine03SMY, new Vector3(568.955, 2796.59, 42.0183), 270, 0);
+
             return base.OnLoad();
         }
 
         public override void OnPlayerFirstSpawnAfterSync(DbPlayer dbPlayer)
         {
-            if(dbPlayer.Paintball == 1)
+            if (dbPlayer.Paintball == 1)
             {
                 dbPlayer.Dimension[0] = 0;
                 dbPlayer.DimensionType[0] = DimensionType.World;
@@ -82,13 +79,12 @@ namespace VMP_CNR.Module.Paintball
 
         public void StartPaintball(DbPlayer dbPlayer, uint id)
         {
-            if (PaintballDeactivated) return;
             if (dbPlayer != null)
             {
                 dbPlayer.SetData("ac-ignorews", 4);
 
                 PaintballArea pba = PaintballAreaModule.Instance.Get(id);
-                pba.pbPlayers.TryAdd(dbPlayer, new vars { life = pba.MaxLife, kills = 0, deaths = 0, killstreak = 0 });
+                pba.Players.TryAdd(dbPlayer, new vars { life = pba.MaxLife, kills = 0, deaths = 0, killstreak = 0 });
                 dbPlayer.SetData("paintball_map", pba.Id);
                 //REMOVE & LOAD WEAPONZ
                 //SAVE WESTE
@@ -105,23 +101,23 @@ namespace VMP_CNR.Module.Paintball
 
 
 
-        public void Spawn(DbPlayer dbPlayer,bool quit=false,bool colshapeSpawn=false)
+        public void Spawn(DbPlayer dbPlayer, bool quit = false, bool colshapeSpawn = false)
         {
             if (dbPlayer != null && dbPlayer.HasData("paintball_map"))
             {
                 var playerMap = dbPlayer.GetData("paintball_map");
                 PaintballArea pba = PaintballAreaModule.Instance.Get(playerMap);
 
-                if (pba.pbPlayers.ContainsKey(dbPlayer)|| quit)
+                if (pba.Players.ContainsKey(dbPlayer) || quit)
                 {
 
-                    if (pba.pbPlayers[dbPlayer].life <= 0|| quit)
+                    if (pba.Players[dbPlayer].life <= 0 || quit)
                     {
                         NAPI.Task.Run(async () =>
                         {
                             await NAPI.Task.WaitForMainThread(1000);
                             //FINISH PAINTBALL
-                            pba.pbPlayers.TryRemove(dbPlayer, out vars value);
+                            pba.Players.TryRemove(dbPlayer, out vars value);
                             dbPlayer.ResetData("paintball_map");
                             dbPlayer.ResetData("paintball_death");
 
@@ -170,8 +166,7 @@ namespace VMP_CNR.Module.Paintball
                             await NAPI.Task.WaitForMainThread(0);
                             //GET/SET NEW SPAWN 
                             var spawn = PaintballSpawnModule.Instance.getSpawn(pba.Id);
-                            dbPlayer.SetDimension(pba.PaintBallDimension);
-                            dbPlayer.Dimension[0] = pba.PaintBallDimension;
+                            dbPlayer.SetDimension(pba.PaintballDimension);
                             dbPlayer.DimensionType[0] = DimensionType.Paintball;
                             dbPlayer.Player.SetPosition(new Vector3(spawn.x, spawn.y, spawn.z));
 
@@ -207,7 +202,7 @@ namespace VMP_CNR.Module.Paintball
 
                             if (!colshapeSpawn)
                             {
-                                dbPlayer.SendNewNotification($"Du hast noch {pba.pbPlayers[dbPlayer].life} Leben");
+                                dbPlayer.SendNewNotification($"Du hast noch {pba.Players[dbPlayer].life} Leben");
                             }
 
                             dbPlayer.ResetData("paintball_death");
@@ -242,7 +237,7 @@ namespace VMP_CNR.Module.Paintball
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -251,7 +246,7 @@ namespace VMP_CNR.Module.Paintball
             if (dbPlayer != null && dbPlayer.HasData("paintball_map"))
             {
                 PaintballArea pba = PaintballAreaModule.Instance.Get(dbPlayer.GetData("paintball_map"));
-                pba.pbPlayers.Remove(dbPlayer, out vars value);
+                pba.Players.Remove(dbPlayer, out vars value);
             }
         }
 
@@ -269,18 +264,18 @@ namespace VMP_CNR.Module.Paintball
                 {
                     var playerMap = dbPlayer.GetData("paintball_map");
                     PaintballArea pba = PaintballAreaModule.Instance.Get(playerMap);
-                    if (pba.pbPlayers.ContainsKey(dbPlayer) && pba.pbPlayers.ContainsKey(iKiller))
+                    if (pba.Players.ContainsKey(dbPlayer) && pba.Players.ContainsKey(iKiller))
                     {
                         dbPlayer.SetTied(true);
 
                         if (dbPlayer != iKiller)
                         {
                             dbPlayer.SetData("paintball_death", 1);
-                            pba.pbPlayers[dbPlayer] = new vars { life = pba.pbPlayers[dbPlayer].life - 1, kills = pba.pbPlayers[dbPlayer].kills, deaths = pba.pbPlayers[dbPlayer].deaths + 1, killstreak = 0 };
+                            pba.Players[dbPlayer] = new vars { life = pba.Players[dbPlayer].life - 1, kills = pba.Players[dbPlayer].kills, deaths = pba.Players[dbPlayer].deaths + 1, killstreak = 0 };
 
-                            if (pba.pbPlayers.ContainsKey(iKiller))
+                            if (pba.Players.ContainsKey(iKiller))
                             {
-                                pba.pbPlayers[iKiller] = new vars { life = pba.pbPlayers[iKiller].life, kills = pba.pbPlayers[iKiller].kills + 1, deaths = pba.pbPlayers[iKiller].deaths, killstreak = pba.pbPlayers[iKiller].killstreak + 1 };
+                                pba.Players[iKiller] = new vars { life = pba.Players[iKiller].life, kills = pba.Players[iKiller].kills + 1, deaths = pba.Players[iKiller].deaths, killstreak = pba.Players[iKiller].killstreak + 1 };
 
                                 dbPlayer.SendNewNotification($"Du wurdest umgebracht von {iKiller.GetName()}");
                                 iKiller.SendNewNotification($"Du hast {dbPlayer.GetName()} umgebracht");
@@ -289,37 +284,37 @@ namespace VMP_CNR.Module.Paintball
                                 iKiller.SetHealth(Math.Min(100, NAPI.Player.GetPlayerHealth(iKiller.Player) + 25));
                                 iKiller.SetArmor(Math.Min(99, NAPI.Player.GetPlayerArmor(iKiller.Player) + 25));
 
-                                if (pba.pbPlayers[iKiller].killstreak == 3)
+                                if (pba.Players[iKiller].killstreak == 3)
                                 {
-                                    foreach (var Players in pba.pbPlayers)
+                                    foreach (var Players in pba.Players)
                                     {
                                         Players.Key.Player.TriggerNewClient("sendGlobalNotification", $"Bei {iKiller.GetName()} läuft!", 5000, "white", "glob");
                                     }
                                 }
-                                if (pba.pbPlayers[iKiller].killstreak == 6)
+                                if (pba.Players[iKiller].killstreak == 6)
                                 {
-                                    foreach (var Players in pba.pbPlayers)
+                                    foreach (var Players in pba.Players)
                                     {
                                         Players.Key.Player.TriggerNewClient("sendGlobalNotification", $"{iKiller.GetName()} scheppert richtig!", 5000, "white", "glob");
                                     }
                                 }
-                                if (pba.pbPlayers[iKiller].killstreak == 9)
+                                if (pba.Players[iKiller].killstreak == 9)
                                 {
-                                    foreach (var Players in pba.pbPlayers)
+                                    foreach (var Players in pba.Players)
                                     {
                                         Players.Key.Player.TriggerNewClient("sendGlobalNotification", $"{iKiller.GetName()} ist GODLIKE", 5000, "white", "glob");
                                     }
                                 }
-                                if (pba.pbPlayers[iKiller].killstreak == 12)
+                                if (pba.Players[iKiller].killstreak == 12)
                                 {
-                                    foreach (var Players in pba.pbPlayers)
+                                    foreach (var Players in pba.Players)
                                     {
                                         Players.Key.Player.TriggerNewClient("sendGlobalNotification", $"{iKiller.GetName()} - Dragan, bist du es?", 5000, "white", "glob");
                                     }
                                 }
 
-                                dbPlayer.Player.TriggerNewClient("updatePaintballScore", pba.pbPlayers[dbPlayer].kills, pba.pbPlayers[dbPlayer].deaths, pba.pbPlayers[dbPlayer].killstreak);
-                                iKiller.Player.TriggerNewClient("updatePaintballScore", pba.pbPlayers[iKiller].kills, pba.pbPlayers[iKiller].deaths, pba.pbPlayers[iKiller].killstreak);
+                                dbPlayer.Player.TriggerNewClient("updatePaintballScore", pba.Players[dbPlayer].kills, pba.Players[dbPlayer].deaths, pba.Players[dbPlayer].killstreak);
+                                iKiller.Player.TriggerNewClient("updatePaintballScore", pba.Players[iKiller].kills, pba.Players[iKiller].deaths, pba.Players[iKiller].killstreak);
                             }
                         }
                     }
@@ -377,9 +372,7 @@ namespace VMP_CNR.Module.Paintball
         }
     }
 
-
-
-    public class PaintballConfirm: Script
+    public class PaintballConfirm : Script
     {
         [RemoteEvent]
         public void PbaConfirm(Player p_Player, string pb_map, string none, string key)
@@ -407,7 +400,7 @@ namespace VMP_CNR.Module.Paintball
             if (!p_Player.CheckRemoteEventKey(key)) return;
             DbPlayer dbPlayer = p_Player.GetPlayer();
             if (!dbPlayer.HasData("pba_choose")) return;
-            
+
             PaintballArea pba = PaintballAreaModule.Instance.Get(dbPlayer.GetData("pba_choose"));
             if (pba.Password == returnstring)
             {

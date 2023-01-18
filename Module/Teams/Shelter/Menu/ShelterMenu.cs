@@ -148,6 +148,9 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     case (int)TeamTypes.TEAM_BRATWA:
                                         dbPlayer.GiveWeapon(WeaponHash.Wrench, 0);
                                         break;
+                                    case (int)TeamTypes.TEAM_BALKANEROS:
+                                        dbPlayer.GiveWeapon(WeaponHash.Knife, 0);
+                                        break;
                                     case (int)TeamTypes.TEAM_ORGANISAZIJA:
                                         dbPlayer.GiveWeapon(WeaponHash.Hammer, 0);
                                         break;
@@ -191,6 +194,9 @@ namespace VMP_CNR.Module.Teams.Shelter
                                         dbPlayer.GiveWeapon(WeaponHash.Bat, 0);
                                         break;
                                 }
+
+                                dbPlayer.Container.AddItem(60, 1);
+                                dbPlayer.Container.AddItem(201, 10);
 
                                 dbPlayer.SendNewNotification(
                                     "Sie haben ihre Waffen aus dem Arsenal genommen! (900$ Kosten)", title: "Fraktion", notificationType: PlayerNotification.NotificationType.FRAKTION);

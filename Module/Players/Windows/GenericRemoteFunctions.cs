@@ -57,11 +57,6 @@ namespace VMP_CNR.Module.Players.Windows
                     "Aktuell kann keine Werbung gesendet werden, bitte warte kurz!");
                 return;
             }
-            if (dbPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Ohne Wohnsitz können Sie keine Werbung schalten!");
-                return;
-            }
             int newsprice = 0;
             if (ad.Length < 10 || ad.Length > 96)
             {
@@ -119,12 +114,7 @@ namespace VMP_CNR.Module.Players.Windows
                 dbPlayer.SendNewNotification("Die Person ist nicht berechtigt dich einzuladen!", title:"Fraktion", notificationType:PlayerNotification.NotificationType.ERROR);
                 return;
             }
-            if (dbPlayer.IsHomeless())
-            {
-                dbPlayer.SendNewNotification("Ohne einen Wohnsitz kannst du keiner Fraktion beitreten!", title: "Fraktion", notificationType: PlayerNotification.NotificationType.ERROR);
-                editDbPlayer.SendNewNotification($"{ dbPlayer.GetName()} hat keinen Wohnsitz und kann daher nicht der Fraktion beitreten!", title: "Fraktion", notificationType: PlayerNotification.NotificationType.ERROR);
-                return;
-            }
+
             if (dbPlayer.TeamId != (uint) TeamList.Zivilist)
             {
                 dbPlayer.SendNewNotification("Du bist bereits in einer Fraktion!", title: "Fraktion", notificationType: PlayerNotification.NotificationType.ERROR);

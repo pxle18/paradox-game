@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Computer.Apps.KFZRentApp.Apps
 
             foreach (PlayerVehicleRentKey playerVehicleRentKey in p_DbPlayer.GetPlayerVehicleRents())
             {
-                PlayerName.PlayerName pName = PlayerNameModule.Instance.GetAll().Values.ToList().Where(pn => pn.Id == playerVehicleRentKey.PlayerId).FirstOrDefault();
+                PlayerName.PlayerNameModel pName = PlayerNameModule.Instance.GetAll().Values.ToList().Where(pn => pn.Id == playerVehicleRentKey.PlayerId).FirstOrDefault();
                 if (pName == null) continue;
 
                 kFZRentObjects.Add(new KFZRentObject((int)playerVehicleRentKey.PlayerId, pName.Name, pName.HandyNr, "Fahrzeug", (int)playerVehicleRentKey.VehicleId, playerVehicleRentKey.BeginDate, playerVehicleRentKey.EndingDate));
@@ -89,7 +89,7 @@ namespace VMP_CNR.Module.Computer.Apps.KFZRentApp.Apps
 
             foreach (PlayerVehicleRentKey playerVehicleRentKey in p_DbPlayer.GetPlayerVehicleRents())
             {
-                PlayerName.PlayerName pName = PlayerNameModule.Instance.GetAll().Values.ToList().Where(pn => pn.Id == playerVehicleRentKey.PlayerId).FirstOrDefault();
+                PlayerName.PlayerNameModel pName = PlayerNameModule.Instance.GetAll().Values.ToList().Where(pn => pn.Id == playerVehicleRentKey.PlayerId).FirstOrDefault();
                 if (pName == null) continue;
 
                 kFZRentObjects.Add(new KFZRentObject((int)playerVehicleRentKey.PlayerId, pName.Name, pName.HandyNr, "Fahrzeug", (int)playerVehicleRentKey.VehicleId, playerVehicleRentKey.BeginDate, playerVehicleRentKey.EndingDate));

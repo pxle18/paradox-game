@@ -374,7 +374,7 @@ namespace VMP_CNR.Module.Players
             }
         }
 
-        public async Task<DbPlayer> Load(MySqlDataReader reader, Player player)
+        public async Task<DbPlayer> Load(MySqlDataReader reader, Player player, bool reload = false)
         {
             DbPlayer dbPlayer = new DbPlayer(reader)
             {
@@ -402,6 +402,7 @@ namespace VMP_CNR.Module.Players
 
                 // Add Verweis
                 player.SetData("player", dbPlayer);
+                player.Name = reader.GetString("Name");
 
                 // Forumid
                 dbPlayer.ForumId = reader.GetInt32("forumid");
@@ -520,6 +521,12 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.warns = new int[2];
                 dbPlayer.warns[1] = reader.GetInt32("warns");
                 dbPlayer.warns[0] = reader.GetInt32("warns");
+                dbPlayer.Ausschluss = new int[2];
+                dbPlayer.Ausschluss[1] = reader.GetInt32("ausschluss");
+                dbPlayer.Ausschluss[0] = reader.GetInt32("ausschluss");
+                dbPlayer.HardwareID = new string[2];
+                dbPlayer.HardwareID[1] = reader.GetString("Hwid");
+                dbPlayer.HardwareID[0] = reader.GetString("Hwid");
                 dbPlayer.fgehalt = new int[2];
                 dbPlayer.fgehalt[1] = reader.GetInt32("fgehalt");
                 dbPlayer.fgehalt[0] = reader.GetInt32("fgehalt");

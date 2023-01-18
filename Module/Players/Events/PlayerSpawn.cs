@@ -460,7 +460,7 @@ namespace VMP_CNR.Module.Players.Events
 
                     dbPlayer.LoadPlayerWeapons();
 
-                    if (!dbPlayer.IsFirstSpawn && dbPlayer.Paintball == 1)
+                    if (dbPlayer.Paintball == 1)
                     {
                         PaintballModule.Instance.Spawn(dbPlayer, false, false);
                         dbPlayer.StopAnimation();

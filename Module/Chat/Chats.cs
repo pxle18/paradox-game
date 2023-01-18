@@ -56,9 +56,18 @@ namespace VMP_CNR.Module.Chat
             });
         }
 
-        public static void sendProgressBar(DbPlayer dbPlayer, int timeInMs)
+        public static void sendProgressBar(DbPlayer dbPlayer, int timeInMs, bool isCancellable = false)
         {
+            dbPlayer.IsProgressBarRunning = true;
             dbPlayer.Player.TriggerNewClient("sendProgressbar", timeInMs);
+        }
+
+        public static void StopProgressbar(DbPlayer dbPlayer)
+        {
+            if (!dbPlayer.IsProgressBarRunning) return;
+
+            dbPlayer.IsProgressBarRunning = false;
+            dbPlayer.Player.TriggerNewClient("stopProgressbar");
         }
     }
 }
