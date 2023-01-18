@@ -88,7 +88,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                             if (sxVeh.Visitors.Contains(dbPlayer))
                                 sxVeh.Visitors.Remove(dbPlayer);
 
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.Dimension[0] = 0;
                             dbPlayer.SetDimension(0);
 
@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                                 
                                 Task.Run(async () =>
                                 {
-                                    dbPlayer.DimensionType[0] = DimensionType.World;
+                                    dbPlayer.DimensionType[0] = DimensionTypes.World;
                                     dbPlayer.Dimension[0] = 0;
                                     dbPlayer.SetDimension(0);
 
@@ -132,7 +132,7 @@ namespace VMP_CNR.Module.Vehicles.InteriorVehicles
                             {
                                 Task.Run(async () =>
                                 {
-                                    dbPlayer.DimensionType[0] = DimensionType.World;
+                                    dbPlayer.DimensionType[0] = DimensionTypes.World;
                                     dbPlayer.Dimension[0] = 0;
                                     dbPlayer.SetDimension(0);
 

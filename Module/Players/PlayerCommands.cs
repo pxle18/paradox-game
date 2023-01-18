@@ -4032,7 +4032,7 @@ namespace VMP_CNR.Module.Players
 
             if (!string.Equals(weedCommand, "grind")) return;
             //Grind
-            if (dbPlayer.DimensionType[0] != DimensionType.House) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.House) return;
 
             //paper = 158
             //plastiktuete = 6
@@ -4125,7 +4125,7 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.TeamId != (int)TeamTypes.TEAM_FIB || !dbPlayer.IsInDuty()) return;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
+            if (dbPlayer.DimensionType[0] == DimensionTypes.House && dbPlayer.HasData("inHouse"))
             {
                 ItemsModuleEvents.resetFriskInventoryFlags(dbPlayer);
                 ItemsModuleEvents.resetDisabledInventoryFlag(dbPlayer);
@@ -4259,7 +4259,7 @@ namespace VMP_CNR.Module.Players
             var command = commandParameter.Split(new[] { ' ' }, 1, StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim()).ToArray();
 
             if (dbPlayer.job[0] != (int)JobTypes.JOB_WEAPONDEALER || !dbPlayer.IsAGangster()) return;
-            if (dbPlayer.DimensionType[0] != DimensionType.WeaponFactory)
+            if (dbPlayer.DimensionType[0] != DimensionTypes.WeaponFactory)
             {
                 dbPlayer.SendNewNotification(
                     "Sie muessen in einer Waffenfabrik sein!");

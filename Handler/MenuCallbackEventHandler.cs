@@ -1081,11 +1081,11 @@ namespace VMP_CNR
                                 
                                 if (iHouse.Keller == 2)
                                 {
-                                    dbPlayer.DimensionType[0] = DimensionType.Labor;
+                                    dbPlayer.DimensionType[0] = DimensionTypes.Labor;
                                 }
                                 else
                                 {
-                                    dbPlayer.DimensionType[0] = DimensionType.Basement;
+                                    dbPlayer.DimensionType[0] = DimensionTypes.Basement;
                                 }
 
                                 dbPlayer.SetData("inHouse", iHouse.Id);
@@ -1124,7 +1124,7 @@ namespace VMP_CNR
 
                                 player.SetPosition(new Vector3(1138.25f, -3198.88f, -39.6657f));
                                 player.SetRotation(357.87f);
-                                dbPlayer.DimensionType[0] = DimensionType.MoneyKeller;
+                                dbPlayer.DimensionType[0] = DimensionTypes.MoneyKeller;
                                 dbPlayer.Player.TriggerNewClient("loadblackmoneyInterior");
                                 dbPlayer.SetData("inHouse", iHouse.Id);
 
@@ -4115,7 +4115,7 @@ namespace VMP_CNR
                             if (xHouse == null) return;
                             player.SetPosition(xHouse.Position);
                             dbPlayer.SetDimension(0);
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.ResetData("tempInt");
                             dbPlayer.ResetData("lastPosition");
                             DialogMigrator.CloseUserMenu(player, Dialogs.menu_shop_interior);
@@ -4145,7 +4145,7 @@ namespace VMP_CNR
                                     mHouse.Interior = interior;
                                     player.SetPosition(mHouse.Position);
                                     dbPlayer.SetDimension(0);
-                                    dbPlayer.DimensionType[0] = DimensionType.World;
+                                    dbPlayer.DimensionType[0] = DimensionTypes.World;
                                     dbPlayer.ResetData("tempInt");
                                     dbPlayer.ResetData("lastPosition");
                                     DialogMigrator.CloseUserMenu(player, Dialogs.menu_shop_interior);
@@ -4169,7 +4169,7 @@ namespace VMP_CNR
                                         {
                                             dbPlayer.SetData("lastPosition", dbPlayer.Player.Position);
                                             player.SetPosition(kvp.Value.Position);
-                                            dbPlayer.DimensionType[0] = DimensionType.House_Shop_Interior;
+                                            dbPlayer.DimensionType[0] = DimensionTypes.House_Shop_Interior;
                                             dbPlayer.SetData("tempInt", kvp.Key);
                                             break;
                                         }

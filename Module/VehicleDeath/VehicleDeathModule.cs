@@ -103,7 +103,7 @@ namespace VMP_CNR.Module.VehicleDeath
                 {
                     foreach (DbPlayer dbPlayer in xVeh.Visitors)
                     {
-                        if (dbPlayer.DimensionType[0] == DimensionType.Camper && dbPlayer.Player.Dimension != 0)
+                        if (dbPlayer.DimensionType[0] == DimensionTypes.Camper && dbPlayer.Player.Dimension != 0)
                         {
                             try
                             {
@@ -125,7 +125,7 @@ namespace VMP_CNR.Module.VehicleDeath
                                 }
                                 if (HeroinModule.CookingPlayers.Contains(dbPlayer)) HeroinModule.CookingPlayers.Remove(dbPlayer);
 
-                                dbPlayer.DimensionType[0] = DimensionType.World;
+                                dbPlayer.DimensionType[0] = DimensionTypes.World;
                                 dbPlayer.Dimension[0] = 0;
                                 dbPlayer.SetDimension(0);
                                 dbPlayer.Player.SetPosition((Vector3)dbPlayer.GetData("CamperEnterPos"));

@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Admin
             if (iKiller == null || !iKiller.IsValid()) return false;
             if (dbPlayer == null || !dbPlayer.IsValid()) return false;
 
-            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0 && iKiller.DimensionType[0] != DimensionType.Gangwar)
+            if (iKiller.Level <= 3 && dbPlayer.Id != iKiller.Id && iKiller.Paintball == 0 && iKiller.DimensionType[0] != DimensionTypes.Gangwar)
             {
                 dbPlayer.SendNewNotification(StringsModule.Instance["KILL_WILL_NOTICE"]);
                 Players.Players.Instance.SendMessageToAuthorizedUsers("deathlog",
@@ -94,12 +94,12 @@ namespace VMP_CNR.Module.Admin
                 }
             }
 
-            if (iKiller.DimensionType[0] == DimensionType.Gangwar && dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+            if (iKiller.DimensionType[0] == DimensionTypes.Gangwar && dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
             {
                 type = "gangwar";
             }
 
-            if (iKiller.DimensionType[0] == DimensionType.Paintball && dbPlayer.DimensionType[0] == DimensionType.Paintball)
+            if (iKiller.DimensionType[0] == DimensionTypes.Paintball && dbPlayer.DimensionType[0] == DimensionTypes.Paintball)
             {
                 type = "paintball";
             }

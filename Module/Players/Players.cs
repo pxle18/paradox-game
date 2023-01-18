@@ -620,9 +620,9 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.WatchMenu = 0;
                 dbPlayer.SocialClubName = reader.GetString("SCName");
 
-                dbPlayer.DimensionType = new DimensionType[2];
-                dbPlayer.DimensionType[0] = (DimensionType)reader.GetInt32("dimensionType");
-                dbPlayer.DimensionType[1] = (DimensionType)reader.GetInt32("dimensionType");
+                dbPlayer.DimensionType = new DimensionTypes[2];
+                dbPlayer.DimensionType[0] = (DimensionTypes)reader.GetInt32("dimensionType");
+                dbPlayer.DimensionType[1] = (DimensionTypes)reader.GetInt32("dimensionType");
 
                 dbPlayer.LastInteracted = DateTime.Now;
 

@@ -10,7 +10,7 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static bool HeroinCook(DbPlayer dbPlayer, ItemModel ItemData)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.Camper)
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Camper)
             {
                 dbPlayer.SendNewNotification(
                      "Sie muessen in einem Wohnmobil sein!");

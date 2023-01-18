@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Houses;
+using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.NpcSpawner;
@@ -162,12 +163,22 @@ namespace VMP_CNR.Module.Stadthalle
                 }
             }
 
+            int kosten = playerToNameChange.Container.GetItemAmount(670) > 0 ? playerToNameChange.Level * 5000 : playerToNameChange.Level * 15000;
+
+            if (!playerToNameChange.TakeBankMoney(kosten, $"Namensänderung - {newName}"))
+            {
+                dbPlayer.SendNewNotification($"Die Namensänderung würde {kosten} $ kosten. Diese Summe hat die Person nicht auf dem Konto");
+                return;
+            }
+
             if (playerToNameChange.OwnHouse[0] != 0)
             {
                 House house = HouseModule.Instance.GetByOwner(playerToNameChange.Id);
                 house.OwnerName = newName;
                 house.SaveOwner();
             }
+
+            if (playerToNameChange.Container.GetItemAmount(670) > 0) playerToNameChange.Container.RemoveItem(670);
 
             Logger.AddNameChangeLog(playerToNameChange.Id, playerToNameChange.Level, playerToNameChange.GetName(), newName, false);
 

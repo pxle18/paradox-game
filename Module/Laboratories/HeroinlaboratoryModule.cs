@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Laboratories
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionType.Heroinlaboratory) return false;
+            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionTypes.Heroinlaboratory) return false;
 
             Heroinlaboratory heroinlaboratory = HeroinlaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == dbPlayer.Player.Dimension).FirstOrDefault();
             if (heroinlaboratory != null && heroinlaboratory.TeamId == dbPlayer.TeamId && dbPlayer.Player.Position.DistanceTo(Coordinates.MethlaboratoryStartPosition) < 1.0f)
@@ -165,7 +165,7 @@ namespace VMP_CNR.Module.Laboratories
 
         public async Task HackHeroinlaboratory(DbPlayer dbPlayer)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.Heroinlaboratory) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Heroinlaboratory) return;
             Heroinlaboratory heroinlaboratory = this.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (heroinlaboratory == null) return;
             await heroinlaboratory.HackLaboratory(dbPlayer);

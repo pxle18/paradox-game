@@ -27,21 +27,25 @@ namespace VMP_CNR.Module
 
         private Modules()
         {
-            _modules = new Dictionary<Type, BaseModule>();
-
-            var objects = Assembly.GetAssembly(typeof(BaseModule))
-                .GetTypes()
-                .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(BaseModule)) &&
-                                 myType.GetCustomAttribute<DisabledModuleAttribute>() == null)
-                .Select(type => (BaseModule) Activator.CreateInstance(type))
-                .ToList();
-            objects.Sort(new ModuleComparer());
-            objects.Reverse();
-
-            foreach (var module in objects)
+            try
             {
-                Register(module);
-            }
+                _modules = new Dictionary<Type, BaseModule>();
+
+                var objects = Assembly.GetAssembly(typeof(BaseModule))
+                    .GetTypes()
+                    .Where(myType => myType.IsClass && !myType.IsAbstract && myType.IsSubclassOf(typeof(BaseModule)) &&
+                                     myType.GetCustomAttribute<DisabledModuleAttribute>() == null)
+                    .Select(type => (BaseModule)Activator.CreateInstance(type))
+                    .ToList();
+
+                objects.Sort(new ModuleComparer());
+                objects.Reverse();
+
+                foreach (var module in objects)
+                {
+                    Register(module);
+                }
+            }catch(Exception e) { Console.WriteLine(e.ToString()); }
         }
 
         public Dictionary<Type, BaseModule> GetModules()

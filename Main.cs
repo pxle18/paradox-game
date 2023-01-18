@@ -70,6 +70,7 @@ using VMP_CNR.Module.Players.NAPIWrapper;
 using VMP_CNR.Module.Threading;
 using VMP_CNR.Module.Admin;
 using System.Net;
+using VMP_CNR.Module.ShopTakeover;
 
 namespace VMP_CNR
 {
@@ -415,6 +416,8 @@ namespace VMP_CNR
             MenuManager.Instance.AddBuilder(new GangwarVehicleMenu());
             MenuManager.Instance.AddBuilder(new GangwarWeaponMenu());
 
+            MenuManager.Instance.AddBuilder(new ShopTakeoverAttackMenu());
+
             //Loading Maps
             Maps.LoadAssets();
 
@@ -529,8 +532,6 @@ namespace VMP_CNR
             Logger.Print("PP      AA   AA RR   RR AA   AA DDDDDD   OOOO0  XX    XX    ");
             Logger.Print("");
             Logger.Print("© module & zeroday. backdooring your systems since cnw v1 ");
-
-            Logger.Print(Dns.GetHostName());
 
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;
@@ -692,7 +693,7 @@ namespace VMP_CNR
 
                     try
                     {
-                        if (iPlayer.DimensionType[0] == DimensionType.Business)
+                        if (iPlayer.DimensionType[0] == DimensionTypes.Business)
                         {
                             var visitedBusiness = iPlayer.GetVisitedBusiness();
                             if (visitedBusiness != null)
@@ -1253,10 +1254,10 @@ namespace VMP_CNR
             player.TriggerNewClient("updateMoney", iPlayer.Money[0]);
             player.TriggerNewClient("updateBlackMoney", iPlayer.BlackMoney[0]);
 
-            if (Ptr)
+            if (DevMode)
             {
                 iPlayer.SendNewNotification(
-                    "ACHTUNG: Sie befinden sich auf dem Public-Test-Server (PTS)");
+                    "ACHTUNG: Sie befinden sich auf dem Test-Server.");
                 iPlayer.SendNewNotification(
                     "Daten können verloren gehen und werden nicht auf die Live DB synchronisiert!");
             }
@@ -1870,7 +1871,7 @@ namespace VMP_CNR
                 if (iPlayer.HasData("houseId"))
                 {
                     // Wenn in House nicht anzeigen
-                    if (iPlayer.DimensionType[0] == DimensionType.World)
+                    if (iPlayer.DimensionType[0] == DimensionTypes.World)
                     {
                         uint houseId = iPlayer.GetData("houseId");
                         var house = HouseModule.Instance.Get(houseId);
@@ -2062,7 +2063,7 @@ namespace VMP_CNR
                 }
 
                 // House Wardrobe
-                if (iPlayer.DimensionType[0] == DimensionType.House && iPlayer.HasData("inHouse"))
+                if (iPlayer.DimensionType[0] == DimensionTypes.House && iPlayer.HasData("inHouse"))
                 {
                     House iHouse;
 
@@ -2247,7 +2248,7 @@ namespace VMP_CNR
             }
 
             // Mache das Interiorkaufmenu wieder auf
-            if (iPlayer.DimensionType[0] == DimensionType.House_Shop_Interior)
+            if (iPlayer.DimensionType[0] == DimensionTypes.House_Shop_Interior)
             {
                 House iHouse;
                 if ((iHouse = HouseModule.Instance[iPlayer.OwnHouse[0]]) == null) return;

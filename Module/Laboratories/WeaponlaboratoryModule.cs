@@ -80,7 +80,7 @@ namespace VMP_CNR.Module.Laboratories
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionType.Weaponlaboratory) return false;
+            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionTypes.Weaponlaboratory) return false;
             if (dbPlayer == null) return false;
 
             Weaponlaboratory weaponlaboratory = WeaponlaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == dbPlayer.Player.Dimension).FirstOrDefault();
@@ -165,7 +165,7 @@ namespace VMP_CNR.Module.Laboratories
         }
         public async Task HackWeaponlaboratory(DbPlayer dbPlayer)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.Weaponlaboratory) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Weaponlaboratory) return;
             Weaponlaboratory weaponlaboratory = this.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (weaponlaboratory == null) return;
             await weaponlaboratory.HackLaboratory(dbPlayer);

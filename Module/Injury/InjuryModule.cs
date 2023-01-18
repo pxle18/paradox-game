@@ -146,7 +146,7 @@ namespace VMP_CNR.Module.Injury
             //Set Invincible until revive 
             dbPlayer.Player.TriggerNewClient("setInvincible", true);
 
-            if (dbPlayer.DimensionType[0] == DimensionType.RacingArea || dbPlayer.HasData("inRacing"))
+            if (dbPlayer.DimensionType[0] == DimensionTypes.RacingArea || dbPlayer.HasData("inRacing"))
             {
                 dbPlayer.RemoveFromRacing();
                 dbPlayer.dead_x[0] = RacingModule.RacingMenuPosition.X;
@@ -202,7 +202,7 @@ namespace VMP_CNR.Module.Injury
             if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team))
             {
                 // in GW Gebiet
-                if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
                 {
                     injuryType = InjuryTypeModule.Instance.Get(InjuryGangwar);
 

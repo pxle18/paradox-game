@@ -27,7 +27,7 @@ namespace VMP_CNR.Module.Paintball.Menu
             l_Menu.Add($"Schließen");
             foreach (KeyValuePair<uint, PaintballArea> pba in PaintballAreaModule.Instance.GetAll())
             {
-                l_Menu.Add($"{pba.Value.Name} ${pba.Value.LobbyEnterPrice} {pba.Value.pbPlayers.Count}/{pba.Value.MaxLobbyPlayers}");
+                l_Menu.Add($"{pba.Value.Name} ${pba.Value.LobbyEnterPrice} {pba.Value.Players.Count}/{pba.Value.MaxLobbyPlayers}");
             }
             return l_Menu;
         }
@@ -55,7 +55,7 @@ namespace VMP_CNR.Module.Paintball.Menu
 
                         if (idx == index)
                         {
-                            if (pba.Value.pbPlayers.Count >= pba.Value.MaxLobbyPlayers)
+                            if (pba.Value.Players.Count >= pba.Value.MaxLobbyPlayers)
                             {
                                 dbPlayer.SendNewNotification("Diese Lobby ist bereits voll!");
                                 return false;

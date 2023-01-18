@@ -208,7 +208,7 @@ namespace VMP_CNR.Module.Laboratories
             if (ActingPlayers.ToList().Contains(dbPlayer))
             {
                 ActingPlayers.Remove(dbPlayer);
-                if (dbPlayer.DimensionType[0] == DimensionType.Cannabislaboratory && dbPlayer.Player.Dimension != 0)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.Cannabislaboratory && dbPlayer.Player.Dimension != 0)
                     dbPlayer.SendNewNotification("Prozess gestoppt!");
             }
         }
@@ -596,7 +596,7 @@ namespace VMP_CNR.Module.Laboratories
             foreach (DbPlayer defender in TeamModule.Instance.Get(TeamId).Members.Values.ToList())
             {
                 if (defender == null || !defender.IsValid()) continue;
-                if (defender.Player.Position.DistanceTo(JumpPointEingang.Position) < 150 || (defender.Dimension[0] == TeamId && defender.DimensionType[0] == DimensionType.Labor))
+                if (defender.Player.Position.DistanceTo(JumpPointEingang.Position) < 150 || (defender.Dimension[0] == TeamId && defender.DimensionType[0] == DimensionTypes.Labor))
                 {
                     count++;
                 }

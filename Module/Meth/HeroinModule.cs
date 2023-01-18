@@ -59,8 +59,8 @@ namespace VMP_CNR.Module.Meth
 
         public override void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.Camper) return;
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Camper) return;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             var sxVehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.Player.Dimension);
             dbPlayer.SetDimension(0);
             dbPlayer.Dimension[0] = 0;
@@ -102,7 +102,7 @@ namespace VMP_CNR.Module.Meth
                 
 
                 //Meth Cooking
-                if (dbPlayer.HasData("cooking") && dbPlayer.DimensionType[0] == DimensionType.Camper)
+                if (dbPlayer.HasData("cooking") && dbPlayer.DimensionType[0] == DimensionTypes.Camper)
                 {
                     if(dbPlayer.Player.Position.DistanceTo(CamperInteriorPosition) > 20.0f)
                     {
@@ -224,7 +224,7 @@ namespace VMP_CNR.Module.Meth
                     // Check Vehicle in Range (Wohnwagen)
                     SxVehicle sxVeh;
 
-                    if (dbPlayer.DimensionType[0] == DimensionType.Camper && dbPlayer.Player.Dimension != 0)
+                    if (dbPlayer.DimensionType[0] == DimensionTypes.Camper && dbPlayer.Player.Dimension != 0)
                     {
                         if (dbPlayer.Player.Position.DistanceTo(CamperInteriorPosition) > 2.5f) return false;
 
@@ -236,7 +236,7 @@ namespace VMP_CNR.Module.Meth
 
                             if (sxVeh.Visitors.Contains(dbPlayer))
                                 sxVeh.Visitors.Remove(dbPlayer);
-                        dbPlayer.DimensionType[0] = DimensionType.World;
+                        dbPlayer.DimensionType[0] = DimensionTypes.World;
                         dbPlayer.Dimension[0] = 0;
                         dbPlayer.SetDimension(0);
 
@@ -266,7 +266,7 @@ namespace VMP_CNR.Module.Meth
                     {
                         dbPlayer.SetData("CamperEnterPos", dbPlayer.Player.Position);
                         dbPlayer.SetDimension(sxVeh.databaseId);
-                        dbPlayer.DimensionType[0] = DimensionType.Camper;
+                        dbPlayer.DimensionType[0] = DimensionTypes.Camper;
                         dbPlayer.Dimension[0] = sxVeh.databaseId;
                         sxVeh.Visitors.Add(dbPlayer);
 
@@ -283,7 +283,7 @@ namespace VMP_CNR.Module.Meth
                     sxVeh.Visitors.Add(dbPlayer);
                     return true;
                 case Key.L:
-                    if (dbPlayer.DimensionType[0] == DimensionType.Camper)
+                    if (dbPlayer.DimensionType[0] == DimensionTypes.Camper)
                     {
                         var vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(dbPlayer.Player.Dimension);
 

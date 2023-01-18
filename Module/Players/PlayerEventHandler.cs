@@ -31,6 +31,7 @@ using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.Phone;
 using VMP_CNR.Module.Players.PlayerAnimations;
 using VMP_CNR.Module.Players.Windows;
+using VMP_CNR.Module.Progressbar.Extensions;
 using VMP_CNR.Module.RemoteEvents;
 using VMP_CNR.Module.Schwarzgeld;
 using VMP_CNR.Module.Staatskasse;
@@ -234,7 +235,7 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.RageExtension.IsInVehicle) return;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.Gangwar) return;
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar) return;
 
             if (dbPlayer.HasData("blockArmorCheat")) return;
 
@@ -270,29 +271,39 @@ namespace VMP_CNR.Module.Players
 
             dbPlayer.SetData("lastArmorPacked", DateTime.Now);
             dbPlayer.SetCannotInteract(true);
-            Chats.sendProgressBar(dbPlayer, 4000);
+
             dbPlayer.PlayAnimation(
                 (int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl), Main.AnimationList["fixing"].Split()[0], Main.AnimationList["fixing"].Split()[1]);
             dbPlayer.Player.TriggerNewClient("freezePlayer", true);
-            await Task.Delay(4000);
+
+            await dbPlayer.RunProgressBar(() =>
+            {
+                if (dbPlayer.Player.Armor < 25)
+                {
+                    dbPlayer.SendNewNotification("Die Weste ist zu kaputt zum packen!");
+                    dbPlayer.SetCannotInteract(false);
+
+                    return Task.CompletedTask;
+                }
+
+                Dictionary<string, dynamic> Data = new Dictionary<string, dynamic>
+                {
+                    { "armorvalue", dbPlayer.Player.Armor },
+                    { "Desc", "Haltbarkeit: " + dbPlayer.Player.Armor + "%" }
+                };
+
+                dbPlayer.Container.AddItem(itemId, 1, Data);
+                dbPlayer.SendNewNotification($"Schutzweste mit {dbPlayer.Player.Armor} gepackt!");
+                dbPlayer.SetArmor(0);
+
+                Logger.AddToArmorPackLog(dbPlayer.Id, dbPlayer.Player.Armor);
+
+                return Task.CompletedTask;
+            }, "Schutzweste", "Du packst deine Schutzweste.", (int)(dbPlayer.Player.Armor * 0.075) * 1000);
+
             dbPlayer.Player.TriggerNewClient("freezePlayer", false);
             dbPlayer.StopAnimation();
 
-            if (dbPlayer.Player.Armor < 25)
-            {
-                dbPlayer.SendNewNotification("Die Weste ist zu kaputt zum packen!");
-                dbPlayer.SetCannotInteract(false);
-                return;
-            }
-
-            Dictionary<string, dynamic> Data = new Dictionary<string, dynamic>();
-            Data.Add("armorvalue", dbPlayer.Player.Armor);
-            Data.Add("Desc", "Haltbarkeit: " + dbPlayer.Player.Armor + "%");
-
-            dbPlayer.Container.AddItem(itemId, 1, Data);
-            Logging.Logger.AddToArmorPackLog(dbPlayer.Id, dbPlayer.Player.Armor);
-            dbPlayer.SendNewNotification($"Schutzweste mit {dbPlayer.Player.Armor} gepackt!");
-            dbPlayer.SetArmor(0);
             dbPlayer.SetCannotInteract(false);
         }
 
@@ -304,7 +315,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod() || dbPlayer.IsTied || dbPlayer.IsCuffed || dbPlayer.HasData("paintball_map")) return;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.Gangwar) return;
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar) return;
 
             if (dbPlayer.RageExtension.IsInVehicle) return;
                         if (dbPlayer.HasData("no-packgun"))

@@ -75,5 +75,12 @@ namespace VMP_CNR.Module.Teams.Shelter
             Money += amount;
             MySQLHandler.ExecuteAsync($"UPDATE `team_shelter` SET money = money + '{amount}' WHERE id = '{Id}';");
         }
+
+        public void GiveMoney(DbPlayer player, int amount, string reason)
+        {
+            Money += amount;
+            Team.AddBankHistory(amount, $"{reason} von {player.GetName()}");
+            MySQLHandler.ExecuteAsync($"UPDATE `team_shelter` SET money = money + '{amount}' WHERE id = '{Id}';");
+        }
     }
 }

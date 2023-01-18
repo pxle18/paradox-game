@@ -2266,35 +2266,35 @@ namespace VMP_CNR.Module.Admin
 
             switch (foundPlayer.DimensionType[0])
             {
-                case DimensionType.World:
+                case DimensionTypes.World:
                     player.TriggerNewClient("setPlayerGpsMarker", foundPlayer.Player.Position.X,
                         foundPlayer.Player.Position.Y);
                     break;
-                case DimensionType.House:
+                case DimensionTypes.House:
                     if (!foundPlayer.HasData("inHouse")) return;
                     House house = HouseModule.Instance.Get(foundPlayer.GetData("inHouse"));
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
-                case DimensionType.Basement:
-                case DimensionType.Labor:
+                case DimensionTypes.Basement:
+                case DimensionTypes.Labor:
                     house = HouseModule.Instance.Get(foundPlayer.Player.Dimension);
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
-                case DimensionType.Camper:
+                case DimensionTypes.Camper:
                     var vehicle =
                         VehicleHandler.Instance.GetByVehicleDatabaseId(foundPlayer.Player.Dimension);
                     if (vehicle == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
-                case DimensionType.Business:
+                case DimensionTypes.Business:
                     break;
-                case DimensionType.Storage:
+                case DimensionTypes.Storage:
                     break;
-                case DimensionType.WeaponFactory:
+                case DimensionTypes.WeaponFactory:
                     break;
-                case DimensionType.Methlaboratory:
+                case DimensionTypes.Methlaboratory:
                     Methlaboratory methlaboratory = MethlaboratoryModule.Instance.GetLaboratoryByDimension(foundPlayer.Player.Dimension);
                     if (methlaboratory == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", methlaboratory.JumpPointEingang.Position.X, methlaboratory.JumpPointEingang.Position.Y);
@@ -2624,7 +2624,7 @@ namespace VMP_CNR.Module.Admin
             var findPlayer = Players.Players.Instance.FindPlayer(name, true);
             if (findPlayer == null) return;
             PlayerSpawn.OnPlayerSpawn(findPlayer.Player);
-            findPlayer.DimensionType[0] = DimensionType.World;
+            findPlayer.DimensionType[0] = DimensionTypes.World;
 
             dbPlayer.SendNewNotification("Sie haben " + findPlayer.GetName() + " respawnt!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
             findPlayer.SendNewNotification("Administrator " + dbPlayer.GetName() +
@@ -3283,7 +3283,7 @@ namespace VMP_CNR.Module.Admin
             var findPlayer = Players.Players.Instance.FindPlayer(name, true);
             if (findPlayer == null || findPlayer.IsAlive()) return;
 
-            findPlayer.DimensionType[0] = DimensionType.World;
+            findPlayer.DimensionType[0] = DimensionTypes.World;
             findPlayer.Revive();
 
             dbPlayer.SendNewNotification("Sie haben " + findPlayer.GetName() + " revived!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
@@ -3405,7 +3405,7 @@ namespace VMP_CNR.Module.Admin
             if (xHouse == null) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.Player.SetPosition(xHouse.Position);
             dbPlayer.SendNewNotification("Du hast dich zu Haus " + xHouse.Id + " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
         }
@@ -3427,7 +3427,7 @@ namespace VMP_CNR.Module.Admin
             if (garage == null) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.Player.SetPosition(garage.Position);
             dbPlayer.SendNewNotification($"Du hast dich zur Garage {garage.Name}({garage.Id}) teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
 
@@ -3447,7 +3447,7 @@ namespace VMP_CNR.Module.Admin
             if (xFarm == null) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.Player.SetPosition(xFarm.Position);
             dbPlayer.SendNewNotification("Du hast dich zum Farm Spot " + xFarm.Id + " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
         }
@@ -3464,7 +3464,7 @@ namespace VMP_CNR.Module.Admin
             if (xFarm == null) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.Player.SetPosition(xFarm.Position);
             dbPlayer.SendNewNotification("Du hast dich zum Farm Spot " + xFarm.Id + " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
         }
@@ -3481,7 +3481,7 @@ namespace VMP_CNR.Module.Admin
             if (xFarm == null) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.Player.SetPosition(xFarm.Position);
             dbPlayer.SendNewNotification("Du hast dich zum Farm Spot " + xFarm.Id + " teleportiert!", title: "ADMIN", notificationType: PlayerNotification.NotificationType.ADMIN);
         }
@@ -4566,7 +4566,7 @@ namespace VMP_CNR.Module.Admin
                 {
                     pos.Z += 5;
                 }
-                else if (dbPlayer.DimensionType[0] != DimensionType.World)
+                else if (dbPlayer.DimensionType[0] != DimensionTypes.World)
                 {
                     pos.Z += 1;
                 }

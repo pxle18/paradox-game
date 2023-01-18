@@ -87,6 +87,7 @@ namespace VMP_CNR.Module
         public virtual bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState) => false;
 
         protected virtual bool OnLoad() => true;
+        protected virtual bool IsActive() => true;
         public virtual void OnPlayerLoadData(DbPlayer dbPlayer, MySqlDataReader reader) { }
         public virtual void OnMinuteUpdate() { }
         public virtual async Task OnMinuteUpdateAsync() => await Task.Delay(0);

@@ -219,7 +219,7 @@ namespace VMP_CNR.Module.Helper
             return str;
         }
 
-        public static string ComplainPlayerData(DimensionType[] playerVar, string dbField)
+        public static string ComplainPlayerData(DimensionTypes[] playerVar, string dbField)
         {
             return (int) playerVar[0] != (int) playerVar[1] ? $"`{dbField}` = '{(int) playerVar[0]}'" : null;
         }

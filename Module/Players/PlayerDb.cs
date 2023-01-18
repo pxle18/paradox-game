@@ -511,7 +511,7 @@ namespace VMP_CNR.Module.Players
             }
 
             // niet update in pb or gangwar...
-            if (dbPlayer.DimensionType[0] != DimensionType.Paintball && dbPlayer.DimensionType[0] != DimensionType.Gangwar && dbPlayer.Paintball == 0)
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Paintball && dbPlayer.DimensionType[0] != DimensionTypes.Gangwar && dbPlayer.Paintball == 0)
             {
                 if (Helper.Helper.CheckPlayerData(dbPlayer, dbPlayer.MetaData.Armor, DbPlayer.Value.Armor, out query))
                 {
@@ -538,7 +538,7 @@ namespace VMP_CNR.Module.Players
                     ups.Add(query);
                 }
 
-                if (dbPlayer.DimensionType[0] != DimensionType.Paintball && dbPlayer.DimensionType[0] != DimensionType.Gangwar && dbPlayer.Paintball == 0)
+                if (dbPlayer.DimensionType[0] != DimensionTypes.Paintball && dbPlayer.DimensionType[0] != DimensionTypes.Gangwar && dbPlayer.Paintball == 0)
                 { 
                     if (Helper.Helper.CheckPlayerData(dbPlayer, dbPlayer.MetaData.Armor, DbPlayer.Value.Armor, out query))
                     {

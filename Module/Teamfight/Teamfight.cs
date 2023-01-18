@@ -345,7 +345,7 @@ namespace VMP_CNR.Module.Teamfight
             TeamfightFunctions.StorePlayerweaponsInsideTeamfightContainer(dbPlayer);
 
             dbPlayer.SetDimension(GangwarModule.Instance.DefaultDimension);
-            dbPlayer.DimensionType[0] = DimensionType.Gangwar;
+            dbPlayer.DimensionType[0] = DimensionTypes.Gangwar;
 
             GiveWPN(dbPlayer);
 
@@ -438,7 +438,7 @@ namespace VMP_CNR.Module.Teamfight
             if (dbPlayer.Player.Dimension != GangwarModule.Instance.DefaultDimension) return;
 
             dbPlayer.SetDimension(0);
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.RemoveAllServerWeapons();
 
             dbPlayer.SetArmor(0);

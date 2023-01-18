@@ -472,7 +472,7 @@ namespace VMP_CNR.Module.Players.Sync
                             dbPlayer.Player.SetRotation(266.862f);
                             dbPlayer.SetDimension(0);
                             dbPlayer.Dimension[0] = 0;
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.SetCuffed(false);
                             if (dbPlayer.HasData("outfitactive")) dbPlayer.ResetData("outfitactive");
                             dbPlayer.ApplyCharacter(false, true);
@@ -488,7 +488,7 @@ namespace VMP_CNR.Module.Players.Sync
                                 dbPlayer.Player.SetRotation(JailSpawn.Heading);
                                 dbPlayer.SetDimension(0);
                                 dbPlayer.Dimension[0] = 0;
-                                dbPlayer.DimensionType[0] = DimensionType.World;
+                                dbPlayer.DimensionType[0] = DimensionTypes.World;
                                 dbPlayer.SetCuffed(false);
                                 if (dbPlayer.HasData("outfitactive")) dbPlayer.ResetData("outfitactive");
                                 dbPlayer.ApplyCharacter(false, true);
@@ -512,7 +512,7 @@ namespace VMP_CNR.Module.Players.Sync
                                 dbPlayer.Player.SetRotation(JailSpawn.Heading);
                                 dbPlayer.SetDimension(0);
                                 dbPlayer.Dimension[0] = 0;
-                                dbPlayer.DimensionType[0] = DimensionType.World;
+                                dbPlayer.DimensionType[0] = DimensionTypes.World;
                                 dbPlayer.SetCuffed(false);
                                 if (dbPlayer.HasData("outfitactive")) dbPlayer.ResetData("outfitactive");
                                 dbPlayer.ApplyCharacter(false, true);

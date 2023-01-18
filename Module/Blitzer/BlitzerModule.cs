@@ -120,7 +120,7 @@ namespace VMP_CNR.Module.Blitzer
                         if (dbPlayer.RageExtension.IsInVehicle)
                         {
                             if (dbPlayer.IsInGuideDuty() || dbPlayer.IsInGameDesignDuty() || dbPlayer.Dimension[0] != 0
-                                || dbPlayer.IsInAdminDuty() || dbPlayer.DimensionType[0] != DimensionType.World)
+                                || dbPlayer.IsInAdminDuty() || dbPlayer.DimensionType[0] != DimensionTypes.World)
                             {
                                 dbPlayer.ResetData("inBlitzerRange");
                                 return;

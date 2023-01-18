@@ -6,6 +6,7 @@ using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.PlayerAnimations;
+using VMP_CNR.Module.Progressbar.Extensions;
 
 namespace VMP_CNR.Module.Items.Scripts
 {
@@ -41,20 +42,29 @@ namespace VMP_CNR.Module.Items.Scripts
                     dbPlayer.VisibleArmorType = type;
                 }
 
-
                 dbPlayer.IsInTask = true;
-                Chats.sendProgressBar(dbPlayer, 4000);
+
                 dbPlayer.PlayAnimation(
-                        (int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl), Main.AnimationList["fixing"].Split()[0], Main.AnimationList["fixing"].Split()[1]);
+                        (int)(AnimationFlags.Loop | AnimationFlags.AllowPlayerControl),
+                        Main.AnimationList["fixing"].Split()[0],
+                        Main.AnimationList["fixing"].Split()[1]
+               );
+
                 dbPlayer.Player.TriggerNewClient("freezePlayer", true);
                 dbPlayer.SetCannotInteract(true);
-                await System.Threading.Tasks.Task.Delay(4000);
+
+                bool finishedProgressbar = await dbPlayer.RunProgressBar(() =>
+                {
+                    dbPlayer.SetArmor(armorvalue, true);
+
+                    return System.Threading.Tasks.Task.CompletedTask;
+                }, "Schutzweste", "Du ziehst eine Schutzweste.", 4 * 1000);
+
                 dbPlayer.SetCannotInteract(false);
                 dbPlayer.Player.TriggerNewClient("freezePlayer", false);
                 dbPlayer.StopAnimation();
 
-                dbPlayer.SetArmor(armorvalue, true);
-                return true;
+                return finishedProgressbar;
             }
             catch(Exception e)
             {

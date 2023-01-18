@@ -16,7 +16,7 @@ namespace VMP_CNR.Module.Items.Scripts
     {
         public static async Task<bool> Zentrifuge(DbPlayer dbPlayer, ItemModel itemModel)
         {
-            if (dbPlayer.DimensionType[0] == DimensionType.Methlaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Methlaboratory)
             {
                 if (dbPlayer.Player.Position.DistanceTo(Coordinates.MethlaboratoryAnalyzePosition) > 2.0f)
                 {
@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 dbPlayer.StopAnimation();
                 return true;
             }
-            else if (dbPlayer.DimensionType[0] == DimensionType.Cannabislaboratory)
+            else if (dbPlayer.DimensionType[0] == DimensionTypes.Cannabislaboratory)
             {
                 if (dbPlayer.Player.Position.DistanceTo(Coordinates.CannabislaboratoryComputerPosition) > 2.0f)
                 {

@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
             // Spawn Vehicle & Player
             dbPlayer.SetDimension(dbPlayer.Id);
             dbPlayer.Dimension[0] = dbPlayer.Id;
-            dbPlayer.DimensionType[0] = DimensionType.RCRacing;
+            dbPlayer.DimensionType[0] = DimensionTypes.RCRacing;
 
             dbPlayer.Player.SetPosition(RCRacingModule.StartFinishPosition);
 
@@ -46,7 +46,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
             dbPlayer.Player.SetPosition(RCRacingModule.RCRacingMenuPosition);
             dbPlayer.SetDimension(0);
             dbPlayer.Dimension[0] = 0;
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
 
             dbPlayer.ResetData("rcRacingExitCheck");
             dbPlayer.ResetData("racingRCRoundStartTime");
