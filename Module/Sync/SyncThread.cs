@@ -316,7 +316,7 @@ namespace VMP_CNR.Module.Sync
                         {
                             iPlayer.MetaData.Position = iPlayer.GetData("NSAEnterPos");
                         }
-                        else if (iPlayer.Player.Dimension == 0 && iPlayer.DimensionType[0] != DimensionType.House)
+                        else if (iPlayer.Player.Dimension == 0 && iPlayer.DimensionType[0] != DimensionTypes.House)
                         {
                             iPlayer.MetaData.Dimension = iPlayer.Player.Dimension;
                             iPlayer.MetaData.Heading = iPlayer.Player.Heading;

@@ -214,7 +214,7 @@ namespace VMP_CNR.Module.Players.Events
                     float heading = 0.0f;
 
                     uint dimension = 0;
-                    DimensionType dimensionType = DimensionType.World;
+                    DimensionTypes dimensionType = DimensionTypes.World;
 
                     // Default Data required for Spawn
                     bool FreezedNoAnim = false;
@@ -259,7 +259,7 @@ namespace VMP_CNR.Module.Players.Events
                             dbPlayer.ResetData("tmpDeathDimension");
                         }
 
-                        if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team) && dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+                        if (GangwarTownModule.Instance.IsTeamInGangwar(dbPlayer.Team) && dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
                         {
                             dimension = GangwarModule.Instance.DefaultDimension;
                         }
@@ -382,10 +382,10 @@ namespace VMP_CNR.Module.Players.Events
                         Main.OnPlayerFirstSpawn(player);
 
                         // Fallback ...
-                        if (dbPlayer.DimensionType[0] == DimensionType.Gangwar)
+                        if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
                         {
                             dbPlayer.Dimension[0] = 0;
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                         }
 
                         // Load player Dimension from DB

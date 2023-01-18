@@ -85,7 +85,7 @@ namespace VMP_CNR.Module.Weapons
 
                 int l_OldGun = 0;
                 int l_NewGun = 0;
-                if (dbPlayer.DimensionType[0] != DimensionType.Paintball)
+                if (dbPlayer.DimensionType[0] != DimensionTypes.Paintball)
                 {
                     foreach (var l_Data in l_WeaponDatas)
                     {

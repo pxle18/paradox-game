@@ -59,7 +59,7 @@ namespace VMP_CNR.Module.Players.Db
         Jeff = 5
     }
 
-    public enum DimensionType : uint
+    public enum DimensionTypes : uint
     {
         World = 0,
         House = 1,
@@ -79,7 +79,8 @@ namespace VMP_CNR.Module.Players.Db
         Paintball = 16,
         Rocket = 17,
         RCRacing = 18,
-        Heroinlaboratory = 19
+        Heroinlaboratory = 19,
+        ShopTakeover = 20
     }
 
     public class MetaDataObject
@@ -337,7 +338,7 @@ namespace VMP_CNR.Module.Players.Db
         public int TempWanteds { get; set; }
 
         public uint[] Dimension { get; set; }
-        public DimensionType[] DimensionType { get; set; }
+        public DimensionTypes[] DimensionType { get; set; }
 
         public DateTime LastInteracted { get; set; }
         public DateTime LastEInteract { get; set; }

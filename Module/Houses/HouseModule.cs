@@ -37,7 +37,7 @@ namespace VMP_CNR.Module.Houses
 
         public override void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.House) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.House) return;
             var house = this[(uint)dbPlayer.Dimension[0]];
             house?.PlayersInHouse.Remove(dbPlayer);
         }
@@ -57,10 +57,10 @@ namespace VMP_CNR.Module.Houses
         public bool PlayerLockHouse(DbPlayer dbPlayer)
         {
             House iHouse;
-            if ((dbPlayer.DimensionType[0] == DimensionType.House)
-                || dbPlayer.DimensionType[0] == DimensionType.Basement
-                || dbPlayer.DimensionType[0] == DimensionType.Labor
-                || dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
+            if ((dbPlayer.DimensionType[0] == DimensionTypes.House)
+                || dbPlayer.DimensionType[0] == DimensionTypes.Basement
+                || dbPlayer.DimensionType[0] == DimensionTypes.Labor
+                || dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller)
             {
                 if (!dbPlayer.HasData("inHouse")) return false;
 
@@ -123,7 +123,7 @@ namespace VMP_CNR.Module.Houses
 
             // Go into house
             dbPlayer.ResetData("houseId");
-            dbPlayer.DimensionType[0] = DimensionType.House;
+            dbPlayer.DimensionType[0] = DimensionTypes.House;
             dbPlayer.Player.SetPosition(iHouse.Interior.Position);
             dbPlayer.Player.SetRotation(iHouse.Interior.Heading);
             dbPlayer.UnloadInteriorIPLs(iHouse.Interior.Id);
@@ -138,7 +138,7 @@ namespace VMP_CNR.Module.Houses
         {
             if (key == Key.E && !dbPlayer.RageExtension.IsInVehicle)
             {
-                if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
+                if (dbPlayer.DimensionType[0] == DimensionTypes.House && dbPlayer.HasData("inHouse"))
                 {
                     House iHouse;
                     if ((iHouse = HouseModule.Instance.Get(dbPlayer.GetData("inHouse"))) != null)
@@ -151,7 +151,7 @@ namespace VMP_CNR.Module.Houses
                                 return true;
                             }
 
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.Player.SetPosition(iHouse.Position);
                             dbPlayer.Player.SetRotation(iHouse.Heading);
                             dbPlayer.SetDimension(0);
@@ -170,24 +170,24 @@ namespace VMP_CNR.Module.Houses
                         }
                     }
                 }
-                else if (dbPlayer.DimensionType[0] == DimensionType.Basement ||
-                    dbPlayer.DimensionType[0] == DimensionType.Labor ||
-                    dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
+                else if (dbPlayer.DimensionType[0] == DimensionTypes.Basement ||
+                    dbPlayer.DimensionType[0] == DimensionTypes.Labor ||
+                    dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller)
                 {
                     House xHouse = HouseModule.Instance.Get((uint)dbPlayer.Player.Dimension);
                     if (xHouse != null)
                     {
                         // Wenn Ausgang
                         if (
-                            ((dbPlayer.DimensionType[0] == DimensionType.Basement || dbPlayer.DimensionType[0] == DimensionType.Labor) && dbPlayer.Player.Position.DistanceTo(new Vector3(1138.25, -3198.88, -39.6657)) <= 2.0f)
-                             || (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller && dbPlayer.Player.Position.DistanceTo(new Vector3(1138.25f, -3198.88f, -39.6657f)) <= 2.0))
+                            ((dbPlayer.DimensionType[0] == DimensionTypes.Basement || dbPlayer.DimensionType[0] == DimensionTypes.Labor) && dbPlayer.Player.Position.DistanceTo(new Vector3(1138.25, -3198.88, -39.6657)) <= 2.0f)
+                             || (dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller && dbPlayer.Player.Position.DistanceTo(new Vector3(1138.25f, -3198.88f, -39.6657f)) <= 2.0))
                         {
-                            if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
+                            if (dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller)
                                 dbPlayer.Player.TriggerNewClient("unloadblackmoneyInterior");
 
                             dbPlayer.Player.SetPosition(xHouse.Position);
                             dbPlayer.SetDimension(0);
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.LoadUnloadedInteriorIPLs(xHouse.Interior.Id);
                             xHouse.PlayersInHouse.Remove(dbPlayer);
                             if(dbPlayer.HasData("inHouse")) dbPlayer.ResetData("inHouse");
@@ -195,7 +195,7 @@ namespace VMP_CNR.Module.Houses
                         }
 
                         // Schutzwesten
-                        if (dbPlayer.DimensionType[0] == DimensionType.Labor)
+                        if (dbPlayer.DimensionType[0] == DimensionTypes.Labor)
                         {
                             if (dbPlayer.Player.Position.DistanceTo(new Vector3(1129.7, -3194.27, -40.3972)) <= 2.0f)
                             {

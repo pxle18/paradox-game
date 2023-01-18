@@ -235,7 +235,7 @@ namespace VMP_CNR.Module.Players
 
             if (dbPlayer.RageExtension.IsInVehicle) return;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.Gangwar) return;
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar) return;
 
             if (dbPlayer.HasData("blockArmorCheat")) return;
 
@@ -315,7 +315,7 @@ namespace VMP_CNR.Module.Players
             DbPlayer dbPlayer = player.GetPlayer();
             if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod() || dbPlayer.IsTied || dbPlayer.IsCuffed || dbPlayer.HasData("paintball_map")) return;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.Gangwar) return;
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar) return;
 
             if (dbPlayer.RageExtension.IsInVehicle) return;
                         if (dbPlayer.HasData("no-packgun"))

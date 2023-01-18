@@ -21,7 +21,7 @@ namespace VMP_CNR.Module.Schwarzgeld
             {
                 if (withdraw <= 0) return;
 
-                if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller)
                 {
                     House xHouse = HouseModule.Instance.Get((uint)dbPlayer.Player.Dimension);
                     if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id))

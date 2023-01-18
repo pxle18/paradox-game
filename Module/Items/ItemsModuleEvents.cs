@@ -257,7 +257,7 @@ namespace VMP_CNR.Module.Items
 
                 if (dbPlayer.HasData("friskInvHouse"))
                 {
-                    if (dbPlayer.GetData("friskInvHouse") == dbPlayer.Player.Dimension && dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
+                    if (dbPlayer.GetData("friskInvHouse") == dbPlayer.Player.Dimension && dbPlayer.DimensionType[0] == DimensionTypes.House && dbPlayer.HasData("inHouse"))
                     {
                         House house;
                         if ((house = HouseModule.Instance.Get(dbPlayer.GetData("inHouse"))) != null)

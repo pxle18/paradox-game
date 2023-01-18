@@ -391,7 +391,7 @@ namespace VMP_CNR.Module.Items
             {
                 dbPlayer.SetData("disableFriskInv", true);
                 House house;
-                if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse") && (house = HouseModule.Instance.Get(dbPlayer.GetData("inHouse"))) != null)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.House && dbPlayer.HasData("inHouse") && (house = HouseModule.Instance.Get(dbPlayer.GetData("inHouse"))) != null)
                 {
                     dbPlayer.SetData("friskInvHouse", dbPlayer.Player.Dimension);
                 }

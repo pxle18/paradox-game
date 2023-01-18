@@ -17,6 +17,7 @@ namespace VMP_CNR.Module.Shops
         public uint Id { get; set; }
         public string Name { get; set; }
         public Vector3 Position { get; set; }
+        public ColShape Shape { get; set; }
         public float Heading { get; set; }
         public List<ShopItem> ShopItems { get; set; }
         public bool Robbed { get; set; }
@@ -52,6 +53,9 @@ namespace VMP_CNR.Module.Shops
                 reader.GetFloat("pos_z"));
             Heading = reader.GetFloat("heading");
 
+            Shape = Spawners.ColShapes.Create(Position, 3.0f);
+            Shape.SetData("shopId", Id);
+
             Ped = Enum.TryParse(reader.GetString("ped_hash"), true, out PedHash skin) ? skin : PedHash.Michael;
 
             DeliveryPosition = new Vector3(reader.GetFloat("deliver_pos_x"), reader.GetFloat("deliver_pos_y"),
@@ -84,13 +88,6 @@ namespace VMP_CNR.Module.Shops
             ShoppingRangePlayers = new List<DbPlayer>();
             ShopOwningState = 0;
             ActingOwningTeam = 0;
-
-            if (RobPosition.X != 0 && RobPosition.Y != 0)
-            {
-                Spawners.ColShapes.Create(Position, 10.0f, 0).SetData("shopRobbingShape", Id);
-                ShopCanOwned = true;
-            }
-
 
             CWSId = reader.GetUInt32("cws_id");
             EventId = reader.GetUInt32("event_id");

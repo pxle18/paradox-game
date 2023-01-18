@@ -131,7 +131,7 @@ namespace VMP_CNR.Module.Events.Jahrmarkt.RCRacing
             if (!ServerFeatures.IsActive("jahrmarkt-rc")) return false;
             if (!dbPlayer.RageExtension.IsInVehicle) return false;
 
-            if (dbPlayer.DimensionType[0] == DimensionType.RCRacing && colShape.HasData("racingRCColshape") && colShapeState == ColShapeState.Enter)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.RCRacing && colShape.HasData("racingRCColshape") && colShapeState == ColShapeState.Enter)
             {
                 if (colShape.GetData<int>("racingRCColshape") == 1) // Start - End Colshape
                 {

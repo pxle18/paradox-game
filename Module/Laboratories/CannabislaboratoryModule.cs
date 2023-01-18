@@ -63,7 +63,7 @@ namespace VMP_CNR.Module.Laboratories
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
-            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionType.Cannabislaboratory) return false;
+            if (key != Key.E || dbPlayer.DimensionType[0] != DimensionTypes.Cannabislaboratory) return false;
 
             Cannabislaboratory Cannabislaboratory = CannabislaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == dbPlayer.Player.Dimension).FirstOrDefault();
             if (Cannabislaboratory != null && Cannabislaboratory.TeamId == dbPlayer.TeamId && dbPlayer.Player.Position.DistanceTo(Coordinates.CannabislaboratoryComputerPosition) < 1.0f)
@@ -241,7 +241,7 @@ namespace VMP_CNR.Module.Laboratories
         }
         public async Task HackCannabislaboratory(DbPlayer dbPlayer)
         {
-            if (dbPlayer.DimensionType[0] != DimensionType.Cannabislaboratory) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Cannabislaboratory) return;
             Cannabislaboratory Cannabislaboratory = this.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (Cannabislaboratory == null) return;
             await Cannabislaboratory.HackLaboratory(dbPlayer);

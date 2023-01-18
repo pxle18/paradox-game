@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.Racing
             // Spawn Vehicle & Player
             dbPlayer.SetDimension(racingLobby.RacingDimension);
             dbPlayer.Dimension[0] = racingLobby.RacingDimension;
-            dbPlayer.DimensionType[0] = DimensionType.RacingArea;
+            dbPlayer.DimensionType[0] = DimensionTypes.RacingArea;
 
             Random rnd = new Random();
             int rx = rnd.Next(1179, 1185);
@@ -101,7 +101,7 @@ namespace VMP_CNR.Module.Racing
             dbPlayer.Player.SetPosition(RacingModule.RacingMenuPosition);
             dbPlayer.SetDimension(0);
             dbPlayer.Dimension[0] = 0;
-            dbPlayer.DimensionType[0] = DimensionType.World;
+            dbPlayer.DimensionType[0] = DimensionTypes.World;
             dbPlayer.ResetData("inRacing");
 
             if (dbPlayer.HasData("outfitactive")) dbPlayer.ResetData("outfitactive");

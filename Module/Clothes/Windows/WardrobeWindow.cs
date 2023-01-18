@@ -335,7 +335,7 @@ namespace VMP_CNR.Module.Clothes.Windows
             {
                 if (dbPlayer.Player.Position.DistanceTo(new Vector3(-79.7095, -811.279, 243.386)) < 3.0f) return true;
 
-                if (dbPlayer.DimensionType[0] != DimensionType.House || !dbPlayer.HasData("inHouse")) return false;
+                if (dbPlayer.DimensionType[0] != DimensionTypes.House || !dbPlayer.HasData("inHouse")) return false;
 
                 House iHouse;
 

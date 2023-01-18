@@ -300,40 +300,40 @@ namespace VMP_CNR.Module.NSA
             Player player = dbPlayer.Player;
             switch (playerFromPool.DimensionType[0])
             {
-                case DimensionType.World:
+                case DimensionTypes.World:
                     player.TriggerNewClient("setPlayerGpsMarker", playerFromPool.Player.Position.X,
                         playerFromPool.Player.Position.Y);
                     break;
-                case DimensionType.House:
+                case DimensionTypes.House:
                     if (!playerFromPool.HasData("inHouse")) return;
                     House house = HouseModule.Instance.Get(playerFromPool.GetData("inHouse"));
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
-                case DimensionType.MoneyKeller:
-                case DimensionType.Basement:
-                case DimensionType.Labor:
+                case DimensionTypes.MoneyKeller:
+                case DimensionTypes.Basement:
+                case DimensionTypes.Labor:
                     house = HouseModule.Instance.Get(playerFromPool.Player.Dimension);
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
-                case DimensionType.Camper:
+                case DimensionTypes.Camper:
                     var vehicle =
                         VehicleHandler.Instance.GetByVehicleDatabaseId(playerFromPool.Player.Dimension);
                     if (vehicle == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
-                case DimensionType.Business:
+                case DimensionTypes.Business:
                     dbPlayer.SendNewNotification("Gesuchte Person " + playerFromPool.GetName() + " befindet sich im BusinessTower!");
                     break;
-                case DimensionType.Storage:
+                case DimensionTypes.Storage:
                     if(playerFromPool.HasData("storageRoomId"))
                     {
                         StorageRoom storageRoom = StorageRoomModule.Instance.Get((uint)playerFromPool.GetData("storageRoomId"));
                         if(storageRoom != null) player.TriggerNewClient("setPlayerGpsMarker", storageRoom.Position.X, storageRoom.Position.Y);
                     }
                     break;
-                case DimensionType.WeaponFactory:
+                case DimensionTypes.WeaponFactory:
                     break;
                 default:
                     Logger.Crash(new ArgumentOutOfRangeException());
@@ -353,43 +353,43 @@ namespace VMP_CNR.Module.NSA
         public void HandleContinuousFind(DbPlayer dbPlayer, DbPlayer playerFromPool) {
             Player player = dbPlayer.Player;
             switch (playerFromPool.DimensionType[0]) {
-                case DimensionType.World:
+                case DimensionTypes.World:
                     player.TriggerNewClient("setPlayerGpsMarker", playerFromPool.Player.Position.X, playerFromPool.Player.Position.Y);
                     break;
 
-                case DimensionType.House:
+                case DimensionTypes.House:
                     if (!playerFromPool.HasData("inHouse")) return;
                     House house = HouseModule.Instance.Get(playerFromPool.GetData("inHouse"));
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
 
-                case DimensionType.MoneyKeller:
-                case DimensionType.Basement:
-                case DimensionType.Labor:
+                case DimensionTypes.MoneyKeller:
+                case DimensionTypes.Basement:
+                case DimensionTypes.Labor:
                     house = HouseModule.Instance.Get(playerFromPool.Player.Dimension);
                     if (house == null || house.Position == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", house.Position.X, house.Position.Y);
                     break;
 
-                case DimensionType.Camper:
+                case DimensionTypes.Camper:
                     SxVehicle vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(playerFromPool.Player.Dimension);
                     if (vehicle == null) return;
                     player.TriggerNewClient("setPlayerGpsMarker", vehicle.Entity.Position.X, vehicle.Entity.Position.Y);
                     break;
 
-                case DimensionType.Business:
+                case DimensionTypes.Business:
                     dbPlayer.SendNewNotification("Gesuchte Person " + playerFromPool.GetName() + " befindet sich im BusinessTower!");
                     break;
 
-                case DimensionType.Storage:
+                case DimensionTypes.Storage:
                     if (playerFromPool.HasData("storageRoomId")) {
                         StorageRoom storageRoom = StorageRoomModule.Instance.Get((uint)playerFromPool.GetData("storageRoomId"));
                         if (storageRoom != null) player.TriggerNewClient("setPlayerGpsMarker", storageRoom.Position.X, storageRoom.Position.Y);
                     }
                     break;
 
-                case DimensionType.WeaponFactory:
+                case DimensionTypes.WeaponFactory:
                     break;
                 default:
                     Logger.Crash(new ArgumentOutOfRangeException());

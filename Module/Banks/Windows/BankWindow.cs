@@ -92,7 +92,7 @@ namespace VMP_CNR.Module.Banks.Windows
             // BusinessBank
             switch (dbPlayer.DimensionType[0])
             {
-                case DimensionType.Business:
+                case DimensionTypes.Business:
                     dbPlayer.SendNewNotification("Funktion nicht moeglich!");
                     break;
                 default:
@@ -170,7 +170,7 @@ namespace VMP_CNR.Module.Banks.Windows
             // BusinessBank
             switch (dbPlayer.DimensionType[0])
             {
-                case DimensionType.Business:
+                case DimensionTypes.Business:
                     Business.Business biz = BusinessModule.Instance.GetById((uint) dbPlayer.Player.Dimension);
                     if (biz == null || dbPlayer.GetActiveBusiness()?.Id != biz.Id) return;
                     if (auszahlen > 0 && auszahlen <= biz.Money)

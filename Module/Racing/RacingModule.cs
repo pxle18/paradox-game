@@ -140,12 +140,12 @@ namespace VMP_CNR.Module.Racing
                         continue;
                     }
                     
-                    if (dbPlayer.DimensionType[0] != DimensionType.RacingArea)
+                    if (dbPlayer.DimensionType[0] != DimensionTypes.RacingArea)
                     {
                         racingLobby.RacingPlayers.Remove(dbPlayer);
                         continue;
                     }
-                    if(dbPlayer.DimensionType[0] == DimensionType.RacingArea && !dbPlayer.RageExtension.IsInVehicle)
+                    if(dbPlayer.DimensionType[0] == DimensionTypes.RacingArea && !dbPlayer.RageExtension.IsInVehicle)
                     {
                         if(dbPlayer.HasData("racingLeaveCheck"))
                         {
@@ -183,7 +183,7 @@ namespace VMP_CNR.Module.Racing
         {
             if (RacingDeactivated) return false;
             if (!dbPlayer.RageExtension.IsInVehicle) return false;
-            if (dbPlayer.DimensionType[0] == DimensionType.RacingArea && colShape.HasData("racingColshape") && colShapeState == ColShapeState.Enter)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.RacingArea && colShape.HasData("racingColshape") && colShapeState == ColShapeState.Enter)
             {
                 if(colShape.GetData<int>("racingColshape") == 1) // Start - End Colshape
                 {

@@ -71,7 +71,7 @@ namespace VMP_CNR.Module.Laboratories
         {
             if (!Configurations.Configuration.Instance.MethLabEnabled) return false;
             if (dbPlayer.RageExtension.IsInVehicle) return false;
-            if (dbPlayer.DimensionType[0] != DimensionType.Methlaboratory) return false;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Methlaboratory) return false;
             if (dbPlayer.RageExtension.IsInVehicle) return false;
             Methlaboratory methlaboratory = this.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (methlaboratory == null) return false;
@@ -290,7 +290,7 @@ namespace VMP_CNR.Module.Laboratories
         public async Task HackMethlaboratory(DbPlayer dbPlayer)
         {
             if (!Configurations.Configuration.Instance.MethLabEnabled) return;
-            if (dbPlayer.DimensionType[0] != DimensionType.Methlaboratory) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Methlaboratory) return;
             Methlaboratory methlaboratory = this.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (methlaboratory == null) return;
             await methlaboratory.HackMethlaboratory(dbPlayer);

@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.Anticheat
         {
             if (ServerFeatures.IsActive("ac-weaponcheck"))
             {
-                if (dbPlayer.DimensionType[0] == DimensionType.Gangwar || dbPlayer.HasData("paintball_map")) return;
+                if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar || dbPlayer.HasData("paintball_map")) return;
 
                 if (dbPlayer.HasData("ac-ignorews")) return;
 

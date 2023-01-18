@@ -15,9 +15,9 @@ using VMP_CNR.Module.Vehicles.Garages;
 
 namespace VMP_CNR.Module.ShopTakeover
 {
-    public class ShopTakeoverManageMenu : MenuBuilder
+    public class ShopTakeoverAttackMenu : MenuBuilder
     {
-        public ShopTakeoverManageMenu() : base(PlayerMenu.ShopTakeoverAttackMenu) { }
+        public ShopTakeoverAttackMenu() : base(PlayerMenu.ShopTakeoverAttackMenu) { }
 
         public override NativeMenu Build(DbPlayer dbPlayer)
         {
@@ -26,32 +26,32 @@ namespace VMP_CNR.Module.ShopTakeover
             ShopTakeoverModel shopTakeover = ShopTakeoverModule.Instance[shopTakeoverId];
             if (shopTakeover == null) return null;
 
-            if(shopTakeover.Team.Id == dbPlayer.Team.Id)
-            {
-                dbPlayer.SendNewNotification("WOW WOW WOW! Was versucht du da??? THATS NOT UR SHOP HOMES!!");
-                return null;
-            }
-           
-            var menu = new NativeMenu(Menu, "Shop-Takeover - Verwaltung");
+            var menu = new NativeMenu(Menu, "Shop-Takeover - Angriff", $"Schutzgeld: (${shopTakeover.Money})");
 
             menu.Add("Schliessen");
-            menu.Add($"Schutzgeld einsammeln (${shopTakeover.Money}");
+            menu.Add($"Angreifen");
+            menu.Add($"Informationen");
 
             return menu;
         }
-
 
         private class EventHandler : IMenuEventHandler
         {
             public bool OnSelect(int index, DbPlayer dbPlayer)
             {
+                uint shopTakeoverId = dbPlayer.GetData("shopTakeoverId");
+
+                ShopTakeoverModel shopTakeover = ShopTakeoverModule.Instance[shopTakeoverId];
+                if (shopTakeover == null) return true;
+
                 switch (index)
                 {
                     case 0: return true;
                     case 1:
-
-                    case 2:
-
+                        ShopTakeoverAttackModule.Instance.Attack(dbPlayer, shopTakeover);
+                        break;
+                    case 3:
+                        dbPlayer.SendNewNotification("Informationen:");
                         break;
                 }
 

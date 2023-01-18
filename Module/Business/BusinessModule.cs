@@ -259,7 +259,7 @@ namespace VMP_CNR.Module.Business
             if (key == Key.L)
             {
                 if (!(dbPlayer.Player.Position.DistanceTo(BusinessPosition) < 3.0f)) return false;
-                if (dbPlayer.DimensionType[0] != DimensionType.Business ||
+                if (dbPlayer.DimensionType[0] != DimensionTypes.Business ||
                     !dbPlayer.IsMemberOfBusiness() && dbPlayer.ActiveBusinessId != dbPlayer.Player.Dimension) return false;
                 var biz = GetById((uint)dbPlayer.Player.Dimension);
 
@@ -286,7 +286,7 @@ namespace VMP_CNR.Module.Business
                     return true;
                 }
 
-                if (dbPlayer.DimensionType[0] == DimensionType.Business &&
+                if (dbPlayer.DimensionType[0] == DimensionTypes.Business &&
                     dbPlayer.Player.Position.DistanceTo(BusinessTresurePosition) < 3.0f)
                 {
                     var biz = GetById((uint)dbPlayer.Player.Dimension);
@@ -299,12 +299,12 @@ namespace VMP_CNR.Module.Business
 
                 if (dbPlayer.Player.Position.DistanceTo(BusinessPosition) < 3.0f)
                 {
-                    if (dbPlayer.DimensionType[0] == DimensionType.Business)
+                    if (dbPlayer.DimensionType[0] == DimensionTypes.Business)
                     {
                         var biz = GetById((uint)dbPlayer.Player.Dimension);
                         biz.Visitors.Remove(dbPlayer);
                         dbPlayer.Player.SetPosition(BusinessEnterPosition);
-                        dbPlayer.DimensionType[0] = DimensionType.World;
+                        dbPlayer.DimensionType[0] = DimensionTypes.World;
                         dbPlayer.SetDimension(0);
                         return true;
                     }

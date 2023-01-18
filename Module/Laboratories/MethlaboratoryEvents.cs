@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Laboratories
             }
             if (!float.TryParse(returnString, out float value)) return;
 
-            if (dbPlayer.DimensionType[0] != DimensionType.Methlaboratory) return;
+            if (dbPlayer.DimensionType[0] != DimensionTypes.Methlaboratory) return;
             Methlaboratory methlaboratory = MethlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
             if (methlaboratory == null) return;
             Parameter parameter = methlaboratory.Parameters.Find(delegate (Parameter para) { return para.Name == parameterName; });

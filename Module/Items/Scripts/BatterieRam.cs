@@ -160,7 +160,7 @@ namespace VMP_CNR.Module.Items.Scripts
                 {
                     foreach (DbPlayer insidePlayer in l_Vehicle.Visitors.ToList())
                     {
-                        if (insidePlayer == null || !insidePlayer.IsValid() || insidePlayer.Dimension[0] == 0 || insidePlayer.DimensionType[0] != DimensionType.Camper) continue;
+                        if (insidePlayer == null || !insidePlayer.IsValid() || insidePlayer.Dimension[0] == 0 || insidePlayer.DimensionType[0] != DimensionTypes.Camper) continue;
                         insidePlayer.SendNewNotification($"Irgendetwas rappelt an der Tür...");
                     }
                 }

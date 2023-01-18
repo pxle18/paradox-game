@@ -28,7 +28,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
         public Vector3 Position { get; set; }
         public float Heading { get; set; }
         public uint Dimension { get; set; }
-        public DimensionType DimensionType { get; set; }
+        public DimensionTypes DimensionType { get; set; }
         public int DestinationId { get; set; }
         public HashSet<Team> Teams { get; set; }
         public bool Locked { get; set; }
@@ -62,7 +62,7 @@ namespace VMP_CNR.Module.Players.JumpPoints
             Position = new Vector3(reader.GetFloat("pos_x"), reader.GetFloat("pos_y"), reader.GetFloat("pos_z"));
             Heading = reader.GetFloat("heading");
             Dimension = (uint)reader.GetInt32("dimension");
-            DimensionType = (DimensionType)reader.GetInt32("dimension_type");
+            DimensionType = (DimensionTypes)reader.GetInt32("dimension_type");
             DestinationId = reader.GetInt32("destionation");
             RangRestriction = reader.GetInt32("rangrestriction");
             Group = reader.GetInt32("group");

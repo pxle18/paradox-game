@@ -124,13 +124,13 @@ namespace VMP_CNR.Module.Space
             // ODER
             // Wieder in die Mars Liste eintragen, was sich aber wegen dem Raketenstandort schwierig gestalten wird
             // insofern der aktuelle Standort der Rakete nicht in der DB gespeichert wird. (Aktuell)
-            if (dbPlayer.DimensionType[0] == DimensionType.Rocket || dbPlayer.IsInSpace())
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Rocket || dbPlayer.IsInSpace())
             {
                 dbPlayer.Mars = false;
                 dbPlayer.Player.SetPosition(EarthShuttleEnter);
                 dbPlayer.SetDimension(0);
                 dbPlayer.Dimension[0] = 0;
-                dbPlayer.DimensionType[0] = DimensionType.World;
+                dbPlayer.DimensionType[0] = DimensionTypes.World;
             }
         }
 

@@ -20,22 +20,22 @@ namespace VMP_CNR
 
         public override NativeMenu Build(DbPlayer dbPlayer)
         {
-            if (dbPlayer.DimensionType[0] == DimensionType.Heroinlaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Heroinlaboratory)
             {
                 Heroinlaboratory heroinlaboratory = HeroinlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                 if (heroinlaboratory == null) return null;
             }
-            else if (dbPlayer.DimensionType[0] == DimensionType.Methlaboratory)
+            else if (dbPlayer.DimensionType[0] == DimensionTypes.Methlaboratory)
             {
                 Methlaboratory methlaboratory = MethlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                 if (methlaboratory == null) return null;
             }
-            else if (dbPlayer.DimensionType[0] == DimensionType.Cannabislaboratory)
+            else if (dbPlayer.DimensionType[0] == DimensionTypes.Cannabislaboratory)
             {
                 Cannabislaboratory cannabislaboratory = CannabislaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                 if (cannabislaboratory == null) return null;
             }
-            else if (dbPlayer.DimensionType[0] == DimensionType.Weaponlaboratory)
+            else if (dbPlayer.DimensionType[0] == DimensionTypes.Weaponlaboratory)
             {
                 Weaponlaboratory weaponlaboratory = WeaponlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                 if (weaponlaboratory == null) return null;
@@ -61,7 +61,7 @@ namespace VMP_CNR
         {
             public bool OnSelect(int index, DbPlayer dbPlayer)
             {
-                if (dbPlayer.DimensionType[0] == DimensionType.Heroinlaboratory)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.Heroinlaboratory)
                 {
                     Heroinlaboratory heroinlaboratory = HeroinlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                     if (heroinlaboratory == null) return false;
@@ -83,7 +83,7 @@ namespace VMP_CNR
                     MenuManager.DismissCurrent(dbPlayer);
                     return true;
                 }
-                else if (dbPlayer.DimensionType[0] == DimensionType.Methlaboratory)
+                else if (dbPlayer.DimensionType[0] == DimensionTypes.Methlaboratory)
                 {
                     Methlaboratory methlaboratory = MethlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                     if (methlaboratory == null) return false;
@@ -105,7 +105,7 @@ namespace VMP_CNR
                     MenuManager.DismissCurrent(dbPlayer);
                     return true;
                 }
-                else if (dbPlayer.DimensionType[0] == DimensionType.Cannabislaboratory)
+                else if (dbPlayer.DimensionType[0] == DimensionTypes.Cannabislaboratory)
                 {
                     Cannabislaboratory cannabislaboratory = CannabislaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                     if (cannabislaboratory == null) return false;
@@ -126,7 +126,7 @@ namespace VMP_CNR
 
                     return true;
                 }
-                else if (dbPlayer.DimensionType[0] == DimensionType.Weaponlaboratory)
+                else if (dbPlayer.DimensionType[0] == DimensionTypes.Weaponlaboratory)
                 {
                     Weaponlaboratory weaponlaboratory = WeaponlaboratoryModule.Instance.GetLaboratoryByDimension(dbPlayer.Player.Dimension);
                     if (weaponlaboratory == null) return false;

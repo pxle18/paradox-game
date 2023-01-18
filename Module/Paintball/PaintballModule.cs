@@ -71,7 +71,7 @@ namespace VMP_CNR.Module.Paintball
             if (dbPlayer.Paintball == 1)
             {
                 dbPlayer.Dimension[0] = 0;
-                dbPlayer.DimensionType[0] = DimensionType.World;
+                dbPlayer.DimensionType[0] = DimensionTypes.World;
                 dbPlayer.Player.SetPosition(PaintballMenuPosition);
                 dbPlayer.SetPaintball(0);
             }
@@ -154,7 +154,7 @@ namespace VMP_CNR.Module.Paintball
                             dbPlayer.SetPaintball(0);
                             dbPlayer.SetDimension(0);
                             dbPlayer.Dimension[0] = 0;
-                            dbPlayer.DimensionType[0] = DimensionType.World;
+                            dbPlayer.DimensionType[0] = DimensionTypes.World;
                             dbPlayer.Player.SetPosition(PaintballMenuPosition);
 
                         });
@@ -167,7 +167,7 @@ namespace VMP_CNR.Module.Paintball
                             //GET/SET NEW SPAWN 
                             var spawn = PaintballSpawnModule.Instance.getSpawn(pba.Id);
                             dbPlayer.SetDimension(pba.PaintballDimension);
-                            dbPlayer.DimensionType[0] = DimensionType.Paintball;
+                            dbPlayer.DimensionType[0] = DimensionTypes.Paintball;
                             dbPlayer.Player.SetPosition(new Vector3(spawn.x, spawn.y, spawn.z));
 
                             if (!colshapeSpawn)
@@ -330,7 +330,7 @@ namespace VMP_CNR.Module.Paintball
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape p_ColShape, ColShapeState p_ColShapeState)
         {
-            if (p_ColShape.HasData("paintballId") && dbPlayer.DimensionType[0] == DimensionType.Paintball)
+            if (p_ColShape.HasData("paintballId") && dbPlayer.DimensionType[0] == DimensionTypes.Paintball)
             {
                 if (dbPlayer.IsInjured()) return false;
 

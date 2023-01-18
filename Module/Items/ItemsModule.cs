@@ -56,7 +56,7 @@ namespace VMP_CNR.Module.Items
             await Task.Delay(10);
 
             // Haus
-            if (dbPlayer.DimensionType[0] == DimensionType.House && dbPlayer.HasData("inHouse"))
+            if (dbPlayer.DimensionType[0] == DimensionTypes.House && dbPlayer.HasData("inHouse"))
             {
                 House xHouse = HouseModule.Instance.Get((uint)dbPlayer.GetData("inHouse"));
                 if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id/* || (xHouse.LastBreak.AddMinutes(10) > DateTime.Now)*/ ))
@@ -67,7 +67,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Meetr Labor
-            if (dbPlayer.DimensionType[0] == DimensionType.Labor)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Labor)
             {
                 House xHouse = HouseModule.Instance.Get(playerDimension);
                 if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id))
@@ -80,7 +80,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Blackmoney (Geldwäsche)
-            if (dbPlayer.DimensionType[0] == DimensionType.MoneyKeller)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.MoneyKeller)
             {
                 House xHouse = HouseModule.Instance.Get((uint)playerDimension);
                 if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id || (dbPlayer.TeamId == (int)TeamTypes.TEAM_FIB && dbPlayer.IsInDuty() && dbPlayer.TeamRank >= 5)))
@@ -124,7 +124,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Prison Locker
-            if (dbPlayer.DimensionType[0] == DimensionType.World)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.World)
             {
                 if (playerPosition.DistanceTo(Coordinates.PrisonLockerPutIn) < 2.0f ||
                     playerPosition.DistanceTo(Coordinates.PrisonLockerTakeOut) < 2.0f ||
@@ -140,7 +140,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Laboratory Containers
-            if (dbPlayer.DimensionType[0] == DimensionType.Methlaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Methlaboratory)
             {
                 Methlaboratory methlaboratory = MethlaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == playerDimension).FirstOrDefault();
                 if (methlaboratory != null && methlaboratory.TeamId == dbPlayer.TeamId && playerPosition.DistanceTo(Coordinates.MethlaboratoryInvInputPosition) < 1.0f)
@@ -152,7 +152,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Laboratory Containers
-            if (dbPlayer.DimensionType[0] == DimensionType.Weaponlaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Weaponlaboratory)
             {
                 Weaponlaboratory weaponlaboratory = WeaponlaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == playerDimension).FirstOrDefault();
                 if (weaponlaboratory != null && weaponlaboratory.TeamId == dbPlayer.TeamId && playerPosition.DistanceTo(Coordinates.WeaponlaboratoryInvInputPosition) < 1.0f)
@@ -164,7 +164,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Laboratory Containers
-            if (dbPlayer.DimensionType[0] == DimensionType.Cannabislaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Cannabislaboratory)
             {
                 Cannabislaboratory cannabislaboratory = CannabislaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == playerDimension).FirstOrDefault();
                 if (cannabislaboratory != null && cannabislaboratory.TeamId == dbPlayer.TeamId && playerPosition.DistanceTo(Coordinates.CannabislaboratoryInvInputPosition) < 1.0f)
@@ -176,7 +176,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Laboratory Containers
-            if (dbPlayer.DimensionType[0] == DimensionType.Heroinlaboratory)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.Heroinlaboratory)
             {
                 Heroinlaboratory heroinlaboratory = HeroinlaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == playerDimension).FirstOrDefault();
                 if (heroinlaboratory != null && heroinlaboratory.TeamId == dbPlayer.TeamId && playerPosition.DistanceTo(Coordinates.MethlaboratoryInvInputPosition) < 1.0f)
@@ -188,7 +188,7 @@ namespace VMP_CNR.Module.Items
             }
 
             // Armory Copinv
-            if (dbPlayer.DimensionType[0] == DimensionType.World)
+            if (dbPlayer.DimensionType[0] == DimensionTypes.World)
             {
                 if (dbPlayer.HasData("ArmoryId"))
                 {

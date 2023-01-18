@@ -51,7 +51,7 @@ namespace VMP_CNR.Module.Menu.Menus.Business
                 {
                     dbPlayer.StopAnimation();
                     var biz = dbPlayer.GetActiveBusiness();
-                    dbPlayer.DimensionType[0] = DimensionType.Business;
+                    dbPlayer.DimensionType[0] = DimensionTypes.Business;
                     dbPlayer.Player.SetPosition(BusinessModule.BusinessPosition);
                     dbPlayer.SetDimension(biz.Id);
                     biz.Visitors.Add(dbPlayer);
@@ -64,7 +64,7 @@ namespace VMP_CNR.Module.Menu.Menus.Business
                     if (index == point)
                     {
                         dbPlayer.StopAnimation();
-                        dbPlayer.DimensionType[0] = DimensionType.Business;
+                        dbPlayer.DimensionType[0] = DimensionTypes.Business;
                         dbPlayer.Player.SetPosition(BusinessModule.BusinessPosition);
                         dbPlayer.SetDimension(biz.Id);
                         biz.Visitors.Add(dbPlayer);
