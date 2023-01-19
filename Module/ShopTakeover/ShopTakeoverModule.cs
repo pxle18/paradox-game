@@ -64,6 +64,11 @@ namespace VMP_CNR.Module.ShopTakeover
             return true;
         }
 
+        public override void OnFiveMinuteUpdate()
+        {
+            foreach(var shopTakeoverModel in GetAll().Values) shopTakeoverModel.AddMoney(120);
+        }
+
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
         {
             if (!colShape.TryData("shopId", out uint shopId)) return false;

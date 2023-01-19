@@ -17,6 +17,7 @@ using VMP_CNR.Module.NSA;
 using VMP_CNR.Module.Teams;
 using VMP_CNR.Module.Events.CWS;
 using VMP_CNR.Module.Teams.Shelter;
+using VMP_CNR.Module.ShopTakeover;
 
 namespace VMP_CNR.Module.Shops.Windows
 {
@@ -224,10 +225,12 @@ namespace VMP_CNR.Module.Shops.Windows
                         }
                         else return;
 
-                        if (accessedShop.ShopCanOwned && accessedShop.OwnerTeam != 0)
-                        {
-                            TeamShelterModule.Instance.Get(accessedShop.OwnerTeam).GiveMoney(Convert.ToInt32(price * 0.10));
-                        }
+                        /*
+                         * if (accessedShop.ShopCanOwned && accessedShop.OwnerTeam != 0)
+                         * {
+                         *    TeamShelterModule.Instance.Get(accessedShop.OwnerTeam).GiveMoney(Convert.ToInt32(price * 0.10));
+                         * }
+                         */
                     }
 
                     // Nightclub Module Give Money To NightClub
@@ -270,6 +273,12 @@ namespace VMP_CNR.Module.Shops.Windows
                             TeamModule.Instance.SendMessageToTeam($"Finanz-Detection: Die Gesuchte Person {dbPlayer.GetName()} hat einen Einkauf getätigt! (Standort: {accessedShop.Name})", TeamTypes.TEAM_FIB, 10000, 3);
                             NSAPlayerExtension.AddTransferHistory($"{dbPlayer.GetName()} Shop {accessedShop.Name}", accessedShop.Position);
                         }
+
+                        var shopTakeoverModel = ShopTakeoverModule.Instance.GetAll().Values.FirstOrDefault(shopTakeover => shopTakeover.Shop.Id == accessedShop.Id);
+                        if (shopTakeoverModel == null) return;
+
+                        // TODO: Change money amount for ShopTakeover
+                        shopTakeoverModel.AddMoney((int)(price * 0.75f));
                     }
                 }
                 catch { }

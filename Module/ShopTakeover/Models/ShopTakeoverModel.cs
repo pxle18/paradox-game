@@ -50,25 +50,12 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         }
 
         public override uint GetIdentifier() => Id;
+        public bool CanAttacked() => Configurations.Configuration.Instance.DevMode || LastRob.AddHours(72) <= DateTime.Now;
 
-        public bool CanAttacked()
+        public void AddMoney(int moneyAmount)
         {
-            if (Configurations.Configuration.Instance.DevMode) return true;
-
-            if (LastRob.AddHours(72) > DateTime.Now) return false;
-
-            int hour = DateTime.Now.Hour;
-            int min = DateTime.Now.Minute;
-
-            if (hour == 7 || hour == 15 || hour == 16 || hour == 17 || hour == 23) return false;
-
-            if (hour == 8 || hour == 16 || hour == 0)
-            {
-                if (min < 30) return false;
-            }
-
-            return true;
+            Money += moneyAmount;
+            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
         }
-
     }
 }
