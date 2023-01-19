@@ -101,6 +101,7 @@ namespace VMP_CNR.Module.ShopTakeover
             foreach(var player in shopTakeoverModel.Players.Values)
             {
                 player.SetDimension(0);
+                player.DimensionType[0] = DimensionTypes.World;
             }
         }
 
@@ -114,10 +115,8 @@ namespace VMP_CNR.Module.ShopTakeover
             if (shopTakeoverModel == null) return false;
 
             if (shopTakeoverModel.TeamsCanAccess.FirstOrDefault(team => team.Id == dbPlayer.Team.Id) == null)
-            {
-                dbPlayer.SendNewNotification("DEV: ShopTakeover nicht zugreifbar (Team)");
                 return false;
-            }
+            
 
             switch (colShapeState)
             {
@@ -129,7 +128,6 @@ namespace VMP_CNR.Module.ShopTakeover
 
                     shopTakeoverModel.Players.TryAdd(dbPlayer.Id, dbPlayer);
 
-                    dbPlayer.SendNewNotification("Enter ShopTakeover");
                     return false;
                 case ColShapeState.Exit:
                     if (!dbPlayer.HasData("attackShopTakeoverId")) return false;
@@ -139,7 +137,6 @@ namespace VMP_CNR.Module.ShopTakeover
                     dbPlayer.SetDimension(0);
 
                     shopTakeoverModel.Players.Remove(dbPlayer.Id);
-                    dbPlayer.SendNewNotification("Leave ShopTakeover");
 
                     return false;
                 default:
