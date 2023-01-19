@@ -57,5 +57,11 @@ namespace VMP_CNR.Module.ShopTakeover.Models
             Money += moneyAmount;
             ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
         }
+
+        public void ClearMoney()
+        {
+            Money = 0;
+            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
+        }
     }
 }

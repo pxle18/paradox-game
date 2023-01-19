@@ -10,6 +10,7 @@ using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.ShopTakeover.Models;
 using VMP_CNR.Module.Teams;
+using VMP_CNR.Module.Teams.Shelter;
 using VMP_CNR.Module.Vehicles.Data;
 using VMP_CNR.Module.Vehicles.Garages;
 
@@ -32,6 +33,9 @@ namespace VMP_CNR.Module.ShopTakeover
             menu.Add($"Angreifen");
             menu.Add($"Informationen");
 
+            if(shopTakeover.Team.Id == dbPlayer.Team.Id)
+                menu.Add("Schutzgeld einsammeln");
+
             return menu;
         }
 
@@ -52,6 +56,20 @@ namespace VMP_CNR.Module.ShopTakeover
                         break;
                     case 3:
                         dbPlayer.SendNewNotification("Informationen:");
+                        break;
+                    case 4:
+                        var shopTakeoverMoney = shopTakeover.Money;
+                        shopTakeover.ClearMoney();
+
+                        var playerShopTakeoverMoney = shopTakeoverMoney * 0.8;
+                        var shelterShopTakeoverMoney = shopTakeoverMoney * 0.2;
+
+                        TeamShelterModule.Instance.Get(dbPlayer.Team.Id).GiveMoney((int)shelterShopTakeoverMoney);
+                        dbPlayer.GiveMoney((int)playerShopTakeoverMoney);
+
+                        // Maybe send team notification?
+                        dbPlayer.SendNewNotification($"Das Schutzgeld wurde erfolgreich eingesammelt. Vom Schutzgeld gingen ${shelterShopTakeoverMoney} (20%) gingen an die Fraktionskasse.");
+
                         break;
                 }
 
