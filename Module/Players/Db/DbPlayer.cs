@@ -1,52 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using GTANetworkAPI;
+﻿using GTANetworkAPI;
 using MySql.Data.MySqlClient;
-using VMP_CNR.Module.Banks.BankHistory;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using VMP_CNR.Module.Animal;
+using VMP_CNR.Module.Anticheat;
+using VMP_CNR.Module.Attachments;
+using VMP_CNR.Module.Boerse;
 using VMP_CNR.Module.Clothes.Character;
+using VMP_CNR.Module.Clothes.InventoryBag;
+using VMP_CNR.Module.Clothes.Outfits;
 using VMP_CNR.Module.Crime;
+using VMP_CNR.Module.Customization;
+using VMP_CNR.Module.Email;
+using VMP_CNR.Module.Events.CWS;
+using VMP_CNR.Module.FIB;
+using VMP_CNR.Module.Gangwar;
+using VMP_CNR.Module.Houses;
+using VMP_CNR.Module.Injury;
+using VMP_CNR.Module.Items;
+using VMP_CNR.Module.NSA.Observation;
+using VMP_CNR.Module.Nutrition;
+using VMP_CNR.Module.PlayerDataCustom;
 using VMP_CNR.Module.Players.Buffs;
+using VMP_CNR.Module.Players.Phone.Apps;
 using VMP_CNR.Module.Players.Phone.Contacts;
 using VMP_CNR.Module.Players.PlayerAnimations;
 using VMP_CNR.Module.Players.Ranks;
+using VMP_CNR.Module.Procedures.Interfaces;
 using VMP_CNR.Module.Teams;
 using VMP_CNR.Module.Teams.Permission;
-using VMP_CNR.Module.Players.Phone.Apps;
-using VMP_CNR.Module.Injury;
-using VMP_CNR.Module.Customization;
-using VMP_CNR.Module.Items;
-using VMP_CNR.Module.Weapons.Data;
-using VMP_CNR.Module.Weapons;
-using VMP_CNR.Module.Voice;
-using System.Threading.Tasks;
+using VMP_CNR.Module.TeamSubgroups;
+using VMP_CNR.Module.TeamSubgroups.Models;
 using VMP_CNR.Module.Telefon.App.Settings;
-using VMP_CNR.Module.Telefon.App.Settings.Wallpaper;
 using VMP_CNR.Module.Telefon.App.Settings.Ringtone;
-using System.Linq;
-using VMP_CNR.Handler;
-using VMP_CNR.Module.Boerse;
-using VMP_CNR.Module.Clothes.Outfits;
-using VMP_CNR.Module.Business;
-using VMP_CNR.Module.Freiberuf;
-using VMP_CNR.Module.Vehicles;
-using VMP_CNR.Module.Gangwar;
-using VMP_CNR.Module.Houses;
-using static VMP_CNR.Module.Players.Events.EventStateModule;
-using VMP_CNR.Module.Email;
-using Newtonsoft.Json;
-using VMP_CNR.Module.Events.CWS;
-using VMP_CNR.Module.Nutrition;
-using VMP_CNR.Module.Anticheat;
+using VMP_CNR.Module.Telefon.App.Settings.Wallpaper;
+using VMP_CNR.Module.Voice;
+using VMP_CNR.Module.Weapons;
 using VMP_CNR.Module.Weapons.Component;
-using VMP_CNR.Module.Attachments;
-using VMP_CNR.Module.Clothes.InventoryBag;
-using System.Collections.Concurrent;
-using VMP_CNR.Module.FIB;
-using VMP_CNR.Module.NSA.Observation;
-using VMP_CNR.Module.Animal;
-using VMP_CNR.Module.PlayerDataCustom;
-using VMP_CNR.Module.Procedures.Interfaces;
-using System.Threading;
+using static VMP_CNR.Module.Players.Events.EventStateModule;
 
 namespace VMP_CNR.Module.Players.Db
 {
@@ -127,6 +123,7 @@ namespace VMP_CNR.Module.Players.Db
             Suspension = 15,
             WDutyTime = 16,
             Paintball = 17,
+            TeamSubgroupId = 18,
         }
 
         public enum OperationType
@@ -214,6 +211,7 @@ namespace VMP_CNR.Module.Players.Db
         public AccountStatus AccountStatus { get; set; }
         public int PassAttempts { get; set; }
         public uint TeamId { get; private set; }
+        public uint TeamSubgroupId { get; private set; }
         public int[] Money { get; set; }
         public int[] BankMoney { get; set; }
 
@@ -374,6 +372,7 @@ namespace VMP_CNR.Module.Players.Db
 
         // Reworked Stuff
         public Team Team { get; private set; }
+        public TeamSubgroup TeamSubgroup { get; private set; }
 
         public List<Banks.BankHistory.BankHistory> BankHistory { get; set; }
         public AnimationScenario AnimationScenario { get; set; }
@@ -528,6 +527,7 @@ namespace VMP_CNR.Module.Players.Db
 
             RankId = reader.GetUInt32("rankId");
             TeamId = reader.GetUInt32("team");
+            TeamSubgroupId = reader.GetUInt32("teamSubgroupId");
             TeamRank = reader.GetUInt32("rang");
             Level = reader.GetInt32("Level");
             Duty = reader.GetUInt32("duty") == 1;
@@ -567,6 +567,7 @@ namespace VMP_CNR.Module.Players.Db
             DbValues[(uint)Value.Duty] = Duty;
             DbValues[(uint)Value.RankId] = RankId;
             DbValues[(uint)Value.TeamId] = TeamId;
+            DbValues[(uint)Value.TeamSubgroupId] = TeamSubgroupId;
             DbValues[(uint)Value.Level] = Level;
             DbValues[(uint)Value.TeamRang] = TeamRank;
             DbValues[(uint)Value.IsCuffed] = IsCuffed;
@@ -806,6 +807,33 @@ namespace VMP_CNR.Module.Players.Db
             NAPI.Task.Run(() =>
             {
                 Player?.TriggerEvent("updateTeamId", teamid);
+            });
+        }
+
+        public void SetTeamSubgroup(uint teamSubgroupId)
+        {
+            // remove if exist
+            if (TeamSubgroupId != 0)
+            {
+                TeamSubgroup teamSubgroup = TeamSubgroupModule.Instance[TeamSubgroupId];
+                if (teamSubgroup != null && teamSubgroup.Members.Values.ToList().Contains(this))
+                {
+                    TeamSubgroupModule.Instance[TeamSubgroupId]?.RemoveMember(this);
+                }
+            }
+
+            TeamSubgroupId = teamSubgroupId;
+            TeamSubgroup = TeamSubgroupModule.Instance[teamSubgroupId];
+
+            // add to new team
+            if (teamSubgroupId != 0)
+            {
+                TeamSubgroup?.AddMember(this);
+            }
+
+            NAPI.Task.Run(() =>
+            {
+                Player?.TriggerEvent("updateTeamSubgroupId", teamSubgroupId);
             });
         }
 
