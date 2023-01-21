@@ -76,7 +76,8 @@ namespace VMP_CNR.Module.Players.Db
         Rocket = 17,
         RCRacing = 18,
         Heroinlaboratory = 19,
-        ShopTakeover = 20
+        ShopTakeover = 20,
+        TeamSubgroupLaboratory = 21
     }
 
     public class MetaDataObject
@@ -437,6 +438,9 @@ namespace VMP_CNR.Module.Players.Db
         public Container CannabislaboratoryOutputContainer { get; set; }
         public Container HeroinlaboratoryInputContainer { get; set; }
         public Container HeroinlaboratoryOutputContainer { get; set; }
+
+        public Container TeamSubgroupLaboratoryInputContainer { get; set; }
+        public Container TeamSubgroupLaboratoryOutputContainer { get; set; }
 
         public Container WorkstationFuelContainer { get; set; }
         public Container WorkstationSourceContainer { get; set; }
