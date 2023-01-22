@@ -3,19 +3,14 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using VMP_CNR.Module.Chat;
 using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Configurations;
-using VMP_CNR.Module.Gangwar;
 using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Laboratories.Windows;
-using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Players.JumpPoints;
-using VMP_CNR.Module.Teams;
 using VMP_CNR.Module.TeamSubgroups;
 
 namespace VMP_CNR.Module.Laboratories
@@ -35,46 +30,17 @@ namespace VMP_CNR.Module.Laboratories
             return new[] { typeof(JumpPointModule) };
         }
 
-        public override void OnPlayerDisconnected(DbPlayer dbPlayer, string reason)
-        {
-            Main.m_AsyncThread.AddToAsyncThread(new Task(() =>
-            {
-                TeamSubgroupLaboratory laboratory = Instance.GetLaboratoryByTeamId(dbPlayer.TeamId);
-
-                if (laboratory != null)
-                {
-                    if (laboratory.ActingPlayers.Contains(dbPlayer)) laboratory.ActingPlayers.Remove(dbPlayer);
-                    if (laboratory.HackInProgess || laboratory.ImpoundInProgress)
-                    {
-                        if (!laboratory.LoggedOutCombatAvoid.ToList().Contains(dbPlayer.Id))
-                        {
-                            laboratory.LoggedOutCombatAvoid.Add(dbPlayer.Id);
-                        }
-                    }
-                }
-            }));
-        }
-
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
             if (key != Key.E || dbPlayer.DimensionType[0] != DimensionTypes.TeamSubgroupLaboratory) return false;
 
-            TeamSubgroupLaboratory teamSubgroupLaboratory = TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamId == dbPlayer.Player.Dimension).FirstOrDefault();
-            if (teamSubgroupLaboratory != null && heroinlaboratory.TeamId == dbPlayer.TeamId && dbPlayer.Player.Position.DistanceTo(Coordinates.MethlaboratoryStartPosition) < 1.0f)
+            TeamSubgroupLaboratory teamSubgroupLaboratory = TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(laboratory => laboratory.TeamSubgroupId == dbPlayer.Player.Dimension).FirstOrDefault();
+            if (teamSubgroupLaboratory != null && teamSubgroupLaboratory.TeamSubgroupId == dbPlayer.TeamId && dbPlayer.Player.Position.DistanceTo(Coordinates.MethlaboratoryStartPosition) < 1.0f)
             {
                 // Processing
                 ComponentManager.Get<TeamSubgroupStartWindow>().Show()(dbPlayer, teamSubgroupLaboratory);
                 return true;
             }
-            if (teamSubgroupLaboratory != null && dbPlayer.Player.Position.DistanceTo(Coordinates.MethlaboratoryLaptopPosition) < 1.0f)
-            {
-                if (teamSubgroupLaboratory.Hacked)
-                {
-                    MenuManager.Instance.Build(PlayerMenu.LaboratoryOpenInvMenu, dbPlayer).Show(dbPlayer);
-                    return true;
-                }
-            }
-
             return false;
         }
 
@@ -137,7 +103,7 @@ namespace VMP_CNR.Module.Laboratories
 
         public TeamSubgroupLaboratory GetLaboratoryByDimension(uint dimension)
         {
-            return TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(Lab => Lab.TeamId == dimension).FirstOrDefault();
+            return TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(Lab => Lab.TeamSubgroupId == dimension).FirstOrDefault();
         }
         public TeamSubgroupLaboratory GetLaboratoryByPosition(Vector3 position)
         {
@@ -149,7 +115,7 @@ namespace VMP_CNR.Module.Laboratories
         }
         public TeamSubgroupLaboratory GetLaboratoryByTeamId(uint teamId)
         {
-            return TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(Lab => Lab.TeamId == teamId).FirstOrDefault();
+            return TeamSubgroupLaboratoryModule.Instance.GetAll().Values.Where(Lab => Lab.TeamSubgroupId == teamId).FirstOrDefault();
         }
     }
 }

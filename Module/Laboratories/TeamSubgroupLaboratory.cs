@@ -42,7 +42,7 @@ namespace VMP_CNR.Module.Laboratories
         private int sodiumPerTick = 25;
         private int vinegarPerTick = 25;
         private int morphinePerTick = 25;
-        private int heroinPerTick = 25;
+        private int heroinampullePerTick = 25;
 
         public TeamSubgroupLaboratory(MySqlDataReader reader) : base(reader)
         {
@@ -87,17 +87,17 @@ namespace VMP_CNR.Module.Laboratories
                     i++;
                 });
 
-                ColShape ColShape = Spawners.ColShapes.Create(JumpPointAusgang.Position, 30.0f, this.TeamId);
-                ColShape.SetData("methInteriorColshape", this.TeamId);
+                ColShape ColShape = Spawners.ColShapes.Create(JumpPointAusgang.Position, 30.0f, this.TeamSubgroupId);
+                ColShape.SetData("methInteriorColshape", this.TeamSubgroupId);
 
                 // Inventory Markers
-                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvFuelPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
-                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvInputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
-                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvOutputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvFuelPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamSubgroupId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvInputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamSubgroupId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryInvOutputPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(0, 255, 0, 155), true, TeamSubgroupId);
 
                 // E Markers
-                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryLaptopPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
-                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryStartPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryLaptopPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamSubgroupId);
+                NAPI.Marker.CreateMarker(25, (Coordinates.MethlaboratoryStartPosition - new Vector3(0f, 0f, 0.95f)), new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 155), true, TeamSubgroupId);
             }
             catch (Exception e) { Logger.Print($"TeamSubgroupLaboratory {Id} " + e.ToString()); }
         }
@@ -112,7 +112,7 @@ namespace VMP_CNR.Module.Laboratories
             if (!ActingPlayers.ToList().Contains(dbPlayer)) return;
 
             if (!PlayerHasRessourcesForTick(dbPlayer) ||
-                !dbPlayer.TeamSubgroupLaboratoryOutputContainer.CanInventoryItemAdded(heroinampulleItemId))
+                !dbPlayer.TeamSubgroupLaboratoryOutputContainer.CanInventoryItemAdded(heroinampulleItemId, heroinampullePerTick))
             {
                 StopProcess(dbPlayer);
                 return;
@@ -122,7 +122,7 @@ namespace VMP_CNR.Module.Laboratories
             dbPlayer.TeamSubgroupLaboratoryInputContainer.RemoveItem(morphineItemId, morphinePerTick);
             dbPlayer.TeamSubgroupLaboratoryInputContainer.RemoveItem(vinegarItemId, vinegarPerTick);
 
-            dbPlayer.TeamSubgroupLaboratoryOutputContainer.AddItem(heroinkisteItemId, heroinPerTick);
+            dbPlayer.TeamSubgroupLaboratoryOutputContainer.AddItem(heroinampulleItemId, heroinampullePerTick);
         }
 
         public void StopProcess(DbPlayer dbPlayer)
@@ -130,7 +130,7 @@ namespace VMP_CNR.Module.Laboratories
             if (ActingPlayers.ToList().Contains(dbPlayer))
             {
                 ActingPlayers.Remove(dbPlayer);
-                if (dbPlayer.DimensionType[0] == DimensionTypes.Heroinlaboratory && dbPlayer.Player.Dimension != 0)
+                if (dbPlayer.DimensionType[0] == DimensionTypes.TeamSubgroupLaboratory && dbPlayer.Player.Dimension != 0)
                     dbPlayer.SendNewNotification("Prozess gestoppt!");
             }
         }
