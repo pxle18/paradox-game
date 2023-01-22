@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.GTAN;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players;
@@ -28,7 +29,7 @@ namespace VMP_CNR.Module.ShopTakeover
         {
             return new[] { typeof(ShopModule) };
         }
-        
+
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
         {
             if (key != Key.E || dbPlayer.RageExtension.IsInVehicle) return false;
@@ -51,7 +52,7 @@ namespace VMP_CNR.Module.ShopTakeover
             var alliedPlayersInRange = Players.Players.Instance.GetPlayersInRange(shopTakeoverModel.Shop.Position, 15)
                 .Where(player => player.Team.Id == dbPlayer.Team.Id);
 
-            if(alliedPlayersInRange.Count() < MinimumAlliesInRange)
+            if (alliedPlayersInRange.Count() < MinimumAlliesInRange)
             {
                 dbPlayer.Team.SendNotificationInRange($"Der Übernahmeprozess auf Shop {shopTakeoverModel.Name} kann aufgrund mangelnder Verbündete in Reichweite nicht gestartet werden. Bitte versuchen Sie es erneut.",
                     shopTakeoverModel.Shop.Position, 20, (int)7.5 * 1000);
@@ -60,13 +61,55 @@ namespace VMP_CNR.Module.ShopTakeover
             }
 
             Menu.MenuManager.Instance.Build(Menu.PlayerMenu.ShopTakeoverAttackMenu, dbPlayer).Show(dbPlayer);
-            
+
             return true;
+        }
+
+        [Command]
+        public void Commandspawnshopcircle(Player player, string commandParams)
+        {
+            DbPlayer dbPlayer = player.GetPlayer();
+            if (dbPlayer == null) return;
+
+            if (!dbPlayer.IsValid() || !dbPlayer.CanAccessMethod())
+            {
+                dbPlayer.SendNewNotification(GlobalMessages.Error.NoPermissions());
+                return;
+            }
+
+            string[] arguments = commandParams.Split(" ");
+
+            if (!int.TryParse(arguments[0], out int hash)) return;
+            if (!int.TryParse(arguments[1], out int amountOfItems)) return;
+            if (!int.TryParse(arguments[2], out int radiusAmount)) return;
+
+            double angleBetween = 360f / amountOfItems;
+
+            double angleBetweenInRad = Math.PI / 180f * angleBetween;
+
+            double radius = radiusAmount / angleBetweenInRad;
+
+            double currentAngle = 0;
+
+            for (int i = 1; i <= amountOfItems; i++)
+            {
+                currentAngle += angleBetweenInRad;
+
+                double x = Math.Sin(currentAngle) * radius;
+                double y = Math.Cos(currentAngle) * radius;
+
+                var position = dbPlayer.Player.Position + new Vector3(x, y, 0);
+                var rotation = currentAngle + (i * (180 / Math.PI * currentAngle));
+
+                NAPI.Object.CreateObject(hash, position, new Vector3(0, 0, rotation));
+            }
         }
 
         public override void OnFiveMinuteUpdate()
         {
-            foreach(var shopTakeoverModel in GetAll().Values) shopTakeoverModel.AddMoney(120);
+            if (GetAll().Values.Count <= 0) return;
+
+            foreach (var shopTakeoverModel in GetAll().Values) shopTakeoverModel.AddMoney(120);
         }
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
