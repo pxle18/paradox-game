@@ -26,6 +26,14 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         public bool IsInTakeover { get; set; } = false;
 
         public Dictionary<uint, DbPlayer> Players { get; set; } = new Dictionary<uint, DbPlayer>();
+        
+        /**
+         * Key: TeamId
+         * Value: Player
+         * - Um dann zu schauen: Wurden alle Personen in der jeweiligen Fraktion schon getötet?
+         * - Ob es sinn macht?
+         */
+        public Dictionary<uint, DbPlayer> Deaths { get; set; } = new Dictionary<uint, DbPlayer>();
 
         public ShopTakeoverModel(MySql.Data.MySqlClient.MySqlDataReader reader) : base(reader)
         {
@@ -62,6 +70,18 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         {
             Money = 0;
             ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
+        }
+
+        public void SetOwner(Team team)
+        {
+            Team = team;
+            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "ownerTeam", team.Id);
+        }
+
+        public void UpdateLastRob()
+        {
+            LastRob = DateTime.Now;
+            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "lastRob", DateTime.Now);
         }
     }
 }

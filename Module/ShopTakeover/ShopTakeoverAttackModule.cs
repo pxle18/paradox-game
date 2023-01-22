@@ -74,18 +74,32 @@ namespace VMP_CNR.Module.ShopTakeover
                 shopTakeoverModel.Players.Values.ForEach(player => player.SendNewNotification("Du bist im ShopTakeover"));
 
                 if (shopTakeoverModel.LastRob.AddMinutes(TimeLimitInMinutes) < DateTime.Now)
-                    Surrender(shopTakeoverModel, "Zeitlimit überschritten.");
+                    Finish(shopTakeoverModel, winningTeam: shopTakeoverModel.Attacker, loosingTeam: shopTakeoverModel.Team, "Zeitlimit überschritten.");
 
                 var attackerPlayersInsideShop = shopTakeoverModel.Players.Values.Where(player => player.Player.Position.DistanceTo(shopTakeoverModel.Shop.Position) <= 15f);
 
                 if (attackerPlayersInsideShop.Count() < 1)
-                    Surrender(shopTakeoverModel, "Keiner der Angreifer im Shop.");
+                    Finish(shopTakeoverModel, winningTeam: shopTakeoverModel.Team, loosingTeam: shopTakeoverModel.Attacker, "Keiner der Angreifer im Shop.");
             }
         }
 
-        public void Surrender(ShopTakeoverModel shopTakeoverModel, string finishReason = "Unbekannt.")
+        public override void OnPlayerDeath(DbPlayer player, NetHandle killer, uint weapon)
         {
+            if (player.DimensionType[0] != DimensionTypes.ShopTakeover) return;
 
+        }
+
+        public void Finish(ShopTakeoverModel shopTakeoverModel, Team winningTeam, Team loosingTeam, string finishReason = "Unbekannt.")
+        {
+            if (!ActiveTakeovers.TryGetValue(shopTakeoverModel.Id, out _)) return;
+
+            Clean(shopTakeoverModel);
+
+            winningTeam.SendNotification($"Ihre Fraktion hat erfolgreich den Shop {shopTakeoverModel.Name} übernommen. Grund: {finishReason}");
+            loosingTeam.SendNotification($"Der Angriff auf den Shop {shopTakeoverModel.Name} ist gescheitert. Grund: {finishReason}");
+
+            shopTakeoverModel.SetOwner(winningTeam);
+            shopTakeoverModel.UpdateLastRob();
         }
 
         public void Clean(ShopTakeoverModel shopTakeoverModel)

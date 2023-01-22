@@ -107,6 +107,7 @@ namespace VMP_CNR.Module.ShopTakeover
 
         public override void OnFiveMinuteUpdate()
         {
+            if (GetAll() == null) return;
             if (GetAll().Values.Count <= 0) return;
 
             foreach (var shopTakeoverModel in GetAll().Values) shopTakeoverModel.AddMoney(120);
