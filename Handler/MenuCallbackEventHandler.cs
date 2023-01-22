@@ -1005,7 +1005,7 @@ namespace VMP_CNR
                             {
                                 Garage garage = GarageModule.Instance.GetHouseGarage(iHouse.Id);
                                 if (garage == null) return;
-                                if (garage.IsTeamGarage()) return;
+                                if (garage.IsTeamGarage() || garage.IsTeamSubgroupGarage()) return;
                                 DialogMigrator.CreateMenu(player, Dialogs.menu_garage_overlay, "Fahrzeug-Garage", "");
                                 DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, GlobalMessages.General.Close(), "");
                                 DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_overlay, "Fahrzeug entnehmen", "");
@@ -1683,6 +1683,18 @@ namespace VMP_CNR
                                             Convert.ToString(kvp.Key));
                                     }
                                 }
+                                else if(garage.IsTeamSubgroupGarage() && garage.TeamSubgroupId.Equals(dbPlayer.TeamSubgroupId))
+                                {
+                                    dbPlayer.SetData("garage_getlist", Main.getTeamSubgroupGarageVehicleList(
+                                    dbPlayer.TeamSubgroupId, garage));
+
+                                    // List Fahrzeuge
+                                    foreach (KeyValuePair<uint, string> kvp in dbPlayer.GetData("garage_getlist"))
+                                    {
+                                        DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_getlist, kvp.Value,
+                                            Convert.ToString(kvp.Key));
+                                    }
+                                }
                                 else
                                 {
                                     dbPlayer.SetData("garage_getlist", Main.getPlayerGarageVehicleList(
@@ -1722,6 +1734,28 @@ namespace VMP_CNR
                                         if (Vehicle == null) continue;
 
                                         if (Vehicle.teamid == dbPlayer.TeamId &&
+                                            Utils.IsPointNearPoint(25.0f, player.Position,
+                                                Vehicle.Entity.Position))
+                                        {
+                                            string l_Name = "";
+                                            if (Vehicle.Data.IsModdedCar == 1)
+                                                l_Name = Vehicle.Data.mod_car_name;
+                                            else
+                                                l_Name = Vehicle.Data.Model;
+                                            DialogMigrator.AddMenuItem(player, Dialogs.menu_garage_setlist,
+                                                l_Name,
+                                                "");
+                                        }
+                                    }
+                                }
+                                else if (garage.IsTeamSubgroupGarage() && garage.TeamSubgroupId.Equals(dbPlayer.TeamSubgroupId))
+                                {
+                                    // List Fahrzeuge
+                                    foreach (SxVehicle Vehicle in VehicleHandler.Instance.GetAllVehicles())
+                                    {
+                                        if (Vehicle == null) continue;
+
+                                        if (Vehicle.teamSubgroupId == dbPlayer.TeamSubgroupId &&
                                             Utils.IsPointNearPoint(25.0f, player.Position,
                                                 Vehicle.Entity.Position))
                                         {
@@ -1796,7 +1830,7 @@ namespace VMP_CNR
                         if (garage != null)
                         {
                             
-                            if (!garage.IsTeamGarage())
+                            if (!garage.IsTeamGarage() && !garage.IsTeamSubgroupGarage())
                             {
                                 if(garage.HouseId > 0 && !garage.CanVehiclePutIntoHouseGarage())
                                 {
@@ -1911,6 +1945,23 @@ namespace VMP_CNR
                                         dbPlayer.SendNewNotification(
 
                                             "Sie haben Ihr Fraktions Fahrzeug erfolgreich aus der Garage entnommen!");
+                                        return;
+                                    }
+                                });
+                                return;
+                            }
+                            else if (garage.IsTeamSubgroupGarage() && garage.TeamSubgroupId.Equals(dbPlayer.TeamSubgroupId))
+                            {
+                                int idx = index - 2;
+
+                                NAPI.Task.Run(async () =>
+                                {
+                                    NetHandle xveh = await Main.LoadTeamVehicle(dbPlayer.TeamId, idx, garage, spawnPos);
+                                    if (xveh != null)
+                                    {
+                                        dbPlayer.SendNewNotification(
+
+                                            "Sie haben Ihr Ug Fahrzeug erfolgreich aus der Garage entnommen!");
                                         return;
                                     }
                                 });

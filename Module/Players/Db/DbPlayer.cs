@@ -219,6 +219,7 @@ namespace VMP_CNR.Module.Players.Db
         public int[] BlackMoney { get; set; }
         public int[] BlackMoneyBank { get; set; }
         public uint TeamRank { get; set; }
+        public uint TeamSubgroupRank { get; set; }
         public int[] PayDay { set; get; }
         public bool IsFirstSpawn { get; set; }
         public bool IsSwimmingOrDivingDoNotUse { get; set; }

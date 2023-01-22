@@ -90,6 +90,10 @@ namespace VMP_CNR.Module.AsyncEventTasks
                         {
                             labelText = labelText + " (Fraktionsgarage)";
                         }
+                        else if (garage.IsTeamSubgroupGarage())
+                        {
+                            labelText = labelText + " (Ug-Garage)";
+                        }
                         else if (garage.Type == GarageType.VehicleCollection)
                         {
                             labelText = "Fahrzeug fuer 2500$ Kaution freikaufen";

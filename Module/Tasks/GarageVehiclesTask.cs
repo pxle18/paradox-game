@@ -64,6 +64,10 @@ namespace VMP_CNR.Module.Tasks
             {
                 return $"SELECT * FROM `fvehicles` WHERE `team` = '{dbPlayer.TeamId}' AND `inGarage` = 1 AND lastGarage = '{garage.Id}' AND `planning_vehicle` = 1 AND `impound_release` <= NOW() AND lastUpdate < NOW() - interval 5 MINUTE ORDER BY vehiclehash ASC;";
             }
+            else if (garage.IsTeamSubgroupGarage())
+            {
+                return $"SELECT * FROM `team_subgroup_vehicles` WHERE `teamSubgroupId` = '{dbPlayer.TeamSubgroupId}' AND `inGarage` = 1 AND lastGarage = '{garage.Id}' AND `impound_release` <= NOW() AND lastUpdate < NOW() - interval 5 MINUTE ORDER BY vehiclehash ASC;";
+            }
             else
             {
                 return (dbPlayer.TeamId == (int)TeamTypes.TEAM_LSC)

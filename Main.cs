@@ -3,74 +3,71 @@
  * Rework by PARADOX Role Play
  */
 
-using System;
-using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using GTANetworkAPI;
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using VMP_CNR.Handler;
 using VMP_CNR.Module;
+using VMP_CNR.Module.Admin;
 using VMP_CNR.Module.Ammunations;
+using VMP_CNR.Module.Anticheat;
 using VMP_CNR.Module.Armory;
+using VMP_CNR.Module.AsyncEventTasks;
 using VMP_CNR.Module.Banks;
+using VMP_CNR.Module.Banks.Windows;
 using VMP_CNR.Module.Business;
 using VMP_CNR.Module.Chat;
+using VMP_CNR.Module.ClientUI.Components;
 using VMP_CNR.Module.Clothes;
 using VMP_CNR.Module.Clothes.Character;
+using VMP_CNR.Module.Clothes.Props;
 using VMP_CNR.Module.Clothes.Shops;
-using VMP_CNR.Module.Houses;
+using VMP_CNR.Module.Clothes.Slots;
+using VMP_CNR.Module.Clothes.Windows;
 using VMP_CNR.Module.Configurations;
+using VMP_CNR.Module.Crime;
+using VMP_CNR.Module.Gangwar;
+using VMP_CNR.Module.Houses;
+using VMP_CNR.Module.Injury;
+using VMP_CNR.Module.Items;
 using VMP_CNR.Module.Jobs.Bus;
+using VMP_CNR.Module.Konversations;
+using VMP_CNR.Module.LifeInvader.App;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Maps;
 using VMP_CNR.Module.Menu;
 using VMP_CNR.Module.Menu.Menus.Account;
+using VMP_CNR.Module.Menu.Menus.Armory;
 using VMP_CNR.Module.Menu.Menus.Business;
+using VMP_CNR.Module.News.App;
+using VMP_CNR.Module.NpcSpawner;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Module.Players.Events;
+using VMP_CNR.Module.Players.NAPIWrapper;
+using VMP_CNR.Module.Players.Windows;
 using VMP_CNR.Module.Robbery;
+using VMP_CNR.Module.Service;
 using VMP_CNR.Module.Shops;
+using VMP_CNR.Module.ShopTakeover;
 using VMP_CNR.Module.Spawners;
 using VMP_CNR.Module.Sync;
 using VMP_CNR.Module.Teams;
+using VMP_CNR.Module.Threading;
+using VMP_CNR.Module.VehicleRent;
 using VMP_CNR.Module.Vehicles;
 using VMP_CNR.Module.Vehicles.Data;
 using VMP_CNR.Module.Vehicles.Garages;
-using VMP_CNR.Module.Vehicles.Mod;
 using VMP_CNR.Module.Vehicles.Shops;
-using Timer = System.Timers.Timer;
-using VehicleData = VMP_CNR.Module.Vehicles.Data.VehicleData;
 using VMP_CNR.Module.Vehicles.Windows;
-using VMP_CNR.Module.Players.Events;
-using VMP_CNR.Module.Banks.Windows;
-using VMP_CNR.Module.ClientUI.Components;
-using VMP_CNR.Module.Injury;
-using VMP_CNR.Module.Items;
-using VMP_CNR.Module.LifeInvader.App;
-using VMP_CNR.Module.Players.Windows;
-using VMP_CNR.Module.Crime;
-using VMP_CNR.Module.News.App;
-using static VMP_CNR.Module.Chat.Chats;
 using VMP_CNR.Module.VehicleSpawner;
-using VMP_CNR.Module.Konversations;
-using VMP_CNR.Module.NpcSpawner;
 using VMP_CNR.Module.Weather;
-using VMP_CNR.Module.Service;
-using VMP_CNR.Module.AsyncEventTasks;
-using VMP_CNR.Module.Menu.Menus.Armory;
-using VMP_CNR.Module.VehicleRent;
-using VMP_CNR.Module.Gangwar;
-using VMP_CNR.Module.Clothes.Slots;
-using VMP_CNR.Module.Anticheat;
-using VMP_CNR.Module.Clothes.Props;
-using VMP_CNR.Module.Clothes.Windows;
-using VMP_CNR.Module.Players.NAPIWrapper;
-using VMP_CNR.Module.Threading;
-using VMP_CNR.Module.Admin;
-using System.Net;
-using VMP_CNR.Module.ShopTakeover;
+using static VMP_CNR.Module.Chat.Chats;
+using Timer = System.Timers.Timer;
 
 namespace VMP_CNR
 {
@@ -227,12 +224,12 @@ namespace VMP_CNR
 
         public Main() { }
 
-        static int HourTimer                                    = 1;
-        public static DateTime adLastSend                       = DateTime.Now;
-        public static List<LifeInvaderApp.AdsFound> adList      = new List<LifeInvaderApp.AdsFound>();
-        public static List<NewsListApp.NewsFound> newsList      = new List<NewsListApp.NewsFound>();
-        public static GTANetworkAPI.Weather m_CurrentWeather    = GTANetworkAPI.Weather.CLEAR;
-        public static GTANetworkAPI.Weather m_DestWeather       = GTANetworkAPI.Weather.CLEAR;
+        static int HourTimer = 1;
+        public static DateTime adLastSend = DateTime.Now;
+        public static List<LifeInvaderApp.AdsFound> adList = new List<LifeInvaderApp.AdsFound>();
+        public static List<NewsListApp.NewsFound> newsList = new List<NewsListApp.NewsFound>();
+        public static GTANetworkAPI.Weather m_CurrentWeather = GTANetworkAPI.Weather.CLEAR;
+        public static GTANetworkAPI.Weather m_DestWeather = GTANetworkAPI.Weather.CLEAR;
         public static bool WeatherOverride = false;
 
         static int mysqlSaveInterval = 0;
@@ -268,7 +265,7 @@ namespace VMP_CNR
             "SMG"
         };
 
-        string[] restrictedGuns = {"railgun", "minigun", "rpg", "GrenadeLauncher", "CompactLauncher", "Pipebomb"};
+        string[] restrictedGuns = { "railgun", "minigun", "rpg", "GrenadeLauncher", "CompactLauncher", "Pipebomb" };
 
         #region StartGamemode
 
@@ -553,7 +550,7 @@ namespace VMP_CNR
             await SyncThread.Instance.Start();
         }
 
-#endregion
+        #endregion
 
         [ServerEvent(Event.PlayerExitColshape)]
         public void OnPlayerExitColShape(ColShape shape, Player player)
@@ -568,7 +565,8 @@ namespace VMP_CNR
             try
             {
                 return;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("SOREN ALARM SYSTEM (WIHUU) : " + exception.Message);
             }
@@ -629,9 +627,9 @@ namespace VMP_CNR
                     }
                 }
 
-                if(iPlayer.Slammer != null)
+                if (iPlayer.Slammer != null)
                 {
-                    if(iPlayer.LastSlam.AddMinutes(5) > DateTime.Now)
+                    if (iPlayer.LastSlam.AddMinutes(5) > DateTime.Now)
                     {
                         var slammer = iPlayer.Slammer;
                         if (slammer == null || !slammer.IsValid()) return;
@@ -647,7 +645,7 @@ namespace VMP_CNR
 
             try
             {
-                if(iPlayer != null) Modules.Instance.OnPlayerDisconnected(iPlayer, reason);
+                if (iPlayer != null) Modules.Instance.OnPlayerDisconnected(iPlayer, reason);
             }
             catch (Exception ex)
             {
@@ -667,11 +665,11 @@ namespace VMP_CNR
             {
                 if (iPlayer.HasData("service") && iPlayer.GetData("service") > 0)
                 {
-                    bool status = ServiceModule.Instance.CancelOwnService(iPlayer, (uint) iPlayer.GetData("service"));
+                    bool status = ServiceModule.Instance.CancelOwnService(iPlayer, (uint)iPlayer.GetData("service"));
 
                     if (status)
                     {
-                        TeamModule.Instance[(uint)iPlayer.GetData("service")].SendNotification($"Der Notruf von { iPlayer.GetName() } ({ iPlayer.ForumId }) wurde abgebrochen!");
+                        TeamModule.Instance[(uint)iPlayer.GetData("service")].SendNotification($"Der Notruf von {iPlayer.GetName()} ({iPlayer.ForumId}) wurde abgebrochen!");
                     }
                 }
             }
@@ -724,7 +722,8 @@ namespace VMP_CNR
                 {
                     if (iPlayer.AccountStatus == AccountStatus.LoggedIn)
                     {
-                        try { 
+                        try
+                        {
                             iPlayer.MetaData.SaveBlocked = true;
                             iPlayer.Save(true);
                         }
@@ -914,7 +913,7 @@ namespace VMP_CNR
                     }
                 }
 
-                if (iPlayer.TeamId == (int) TeamTypes.TEAM_LSC)
+                if (iPlayer.TeamId == (int)TeamTypes.TEAM_LSC)
                 {
                     cmd.CommandText = $"SELECT * FROM `vehicles` WHERE `TuningState` = 1 AND `inGarage` = 1 AND `garage_id` = '{garage.Id}'ORDER BY id;";
                     using (var reader = cmd.ExecuteReader())
@@ -1062,21 +1061,56 @@ namespace VMP_CNR
             return null;
         }
 
-        public static Dictionary<uint, string> getTeamGarageVehicleList(uint teamid, Garage garage)
+        public static Dictionary<uint, string> getTeamGarageVehicleList(uint teamId, Garage garage)
         {
-            if (teamid <= 0) return null;
+            if (teamId <= 0) return null;
 
             var vehList = new Dictionary<uint, string>();
 
             // frage die datenbank nach den fraktions fahrzeugen ab
-            string query =
-                $"SELECT * FROM `fvehicles` WHERE `team` = '{teamid}' AND `inGarage` = 1 AND `pos_x` = '0' AND lastGarage = '{garage.Id}' ORDER BY id;";
+            string    query = $"SELECT * FROM `fvehicles` WHERE `team` = '{teamId}' AND `inGarage` = 1 AND `pos_x` = '0' AND lastGarage = '{garage.Id}' ORDER BY id;";
 
             using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
                 cmd.CommandText = @query;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var data = VehicleDataModule.Instance.GetDataById(reader.GetUInt32(10));
+                            string note = reader.GetString("note");
+                            if (data == null) continue;
+                            if (!garage.Classifications.Contains(data.ClassificationId)) continue;
+                            // es ist ein fahrzeug und eine garage für fahrzeuge
+                            vehList.Add(reader.GetUInt32("id"),
+                                data.IsModdedCar == 1 ? $"{data.mod_car_name} {note}" : $"{data.Model} {note}");
+                            continue;
+                        }
+                    }
+                }
+            }
+
+            return vehList;
+        }
+
+        public static Dictionary<uint, string> getTeamSubgroupGarageVehicleList(uint teamSubgroupId, Garage garage)
+        {
+            if (teamSubgroupId <= 0) return null;
+
+            var vehList = new Dictionary<uint, string>();
+
+            // frage die datenbank nach den fraktions fahrzeugen ab
+            string query = $"SELECT * FROM `team_subgroup_vehicles` WHERE `teamsubgroupid` = '{teamSubgroupId}' AND `inGarage` = 1 AND `pos_x` = '0' AND lastGarage = '{garage.Id}' ORDER BY id;";
+
+            using (var conn = new MySqlConnection(Configuration.Instance.GetMySqlConnection()))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = query;
                 using (var reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -1134,8 +1168,8 @@ namespace VMP_CNR
                                             reader.GetInt32("color1"), reader.GetInt32("color2"), 0, reader.GetUInt32("gps_tracker") == 1, true, true,
                                             teamid, reader.GetString("plate"),
                                             reader.GetUInt32("id"), 0, 0, data.Fuel,
-                                            VehicleHandler.MaxVehicleHealth, reader.GetString("tuning"), "", 0, ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE), 
-                                            WheelClamp:reader.GetInt32("WheelClamp"), AlarmSystem:reader.GetInt32("alarm_system") == 1, lastgarageId:garage.Id, container2: ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE2));
+                                            VehicleHandler.MaxVehicleHealth, reader.GetString("tuning"), "", 0, ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE),
+                                            WheelClamp: reader.GetInt32("WheelClamp"), AlarmSystem: reader.GetInt32("alarm_system") == 1, lastgarageId: garage.Id, container2: ContainerManager.LoadContainer(reader.GetUInt32("id"), ContainerTypes.FVEHICLE2));
 
                                         while (xVeh.Entity == null)
                                         {
@@ -1649,7 +1683,7 @@ namespace VMP_CNR
 
         public static bool canPlayerFreed(DbPlayer iPlayer, DbPlayer iTarget)
         {
-            if (iPlayer.job[0] == (int) JobTypes.JOB_ANWALT)
+            if (iPlayer.job[0] == (int)JobTypes.JOB_ANWALT)
             {
                 if (iTarget.JailTime[0] > 5)
                 {
@@ -1690,7 +1724,7 @@ namespace VMP_CNR
                 return;
             }
 
-            if (iPlayer.job[0] == (int) JobTypes.JOB_ANWALT)
+            if (iPlayer.job[0] == (int)JobTypes.JOB_ANWALT)
             {
                 if (canPlayerFreed(iPlayer, iTarget))
                 {
@@ -1853,11 +1887,15 @@ namespace VMP_CNR
                     if (garage != null && garage.HouseId <= 0)
                     {
                         uint teamId = iPlayer.TeamId;
-                        if(garage.Teams.Contains((uint)TeamTypes.TEAM_IAA) && iPlayer.IsNSADuty) {
+                        uint teamSubGroupId = iPlayer.TeamSubgroupId;
+                        if (garage.Teams.Contains((uint)TeamTypes.TEAM_IAA) && iPlayer.IsNSADuty)
+                        {
                             teamId = (uint)TeamTypes.TEAM_IAA;
                         }
 
                         if (garage.IsTeamGarage() && !garage.Teams.Contains(teamId)) return;
+
+                        if (garage.IsTeamSubgroupGarage() && !garage.TeamSubgroupId.Equals(teamSubGroupId)) return;
 
                         if (iPlayer.Player.Dimension != GangwarModule.Instance.DefaultDimension)
                         {
@@ -2012,7 +2050,7 @@ namespace VMP_CNR
                         var eqFullClothes = ClothModule.Instance.GetAll()
                             .Where(c => eqClothes.ContainsValue(c.Key))
                             .ToDictionary(pair => pair.Key, pair => pair.Value);
-                        
+
                         ComponentManager.Get<WardrobeWindow>().Show()(
                             iPlayer,
                             new[]
@@ -2067,7 +2105,7 @@ namespace VMP_CNR
                 {
                     House iHouse;
 
-                    if ((iHouse = HouseModule.Instance.Get((uint) iPlayer.GetData("inHouse"))) == null) return;
+                    if ((iHouse = HouseModule.Instance.Get((uint)iPlayer.GetData("inHouse"))) == null) return;
 
                     if (iHouse.Interior.ClothesPosition.DistanceTo(iPlayer.Player.Position) > 3.0f) return;
 
@@ -2175,7 +2213,7 @@ namespace VMP_CNR
                 else if (IsPlayerInRangeOfPoint(player, 2.5f,
                     new Vector3(483.179, -1309.349, 29.216)))
                 {
-                    if (iPlayer.job[0] != (int) JobTypes.JOB_MECH) return;
+                    if (iPlayer.job[0] != (int)JobTypes.JOB_MECH) return;
                     DialogMigrator.CreateMenu(player, Dialogs.menu_shop_mechanic, "Mechaniker Store", "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, GlobalMessages.General.Close(), "");
                     DialogMigrator.AddMenuItem(player, Dialogs.menu_shop_mechanic, "Spraydose (300$)", "");

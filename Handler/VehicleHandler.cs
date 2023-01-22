@@ -15,6 +15,8 @@ using VMP_CNR.Module.PlayerName;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Teams;
+using VMP_CNR.Module.TeamSubgroups;
+using VMP_CNR.Module.TeamSubgroups.Models;
 using VMP_CNR.Module.Tuning;
 using VMP_CNR.Module.Vehicles;
 using VMP_CNR.Module.Vehicles.Data;
@@ -31,6 +33,7 @@ namespace VMP_CNR.Handler
         public static ConcurrentDictionary<uint, SxVehicle> SxVehicles;
 
         public static ConcurrentDictionary<uint, List<SxVehicle>> TeamVehicles;
+        public static ConcurrentDictionary<uint, List<SxVehicle>> TeamSubgroupVehicles;
         public static ConcurrentDictionary<uint, List<SxVehicle>> PlayerVehicles;
         public static ConcurrentDictionary<uint, List<SxVehicle>> ClassificationVehicles;
         public static ConcurrentDictionary<uint, List<SxVehicle>> SpawnedVehicles;
@@ -39,6 +42,7 @@ namespace VMP_CNR.Handler
         {
             SxVehicles = new ConcurrentDictionary<uint, SxVehicle>();
             TeamVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
+            TeamSubgroupVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
             PlayerVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
             ClassificationVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
             SpawnedVehicles = new ConcurrentDictionary<uint, List<SxVehicle>>();
@@ -51,6 +55,13 @@ namespace VMP_CNR.Handler
             if (!TeamVehicles.ContainsKey(teamid)) TeamVehicles.TryAdd(teamid, new List<SxVehicle>());
 
             TeamVehicles[teamid].Add(sxVehicle);
+        }
+
+        public void AddContextTeamSubgroupVehicle(uint teamSubgroupId, SxVehicle sxVehicle)
+        {
+            if (!TeamSubgroupVehicles.ContainsKey(teamSubgroupId)) TeamSubgroupVehicles.TryAdd(teamSubgroupId, new List<SxVehicle>());
+
+            TeamSubgroupVehicles[teamSubgroupId].Add(sxVehicle);
         }
 
         public void AddContextPlayerVehicle(uint playerId, SxVehicle sxVehicle)
@@ -99,6 +110,11 @@ namespace VMP_CNR.Handler
             return TeamVehicles.ContainsKey(teamid) ? TeamVehicles[teamid].Where(v => !v.PlanningVehicle).ToList() : new List<SxVehicle>();
         }
 
+        public List<SxVehicle> GetTeamSubgroupVehicles(uint teamSubgroupId)
+        {
+            return TeamSubgroupVehicles.ContainsKey(teamSubgroupId) ? TeamSubgroupVehicles[teamSubgroupId].ToList() : new List<SxVehicle>();
+        }
+
         public List<SxVehicle> GetTeamPlanningVehicles(uint teamid)
         {
             return TeamVehicles.ContainsKey(teamid) ? TeamVehicles[teamid].Where(v => v.PlanningVehicle).ToList() : new List<SxVehicle>();
@@ -112,6 +128,11 @@ namespace VMP_CNR.Handler
         public SxVehicle FindTeamVehicle(uint teamid, uint vehicleDatabaseId)
         {
             return GetTeamVehicles(teamid).Where(v => v.databaseId == vehicleDatabaseId).FirstOrDefault();
+        }
+
+        public SxVehicle FindTeamSubgroupVehicle(uint teamSubgroupId, uint vehicleDatabaseId)
+        {
+            return GetTeamSubgroupVehicles(teamSubgroupId).Where(v => v.databaseId == vehicleDatabaseId).FirstOrDefault();
         }
 
         public SxVehicle FindTeamPlanningVehicle(uint teamid, uint vehicleDatabaseId)
@@ -177,11 +198,24 @@ namespace VMP_CNR.Handler
             }
         }
 
-        public SxVehicle GetByVehicleDatabaseId(uint dbId, uint teamId)
+        public SxVehicle GetByVehicleDatabaseIdAndTeamId(uint dbId, uint teamId)
         {
             try
             {
                 return GetAllVehicles().FirstOrDefault(veh => veh.databaseId == dbId && veh.teamid == teamId);
+            }
+            catch (Exception ex)
+            {
+                Logger.Crash(ex);
+                return null;
+            }
+        }
+
+        public SxVehicle GetByVehicleDatabaseIdAndTeamSubgroupId(uint dbId, uint teamSubgroupId)
+        {
+            try
+            {
+                return GetAllVehicles().FirstOrDefault(veh => veh.databaseId == dbId && veh.teamSubgroupId == teamSubgroupId);
             }
             catch (Exception ex)
             {
@@ -233,7 +267,7 @@ namespace VMP_CNR.Handler
 
         public bool isAJobVeh(SxVehicle sxVeh)
         {
-            if (sxVeh.jobid > 0 && sxVeh.databaseId == 0 && sxVeh.teamid == 0)
+            if (sxVeh.jobid > 0 && sxVeh.databaseId == 0 && sxVeh.teamid == 0 && sxVeh.teamSubgroupId == 0)
             {
                 return true;
             }
@@ -243,7 +277,7 @@ namespace VMP_CNR.Handler
 
         public bool isJobVeh(SxVehicle sxVeh, int jobid)
         {
-            if (sxVeh.jobid == jobid && sxVeh.databaseId == 0 && sxVeh.teamid == 0)
+            if (sxVeh.jobid == jobid && sxVeh.databaseId == 0 && sxVeh.teamid == 0 && sxVeh.teamSubgroupId == 0)
             {
                 return true;
             }
@@ -323,7 +357,6 @@ namespace VMP_CNR.Handler
                 return null;
             }
         }
-
         public List<SxVehicle> GetAllTeamVehicles()
         {
             var l_List = new List<SxVehicle>();
@@ -362,6 +395,59 @@ namespace VMP_CNR.Handler
             return sxVehicles;
         }
 
+        public List<SxVehicle> GetClosestTeamSubgroupVehicles(Vector3 position, float range = 4.0f)
+        {
+            try
+            {
+                return GetAllTeamSubgroupVehicles().Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+                return null;
+            }
+        }
+
+        public List<SxVehicle> GetAllTeamSubgroupVehicles()
+        {
+            var l_List = new List<SxVehicle>();
+            foreach (var l_TeamSubgroupVehicles in TeamSubgroupVehicles)
+            {
+                foreach (var l_Veh in l_TeamSubgroupVehicles.Value)
+                {
+                    if (l_List.Contains(l_Veh))
+                        continue;
+
+                    l_List.Add(l_Veh);
+                }
+            }
+            return l_List;
+        }
+
+
+        public SxVehicle GetClosestVehicleFromTeamSubgroup(Vector3 position, int teamSubgroupId, float range = 4.0f)
+        {
+            try
+            {
+                IEnumerable<SxVehicle> sxVehicleList = GetTeamSubgroupVehicles((uint)teamSubgroupId).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range);
+                return sxVehicleList.Count() > 0 ? sxVehicleList.FirstOrDefault() : null;
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+                return null;
+            }
+        }
+
+        public List<SxVehicle> GetClosestVehiclesFromTeamSubgroup(Vector3 position, int teamSubgroupId, float range = 4.0f)
+        {
+            List<SxVehicle> sxVehicles = new List<SxVehicle>();
+            sxVehicles = GetTeamSubgroupVehicles((uint)teamSubgroupId).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range).ToList();
+            return sxVehicles;
+        }
+
+
+
         public List<SxVehicle> GetClosestPlanningVehiclesFromTeam(Vector3 position, int teamid, float range = 4.0f)
         {
             List<SxVehicle> sxVehicles = new List<SxVehicle>();
@@ -376,11 +462,45 @@ namespace VMP_CNR.Handler
             return sxVehicles;
         }
 
+        public List<SxVehicle> GetClosestVehiclesFromTeamSubgroupWithContainerOpen(Vector3 position, int teamSubgroupId, float range = 8.0f)
+        {
+            List<SxVehicle> sxVehicles = new List<SxVehicle>();
+            sxVehicles = GetTeamSubgroupVehicles((uint)teamSubgroupId).Where(sxVeh => sxVeh.Entity.Position.DistanceTo(position) <= range && !sxVeh.SyncExtension.Locked && sxVeh.TrunkStateOpen).ToList();
+            return sxVehicles;
+        }
+
         public SxVehicle GetClosestVehicleFromTeamFilter(Vector3 position, int teamid, float range = 4.0f, int seats = 2)
         {
             try
             {
                 IEnumerable<SxVehicle> sxVehicleList = GetClosestVehiclesFromTeam(position, teamid, range);
+                if (sxVehicleList.Count() == 0) return null;
+                SxVehicle sxVehicle = sxVehicleList.FirstOrDefault();
+                var pos = sxVehicle.Entity.Position.DistanceTo(position);
+                foreach (var sx in sxVehicleList)
+                {
+                    if (sx.Entity.GetNextFreeSeat() == -2) continue;
+                    if (sx.Data.Slots < seats) continue;
+                    if (pos > sx.Entity.Position.DistanceTo(position))
+                    {
+                        pos = sx.Entity.Position.DistanceTo(position);
+                        sxVehicle = sx;
+                    }
+                }
+                return sxVehicle;
+            }
+            catch (Exception e)
+            {
+                Logger.Crash(e);
+                return null;
+            }
+        }
+
+        public SxVehicle GetClosestVehicleFromTeamSubgroupFilter(Vector3 position, int teamSubgroupId, float range = 4.0f, int seats = 2)
+        {
+            try
+            {
+                IEnumerable<SxVehicle> sxVehicleList = GetClosestVehiclesFromTeamSubgroup(position, teamSubgroupId, range);
                 if (sxVehicleList.Count() == 0) return null;
                 SxVehicle sxVehicle = sxVehicleList.FirstOrDefault();
                 var pos = sxVehicle.Entity.Position.DistanceTo(position);
@@ -464,12 +584,12 @@ namespace VMP_CNR.Handler
             bool spawnClosed = true, bool engineOff = false, uint teamid = 0, string owner = "", uint databaseId = 0,
             int jobId = 0, uint ownerId = 0, int fuel = 100, int zustand = 1000,
             string tuning = "", string neon = "", float km = 0f, Container container = null, string plate = "", bool disableTuning = false, bool InTuningProcess = false,
-            int WheelClamp = 0, bool AlarmSystem = false, uint lastgarageId = 0, bool planningvehicle = false, int carSellPrice = 0, Container container2 = null)
+            int WheelClamp = 0, bool AlarmSystem = false, uint lastgarageId = 0, bool planningvehicle = false, int carSellPrice = 0, Container container2 = null, uint teamSubGroupId = 0)
         {
             try
             {
                 // Cannot spawn duplicatings
-                if (VehicleHandler.SxVehicles != null && databaseId != 0 && GetAllVehicles().Where(veh => veh.databaseId == databaseId && veh.teamid == teamid).Count() > 0) return null;
+                if (VehicleHandler.SxVehicles != null && databaseId != 0 && GetAllVehicles().Where(veh => veh.databaseId == databaseId && veh.teamid == teamid && veh.teamSubgroupId == teamSubGroupId).Count() > 0) return null;
 
                 var xVeh = new SxVehicle();
                 var data = VehicleDataModule.Instance.GetDataById(model);
@@ -523,6 +643,7 @@ namespace VMP_CNR.Handler
                 xVeh.spawnRot = rotation;
                 xVeh.spawnPos = pos;
                 xVeh.teamid = teamid;
+                xVeh.teamSubgroupId = teamSubGroupId;
                 xVeh.jobid = jobId;
                 xVeh.zustand = zustand;
                 xVeh.databaseId = databaseId;
@@ -548,6 +669,7 @@ namespace VMP_CNR.Handler
                 xVeh.Visitors = new List<DbPlayer>();
 
                 xVeh.Team = TeamModule.Instance.Get(teamid);
+                xVeh.TeamSubgroup = TeamSubgroupModule.Instance.Get(teamSubGroupId);
 
                 xVeh.color1 = color1;
                 xVeh.color2 = color2;
@@ -601,6 +723,10 @@ namespace VMP_CNR.Handler
                 {
                     AddContextTeamVehicle(xVeh.teamid, xVeh);
                 }
+                else if (xVeh.IsTeamSubGroupVehicle())
+                {
+                    AddContextTeamSubgroupVehicle(xVeh.teamSubgroupId, xVeh);
+                }
                 else if (xVeh.IsPlayerVehicle())
                 {
                     AddContextPlayerVehicle(xVeh.ownerId, xVeh);
@@ -642,8 +768,8 @@ namespace VMP_CNR.Handler
                 {
                     try
                     {
-                    // Do entity Stuff here...
-                    xVeh.Entity.SetData("vehicle", xVeh);
+                        // Do entity Stuff here...
+                        xVeh.Entity.SetData("vehicle", xVeh);
 
                         xVeh.Entity.Dimension = dimension;
 
@@ -703,8 +829,8 @@ namespace VMP_CNR.Handler
                             xVeh.Entity.SetExtra(1, true);
                         }
 
-                    // Set Anticheat Data
-                    xVeh.Entity.SetData<string>("serverhash", "1312asdbncawssd1ccbSh1");
+                        // Set Anticheat Data
+                        xVeh.Entity.SetData<string>("serverhash", "1312asdbncawssd1ccbSh1");
                         xVeh.Entity.SetData<Vector3>("lastSavedPos", xVeh.Entity.Position);
 
                         if (xVeh.Undercover)
@@ -728,8 +854,8 @@ namespace VMP_CNR.Handler
                             xVeh.Entity.NumberPlate = RegistrationOfficeFunctions.GetRandomPlate(true);
                         }
 
-                    //xVeh.entity.SetSharedData("silentMode", false);
-                }
+                        //xVeh.entity.SetSharedData("silentMode", false);
+                    }
                     catch (Exception e)
                     {
                         Logger.Crash(e);
@@ -821,6 +947,17 @@ namespace VMP_CNR.Handler
                     Logger.Crash(e);
                 }
             }
+            else if (sxVehicle.IsTeamSubGroupVehicle())
+            {
+                try
+                {
+                    TeamSubgroupVehicles[sxVehicle.teamSubgroupId].Remove(sxVehicle);
+                }
+                catch (Exception e)
+                {
+                    Logger.Crash(e);
+                }
+            }
 
             SxVehicles.TryRemove(sxVehicle.uniqueServerId, out SxVehicle vehicle);
 
@@ -883,6 +1020,7 @@ namespace VMP_CNR.Handler
         public int color1 { get; set; }
         public int color2 { get; set; }
         public uint teamid { get; set; }
+        public uint teamSubgroupId { get; set; }
         public int jobid { get; set; }
         public uint databaseId { get; set; }
         public int zustand { get; set; }
@@ -898,6 +1036,7 @@ namespace VMP_CNR.Handler
         public double Distance { get; set; }
 
         public Team Team { get; set; }
+        public TeamSubgroup TeamSubgroup { get; set; }
 
         public Dictionary<int, int> Attachments { get; set; }
         public string LastDriver { get; set; }

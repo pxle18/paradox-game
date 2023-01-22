@@ -26,7 +26,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
         public string Name { get; }
 
         public HashSet<uint> Teams { get; }
-        
+        public uint TeamSubgroupId { get; }
         public GarageType Type { get; }
         public List<GarageSpawn> Spawns { get; }
         public int Rang { get; }
@@ -128,6 +128,11 @@ namespace VMP_CNR.Module.Vehicles.Garages
             return Teams.Count() > 0 || GangwarTownId > 0;
         }
 
+        public bool IsTeamSubgroupGarage()
+        {
+            return TeamSubgroupId > 0;
+        }
+
         public bool IsPlanningGarage()
         {
             return PlanningGarage;
@@ -216,6 +221,26 @@ namespace VMP_CNR.Module.Vehicles.Garages
                             else
                                 vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.Model, ""));
                         }
+                    }
+                }
+            }
+            else if (IsTeamSubgroupGarage())
+            {
+                if (!TeamSubgroupId.Equals(dbPlayer.TeamSubgroupId)) return vehicles;
+
+                foreach (var vehicle in VehicleHandler.Instance.GetTeamSubgroupVehicles(dbPlayer.TeamSubgroupId))
+                {
+                    if (vehicle == null) continue;
+                    if (vehicle.databaseId == 0) continue;
+                    if (!dbPlayer.CanControl(vehicle)) continue;
+                    if (!Classifications.Contains(vehicle.Data.ClassificationId)) continue;
+
+                    if (dbPlayer.Player.Position.DistanceTo(vehicle.Entity.Position) <= radius)
+                    {
+                        if (vehicle.Data.IsModdedCar == 1)
+                            vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.mod_car_name, ""));
+                        else
+                            vehicles.Add(new Main.GarageVehicle(vehicle.databaseId, vehicle.fuel, vehicle.Data.Model, ""));
                     }
                 }
             }

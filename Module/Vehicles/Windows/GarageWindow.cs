@@ -109,6 +109,15 @@ namespace VMP_CNR.Module.Vehicles.Windows
 
                         SynchronizedTaskManager.Instance.Add(new GaragePlayerTeamVehicleTakeOutTask(garage, vehicleId, dbPlayer, spawn));
                     }
+                    else if (garage.IsTeamSubgroupGarage())
+                    {
+                        if (garage.Rang > 0 && dbPlayer.TeamSubgroupRank < garage.Rang)
+                        {
+                            dbPlayer.SendNewNotification("Sie haben nicht den benötigten Rang!");
+                            return;
+                        }
+                        SynchronizedTaskManager.Instance.Add(new GaragePlayerTeamVehicleTakeOutTask(garage, vehicleId, dbPlayer, spawn));
+                    }
                     else
                     {
                         if (garage.Type == GarageType.VehicleCollection)
@@ -191,8 +200,7 @@ namespace VMP_CNR.Module.Vehicles.Windows
 
                     if (garage.IsTeamGarage() && garage.Teams.Contains(currTeam))
                     {
-                        var vehicle = VehicleHandler.Instance.GetByVehicleDatabaseId(vehicleId, currTeam);
-
+                        var vehicle = VehicleHandler.Instance.GetByVehicleDatabaseIdAndTeamId(vehicleId, currTeam);
 
                         if (vehicle == null || vehicle.teamid != currTeam) return;
                         if (vehicle.Visitors.Count != 0) return;
@@ -209,6 +217,26 @@ namespace VMP_CNR.Module.Vehicles.Windows
                             return;
                         }
                         vehicle.SetTeamCarGarage(true, (int)garage.Id);
+                    }
+                    else if (garage.IsTeamSubgroupGarage() && garage.TeamSubgroupId.Equals(dbPlayer.TeamSubgroupId))
+                    {
+                        var vehicle = VehicleHandler.Instance.GetByVehicleDatabaseIdAndTeamSubgroupId(vehicleId, dbPlayer.TeamSubgroupId);
+
+                        if (vehicle == null || vehicle.teamSubgroupId != dbPlayer.TeamSubgroupId) return;
+                        if (vehicle.Visitors.Count != 0) return;
+                        if (vehicle.Entity.Position.DistanceTo(garage.Position) > garage.Radius) return;
+                        if (vehicle.GetOccupants().IsEmpty() == false)
+                        {
+                            dbPlayer.SendNewNotification("Da ist noch ein*e Mitfahrer*in im Kofferraum");
+                            return;
+                        }
+
+                        if (vehicle.CreatedDate.AddSeconds(10) > DateTime.Now)
+                        {
+                            dbPlayer.SendNewNotification("Bitte warte kurz bevor du dieses Fahrzeug erneut einparkst!");
+                            return;
+                        }
+                        vehicle.SetTeamSubgroupCarGarage(true, (int)garage.Id);
                     }
                     else
                     {

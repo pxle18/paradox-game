@@ -56,6 +56,7 @@ namespace VMP_CNR.Module.Items
         HEROINLABORATORYFUEL = 49,
         TEAMSUBGROUPLABORATORYINPUT = 50,
         TEAMSUBGROUPLABORATORYOUTPUT = 51,
+        UGVEHICLE = 52,
     }
 
     public class ContainerData
@@ -120,6 +121,8 @@ namespace VMP_CNR.Module.Items
             {ContainerTypes.HEROINLABORATORYINPUT, new ContainerData() { DefaultSlots = 6, DefaultWeight = 150000, DatabaseTable = "container_heroinlaboratory_input", InventoryName = "Heroinlabor Rohstoffe" } },
             {ContainerTypes.HEROINLABORATORYOUTPUT, new ContainerData() { DefaultSlots = 8, DefaultWeight = 240000, DatabaseTable = "container_heroinlaboratory_output", InventoryName = "Heroinlabor Endprodukt" } },
             {ContainerTypes.TEAMSUBGROUPLABORATORYINPUT, new ContainerData() { DefaultSlots = 6, DefaultWeight = 150000, DatabaseTable = "container_teamsubgrouolaboratory_input", InventoryName = "Heroinampullenlabor Rohstoffe" } },
-            {ContainerTypes.TEAMSUBGROUPLABORATORYOUTPUT, new ContainerData() { DefaultSlots = 6, DefaultWeight = 150000, DatabaseTable = "container_teamsubgrouolaboratory_output", InventoryName = "Heroinampullenlabor Endprodukt" } },        };
+            {ContainerTypes.TEAMSUBGROUPLABORATORYOUTPUT, new ContainerData() { DefaultSlots = 6, DefaultWeight = 150000, DatabaseTable = "container_teamsubgrouolaboratory_output", InventoryName = "Heroinampullenlabor Endprodukt" } },
+            {ContainerTypes.UGVEHICLE, new ContainerData() { DefaultSlots = 12, DefaultWeight = 100000, DatabaseTable = "container_team_subgroup_vehicles", InventoryName = "Kofferraum" } },
+        };
     }
 }

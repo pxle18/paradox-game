@@ -32,6 +32,13 @@ namespace VMP_CNR.Module.Vehicles
             return sxVeh.teamid > 0;
         }
 
+        public static bool IsTeamSubGroupVehicle(this SxVehicle sxVeh)
+        {
+            if (sxVeh == null) return false;
+            return sxVeh.teamSubgroupId > 0;
+        }
+
+
         public static void SetTuningState(this SxVehicle p_SxVeh, bool p_State)
         {
             Main.m_AsyncThread.AddToAsyncThread(new System.Threading.Tasks.Task(() =>
@@ -89,6 +96,42 @@ namespace VMP_CNR.Module.Vehicles
                 else
                 {
                     query = $"UPDATE `fvehicles` SET inGarage = '0', fuel = '{sxVeh.fuel}' WHERE id = '{sxVeh.databaseId}';";
+                }
+
+                MySQLHandler.ExecuteAsync(query);
+
+                sxVeh.Container.SaveAll();
+
+                await NAPI.Task.WaitForMainThread(500);
+
+                if (sxVeh.Entity != null && inGarage)
+                {
+                    VehicleHandler.Instance.DeleteVehicle(sxVeh);
+                }
+
+            });
+        }
+
+        public static void SetTeamSubgroupCarGarage(this SxVehicle sxVeh, bool inGarage, int garageId = -1)
+        {
+            NAPI.Task.Run(async () =>
+            {
+                if (sxVeh == null) return;
+                if (sxVeh.teamSubgroupId <= 0 || sxVeh.databaseId <= 0) return;
+
+                string query = "";
+
+                if (inGarage)
+                {
+                    if (garageId != -1)
+                    {
+                        query = $"UPDATE `team_subgroup_vehicles` SET inGarage = '1', fuel = '{sxVeh.fuel}', pos_x = '0', pos_y = '0', pos_z = '0', lastGarage = '{garageId}' WHERE id = '{sxVeh.databaseId}';";
+                    }
+                    else query = $"UPDATE `team_subgroup_vehicles` SET inGarage = '1', fuel = '{sxVeh.fuel}', pos_x = '0', pos_y = '0', pos_z = '0' WHERE id = '{sxVeh.databaseId}';";
+                }
+                else
+                {
+                    query = $"UPDATE `team_subgroup_vehicles` SET inGarage = '0', fuel = '{sxVeh.fuel}' WHERE id = '{sxVeh.databaseId}';";
                 }
 
                 MySQLHandler.ExecuteAsync(query);
