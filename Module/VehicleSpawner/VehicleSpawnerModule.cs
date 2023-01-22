@@ -56,7 +56,7 @@ namespace VMP_CNR.Module.VehicleSpawner
             }
             else if (sxVehicle.IsTeamSubGroupVehicle())
             {
-                MySQLHandler.ExecuteAsync($"UPDATE team_subgroup_vehicles SET pos_x = '{x}', pos_y = '{y}', pos_z = '{z}', `fuel` = '{sxVehicle.fuel}', `zustand` = '{Convert.ToInt32(sxVehicle.Entity.Health)}', `km` = '{Convert.ToInt32(sxVehicle.Distance)}', `rotation` = '{rotation}' WHERE id = '{sxVehicle.databaseId}' AND teamsubgroupid = '{sxVehicle.teamid}'");
+                MySQLHandler.ExecuteAsync($"UPDATE team_subgroup_vehicles SET pos_x = '{x}', pos_y = '{y}', pos_z = '{z}', `fuel` = '{sxVehicle.fuel}', `zustand` = '{Convert.ToInt32(sxVehicle.Entity.Health)}', `km` = '{Convert.ToInt32(sxVehicle.Distance)}', `rotation` = '{rotation}' WHERE id = '{sxVehicle.databaseId}' AND teamsubgroupid = '{sxVehicle.teamSubgroupId}'");
             }
             else if (sxVehicle.IsPlayerVehicle())
             {
