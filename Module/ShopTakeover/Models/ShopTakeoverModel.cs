@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using VMP_CNR.Module.Logging;
+using VMP_CNR.Module.Maps;
+using VMP_CNR.Module.Maps.Models;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Shops;
 using VMP_CNR.Module.Teams;
@@ -15,7 +17,7 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         public string Name { get; set; }
         public Shop Shop { get; set; }
         public Team Team { get; set; }
-        public HashSet<Team> TeamsCanAccess { get; set; }
+        public LoadableScriptMapModel Map { get; set; }
         public int Money { get; set; }
         public DateTime LastRob { get; set; }
 
@@ -43,18 +45,9 @@ namespace VMP_CNR.Module.ShopTakeover.Models
             Money = reader.GetInt32("money");
             LastRob = reader.GetDateTime("lastRob");
 
-            TeamsCanAccess = new HashSet<Team>();
-
-            var teamString = reader.GetString("teamsCanAccess");
-            if (!string.IsNullOrEmpty(teamString))
-            {
-                var splittedTeams = teamString.Split(',');
-                foreach (var teamIdString in splittedTeams)
-                {
-                    if (!uint.TryParse(teamIdString, out var teamId) || TeamsCanAccess.Contains(TeamModule.Instance[teamId])) continue;
-                    TeamsCanAccess.Add(TeamModule.Instance[teamId]);
-                }
-            }
+            Map = LoadableScriptMapModule.Instance[
+                reader.GetUInt32("script_map_id")
+            ];
         }
 
         public override uint GetIdentifier() => Id;

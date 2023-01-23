@@ -6,6 +6,7 @@ using System.Text;
 using VMP_CNR.Module.Commands;
 using VMP_CNR.Module.GTAN;
 using VMP_CNR.Module.Logging;
+using VMP_CNR.Module.Maps;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Shops;
@@ -27,7 +28,10 @@ namespace VMP_CNR.Module.ShopTakeover
 
         public override Type[] RequiredModules()
         {
-            return new[] { typeof(ShopModule) };
+            return new[] { 
+                typeof(ShopModule),
+                typeof(LoadableScriptMapModule)
+            };
         }
 
         public override bool OnKeyPressed(DbPlayer dbPlayer, Key key)
