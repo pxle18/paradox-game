@@ -17,7 +17,7 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         public string Name { get; set; }
         public Shop Shop { get; set; }
         public Team Team { get; set; }
-        public LoadableScriptMapModel Map { get; set; }
+        public LoadableScriptMapModel ScriptMap { get; set; }
         public int Money { get; set; }
         public DateTime LastRob { get; set; }
 

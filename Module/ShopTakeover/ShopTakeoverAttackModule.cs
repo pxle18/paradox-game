@@ -65,6 +65,9 @@ namespace VMP_CNR.Module.ShopTakeover
             shopTakeoverModel.LastRob = DateTime.Now;
 
             Instance.ActiveTakeovers.Add(shopTakeoverModel.Id, shopTakeoverModel);
+
+            var scriptMap = shopTakeoverModel.ScriptMap;
+            scriptMap.Map.Load();
         }
 
         public override void OnMinuteUpdate()
@@ -117,6 +120,9 @@ namespace VMP_CNR.Module.ShopTakeover
             });
 
             shopTakeoverModel.IsInTakeover = false;
+
+            var scriptMap = shopTakeoverModel.ScriptMap;
+            scriptMap.Map.Unload();
         }
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
