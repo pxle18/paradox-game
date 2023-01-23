@@ -6,7 +6,7 @@ using System.Text;
 
 namespace VMP_CNR.Module.Maps.Models
 {
-    class LoadableScriptMapModel : Loadable<uint>
+    public class LoadableScriptMapModel : Loadable<uint>
     {
         public uint Id { get; set; }
         public string Name { get; set; }
