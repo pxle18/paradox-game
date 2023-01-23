@@ -58,24 +58,30 @@ namespace VMP_CNR.Module.ShopTakeover.Models
         }
 
         public override uint GetIdentifier() => Id;
-        public bool CanAttacked() => Configurations.Configuration.Instance.DevMode || LastRob.AddHours(72) <= DateTime.Now;
+        public bool CanAttacked() => Configurations.Configuration.Instance.DevMode || LastRob.AddHours(8) <= DateTime.Now;
 
         public void AddMoney(int moneyAmount)
         {
             Money += moneyAmount;
-            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
+
+            string query = $"UPDATE `shop_takeovers` SET `money` = '{Money}' WHERE `id` = '{Id}'";
+            MySQLHandler.ExecuteAsync(query);
         }
 
         public void ClearMoney()
         {
             Money = 0;
-            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "money", Money);
+
+            string query = $"UPDATE `shop_takeovers` SET `money` = '{Money}' WHERE `id` = '{Id}'";
+            MySQLHandler.ExecuteAsync(query);
         }
 
         public void SetOwner(Team team)
         {
-            Team = team;
-            ShopTakeoverModule.Instance.Update(Id, this, "shop_takeovers", $"id = {Id}", "ownerTeam", team.Id);
+            Team = TeamModule.Instance[team.Id];
+
+            string query = $"UPDATE `shop_takeovers` SET `ownerTeam` = '{team.Id}' WHERE `id` = '{Id}'";
+            MySQLHandler.ExecuteAsync(query);
         }
 
         public void UpdateLastRob()

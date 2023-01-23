@@ -83,34 +83,29 @@ namespace VMP_CNR.Module.ShopTakeover
             if (!int.TryParse(arguments[1], out int amountOfItems)) return;
             if (!int.TryParse(arguments[2], out int radiusAmount)) return;
 
-            double angleBetween = 360f / amountOfItems;
+            var parts = amountOfItems;
 
-            double angleBetweenInRad = Math.PI / 180f * angleBetween;
+            var centerX = dbPlayer.Player.Position.X;
+            var centerY = dbPlayer.Player.Position.Y;
+            var distanceFromCenter = radiusAmount;
 
-            double radius = radiusAmount / angleBetweenInRad;
+            var step = 360 / parts;
 
-            double currentAngle = 0;
-
-            for (int i = 1; i <= amountOfItems; i++)
+            for (var i = 1; i <= parts; i++)
             {
-                currentAngle += angleBetweenInRad;
+                var h = i * step;
+                var rad = (-h * Math.PI / 180);
 
-                double x = Math.Sin(currentAngle) * radius;
-                double y = Math.Cos(currentAngle) * radius;
+                var x = (centerX + distanceFromCenter * Math.Sin(rad));
+                var y = (centerY + distanceFromCenter * Math.Cos(rad));
 
-                var position = dbPlayer.Player.Position + new Vector3(x, y, 0);
-                var rotation = currentAngle + (i * (180 / Math.PI * currentAngle));
-
-                NAPI.Object.CreateObject(hash, position, new Vector3(0, 0, rotation));
+                NAPI.Object.CreateObject(hash, new Vector3(x,y, dbPlayer.Player.Position.Z), new Vector3(0, 0, h));
             }
         }
 
         public override void OnFiveMinuteUpdate()
         {
-            if (GetAll() == null) return;
-            if (GetAll().Values.Count <= 0) return;
-
-            foreach (var shopTakeoverModel in GetAll().Values) shopTakeoverModel.AddMoney(120);
+            foreach (var shopTakeoverModel in GetAll().Values.ToList()) shopTakeoverModel.AddMoney(120);
         }
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)

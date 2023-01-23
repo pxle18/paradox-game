@@ -594,7 +594,7 @@ namespace VMP_CNR.Module.Teams.Shelter
                                     {
 
                                         dbPlayer.GiveWeaponComponent((uint)l_Weapon.Hash, weaponComponent.Hash);
-                                        dbPlayer.SendNewNotification("Waffe vergoldet!");
+                                        dbPlayer.SendNewNotification("Waffe vergoldet!"); 
                                         return true;
                                     }
                                 }

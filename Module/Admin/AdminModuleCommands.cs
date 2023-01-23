@@ -1946,7 +1946,7 @@ namespace VMP_CNR.Module.Admin
                     case (int)AdminLevelTypes.PublicRelation:
                         color = 1;
                         break;
-                    case 21:
+                    case 25:
                         color = 11;
                         break;
 

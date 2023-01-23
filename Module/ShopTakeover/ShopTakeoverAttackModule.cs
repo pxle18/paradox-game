@@ -23,7 +23,7 @@ namespace VMP_CNR.Module.ShopTakeover
         public Dictionary<uint, ShopTakeoverModel> ActiveTakeovers = new Dictionary<uint, ShopTakeoverModel>();
 
         public const int ShopTakeoverDimension = 5000;
-        public const int TimeLimitInMinutes = 15;
+        public const int TimeLimitInMinutes = 20;
 
         public override Type[] RequiredModules()
         {
@@ -46,7 +46,7 @@ namespace VMP_CNR.Module.ShopTakeover
                 return;
             }
 
-            if(shopTakeoverModel.Team.Id == dbPlayer.Team.Id)
+            if (shopTakeoverModel.Team.Id == dbPlayer.Team.Id)
             {
                 dbPlayer.SendNewNotification("öhm... WIESO WILLST DU DICH SELBST ANGREIFEN?! BIST DU DOOOF?????");
                 return;
@@ -69,7 +69,7 @@ namespace VMP_CNR.Module.ShopTakeover
 
         public override void OnMinuteUpdate()
         {
-            foreach (var shopTakeoverModel in ActiveTakeovers.Values)
+            foreach (var shopTakeoverModel in ActiveTakeovers.Values.ToList())
             {
                 shopTakeoverModel.Players.Values.ForEach(player => player.SendNewNotification("Du bist im ShopTakeover"));
 
@@ -99,24 +99,24 @@ namespace VMP_CNR.Module.ShopTakeover
             loosingTeam.SendNotification($"Der Angriff auf den Shop {shopTakeoverModel.Name} ist gescheitert. Grund: {finishReason}");
 
             shopTakeoverModel.SetOwner(winningTeam);
-            shopTakeoverModel.UpdateLastRob();
+            // shopTakeoverModel.UpdateLastRob();
         }
 
         public void Clean(ShopTakeoverModel shopTakeoverModel)
         {
             Instance.ActiveTakeovers.Remove(shopTakeoverModel.Id);
 
-            shopTakeoverModel.Marker.Delete();
-            shopTakeoverModel.Marker = null;
-
-            shopTakeoverModel.ColShape.Delete();
-            shopTakeoverModel.ColShape = null;
-
-            foreach(var player in shopTakeoverModel.Players.Values)
+            NAPI.Task.Run(() =>
             {
-                player.SetDimension(0);
-                player.DimensionType[0] = DimensionTypes.World;
-            }
+                shopTakeoverModel.Marker.Delete();
+                shopTakeoverModel.ColShape.Delete();
+
+                shopTakeoverModel.Marker = null;
+                shopTakeoverModel.ColShape = null;
+                shopTakeoverModel.Attacker = null;
+            });
+
+            shopTakeoverModel.IsInTakeover = false;
         }
 
         public override bool OnColShapeEvent(DbPlayer dbPlayer, ColShape colShape, ColShapeState colShapeState)
@@ -128,17 +128,16 @@ namespace VMP_CNR.Module.ShopTakeover
             var shopTakeoverModel = ShopTakeoverModule.Instance.Get(shopTakeoverId);
             if (shopTakeoverModel == null) return false;
 
-            if (shopTakeoverModel.TeamsCanAccess.FirstOrDefault(team => team.Id == dbPlayer.Team.Id) == null)
-                return false;
-            
+            if (dbPlayer.Team.Id != shopTakeoverModel.Team.Id
+                && dbPlayer.Team.Id != shopTakeoverModel.Attacker.Id) return false;
 
             switch (colShapeState)
             {
                 case ColShapeState.Enter:
                     dbPlayer.SetData("attackShopTakeoverId", shopTakeoverModel.Id);
 
-                    dbPlayer.DimensionType[0] = DimensionTypes.ShopTakeover;
-                    dbPlayer.SetDimension(ShopTakeoverDimension);
+                    // dbPlayer.DimensionType[0] = DimensionTypes.ShopTakeover;
+                    // dbPlayer.SetDimension(ShopTakeoverDimension);
 
                     shopTakeoverModel.Players.TryAdd(dbPlayer.Id, dbPlayer);
 
@@ -147,8 +146,8 @@ namespace VMP_CNR.Module.ShopTakeover
                     if (!dbPlayer.HasData("attackShopTakeoverId")) return false;
                     dbPlayer.ResetData("attackShopTakeoverId");
 
-                    dbPlayer.DimensionType[0] = DimensionTypes.World;
-                    dbPlayer.SetDimension(0);
+                    // dbPlayer.DimensionType[0] = DimensionTypes.World;
+                    // dbPlayer.SetDimension(0);
 
                     shopTakeoverModel.Players.Remove(dbPlayer.Id);
 
