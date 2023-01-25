@@ -209,8 +209,8 @@ namespace VMP_CNR.Module.Items.Scripts
                     case 3:
                     case 4:
                     case 5:
-                        xItem = 40; // marksam ammo
-                        amount = 3;
+                        xItem = 348; // marksam ammo
+                        amount = 1;
                         break;
                     case 6:
                     case 7:
@@ -286,7 +286,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     case 47:
                     case 48:
                     case 49:
-                        xItem = 1220; // marksman schalld
+                        xItem = 349; // marksman schalld
                         amount = 1;
                         break;
                     case 50:
@@ -298,7 +298,7 @@ namespace VMP_CNR.Module.Items.Scripts
                     case 53:
                     case 54:
                     case 55:
-                        xItem = 1235; // advanced light
+                        xItem = 2237; // advanced light
                         amount = 1;
                         break;
                     case 56:
