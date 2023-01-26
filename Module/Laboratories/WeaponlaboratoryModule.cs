@@ -40,7 +40,8 @@ namespace VMP_CNR.Module.Laboratories
             { 987, 40000 }, // M4
             { 986, 40000 }, // Bullpup
             { 985, 35000 }, // AK
-            { 1267, 15000 } // MicroSMG
+            { 1267, 15000 }, // MicroSMG
+            { 82, 55000 }, // 50000
         };
 
         protected override string GetQuery()
