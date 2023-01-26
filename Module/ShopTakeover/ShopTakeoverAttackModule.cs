@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using VMP_CNR.Extensions;
 using VMP_CNR.Module.GTAN;
+using VMP_CNR.Module.Injury;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Shops;
@@ -79,7 +80,7 @@ namespace VMP_CNR.Module.ShopTakeover
                 if (shopTakeoverModel.LastRob.AddMinutes(TimeLimitInMinutes) < DateTime.Now)
                     Finish(shopTakeoverModel, winningTeam: shopTakeoverModel.Attacker, loosingTeam: shopTakeoverModel.Team, "Zeitlimit überschritten.");
 
-                var attackerPlayersInsideShop = shopTakeoverModel.Players.Values.Where(player => player.Player.Position.DistanceTo(shopTakeoverModel.Shop.Position) <= 15f);
+                var attackerPlayersInsideShop = shopTakeoverModel.Players.Values.Where(player => player.Player.Position.DistanceTo(shopTakeoverModel.Shop.Position) <= 15f && !player.IsInjured());
 
                 if (attackerPlayersInsideShop.Count() < 1)
                     Finish(shopTakeoverModel, winningTeam: shopTakeoverModel.Team, loosingTeam: shopTakeoverModel.Attacker, "Keiner der Angreifer im Shop.");
