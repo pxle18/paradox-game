@@ -49,36 +49,13 @@ namespace VMP_CNR.Module.Items
                 Locked = false;
 
                 SaveItem dbItem = new SaveItem(0, 0, 0, null);
-                int maxSlots = ContainerManager.GetMaxSlots(Type);
-                
-                for (int i = 0; i < maxSlots; i++)
+                for (int i = 0; i < ContainerManager.GetMaxSlots(Type); i++)
                 {
-                    try
-                    {
-                        string columnName = "slot_" + i;
-                        // Prüfen ob die Spalte existiert
-                        if (HasColumn(reader, columnName))
-                        {
-                            string slotData = reader.GetString(columnName);
-                            dbItem = (slotData == "" || slotData == "[]" ? new SaveItem(0, 0, 0, null) : JsonConvert.DeserializeObject<List<SaveItem>>(slotData).First()) ?? new SaveItem(0, 0, 0, null);
-                        }
-                        else
-                        {
-                            // Spalte existiert nicht, leeren Slot erstellen
-                            dbItem = new SaveItem(0, 0, 0, null);
-                        }
-                        
-                        if (dbItem.Id != 0 && !ItemModelModule.Instance.GetAll().ContainsKey(dbItem.Id))
-                            dbItem = new SaveItem(0, 0, 0, null);
+                    dbItem = (reader.GetString("slot_" + i) == "" ? new SaveItem(0, 0, 0, null) : (reader.GetString("slot_" + i) == "[]" ? new SaveItem(0, 0, 0, null) : JsonConvert.DeserializeObject<List<SaveItem>>(reader.GetString("slot_" + i)).First()) ?? new SaveItem(0, 0, 0, null));
+                    if (dbItem.Id != 0 && !ItemModelModule.Instance.GetAll().ContainsKey(dbItem.Id))
+                        dbItem = new SaveItem(0, 0, 0, null);
 
-                        Slots.Add(i, new Item(dbItem.Id, dbItem.Durability, dbItem.Amount, dbItem.Data));
-                    }
-                    catch (Exception ex)
-                    {
-                        // Fehler beim Laden des Slots - leeren Slot erstellen
-                        Logger.Print($"Error loading slot {i} for container {Id}: {ex.Message}");
-                        Slots.Add(i, new Item(0, 0, 0, null));
-                    }
+                    Slots.Add(i, new Item(dbItem.Id, dbItem.Durability, dbItem.Amount, dbItem.Data));
                 }
 
                 IntelligentContainerSaving = new Dictionary<int, DateTime>();
@@ -102,36 +79,13 @@ namespace VMP_CNR.Module.Items
                 Locked = false;
 
                 SaveItem dbItem = new SaveItem(0, 0, 0, null);
-                int maxSlots = ContainerManager.GetMaxSlots(Type);
-                
-                for (int i = 0; i < maxSlots; i++)
+                for (int i = 0; i < ContainerManager.GetMaxSlots(Type); i++)
                 {
-                    try
-                    {
-                        string columnName = "slot_" + i;
-                        // Prüfen ob die Spalte existiert
-                        if (HasColumn(reader, columnName))
-                        {
-                            string slotData = reader.GetString(columnName);
-                            dbItem = (slotData == "" || slotData == "[]" ? new SaveItem(0, 0, 0, null) : JsonConvert.DeserializeObject<List<SaveItem>>(slotData).First()) ?? new SaveItem(0, 0, 0, null);
-                        }
-                        else
-                        {
-                            // Spalte existiert nicht, leeren Slot erstellen
-                            dbItem = new SaveItem(0, 0, 0, null);
-                        }
-                        
-                        if (dbItem.Id != 0 && !ItemModelModule.Instance.GetAll().ContainsKey(dbItem.Id))
-                            dbItem = new SaveItem(0, 0, 0, null);
+                    dbItem = (reader.GetString("slot_" + i) == "" ? new SaveItem(0, 0, 0, null) : (reader.GetString("slot_" + i) == "[]" ? new SaveItem(0, 0, 0, null) : JsonConvert.DeserializeObject<List<SaveItem>>(reader.GetString("slot_" + i)).First()) ?? new SaveItem(0, 0, 0, null));
+                    if (dbItem.Id != 0 && !ItemModelModule.Instance.GetAll().ContainsKey(dbItem.Id))
+                        dbItem = new SaveItem(0, 0, 0, null);
 
-                        Slots.Add(i, new Item(dbItem.Id, dbItem.Durability, dbItem.Amount, dbItem.Data));
-                    }
-                    catch (Exception ex)
-                    {
-                        // Fehler beim Laden des Slots - leeren Slot erstellen
-                        Logger.Print($"Error loading slot {i} for container {Id}: {ex.Message}");
-                        Slots.Add(i, new Item(0, 0, 0, null));
-                    }
+                    Slots.Add(i, new Item(dbItem.Id, dbItem.Durability, dbItem.Amount, dbItem.Data));
                 }
 
                 IntelligentContainerSaving = new Dictionary<int, DateTime>();
@@ -164,30 +118,6 @@ namespace VMP_CNR.Module.Items
             IntelligentContainerSaving = new Dictionary<int, DateTime>();
             
             ContainerManager.CheckStaticContainerInserting(this);
-        }
-        
-        private bool HasColumn(MySqlDataReader reader, string columnName)
-        {
-            try
-            {
-                return reader.GetOrdinal(columnName) >= 0;
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return false;
-            }
-        }
-        
-        private bool HasColumn(DbDataReader reader, string columnName)
-        {
-            try
-            {
-                return reader.GetOrdinal(columnName) >= 0;
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return false;
-            }
         }
     }
 }

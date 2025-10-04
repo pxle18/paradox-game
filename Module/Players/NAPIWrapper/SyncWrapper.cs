@@ -41,11 +41,12 @@ namespace VMP_CNR.Module.Players.NAPIWrapper
                 {
                     NAPI.Task.Run(() =>
                     {
-                        foreach (DbPlayer dbPlayer in Players.Instance.GetValidPlayers())
+                        foreach (Player client in NAPI.Pools.GetAllPlayers())
                         {
+                            DbPlayer dbPlayer = client.GetPlayer();
                             if (dbPlayer == null || !dbPlayer.IsValid()) continue;
 
-                            bool isInVehicleState = dbPlayer.Player.IsInVehicle;
+                            bool isInVehicleState = client.IsInVehicle;
 
                             if(isInVehicleState != dbPlayer.RageExtension.IsInVehicle)
                             {

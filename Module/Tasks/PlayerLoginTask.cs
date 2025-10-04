@@ -44,11 +44,11 @@ namespace VMP_CNR.Module.Tasks
 
             if (!reader.HasRows)
             {
-                _player.SendNotification("Sie benoetigen einen Account (Void.to)! Name richtig gesetzt? Vorname_Nachname");
+                _player.SendNotification("Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
                 await Task.Delay(500);
 
                 _player.Kick(
-                    "Sie benoetigen einen Account (Void.to)! Name richtig gesetzt? Vorname_Nachname");
+                    "Sie benoetigen einen Account (paradox.to)! Name richtig gesetzt? Vorname_Nachname");
 
                 Logger.Debug($"Player was kicked, no Account found for {_player.Name}");
 
@@ -70,7 +70,7 @@ namespace VMP_CNR.Module.Tasks
 
                         PlayerLoginDataValidationModule.SyncUserBanToForum(reader.GetInt32("forumid"));
 
-                        _player.SendNotification($"Dein Void (IC-)Account wurde gesperrt. Melde dich im Teamspeak!");
+                        _player.SendNotification($"Dein PARADOX (IC-)Account wurde gesperrt. Melde dich im Teamspeak!");
                         await Task.Delay(500);
                         _player.Kick();
                         return;

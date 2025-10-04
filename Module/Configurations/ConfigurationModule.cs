@@ -33,7 +33,7 @@ namespace VMP_CNR.Module.Configurations
             if (key != Key.J) return false;
 
             if (!dbPlayer.CanInteract()) return false;
-            if (dbPlayer.RageExtension.IsInVehicle ) return false;
+            if (dbPlayer.RageExtension.IsInVehicle /*|| dbPlayer.Player.IsInVehicle*/) return false;
             if (PhoneCall.IsPlayerInCall(dbPlayer.Player)) return false;
 
             if (dbPlayer.HasData("salute"))

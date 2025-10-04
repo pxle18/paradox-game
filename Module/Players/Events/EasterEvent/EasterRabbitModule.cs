@@ -51,7 +51,7 @@ namespace VMP_CNR.Module.Players.Events.EasterEvent
                     if(dbPlayer.Container.CanInventoryItemAdded(EasterEggId))
                     {
                         dbPlayer.Container.AddItem(EasterEggId);
-                        dbPlayer.SendNewNotification($"Du hast ein {ItemModelModule.Instance.Get(EasterEggId).Name} bekommen! Frohe Ostern wünscht Void.");
+                        dbPlayer.SendNewNotification($"Du hast ein {ItemModelModule.Instance.Get(EasterEggId).Name} bekommen! Frohe Ostern wünscht PARADOX.");
                         dbPlayer.ChangeEventState(EventStateModule.EventListIds.EASTER2021, 1);
                         easterRabbit.LastUsed = DateTime.Now;
                     }

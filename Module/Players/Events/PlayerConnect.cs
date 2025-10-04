@@ -7,7 +7,6 @@ using VMP_CNR.Module.Configurations;
 using VMP_CNR.Module.Logging;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Tasks;
-using VMP_CNR.Handler.Webhook;
 
 namespace VMP_CNR.Module.Players.Events
 {
@@ -18,16 +17,6 @@ namespace VMP_CNR.Module.Players.Events
             if (player == null) return;
 
             Logger.Debug("OnPlayerConnectEvent " + player.Name);
-
-            // 🚀 WEBHOOK LOGGING - Player Connect
-            try
-            {
-                VoidEventLogger.LogPlayerConnect(player);
-            }
-            catch (Exception ex)
-            {
-                Logger.Print($"[WEBHOOK] Fehler beim Loggen von PlayerConnect: {ex.Message}");
-            }
 
             player.SetPosition(new Vector3(17.4809, 637.872, 210.595));
 

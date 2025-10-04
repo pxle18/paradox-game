@@ -19,9 +19,9 @@ namespace VMP_CNR.Module.Tattoo
 
         public TattooLicense(MySqlDataReader reader) : base(reader)
         {
-            Id = reader.IsDBNull(reader.GetOrdinal("tattooLicenseId")) ? 0 : reader.GetUInt32("tattooLicenseId");
-            AssetsTattooId = reader.IsDBNull(reader.GetOrdinal("assets_tattoo_id")) ? 0 : reader.GetUInt32("assets_tattoo_id");
-            Price = reader.IsDBNull(reader.GetOrdinal("tattooLicensePrice")) ? 0 : reader.GetInt32("tattooLicensePrice");
+            Id = reader.GetUInt32("tattooLicenseId");
+            AssetsTattooId = reader.GetUInt32("assets_tattoo_id");
+            Price = reader.GetInt32("tattooLicensePrice");
 
             try
             {

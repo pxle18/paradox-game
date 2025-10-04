@@ -15,7 +15,7 @@ using VMP_CNR.Module.Teams;
 namespace VMP_CNR.Module.ShopTakeover
 {
     /**
-     * This is part of the Void Game-Rework.
+     * This is part of the PARADOX Game-Rework.
      * Made by module@jabber.ru
      */
     public sealed class ShopTakeoverAttackModule : Module<ShopTakeoverAttackModule>

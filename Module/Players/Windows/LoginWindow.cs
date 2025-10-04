@@ -41,9 +41,9 @@ namespace VMP_CNR.Module.Players.Windows
         }
         
         [RemoteEvent]
-        public void SetPlayerRemoteHashKey(Player player, string userIdString)
+        public void SetPlayerRemoteHashKey(Player player, string userIdString, string key)
         {
-            // Removed remote event key to match client signature
+            if (!player.CheckRemoteEventKey(key)) return;
 
             DbPlayer dbPlayer = player.GetPlayer();
             if (dbPlayer == null) return;
@@ -82,26 +82,6 @@ namespace VMP_CNR.Module.Players.Windows
                     return;
                 }
 
-                // Check if player needs registration (empty password)
-                if (string.IsNullOrEmpty(dbPlayer.Password) || string.IsNullOrEmpty(dbPlayer.Salt))
-                {
-                    // Auto-registration: Set the provided password as new password
-                    string newSalt = Guid.NewGuid().ToString().Substring(0, 8);
-                    string hashedPassword = HashThis.GetSha256Hash(newSalt + password);
-                    
-                    // Update database with new password and salt
-                    string updateQuery = $"UPDATE `player` SET `Pass` = '{hashedPassword}', `Salt` = '{newSalt}' WHERE `id` = '{dbPlayer.Id}';";
-                    MySQLHandler.ExecuteAsync(updateQuery);
-                    
-                    // Update player object
-                    dbPlayer.Password = hashedPassword;
-                    dbPlayer.Salt = newSalt;
-                    
-                    Logger.Print($"Auto-registered player: {dbPlayer.GetName()} with new password");
-                    
-                    // Continue with login process
-                }
-                
                 var pass = HashThis.GetSha256Hash(dbPlayer.Salt + password);
                 var pass2 = dbPlayer.Password;
                 if (pass == pass2)

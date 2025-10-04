@@ -18,7 +18,7 @@ namespace VMP_CNR.Module.Players
         public static void SetPlayerCurrentJobSkill(this DbPlayer dbPlayer)
         {
             if (dbPlayer.job[0] == 0) return;
-            if (dbPlayer.job_skills != null && dbPlayer.job_skills[0] != null && dbPlayer.job_skills[0] != "")
+            if (dbPlayer.job_skills[0] != "")
             {
                 string[] Items = dbPlayer.job_skills[0].Split(',');
                 foreach (string item in Items)

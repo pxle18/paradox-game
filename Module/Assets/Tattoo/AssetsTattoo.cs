@@ -18,12 +18,12 @@ namespace VMP_CNR.Module.Assets.Tattoo
         public AssetsTattoo(MySqlDataReader reader) : base(reader)
         {
             Id = reader.GetUInt32("id");
-            Name = reader.IsDBNull(reader.GetOrdinal("name")) ? "" : reader.GetString("name");
-            HashMale = reader.IsDBNull(reader.GetOrdinal("hash_male")) ? "" : reader.GetString("hash_male");
-            HashFemale = reader.IsDBNull(reader.GetOrdinal("hash_female")) ? "" : reader.GetString("hash_female");
-            Collection = reader.IsDBNull(reader.GetOrdinal("collection")) ? "" : reader.GetString("collection");
-            ZoneId = reader.IsDBNull(reader.GetOrdinal("zone_id")) ? 0 : reader.GetInt32("zone_id");
-            Price = reader.IsDBNull(reader.GetOrdinal("price")) ? 0 : reader.GetInt32("price");
+            Name = reader.GetString("name");
+            HashMale = reader.GetString("hash_male");
+            HashFemale = reader.GetString("hash_female");
+            Collection = reader.GetString("collection");
+            ZoneId = reader.GetInt32("zone_id");
+            Price = reader.GetInt32("price");
         }
 
         public override uint GetIdentifier()

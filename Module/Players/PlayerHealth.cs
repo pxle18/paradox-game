@@ -8,15 +8,12 @@ namespace VMP_CNR.Module.Players
     {
         public static void ApplyPlayerHealth(this DbPlayer dbPlayer)
         {
-            // Guard missing player instance during early load
-            if (dbPlayer == null || dbPlayer.Player == null) return;
-
             if (dbPlayer.Hp > 0)
             {
                 if (dbPlayer.Hp > 99) dbPlayer.Hp = 99;
                 dbPlayer.SetHealth(dbPlayer.Hp);
             }
-            if (dbPlayer.Armor != null && dbPlayer.Armor.Length > 0 && dbPlayer.Armor[0] > 0)
+            if (dbPlayer.Armor[0] > 0)
             {
                 if(dbPlayer.Armor[0] > 99)
                 {
@@ -29,12 +26,8 @@ namespace VMP_CNR.Module.Players
 
         public static void UpdatePlayerHealthAndArmor(this DbPlayer dbPlayer)
         {
-            if (dbPlayer?.Player == null) return;
             dbPlayer.Hp = dbPlayer.Player.Health;
-            if (dbPlayer.Armor != null && dbPlayer.Armor.Length > 0)
-            {
-                dbPlayer.Armor[0] = dbPlayer.Player.Armor;
-            }
+            dbPlayer.Armor[0] = dbPlayer.Player.Armor;
         }
 
         public static void SetHealth(this DbPlayer dbPlayer, int health)
@@ -48,7 +41,6 @@ namespace VMP_CNR.Module.Players
 
             NAPI.Task.Run(() =>
             {
-                if (dbPlayer?.Player == null) return;
                 dbPlayer.Hp = health;
                 dbPlayer.Player.Health = health;
             });

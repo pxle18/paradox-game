@@ -20,7 +20,7 @@ namespace VMP_CNR.Module.Farming
             var farmSpot = FarmSpotModule.Instance[farmPosition.FarmSpotId];
             if (farmSpot == null)
             {
-                Logger.Debug($"Void FarmSpotId {farmPosition.FarmSpotId}");
+                Logger.Debug($"Unknown FarmSpotId {farmPosition.FarmSpotId}");
                 return;
             }
 

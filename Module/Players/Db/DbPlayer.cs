@@ -368,9 +368,6 @@ namespace VMP_CNR.Module.Players.Db
         public bool IsInTask { get; set; }
         public Rank Rank { get; set; }
 
-        // Lifecycle flag: becomes true after first spawn sync is done
-        public bool FirstSpawnCompleted { get; set; }
-
         public Procedure Procedure { get; set; }
         public Dictionary<string, string> ProcedureData { get; set; } = new Dictionary<string, string>();
         public string CurrentProcedureKey { get; set; }
@@ -675,50 +672,23 @@ namespace VMP_CNR.Module.Players.Db
 
         public void SetArmorPlayer(int Armor)
         {
-            // Add safety checks for null/invalid state
-            if (!this.IsValid() || this.Player == null) return;
-            
-            try
-            {
-                if (AccountStatus != AccountStatus.LoggedIn) return;
-            }
-            catch
-            {
-                // AccountStatus might not be initialized yet
-                return;
-            }
+            if (AccountStatus != AccountStatus.LoggedIn) return;
 
             Task.Run(async () =>
             {
-                // Retry until player is ready (even before first spawn), but cap attempts
-                int attempts = 0;
-                while ((this.Player == null || !this.IsValid() || this.Character == null) && attempts < 10)
-                {
-                    attempts++;
-                    await Task.Delay(500);
-                }
-
-                if (this.Player == null || !this.IsValid() || this.Character == null)
-                {
-                    // Still not ready, give up silently
-                    return;
-                }
-
                 if (Armor >= 99) Armor = 99;
 
                 SetData("ac_lastArmor", Armor);
 
                 SetData("serverArmorChanged", 2);
-                if (MetaData != null) MetaData.Armor = Armor;
+                MetaData.Armor = Armor;
 
-                // Apply armor on main thread
-                NAPI.Task.Run(() => { if (this.Player != null && this.IsValid()) this.Player.Armor = Armor; });
+                NAPI.Task.Run(() => { Player.Armor = Armor; });
 
                 await Task.Delay(500);
 
-                // After a short delay, try to apply visibility (safe checks inside)
-                try { if (this.Player != null && this.Character != null) this.ApplyArmorVisibility(); } catch {}
-                try { this.Save(); } catch {}
+                this.ApplyArmorVisibility();
+                this.Save();
             });
 
 
@@ -726,33 +696,16 @@ namespace VMP_CNR.Module.Players.Db
 
         public void SetDimension(uint dimension)
         {
-            // Add safety checks for null/invalid state
-            if (!this.IsValid() || this.Player == null) return;
-            
-            try
-            {
-                if (AccountStatus != AccountStatus.LoggedIn) return;
-            }
-            catch
-            {
-                // AccountStatus might not be initialized yet
-                return;
-            }
+            if (AccountStatus != AccountStatus.LoggedIn) return;
 
             SetData("serverDimensionChange", 2);
-            if (this.Dimension != null && this.Dimension.Length > 0)
-                Dimension[0] = dimension;
+            Dimension[0] = dimension;
 
             NAPI.Task.Run(() =>
             {
-                if (this.Player != null)
-                {
-                    Player.Dimension = dimension;
-                }
+                Player.Dimension = dimension;
 
-                bool animalActive = false;
-                try { animalActive = this.IsAnimalActiv(); } catch { animalActive = false; }
-                if (PlayerPed != null && PlayerPed.Ped != null && animalActive)
+                if (this.IsAnimalActiv())
                 {
                     PlayerPed.Ped.Dimension = dimension;
                 }
@@ -767,81 +720,42 @@ namespace VMP_CNR.Module.Players.Db
         /// <param name="dimension">Dimension, in die der Spieler gesetzt werden soll.</param>
         public void SetDimensionAsync(uint dimension, bool resetToPrevAfterDelay = false, int resetDelay = 100)
         {
-            // Capture the necessary values before async operation
-            if (!this.IsValid() || this.Player == null)
-                return;
-                
-            // Check AccountStatus before starting the task
-            try
+            Task.Run(async () =>
             {
                 if (AccountStatus != AccountStatus.LoggedIn)
                     return;
-            }
-            catch
-            {
-                // AccountStatus might not be initialized yet
-                return;
-            }
-            
-            Task.Run(async () =>
-            {
-                try
-                {
-                    // Re-check validity after thread switch
-                    if (!this.IsValid() || this.Player == null)
-                        return;
 
                 await NAPI.Task.WaitForMainThread();
-                
-                // Additional safety check after thread switch
-                if (!this.IsValid() || this.Player == null)
-                    return;
-                    
                 SetData("serverDimensionChange", 2);
 
-                bool animalActive = false;
-                try { animalActive = this.IsAnimalActiv(); } catch { animalActive = false; }
-                if (PlayerPed != null && PlayerPed.Ped != null && animalActive)
+                if (this.IsAnimalActiv())
                 {
                     PlayerPed.Ped.Dimension = dimension;
                 }
 
                 if (resetToPrevAfterDelay)
                 {
-                    uint prevDimension = (this.Dimension != null && this.Dimension.Length > 0) ? Dimension[0] : 0;
+                    uint prevDimension = Dimension[0];
 
-                    if (this.Player != null) Player.Dimension = dimension;
-                    if (this.Dimension != null && this.Dimension.Length > 0) Dimension[0] = dimension;
+                    Player.Dimension = dimension;
+                    Dimension[0] = dimension;
 
                     await Task.Delay(resetDelay);
                     SetDimensionAsync(prevDimension); // Rekursiv
                 }
                 else
                 {
-                    if (this.Player != null) Player.Dimension = dimension;
-                    if (this.Dimension != null && this.Dimension.Length > 0) Dimension[0] = dimension;
+                    Player.Dimension = dimension;
+                    Dimension[0] = dimension;
                 }
 
                 await Task.Delay(5);
-                }
-                catch { /* swallow early spawn timing exceptions */ }
             });
         }
 
         public void WarpOutOfVehicle(bool checkAC = false)
         {
-            // Add safety checks for null/invalid state
-            if (!this.IsValid() || this.Player == null) return;
-            
-            try
-            {
-                if (AccountStatus != AccountStatus.LoggedIn) return;
-            }
-            catch
-            {
-                // AccountStatus might not be initialized yet
-                return;
-            }
+            if (AccountStatus != AccountStatus.LoggedIn) return;
 
             if (RageExtension.IsInVehicle)
             {

@@ -24,7 +24,7 @@ using VMP_CNR.Module.Sync;
 namespace VMP_CNR.Module.Christmas
 {
     /**
-     * This is part of the Void Game-Rework.
+     * This is part of the PARADOX Game-Rework.
      * Made by module@jabber.ru
      */
 
@@ -42,7 +42,7 @@ namespace VMP_CNR.Module.Christmas
 
             if (christmasCodes.Count() <= 0)
             {
-                dbPlayer.SendNewNotification("Wir konnten leider keine Geschenke unter deinem Code. Bist du sicher, dass du bereits Geschenke im Adventskalender geöffnet hast?", PlayerNotification.NotificationType.ERROR, "XMAS.void.to", 8000);
+                dbPlayer.SendNewNotification("Wir konnten leider keine Geschenke unter deinem Code. Bist du sicher, dass du bereits Geschenke im Adventskalender geöffnet hast?", PlayerNotification.NotificationType.ERROR, "XMAS.PRDX.TO", 8000);
                 Logger.Print(ChristmasPresentModule.Instance.Presents.Count().ToString());
 
                 return;
@@ -96,7 +96,7 @@ namespace VMP_CNR.Module.Christmas
 
             PlayerNotifications.Instance.Add(
                 PresentLocation,
-                "Void Roleplay", "Nehmt eure gesammelten Geschenke mit. I think it’s time, isn’t it?"
+                "PARADOX Roleplay", "Nehmt eure gesammelten Geschenke mit. I think it’s time, isn’t it?"
             );
 
             return true;
@@ -118,7 +118,7 @@ namespace VMP_CNR.Module.Christmas
                         var christmasCodes = Instance.Presents.Where(christmasPresent => christmasPresent.PlayerId == dbPlayer.Id);
                         if (christmasCodes == null || christmasCodes.Count() <= 0)
                         {
-                            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.void.to erhalten hast." });
+                            ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Adventskalender Login-Code einlösen", Callback = "RedeemChristmasCode", Message = "Gib deinen Login-Code ein, den du auf xmas.prdx.to erhalten hast." });
                             return true;
                         }
 
@@ -138,7 +138,7 @@ namespace VMP_CNR.Module.Christmas
 
         public void ProcessChristmasCodes(DbPlayer player, IEnumerable<ChristmasPresentModel> christmasPresents)
         {
-            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Bitte öffne an diesem Punkt dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.void.to");
+            player.SendNewNotification("Hey, wir haben deine Geschenke gefunden! Bitte öffne an diesem Punkt dein Inventar.", PlayerNotification.NotificationType.SUCCESS, "XMAS.PRDX.TO");
 
             foreach (var code in christmasPresents.ToList())
             {

@@ -39,7 +39,7 @@ namespace VMP_CNR
                 str2 = Content.General.GetDonorName(dbPlayer.donator[0]);
             }
 
-            menu.Add("Void: ~b~" + str2, "");
+            menu.Add("PARADOX: ~b~" + str2, "");
 
             menu.Add("Bargeld: ~g~" + dbPlayer.Money[0] + "$", "");
             menu.Add("Wanteds: ~r~" + dbPlayer.Wanteds[0] + "/59", "");
