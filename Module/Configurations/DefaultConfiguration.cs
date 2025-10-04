@@ -54,9 +54,9 @@ namespace VMP_CNR.Module.Configurations
 
         public DefaultConfiguration(IReadOnlyDictionary<string, dynamic> data)
         {
-            DevLog = false;
-            Ptr = false;
-            DevMode = Dns.GetHostName() == "v1281832.v-server.me";
+            DevLog = true;
+            Ptr = true;
+            DevMode = true;
             VoiceChannel = "INGAME_LIVE";
             VoiceChannelPassword = "WALID";
             IsServerOpen = false;
@@ -65,13 +65,13 @@ namespace VMP_CNR.Module.Configurations
             BlackMoneyEnabled = true;  //set to true later
             MethLabEnabled = true;  //set to true later
             MeertraeubelEnabled = true; //set to true later
-            JailescapeEnabled = false;
+            JailescapeEnabled = true;
             JumpPointsEnabled = true;
 
-            mysql_user = "user";
-            mysql_pw = "Nm2zefvTEOIgLfTR6EM8";
-            mysql_user_forum = "user";
-            mysql_pw_forum = "Nm2zefvTEOIgLfTR6EM8";
+            mysql_user = "root";
+            mysql_pw = "";
+            mysql_user_forum = "root";
+            mysql_pw_forum = "";
 
             DisableLauncher = false;
             if(data.ContainsKey("disable_launcher"))
@@ -96,7 +96,6 @@ namespace VMP_CNR.Module.Configurations
             CanBridgeUsed = false;
             MaxPlayers = data.ContainsKey("max_players") ? int.Parse(data["max_players"]) : 1000;
 
-            // Damage Multipliers
             WeaponDamageMultipier = 0.4f;
             MeleeDamageMultipier = 0.25f;
 
@@ -116,23 +115,21 @@ namespace VMP_CNR.Module.Configurations
             LinuxPath = data.ContainsKey("linux_server_path") ? data["linux_server_path"] : "/home/ragemp-srv/";
         }
         
-        public string GetMySqlConnection()
+      public string GetMySqlConnection()
         {
-            string hostName = Dns.GetHostName();
-
-            return $"server='db.prdx.to'; uid='{mysql_user}'; pwd='{mysql_pw}'; port=3306; database='ingame_{(hostName == "v1281832.v-server.me" ? "test" : "live")}';max pool size=999;SslMode=none;convert zero datetime=True;";
+            return "server='localhost'; uid='root'; pwd=''; port=3306; database='ingame_void';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
         
         public string GetMySqlConnectionBoerse()
         {
             return 
-                "server='db.prdx.to'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
+                "server='localhost'; uid='" + mysql_user + "'; pwd='" + mysql_pw + "'; database='boerse';max pool size=999;SslMode=none;convert zero datetime=True;";
         }
 
         public string GetMySqlConnectionForum()
         {
             return
-                "server='db.prdx.to'; uid='" + mysql_user_forum + "'; pwd='" + mysql_pw_forum + "'; database='forum_live';max pool size=999;SslMode=none;";
+                "server='localhost'; uid='" + mysql_user_forum + "'; pwd='" + mysql_pw_forum + "'; database='forum_live';max pool size=999;SslMode=none;";
         }
 
         public override string ToString()

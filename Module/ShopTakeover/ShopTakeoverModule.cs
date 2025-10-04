@@ -13,7 +13,7 @@ using VMP_CNR.Module.ShopTakeover.Models;
 namespace VMP_CNR.Module.ShopTakeover
 {
     /**
-     * This is part of the PARADOX Game-Rework.
+     * This is part of the Void Game-Rework.
      * Made by module@jabber.ru
      */
     public sealed class ShopTakeoverModule : SqlModule<ShopTakeoverModule, ShopTakeoverModel, uint>

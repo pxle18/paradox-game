@@ -189,6 +189,12 @@ namespace VMP_CNR.Module.Players.Events
                     else if (dbPlayer == null || !dbPlayer.IsValid())
                     {
                         await NAPI.Task.WaitForMainThread(2000);
+                        // Re-fetch dbPlayer and guard against null
+                        dbPlayer = player.GetPlayer();
+                        if (dbPlayer == null || !dbPlayer.IsValid())
+                        {
+                            return;
+                        }
                         dbPlayer.SetAcPlayerSpawnDeath();
                         if (dbPlayer.IsFirstSpawn)
                         {
@@ -275,7 +281,11 @@ namespace VMP_CNR.Module.Players.Events
                     {
                         dbPlayer.ResetData("komaSpawn");
 
-                        Vector3 spawnPos = InjuryModule.Instance.GetClosestHospital(new Vector3(dbPlayer.dead_x[0], dbPlayer.dead_y[0], dbPlayer.dead_z[0]));
+                        // Guard dead position arrays
+                        float dx = (dbPlayer.dead_x != null && dbPlayer.dead_x.Length > 0) ? dbPlayer.dead_x[0] : player.Position.X;
+                        float dy = (dbPlayer.dead_y != null && dbPlayer.dead_y.Length > 0) ? dbPlayer.dead_y[0] : player.Position.Y;
+                        float dz = (dbPlayer.dead_z != null && dbPlayer.dead_z.Length > 0) ? dbPlayer.dead_z[0] : player.Position.Z;
+                        Vector3 spawnPos = InjuryModule.Instance.GetClosestHospital(new Vector3(dx, dy, dz));
                         dbPlayer.SetPlayerKomaSpawn();
 
                         pos.X = spawnPos.X;
@@ -323,14 +333,14 @@ namespace VMP_CNR.Module.Players.Events
                         }
                         else
                         {
-                            if (dbPlayer.Team.TeamSpawns.TryGetValue(dbPlayer.fspawn[0], out var spawn))
+                            if (dbPlayer.Team != null && dbPlayer.Team.TeamSpawns != null && dbPlayer.Team.TeamSpawns.TryGetValue(dbPlayer.fspawn != null && dbPlayer.fspawn.Length > 0 ? dbPlayer.fspawn[0] : 0, out var spawn))
                             {
                                 pos = spawn.Position;
                                 heading = spawn.Heading;
                             }
                             else
                             {
-                                spawn = dbPlayer.Team.TeamSpawns.FirstOrDefault().Value;
+                                spawn = (dbPlayer.Team != null && dbPlayer.Team.TeamSpawns != null) ? dbPlayer.Team.TeamSpawns.FirstOrDefault().Value : null;
                                 if (spawn != null)
                                 {
                                     pos = spawn.Position;
@@ -343,7 +353,7 @@ namespace VMP_CNR.Module.Players.Events
                     // Setting Pos
                     if (dbPlayer.IsFirstSpawn)
                     {
-                        if (dbPlayer.pos_x[0] != 0f && !dbPlayer.IsNewbie())
+                        if (dbPlayer.pos_x != null && dbPlayer.pos_x.Length > 0 && dbPlayer.pos_x[0] != 0f && !dbPlayer.IsNewbie())
                         {
                             dbPlayer.spawnProtection = DateTime.Now;
 
@@ -354,7 +364,7 @@ namespace VMP_CNR.Module.Players.Events
                                 pos = new Vector3(pos.X, pos.Y, pos.Z + 3.0f);
                             }
 
-                            heading = dbPlayer.pos_heading[0];
+                            heading = (dbPlayer.pos_heading != null && dbPlayer.pos_heading.Length > 0) ? dbPlayer.pos_heading[0] : heading;
 
                         }
 
@@ -362,6 +372,8 @@ namespace VMP_CNR.Module.Players.Events
                         {
                             await NAPI.Task.WaitForMainThread(9000);
                             Modules.Instance.OnPlayerFirstSpawnAfterSync(dbPlayer);
+                            // mark first spawn lifecycle completed for safe armor/health application
+                            dbPlayer.FirstSpawnCompleted = true;
 
                             // resync cuffstate
 
@@ -382,15 +394,15 @@ namespace VMP_CNR.Module.Players.Events
                         Main.OnPlayerFirstSpawn(player);
 
                         // Fallback ...
-                        if (dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
+                        if (dbPlayer.DimensionType != null && dbPlayer.DimensionType.Length > 0 && dbPlayer.DimensionType[0] == DimensionTypes.Gangwar)
                         {
                             dbPlayer.Dimension[0] = 0;
                             dbPlayer.DimensionType[0] = DimensionTypes.World;
                         }
 
                         // Load player Dimension from DB
-                        dimension = dbPlayer.Dimension[0];
-                        dimensionType = dbPlayer.DimensionType[0];
+                        dimension = (dbPlayer.Dimension != null && dbPlayer.Dimension.Length > 0) ? dbPlayer.Dimension[0] : 0;
+                        dimensionType = (dbPlayer.DimensionType != null && dbPlayer.DimensionType.Length > 0) ? dbPlayer.DimensionType[0] : DimensionTypes.World;
 
                         DialogMigrator.CloseUserDialog(player, Dialogs.menu_info);
 
@@ -419,13 +431,34 @@ namespace VMP_CNR.Module.Players.Events
                             }
 
                             player.TriggerNewClient("SetOwnAnimData", JsonConvert.SerializeObject(new AnimationSyncItem(dbPlayer)));
-                            player.TriggerNewClient("onPlayerLoaded", firstName, lastName, dbPlayer.Id, dbPlayer.RP[0],
-                                dbPlayer.GetActiveBusiness()?.Id ?? 0, dbPlayer.grade[0], dbPlayer.Money[0], 0,
-                                dbPlayer.OwnHouse[0], dbPlayer.TeamId, dbPlayer.TeamRank, dbPlayer.Level, dbPlayer.IsInjured(), dbPlayer.IsInDuty(),
-                                dbPlayer.IsTied, dbPlayer.IsCuffed, dbPlayer.VoiceHash, dbPlayer.funkStatus, dbPlayer.handy[0], dbPlayer.job[0],
-                                dbPlayer.JobSkill[0], dbPlayer.GetJsonAnimationsShortcuts(), dbPlayer.RankId >= (uint)AdminLevelTypes.FirstLevelTeam,
-                                Configuration.Instance.WeaponDamageMultipier, Configuration.Instance.PlayerSync,
-                                Configuration.Instance.VehicleSync, dbPlayer.BlackMoney[0], dbPlayer.Ringtone.Id, insurance, dbPlayer.zwd[0],
+                            player.TriggerNewClient("onPlayerLoaded", firstName, lastName, dbPlayer.Id, 
+                                (dbPlayer.RP != null && dbPlayer.RP.Length > 0) ? dbPlayer.RP[0] : 0,
+                                dbPlayer.GetActiveBusiness()?.Id ?? 0, 
+                                (dbPlayer.grade != null && dbPlayer.grade.Length > 0) ? dbPlayer.grade[0] : 0, 
+                                (dbPlayer.Money != null && dbPlayer.Money.Length > 0) ? dbPlayer.Money[0] : 0, 
+                                0,
+                                (dbPlayer.OwnHouse != null && dbPlayer.OwnHouse.Length > 0) ? dbPlayer.OwnHouse[0] : 0, 
+                                dbPlayer.TeamId, 
+                                dbPlayer.TeamRank, 
+                                dbPlayer.Level, 
+                                dbPlayer.IsInjured(), 
+                                dbPlayer.IsInDuty(),
+                                dbPlayer.IsTied, 
+                                dbPlayer.IsCuffed, 
+                                dbPlayer.VoiceHash ?? "", 
+                                dbPlayer.funkStatus, 
+                                (dbPlayer.handy != null && dbPlayer.handy.Length > 0) ? dbPlayer.handy[0] : 0, 
+                                (dbPlayer.job != null && dbPlayer.job.Length > 0) ? dbPlayer.job[0] : 0,
+                                (dbPlayer.JobSkill != null && dbPlayer.JobSkill.Length > 0) ? dbPlayer.JobSkill[0] : 0, 
+                                dbPlayer.GetJsonAnimationsShortcuts() ?? "[]", 
+                                dbPlayer.RankId >= (uint)AdminLevelTypes.FirstLevelTeam,
+                                Configuration.Instance.WeaponDamageMultipier, 
+                                Configuration.Instance.PlayerSync,
+                                Configuration.Instance.VehicleSync, 
+                                (dbPlayer.BlackMoney != null && dbPlayer.BlackMoney.Length > 0) ? dbPlayer.BlackMoney[0] : 0, 
+                                dbPlayer.Ringtone?.Id ?? 0, 
+                                insurance, 
+                                (dbPlayer.zwd != null && dbPlayer.zwd.Length > 0) ? dbPlayer.zwd[0] : 0,
                                 Configuration.Instance.MeleeDamageMultipier,
                                 Configuration.Instance.DamageLog
                                 );

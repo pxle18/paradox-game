@@ -41,6 +41,7 @@ using VMP_CNR.Module.Vehicles;
 using VMP_CNR.Module.Weapons.Component;
 using VMP_CNR.Module.Weapons.Data;
 using static VMP_CNR.AnimationContent;
+using VMP_CNR.Handler.Webhook;
 
 namespace VMP_CNR.Module.Players
 {
@@ -98,6 +99,25 @@ namespace VMP_CNR.Module.Players
             if (destinationDbPlayer.Player.Position.DistanceTo(dbPlayer.Player.Position) > 20f) return;
 
             dbPlayer.SetData("sInteraction", destinationDbPlayer);
+            
+            // 💰 WEBHOOK LOGGING - Money Give Dialog
+            try
+            {
+                VoidMessageBuilder.Create()
+                    .SetContent($"💸 **Geld-Dialog geöffnet**")
+                    .SetTitle("Money Transfer Dialog")
+                    .SetEventColor(EventType.Money)
+                    .AddField("Geber", dbPlayer.GetName(), true)
+                    .AddField("Empfänger", destinationDbPlayer.GetName(), true)
+                    .AddTimestamp()
+                    .SetFooter("Money System")
+                    .SendTo(WebhookConfig.WebhookChannel.General);
+            }
+            catch (Exception ex)
+            {
+                Logger.Print($"[WEBHOOK] Fehler beim Loggen von Money Dialog: {ex.Message}");
+            }
+            
             ComponentManager.Get<GiveMoneyWindow>().Show()(dbPlayer, destinationDbPlayer);
         }
 
@@ -857,6 +877,26 @@ namespace VMP_CNR.Module.Players
                     destinationDbPlayer.SetCuffed(false);
                     destinationDbPlayer.SetTied(false);
                     destinationDbPlayer.ResetData("lastCuffedTied");
+                    
+                    // 🔓 WEBHOOK LOGGING - Player Uncuffed
+                    try
+                    {
+                        VoidMessageBuilder.Create()
+                            .SetContent($"🔓 **Handschellen abgenommen**")
+                            .SetTitle("Player Uncuffed")
+                            .SetEventColor(EventType.Admin)
+                            .AddField("Beamter", dbPlayer.GetName(), true)
+                            .AddField("Zielperson", destinationDbPlayer.GetName(), true)
+                            .AddField("Team", dbPlayer.Team?.Name ?? "Unbekannt", true)
+                            .AddTimestamp()
+                            .SetFooter("Police System")
+                            .SendTo(WebhookConfig.WebhookChannel.AdminActions);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Print($"[WEBHOOK] Fehler beim Loggen von Uncuffing: {ex.Message}");
+                    }
+                    
                     dbPlayer.SendNewNotification("Sie haben jemanden die Handschellen abgenommen!");
                     destinationDbPlayer.SendNewNotification("Ein Beamter hat Ihnen die Handschellen abgenommen!");
                     return;
@@ -895,6 +935,26 @@ namespace VMP_CNR.Module.Players
 
                     destinationDbPlayer.SetCuffed(true);
                     destinationDbPlayer.SetData("lastCuffedTied", "cuffed");
+                    
+                    // 🔒 WEBHOOK LOGGING - Player Cuffed
+                    try
+                    {
+                        VoidMessageBuilder.Create()
+                            .SetContent($"🔒 **Handschellen angelegt**")
+                            .SetTitle("Player Cuffed")
+                            .SetEventColor(EventType.Admin)
+                            .AddField("Beamter", dbPlayer.GetName(), true)
+                            .AddField("Zielperson", destinationDbPlayer.GetName(), true)
+                            .AddField("Team", dbPlayer.Team?.Name ?? "Unbekannt", true)
+                            .AddTimestamp()
+                            .SetFooter("Police System")
+                            .SendTo(WebhookConfig.WebhookChannel.AdminActions);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Print($"[WEBHOOK] Fehler beim Loggen von Cuffing: {ex.Message}");
+                    }
+                    
                     dbPlayer.SendNewNotification("Sie haben jemanden die Handschellen angelegt!");
                     destinationDbPlayer.SendNewNotification("Ein Beamter hat Ihnen die Handschellen angelegt!");
                 }

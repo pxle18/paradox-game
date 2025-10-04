@@ -397,8 +397,8 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.PlayerWrapper = new PlayerWrapper(player);
 
                 dbPlayer.Id = reader.GetUInt32("id");
-                dbPlayer.Password = reader.GetString("Pass");
-                dbPlayer.Salt = reader.GetString("Salt");
+                dbPlayer.Password = reader.IsDBNull(reader.GetOrdinal("Pass")) ? "" : reader.GetString("Pass");
+                dbPlayer.Salt = reader.IsDBNull(reader.GetOrdinal("Salt")) ? "" : reader.GetString("Salt");
 
                 // Add Verweis
                 player.SetData("player", dbPlayer);
@@ -500,15 +500,15 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.uni_workaholic[1] = reader.GetInt32("uni_workaholic");
                 dbPlayer.uni_workaholic[0] = reader.GetInt32("uni_workaholic");
                 dbPlayer.birthday = new string[2];
-                dbPlayer.birthday[1] = reader.GetString("birthday");
-                dbPlayer.birthday[0] = reader.GetString("birthday");
+                dbPlayer.birthday[1] = reader.IsDBNull(reader.GetOrdinal("birthday")) ? "" : reader.GetString("birthday");
+                dbPlayer.birthday[0] = reader.IsDBNull(reader.GetOrdinal("birthday")) ? "" : reader.GetString("birthday");
                 dbPlayer.fspawn = new uint[2];
                 dbPlayer.fspawn[1] = reader.GetUInt32("fspawn");
                 dbPlayer.fspawn[0] = reader.GetUInt32("fspawn");
 
                 dbPlayer.hasPed = new string[2];
-                dbPlayer.hasPed[1] = reader.GetString("hasPed");
-                dbPlayer.hasPed[0] = reader.GetString("hasPed");
+                dbPlayer.hasPed[1] = reader.IsDBNull(reader.GetOrdinal("hasPed")) ? "" : reader.GetString("hasPed");
+                dbPlayer.hasPed[0] = reader.IsDBNull(reader.GetOrdinal("hasPed")) ? "" : reader.GetString("hasPed");
                 dbPlayer.Lic_FirstAID = new int[2];
                 dbPlayer.Lic_FirstAID[1] = reader.GetInt32("Lic_FirstAID");
                 dbPlayer.Lic_FirstAID[0] = reader.GetInt32("Lic_FirstAID");
@@ -516,8 +516,8 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.timeban[1] = reader.GetInt32("timeban");
                 dbPlayer.timeban[0] = reader.GetInt32("timeban");
                 dbPlayer.job_skills = new string[2];
-                dbPlayer.job_skills[1] = reader.GetString("job_skills");
-                dbPlayer.job_skills[0] = reader.GetString("job_skills");
+                dbPlayer.job_skills[1] = reader.IsDBNull(reader.GetOrdinal("job_skills")) ? "" : reader.GetString("job_skills");
+                dbPlayer.job_skills[0] = reader.IsDBNull(reader.GetOrdinal("job_skills")) ? "" : reader.GetString("job_skills");
                 dbPlayer.warns = new int[2];
                 dbPlayer.warns[1] = reader.GetInt32("warns");
                 dbPlayer.warns[0] = reader.GetInt32("warns");
@@ -525,8 +525,8 @@ namespace VMP_CNR.Module.Players
                 dbPlayer.Ausschluss[1] = reader.GetInt32("ausschluss");
                 dbPlayer.Ausschluss[0] = reader.GetInt32("ausschluss");
                 dbPlayer.HardwareID = new string[2];
-                dbPlayer.HardwareID[1] = reader.GetString("Hwid");
-                dbPlayer.HardwareID[0] = reader.GetString("Hwid");
+                dbPlayer.HardwareID[1] = reader.IsDBNull(reader.GetOrdinal("Hwid")) ? "" : reader.GetString("Hwid");
+                dbPlayer.HardwareID[0] = reader.IsDBNull(reader.GetOrdinal("Hwid")) ? "" : reader.GetString("Hwid");
                 dbPlayer.fgehalt = new int[2];
                 dbPlayer.fgehalt[1] = reader.GetInt32("fgehalt");
                 dbPlayer.fgehalt[0] = reader.GetInt32("fgehalt");

@@ -49,7 +49,7 @@ namespace VMP_CNR.Module.Vehicles.Garages
         public Garage(MySqlDataReader reader) : base(reader)
         {
             if (!Enum.TryParse(reader.GetInt32(6).ToString(), out GarageType type))
-                Logger.Crash(new Exception($"Unknown garage type {reader.GetInt32(6)}"));
+                Logger.Crash(new Exception($"Unknwon garage type {reader.GetInt32(6)}"));
 
             Id = reader.GetUInt32("id");
             Position = new Vector3(reader.GetFloat("npc_pos_x"), reader.GetFloat("npc_pos_y"), reader.GetFloat("npc_pos_z"));

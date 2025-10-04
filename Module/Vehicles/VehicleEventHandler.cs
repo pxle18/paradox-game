@@ -18,6 +18,7 @@ using VMP_CNR.Module.Players.Db;
 using VMP_CNR.Module.Progressbar.Extensions;
 using VMP_CNR.Module.RemoteEvents;
 using VMP_CNR.Module.Vehicles.Windows;
+using VMP_CNR.Handler.Webhook;
 
 namespace VMP_CNR.Module.Vehicles
 {
@@ -121,6 +122,20 @@ namespace VMP_CNR.Module.Vehicles
 
             l_Vehicle.SirensActive = p_State;
             l_Vehicle.SilentSiren = !sound; // is sirene sound on, deshalb negative
+            
+            // 🚑 WEBHOOK LOGGING - Siren State
+            try
+            {
+                DbPlayer dbPlayer = p_Client.GetPlayer();
+                if (dbPlayer != null && dbPlayer.IsValid())
+                {
+                    VoidEventLogger.LogVehicleEvent(dbPlayer.Player, l_Vehicle.Entity, p_State ? "Sirene aktiviert" : "Sirene deaktiviert", $"Sound: {sound}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Print($"[WEBHOOK] Fehler beim Loggen von Siren: {ex.Message}");
+            }
         }
 
         [RemoteEvent]

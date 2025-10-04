@@ -15,7 +15,7 @@ using VMP_CNR.Module.Sync;
 namespace VMP_CNR.Module.Kasino
 {
     /**
-     * This is part of the PARADOX Game-Rework.
+     * This is part of the Void Game-Rework.
      * Made by module@jabber.ru
      */
 

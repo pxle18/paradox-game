@@ -193,21 +193,21 @@ namespace VMP_CNR.Module.Anticheat
                 int warnings = dbPlayer.GetData("lastScreenResFailed");
                 if (warnings > 3)
                 {
-                    dbPlayer.Kick("Dieses Bildformat wird auf PARADOX nicht unterstützt!");
+                    dbPlayer.Kick("Dieses Bildformat wird auf Void nicht unterstützt!");
                     Logging.Logger.LogToAcDetections(dbPlayer.Id, Logging.ACTypes.WrondScreenFormat, $"{dbPlayer.GetName()} Format: " + res);
                     return;
                 }
                 else
                 {
                     dbPlayer.SetData("lastScreenResFailed", warnings + 1);
-                    dbPlayer.SendNewNotification("Dieses Bildformat wird auf PARADOX nicht unterstützt, bitte änder deine Grafikeinstellung! (Warning " + warnings +"/3");
+                    dbPlayer.SendNewNotification("Dieses Bildformat wird auf Void nicht unterstützt, bitte änder deine Grafikeinstellung! (Warning " + warnings +"/3");
                     return;
                 }
             }
             else
             {
                 dbPlayer.SetData("lastScreenResFailed", 1);
-                dbPlayer.SendNewNotification("Dieses Bildformat wird auf PARADOX nicht unterstützt, bitte änder deine Grafikeinstellung! (Warning 1/3");
+                dbPlayer.SendNewNotification("Dieses Bildformat wird auf Void nicht unterstützt, bitte änder deine Grafikeinstellung! (Warning 1/3");
             } */
         }
     }

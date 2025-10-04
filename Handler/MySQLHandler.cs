@@ -15,7 +15,7 @@ using static VMP_CNR.Module.Sync.MySqlSyncThread;
 
 namespace VMP_CNR
 {
-    public static class PARADOXDataReader 
+    public static class VoidDataReader 
     {
         public static UInt32 GetUInt32(this DbDataReader reader, string ordinal)
         {

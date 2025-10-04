@@ -76,6 +76,9 @@ namespace VMP_CNR.Module.Players
         {
             NAPI.Task.Run(() =>
             {
+                if (dbPlayer == null || dbPlayer.Player == null) return;
+                if (!dbPlayer.IsValid()) return;
+                if (dbPlayer.Character == null) return;
                 if (!dbPlayer.IsFreeMode()) return;
 
                 if (dbPlayer.Player.Armor <= 5)

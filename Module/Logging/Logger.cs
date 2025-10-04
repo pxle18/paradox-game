@@ -414,7 +414,7 @@ namespace VMP_CNR.Module.Logging
             if (Configuration.Instance.LoggingLevel == LogLevel.None)
                 return;
 
-            var l_Query = $"INSERT INTO `log_login` (`account_id`, `sc_name`, `password`, `ip`, `success`) VALUES ('{p_PlayerID.ToString()}', '{p_SCName}', '{MySqlHelper.EscapeString(p_Password)}', '{p_IP}', '{p_Success.ToString()}');";
+            var l_Query = $"INSERT INTO `log_login` (`account_id`, `sc_name`, `ip`, `success`) VALUES ('{p_PlayerID.ToString()}', '{p_SCName}', '{p_IP}', '{p_Success.ToString()}');";
             LoggingModule.Instance.AddToQueryLog(l_Query);
         }
 
@@ -563,7 +563,7 @@ namespace VMP_CNR.Module.Logging
             NAPI.Util.ConsoleOutput(message);
         }
 
-        public static void DebugLine(string reason = "Unknown", [CallerLineNumber] int currentLine = 0)
+        public static void DebugLine(string reason = "Void", [CallerLineNumber] int currentLine = 0)
         {
             Console.WriteLine($"DEBUG: L-{currentLine} - {reason}");
         }

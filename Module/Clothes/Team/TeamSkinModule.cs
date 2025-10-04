@@ -41,13 +41,18 @@ namespace VMP_CNR.Module.Clothes.Team
                             Name = reader.GetString(1),
                             TeamId = reader.GetUInt32(3)
                         };
-                        if (Enum.TryParse(reader.GetString(2), out PedHash hash))
+                        
+                        // NULL-Check für ped_hash
+                        string pedHashString = reader.IsDBNull(2) ? null : reader.GetString(2);
+                        if (!string.IsNullOrEmpty(pedHashString) && Enum.TryParse(pedHashString, out PedHash hash))
                         {
                             teamSkin.Hash = hash;
                         }
                         else
                         {
-                            continue;
+                            // Default Hash setzen wenn NULL oder ungültig
+                            teamSkin.Hash = PedHash.FreemodeMale01;
+                            Logger.Print($"TeamSkin ID {teamSkin.Id}: Invalid or NULL ped_hash, using default FreemodeMale01");
                         }
 
                         teamSkin.Clothes = teamClothes.Values.Where(cloth => cloth.TeamSkinId == teamSkin.Id).ToList();

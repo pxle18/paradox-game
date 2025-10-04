@@ -1,6 +1,6 @@
 ﻿/**
  * VMP_CNR - GVMP.de
- * Rework by PARADOX Role Play
+ * Rework by Void Role Play
  */
 
 using System;
@@ -71,6 +71,8 @@ using VMP_CNR.Module.Threading;
 using VMP_CNR.Module.Admin;
 using System.Net;
 using VMP_CNR.Module.ShopTakeover;
+using VMP_CNR.Handler.Webhook;
+using System.Text;
 
 namespace VMP_CNR
 {
@@ -333,6 +335,28 @@ namespace VMP_CNR
 
         public void InitGameMode()
         {
+            // REGISTRIERE ENCODING PROVIDER FÜR MYSQL!
+            try
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                Logger.Print("[SYSTEM] Encoding Provider registriert!");
+            }
+            catch (Exception ex)
+            {
+                Logger.Print($"[ERROR] Encoding Provider Fehler: {ex.Message}");
+            }
+            
+            // INITIALISIERE DAS NEUE WEBHOOK-SYSTEM!
+            try
+            {
+                DiscordHandler.Initialize();
+                Logger.Print("[VOID] Webhook-System erfolgreich initialisiert!");
+            }
+            catch (Exception ex)
+            {
+                Logger.Print($"[VOID] Fehler beim Initialisieren des Webhook-Systems: {ex.Message}");
+            }
+
             Modules.Instance.LoadAll();
 
             StartupScripts.Instance.OnStartup();
@@ -525,13 +549,12 @@ namespace VMP_CNR
 
             Modules.Instance.OnDailyReset();
 
-            Logger.Print("PPPPPP    AAA   RRRRRR    AAA   DDDDD    OOOOO  XX    XX   ");
-            Logger.Print("PP   PP  AAAAA  RR   RR  AAAAA  DD  DD  OO   OO  XX  XX     ");
-            Logger.Print("PPPPPP  AA   AA RRRRRR  AA   AA DD   DD OO   OO   XXXX      ");
-            Logger.Print("PP      AAAAAAA RR  RR  AAAAAAA DD   DD OO   OO  XX  XX     ");
-            Logger.Print("PP      AA   AA RR   RR AA   AA DDDDDD   OOOO0  XX    XX    ");
+            Logger.Print("RRRRRRR   OOOO   L      EEEEEEE  PPPPPP   L      AAA   Y   Y   ");
+            Logger.Print("RR   RR  OO  OO  L      EE       PP   PP  L     AAAAA   Y Y    ");
+            Logger.Print("RRRRRRR  OO  OO  L      EEEEE    PPPPPP   L    AA   AA   Y     ");
+            Logger.Print("RR  RR   OO  OO  L      EE       PP       L    AAAAAAA   Y     ");
+            Logger.Print("RR   RR   OOOO   LLLLLL EEEEEEE  PP       LLLLLAA   AA   Y     ");
             Logger.Print("");
-            Logger.Print("© module & zeroday. backdooring your systems since cnw v1 ");
 
             DamageThread.Instance.InitThreads();
             Configuration.Instance.IsServerOpen = true;
@@ -647,6 +670,16 @@ namespace VMP_CNR
 
             try
             {
+                // 📴 WEBHOOK LOGGING - Player Disconnect
+                try
+                {
+                    VoidEventLogger.LogPlayerDisconnect(iPlayer.Player, type, reason);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Print($"[WEBHOOK] Fehler beim Loggen von Player Disconnect: {ex.Message}");
+                }
+                
                 if(iPlayer != null) Modules.Instance.OnPlayerDisconnected(iPlayer, reason);
             }
             catch (Exception ex)

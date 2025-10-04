@@ -40,7 +40,7 @@ namespace VMP_CNR
             var tattooshop = TattooShopFunctions.GetTattooShop(dbPlayer);
             if (tattooshop == null)
             {
-                dbPlayer.SendNewNotification("Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im PARADOX-Bugtracker!", PlayerNotification.NotificationType.ERROR);
+                dbPlayer.SendNewNotification("Der Lizenzenshop konnte dich keinem Tattooladen zuordnen. Melde dies bitte im Void-Bugtracker!", PlayerNotification.NotificationType.ERROR);
                 return null;
             }
 

@@ -34,7 +34,7 @@ namespace VMP_CNR.Module.Stadthalle
             MenuColShape.SetData("stadthalle_menu", true);
 
             Main.ServerBlips.Add(
-                Blips.Create(NameChangePosition, "PARADOX Stadthalle", 267, 1.0f, color: 42)
+                Blips.Create(NameChangePosition, "Void Stadthalle", 267, 1.0f, color: 42)
             );
 
             MenuManager.Instance.AddBuilder(new StadtHalleMenu());

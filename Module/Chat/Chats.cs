@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using VMP_CNR.Module.Players;
 using VMP_CNR.Module.Players.Db;
+using VMP_CNR.Handler.Webhook;
+using System;
+using VMP_CNR.Handler;
 
 namespace VMP_CNR.Module.Chat
 {
@@ -39,6 +42,27 @@ namespace VMP_CNR.Module.Chat
                   foreach (DbPlayer dbPlayer in Players.Players.Instance.GetValidPlayers())
                   {
                       dbPlayer.Player.TriggerNewClient("sendGlobalNotification", message, duration, color.ToString().ToLower(), icon.ToString().ToLower());
+                  }
+                  
+                  // 📢 WEBHOOK LOGGING - Global Message
+                  try
+                  {
+                      VoidMessageBuilder.Create()
+                          .SetContent($"📢 **Globale Nachricht versendet**")
+                          .SetTitle("Global Message")
+                          .SetEventColor(EventType.Info)
+                          .AddField("Nachricht", message, false)
+                          .AddField("Farbe", color.ToString(), true)
+                          .AddField("Icon", icon.ToString(), true)
+                          .AddField("Dauer", $"{duration}ms", true)
+                          .AddField("Empfänger", Players.Players.Instance.GetValidPlayers().Count.ToString(), true)
+                          .AddTimestamp()
+                          .SetFooter("Global Chat")
+                          .SendTo(WebhookConfig.WebhookChannel.System);
+                  }
+                  catch (Exception ex)
+                  {
+                      Logging.Logger.Print($"[WEBHOOK] Fehler beim Loggen von Global Message: {ex.Message}");
                   }
             });
         }

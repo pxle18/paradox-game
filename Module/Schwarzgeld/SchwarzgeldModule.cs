@@ -105,14 +105,12 @@ namespace VMP_CNR.Module.Schwarzgeld
                 House xHouse = HouseModule.Instance.Get((uint)dbPlayer.Player.Dimension);
                 if (xHouse != null && (dbPlayer.HouseKeys.Contains(xHouse.Id) || dbPlayer.OwnHouse[0] == xHouse.Id))
                 {
-                    // Blackmoney (Geldwäsche)
                     if (dbPlayer.Player.Position.DistanceTo(SchwarzgeldModule.BlackMoneyEndPoint) < 1.5f)
                     {
                         ComponentManager.Get<TextInputBoxWindow>().Show()(dbPlayer, new TextInputBoxWindowObject() { Title = "Gelddruckmaschine", Callback = "BlackmoneyWithdraw", Message = $"Aktueller Betrag {xHouse.BLAmount}$, wie viel möchten Sie entnehmen:" });
                         return true;
                     }
 
-                    // Bank to normal geld
                     if (dbPlayer.Player.Position.DistanceTo(SchwarzgeldModule.MarkedDollarWorkbench) < 1.5f)
                     {
                         if(dbPlayer.Container.GetItemAmount(RobberyModule.MarkierteScheineID) <= 0)
